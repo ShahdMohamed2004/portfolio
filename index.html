@@ -287,6 +287,17 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     font-family:var(--font-hand);font-size:1.3rem;color:var(--yellow);
     display:inline-block;transform:rotate(-1.5deg);margin-bottom:22px;
   }
+  html[dir="rtl"] .hero-note{
+    font-family:'Cairo',var(--font-body);font-size:1.04rem;font-weight:600;
+    letter-spacing:0;line-height:1.7;transform:none;margin-bottom:24px;
+    padding:6px 14px;border-inline-start:3px solid var(--yellow);
+    background:linear-gradient(90deg,rgba(231,184,78,.12),transparent 82%);
+    color:var(--yellow);border-radius:0 6px 6px 0;
+  }
+  html[dir="rtl"] .hero-note::before{content:'✦';font-size:.78em;margin-inline-end:8px;opacity:.82;}
+  @media (max-width:600px){
+    html[dir="rtl"] .hero-note{font-size:.92rem;padding:5px 11px;margin-bottom:20px;}
+  }
   h1{
     font-family:var(--font-display);font-weight:500;
     font-size:clamp(2.3rem, 5.6vw, 3.6rem);
