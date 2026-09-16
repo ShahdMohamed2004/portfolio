@@ -627,6 +627,35 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   @media (max-width:360px){
     .wordmark{font-size:1.05rem;}
   }
+
+  /* Final mobile/RTL stability pass. Keep the page inside the viewport and
+     remove the desktop timeline spine on narrow screens. */
+  html, body{width:100%;max-width:100%;overflow-x:hidden;}
+  main.wrap{width:100%;max-width:760px;}
+  header, header nav{width:100%;max-width:none;}
+  html[dir="rtl"] header nav, html[dir="rtl"] .nav-utility{direction:rtl;}
+  html[dir="rtl"] .hero, html[dir="rtl"] section{direction:rtl;}
+  @media (max-width:720px){
+    main.wrap{padding-left:18px;padding-right:18px;}
+    .spine{padding-left:0;padding-right:0;}
+    .spine::before,.entry::before{display:none;}
+    .entry:hover,html[dir="rtl"] .entry:hover{transform:none;}
+    .hero{padding-top:116px;}
+    .hero h1{max-width:100%;font-size:clamp(2rem,9vw,3rem);}
+    .hero p.lead,.about-text p,.entry p,.section-lead{max-width:100%;}
+    .credential-strip{width:100%;}
+    .credential-strip .cred{min-width:0;}
+    .cta-row{align-items:stretch;}
+    .cta-row .btn{max-width:100%;}
+  }
+  @media (max-width:420px){
+    header{padding-top:12px;padding-bottom:12px;}
+    header nav{padding-left:12px;padding-right:12px;}
+    main.wrap{padding-left:16px;padding-right:16px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -1084,7 +1113,7 @@ const SITE_AR = {
   fullName: "شهد محمد صديق",
   title: "مدرّسة لغة إنجليزية | أخصائية TEFL",
   heroNote: "منفتحة على فرص في التدريس وتكنولوجيا التعليم",
-  heroHeadline: "علّم لترى، وتعلّم لتكون",
+  heroHeadline: "نُعلِّم لنُبصر، ونتعلَّم لنكون",
   heroLead: "أنا مدرّسة لغة إنجليزية وأخصائية TEFL حاصلة على درجة مزدوجة من جامعة أكتوبر للعلوم الحديثة والآداب (MSA) وجامعة بيدفوردشير. أصمّم طرقًا بصرية قائمة على الخط الزمني لتدريس الأزمنة والقواعد، وأبني أدوات تقييم تقيس فعلًا ما صُمِّمت لقياسه، انطلاقًا من خبرة ميدانية حقيقية في جامعة MSA ومدارس دار التربية.",
 
   links: SITE.links,
