@@ -46,6 +46,7 @@
     --chalk-dim:#B7C2B9;
     --muted:#8FA098;
     --yellow:#E7B84E;
+    --text-accent:#E7B84E;
     --stat-color:#E7B84E;
     --pink:#D98098;
     --line:rgba(239,234,216,0.16);
@@ -66,6 +67,7 @@
     --muted:#6B786F;
     --line:rgba(21,40,37,0.14);
     --line-strong:rgba(21,40,37,0.28);
+    --text-accent:#92400E;
     --stat-color:#7A5B20;
   }
 
@@ -240,10 +242,11 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .mobile-menu.open{transform:translateX(0);}
   body.menu-open{overflow:hidden;}
   .mobile-menu-close{
-    position:sticky;top:-1px;z-index:1;align-self:flex-end;background:var(--ink-2);border:1px solid var(--line-strong);color:var(--chalk-dim);
-    border-radius:4px;padding:8px 14px;font:inherit;font-size:.9rem;cursor:pointer;
+    position:sticky;top:-1px;z-index:1;align-self:flex-end;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:44px;background:var(--ink-2);border:1px solid var(--line-strong);color:var(--chalk-dim);
+    border-radius:6px;padding:8px 12px;font:inherit;font-size:.9rem;cursor:pointer;
     transition:color .2s ease,border-color .2s ease,background .2s ease;
   }
+  .mobile-menu-close .close-icon{font-size:1.5rem;line-height:1;font-family:var(--font-body);font-weight:400;}
   .mobile-menu-close:hover,.mobile-menu-close:focus-visible{color:var(--yellow);border-color:var(--yellow);background:rgba(231,184,78,.08);}
   .mobile-menu a{
     font-family:var(--font-display);font-size:1.15rem;text-decoration:none;
@@ -606,7 +609,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   /* Content cards are rendered by JavaScript after the initial reveal observer is created. */
   .materials-grid .reveal-item,.skills-grid .reveal-item{opacity:1;transform:none;}
   .skill-group h4{
-    font-family:var(--font-hand);font-size:1.15rem;color:var(--yellow);
+    font-family:var(--font-hand);font-size:1.15rem;color:var(--text-accent);
     margin-bottom:12px;transform:rotate(-1deg);display:inline-block;
   }
   .skill-group ul{list-style:none;}
@@ -616,6 +619,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
   .skill-group li:last-child{border-bottom:none;}
   .skill-group li .lvl{color:var(--yellow);font-family:var(--font-hand);font-size:0.95rem;flex-shrink:0;}
+  html[data-theme="light"] .entry .gpa,html[data-theme="light"] .meta-label,html[data-theme="light"] .skill-group li .lvl{color:var(--text-accent);}
 
   /* ---------- creative dimension ---------- */
   .creative-row{display:flex;flex-wrap:wrap;gap:34px;align-items:baseline;margin-bottom:26px;}
@@ -733,6 +737,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
   @media (max-width:720px){
     .skills-grid{grid-template-columns:1fr;gap:20px;max-width:none;}
+    .entry details summary{min-height:44px;display:flex;align-items:center;}
+    .entry details summary h3{margin-bottom:0;}
     .dev-grid{grid-template-columns:1fr;gap:18px;}
     .grid-4{grid-template-columns:1fr;}
     .materials-grid{grid-template-columns:1fr;}
@@ -845,7 +851,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
 <div class="menu-backdrop" id="menuBackdrop"></div>
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
-  <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close menu">Close menu</button>
+  <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close menu"><span class="close-icon" aria-hidden="true">×</span><span id="mobileMenuCloseLabel">Close menu</span></button>
   <a href="#about" data-nav="about">About</a>
   <a href="#teaching" data-nav="teaching">Teaching</a>
   <a href="#work" data-nav="work">Work</a>
@@ -1661,7 +1667,7 @@ const SITE_AR = {
     document.getElementById('contactLinkedinBtn').textContent = 'LinkedIn';
     document.querySelector('.skip-link').textContent = lang === 'ar' ? 'تخطَّ إلى المحتوى الرئيسي' : 'Skip to main content';
     document.getElementById('backToTop').setAttribute('aria-label', lang === 'ar' ? 'العودة للأعلى' : 'Back to top');
-    document.getElementById('mobileMenuClose').textContent = lang === 'ar' ? 'إغلاق القائمة' : 'Close menu';
+    document.getElementById('mobileMenuCloseLabel').textContent = lang === 'ar' ? 'إغلاق القائمة' : 'Close menu';
     document.getElementById('mobileMenuClose').setAttribute('aria-label', lang === 'ar' ? 'إغلاق القائمة' : 'Close menu');
   }
 
@@ -1745,6 +1751,17 @@ const SITE_AR = {
   document.getElementById('mobileMenuClose').addEventListener('click', closeMenu);
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   document.addEventListener('keydown', (event) => { if(event.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu(); });
+  let menuTouchStartX = 0;
+  mobileMenu.addEventListener('touchstart', (event) => {
+    if(event.touches.length === 1) menuTouchStartX = event.touches[0].clientX;
+  }, {passive:true});
+  mobileMenu.addEventListener('touchend', (event) => {
+    if(!menuTouchStartX || event.changedTouches.length !== 1) return;
+    const deltaX = event.changedTouches[0].clientX - menuTouchStartX;
+    const rtl = document.documentElement.dir === 'rtl';
+    if((!rtl && deltaX > 72) || (rtl && deltaX < -72)) closeMenu();
+    menuTouchStartX = 0;
+  }, {passive:true});
 
   // toast
   function showToast(){
