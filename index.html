@@ -814,6 +814,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     <div class="cta-row">
       <a class="btn btn-solid" href="#credentials" id="btnCredentials">View credentials</a>
       <a class="btn btn-text" href="#" id="btnCV" target="_blank" rel="noopener noreferrer">Download CV</a>
+      <a class="btn btn-text" href="#" id="btnLinkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a class="btn btn-text" href="#work" id="btnWork">Explore my work</a>
     </div>
 
@@ -1377,6 +1378,7 @@ const SITE_AR = {
   document.getElementById('railPortfolio').href = SITE.links.portfolioFolder;
   document.getElementById('railLinkedin').href = SITE.links.linkedin;
   document.getElementById('btnCV').href = SITE.links.cv;
+  document.getElementById('btnLinkedin').href = SITE.links.linkedin;
   if(SITE.links.degreeCertificate){
     document.getElementById('btnCredentials').href = SITE.links.degreeCertificate;
     document.getElementById('btnCredentials').target = '_blank';
@@ -1553,6 +1555,7 @@ const SITE_AR = {
     materialsPortfolioLink: ["View full portfolio", "عرض ملف الأعمال الكامل"],
     cvLinkDesktop: ["Download CV", "تحميل السيرة الذاتية"], cvLinkMobile: ["Download CV", "تحميل السيرة الذاتية"],
     btnCV: ["Download CV", "تحميل السيرة الذاتية"],
+    btnLinkedin: ["LinkedIn", "LinkedIn"],
     contactEmailBtn: ["Email", "البريد الإلكتروني"],
     contactCvBtn: ["Download CV", "تحميل السيرة الذاتية"]
   };
