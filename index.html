@@ -685,9 +685,15 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[dir="rtl"] .hero, html[dir="rtl"] section{direction:rtl;}
   @media (max-width:720px){
     main.wrap{padding-left:18px;padding-right:18px;}
-    .spine{padding-left:0;padding-right:0;}
-    .spine::before,.entry::before{display:none;}
+    /* Keep the vertical timeline visible on phones, with compact dots and a
+       comfortable reading gutter in both LTR and RTL layouts. */
+    .spine{padding-left:26px;padding-right:0;}
+    .spine::before{display:block;left:5px;right:auto;top:8px;bottom:8px;background:var(--line-strong);}
+    .entry::before{display:block;left:-26px;right:auto;top:12px;width:8px;height:8px;}
     .entry:hover,html[dir="rtl"] .entry:hover{transform:none;}
+    html[dir="rtl"] .spine{padding-left:0;padding-right:26px;}
+    html[dir="rtl"] .spine::before{left:auto;right:5px;}
+    html[dir="rtl"] .entry::before{left:auto;right:-26px;}
     .hero{padding-top:116px;}
     .hero h1{max-width:100%;font-size:clamp(2rem,9vw,3rem);}
     .hero p.lead,.about-text p,.entry p,.section-lead{max-width:100%;}
