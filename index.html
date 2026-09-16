@@ -369,7 +369,20 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 
   /* ---------- section shell ---------- */
-  section{padding:80px 0;border-top:1px solid var(--line);position:relative;}
+  section{padding:80px 0;border-top:1px solid var(--line);position:relative;scroll-margin-top:84px;}
+  section .section-head h2{transition:transform .55s cubic-bezier(.2,.7,.2,1),color .4s ease;}
+  section .section-tag{transition:letter-spacing .5s ease,opacity .4s ease;}
+  section.section-active .section-head h2{transform:translateX(8px);color:var(--chalk);}
+  section.section-active .section-tag{letter-spacing:.09em;opacity:1;}
+  html[dir="rtl"] section.section-active .section-head h2{transform:translateX(-8px);}
+  @media (max-width:720px){
+    section.section-active .section-head h2{transform:translateX(4px);}
+    html[dir="rtl"] section.section-active .section-head h2{transform:translateX(-4px);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    section .section-head h2,section .section-tag{transition:none;}
+    section.section-active .section-head h2{transform:none;}
+  }
   .section-head{margin-bottom:52px;}
   .section-tag{
     font-family:var(--font-hand);font-size:1.2rem;color:var(--yellow);
@@ -1759,6 +1772,16 @@ const SITE_AR = {
     aboutPhotoImg.style.transform = `translateY(${offset}px)`;
   }
 
+  function updateSectionScenes(){
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const focusY = vh * 0.52;
+    document.querySelectorAll('main > section').forEach(section => {
+      const rect = section.getBoundingClientRect();
+      const active = rect.top < focusY && rect.bottom > focusY;
+      section.classList.toggle('section-active', active);
+    });
+  }
+
   function updateProjectTimelines(){
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const focusY = vh * 0.52;
@@ -1811,6 +1834,7 @@ const SITE_AR = {
     updateBackToTop();
     updateAboutParallax();
     updateTimeline();
+    updateSectionScenes();
     updateProjectTimelines();
     scrollTicking = false;
   }
