@@ -46,6 +46,7 @@
     --chalk-dim:#B7C2B9;
     --muted:#8FA098;
     --yellow:#E7B84E;
+    --stat-color:#E7B84E;
     --pink:#D98098;
     --line:rgba(239,234,216,0.16);
     --line-strong:rgba(239,234,216,0.32);
@@ -65,6 +66,7 @@
     --muted:#6B786F;
     --line:rgba(21,40,37,0.14);
     --line-strong:rgba(21,40,37,0.28);
+    --stat-color:#7A5B20;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -236,8 +238,9 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-gutter:stable;
   }
   .mobile-menu.open{transform:translateX(0);}
+  body.menu-open{overflow:hidden;}
   .mobile-menu-close{
-    align-self:flex-start;background:none;border:1px solid var(--line-strong);color:var(--chalk-dim);
+    position:sticky;top:-1px;z-index:1;align-self:flex-end;background:var(--ink-2);border:1px solid var(--line-strong);color:var(--chalk-dim);
     border-radius:4px;padding:8px 14px;font:inherit;font-size:.9rem;cursor:pointer;
     transition:color .2s ease,border-color .2s ease,background .2s ease;
   }
@@ -547,7 +550,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
   .entry .place{font-size:0.9rem;color:var(--muted);margin-bottom:10px;}
   .entry p{color:var(--chalk-dim);max-width:56ch;font-size:0.98rem;}
-  .entry .stat-line{font-size:0.88rem;color:var(--yellow);margin-top:10px;font-family:var(--font-body);}
+  .entry .stat-line{font-size:0.88rem;color:var(--stat-color);margin-top:10px;font-family:var(--font-body);}
   .entry ul.point-list{margin-top:12px;padding-left:18px;color:var(--chalk-dim);font-size:0.94rem;}
   .entry ul.point-list li{margin-bottom:4px;text-align:justify;}
 
@@ -600,6 +603,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .skill-block h3{font-family:var(--font-display);font-size:1.25rem;font-weight:500;margin-bottom:18px;color:var(--chalk);}
   .skill-block .skill-group{margin-top:16px;}
   .skill-block .skill-group:first-of-type{margin-top:0;}
+  /* Content cards are rendered by JavaScript after the initial reveal observer is created. */
+  .materials-grid .reveal-item,.skills-grid .reveal-item{opacity:1;transform:none;}
   .skill-group h4{
     font-family:var(--font-hand);font-size:1.15rem;color:var(--yellow);
     margin-bottom:12px;transform:rotate(-1deg);display:inline-block;
@@ -1690,6 +1695,7 @@ const SITE_AR = {
     const menuButton = document.getElementById('hamburgerBtn');
     if(menu) menu.classList.remove('open');
     if(backdrop) backdrop.classList.remove('open');
+    document.body.classList.remove('menu-open');
     if(menuButton) {
       menuButton.setAttribute('aria-expanded', 'false');
       menuButton.setAttribute('aria-label', document.documentElement.lang === 'ar' ? 'فتح القائمة' : 'Open menu');
@@ -1724,12 +1730,14 @@ const SITE_AR = {
   function closeMenu(){
     mobileMenu.classList.remove('open');
     backdrop.classList.remove('open');
+    document.body.classList.remove('menu-open');
     hamburger.setAttribute('aria-expanded', 'false');
     hamburger.setAttribute('aria-label', document.documentElement.lang === 'ar' ? 'فتح القائمة' : 'Open menu');
   }
   hamburger.addEventListener('click', function(){
     const open = mobileMenu.classList.toggle('open');
     backdrop.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
     hamburger.setAttribute('aria-expanded', String(open));
     hamburger.setAttribute('aria-label', open ? (document.documentElement.lang === 'ar' ? 'إغلاق القائمة' : 'Close menu') : (document.documentElement.lang === 'ar' ? 'فتح القائمة' : 'Open menu'));
   });
