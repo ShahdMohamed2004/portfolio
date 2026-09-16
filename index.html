@@ -507,7 +507,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .dev-card .proj-link{margin-top:12px;font-size:0.86rem;}
 
   /* ---------- skills / languages ---------- */
-  .skills-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;}
+  .skills-grid{display:grid;grid-template-columns:1fr;gap:28px;max-width:640px;}
   .skill-block{border:1px solid var(--line-strong);border-radius:8px;padding:24px;position:relative;overflow:hidden;}
   .skill-block::before{content:"";position:absolute;inset-inline-start:0;top:0;width:3px;height:100%;background:var(--yellow);opacity:.8;}
   .skill-block.languages-block{border-color:rgba(217,128,152,.5);}
@@ -625,7 +625,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[dir="rtl"] .mobile-menu.open a{transform:translateX(0);}
 
   @media (max-width:720px){
-    .skills-grid{grid-template-columns:1fr;gap:20px;}
+    .skills-grid{grid-template-columns:1fr;gap:20px;max-width:none;}
     .dev-grid{grid-template-columns:1fr;gap:18px;}
     .grid-4{grid-template-columns:1fr;}
     .materials-grid{grid-template-columns:1fr;}
@@ -1321,12 +1321,13 @@ const SITE_AR = {
     document.getElementById('btnCredentials').target = '_blank';
     document.getElementById('btnCredentials').rel = 'noopener noreferrer';
   }
+  // Always open Gmail's compose screen with the recipient already filled in.
   const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(SITE.links.email);
   const contactEmailBtn = document.getElementById('contactEmailBtn');
-  const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  contactEmailBtn.href = isMobileDevice ? 'mailto:' + SITE.links.email : gmailComposeUrl;
-  if(!isMobileDevice){ contactEmailBtn.target = '_blank'; contactEmailBtn.rel = 'noopener noreferrer'; }
-  contactEmailBtn.title = isMobileDevice ? 'Open your email app' : 'Open Gmail compose';
+  contactEmailBtn.href = gmailComposeUrl;
+  contactEmailBtn.target = '_blank';
+  contactEmailBtn.rel = 'noopener noreferrer';
+  contactEmailBtn.title = 'Open Gmail compose';
   document.getElementById('contactLinkedinBtn').href = SITE.links.linkedin;
   document.getElementById('contactCvBtn').href = SITE.links.cv;
   contactEmailBtn.addEventListener('click', function(){
