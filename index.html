@@ -1,405 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>
-      (function() {
-        // Capture host references before any artifact code runs: Window.parent
-        // is [Replaceable] (a top-level `var parent` in artifact code would
-        // replace the accessor with a data property), and a top-level
-        // `const crypto` would shadow the global — either would otherwise
-        // silently break the bridge for artifacts that worked before.
-        const realParent = window.parent;
-        const cryptoObj = window.crypto;
-        // html-to-image is only used by takeScreenshot: fetched on first use, not as a
-        // parser-blocking tag. Native fetch, captured before the proxy override below.
-        const realFetch = typeof window.fetch === 'function' ? window.fetch.bind(window) : null;
-        const HTML_TO_IMAGE_SRC = "https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js";
-        const HTML_TO_IMAGE_INTEGRITY = "sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==";
-        let htmlToImageLoad = null;
-        const loadHtmlToImage = () => {
-          if (!htmlToImageLoad) {
-            htmlToImageLoad = (realFetch
-              ? realFetch(HTML_TO_IMAGE_SRC, { integrity: HTML_TO_IMAGE_INTEGRITY, credentials: 'omit', referrerPolicy: 'no-referrer' })
-              : Promise.reject(new Error('fetch unavailable'))
-            )
-              .then((res) => {
-                if (!res.ok) throw new Error('html-to-image failed to load (' + res.status + ')');
-                return res.text();
-              })
-              .then((source) => {
-                // UMD bundle: hide the artifact's AMD/CommonJS globals so it takes the
-                // window-global branch; inline script text runs synchronously on insert.
-                const hidden = ['define', 'module', 'exports'].map((k) => {
-                  const entry = { k, own: Object.prototype.hasOwnProperty.call(window, k), v: window[k] };
-                  try { window[k] = undefined; } catch (e) {}
-                  return entry;
-                });
-                try {
-                  const el = document.createElement('script');
-                  el.text = source;
-                  (document.head || document.documentElement).appendChild(el);
-                } finally {
-                  hidden.forEach(({ k, own, v }) => {
-                    try { if (own) { window[k] = v; } else { delete window[k]; } } catch (e) {}
-                  });
-                }
-                if (!window.htmlToImage) throw new Error('html-to-image unavailable after load');
-                return window.htmlToImage;
-              });
-            // A failed load may be transient; let the next screenshot retry.
-            htmlToImageLoad.catch(() => { htmlToImageLoad = null; });
-          }
-          return htmlToImageLoad;
-        };
-        // crypto.randomUUID exists only in Secure Contexts; fall back to a
-        // unique non-crypto id elsewhere (http://LAN-IP dev flows) —
-        // uniqueness is what the bridge needs, unpredictability is
-        // defense-in-depth on top of the source guards.
-        const newRequestId =
-          cryptoObj && typeof cryptoObj.randomUUID === "function"
-            ? function () { return cryptoObj.randomUUID(); }
-            : function () { return Date.now() + "-" + Math.random(); };
-        const originalConsole = window.console;
-        window.console = {
-          log: (...args) => {
-            originalConsole.log(...args);
-            realParent.postMessage({ type: 'console', message: args.join(' ') }, '*');
-          },
-          error: (...args) => {
-            originalConsole.error(...args);
-            realParent.postMessage({ type: 'console', message: 'Error: ' + args.join(' ') }, '*');
-          },
-          warn: (...args) => {
-            originalConsole.warn(...args);
-            realParent.postMessage({ type: 'console', message: 'Warning: ' + args.join(' ') }, '*');
-          }
-        };
-
-        // Bridge request ids are crypto-random (not sequential) so they
-        // cannot be predicted by other frames in the tab.
-        let callbacksMap = new Map();
-        let streamControllers = new Map();
-        
-        window.claude = {
-          complete: (prompt) => {
-            return new Promise((resolve, reject) => {
-              const id = newRequestId();
-              callbacksMap.set(id, { resolve, reject });
-              realParent.postMessage({ type: 'claudeComplete', id, prompt }, '*');
-            });
-          }
-        };
-
-        window.storage = {
-          get: (key, shared = false) => {
-            return new Promise((resolve, reject) => {
-              const id = newRequestId();
-              callbacksMap.set(id, { resolve, reject });
-              realParent.postMessage({ type: 'storageGet', id, key, shared }, '*');
-            });
-          },
-          set: (key, value, shared = false) => {
-            return new Promise((resolve, reject) => {
-              const id = newRequestId();
-              callbacksMap.set(id, { resolve, reject });
-              realParent.postMessage({ type: 'storageSet', id, key, value, shared }, '*');
-            });
-          },
-          delete: (key, shared = false) => {
-            return new Promise((resolve, reject) => {
-              const id = newRequestId();
-              callbacksMap.set(id, { resolve, reject });
-              realParent.postMessage({ type: 'storageDelete', id, key, shared }, '*');
-            });
-          },
-          list: (prefix, shared = false) => {
-            return new Promise((resolve, reject) => {
-              const id = newRequestId();
-              callbacksMap.set(id, { resolve, reject });
-              realParent.postMessage({ type: 'storageList', id, prefix, shared }, '*');
-            });
-          }
-        };
-
-        let pendingBlobs = new Map();
-        URL.createObjectURL = (blob) => {
-          // Store the blob and create an ID and URL for it
-          const blobId = `blob-${Date.now()}-${Math.random()}`;
-          pendingBlobs.set(blobId, blob);
-          return `blob-request://${blobId}`;
-        };
-
-        URL.revokeObjectURL = (url) => {
-          // Remove the blob from our store
-          const blobId = url.replace("blob-request://", "");
-          pendingBlobs.delete(blobId);
-        };
-
-        const getBlobFromURL = (url) => {
-          const blobId = url.replace("blob-request://", "");
-          return pendingBlobs.get(blobId);
-        };
-
-        // Override global fetch with streaming support
-        window.fetch = (url, init = {}) => {
-          return new Promise((resolve, reject) => {
-            const id = newRequestId();
-            const channelId = `fetch-${id}-${Date.now()}`;
-            
-            callbacksMap.set(id, { 
-              resolve: (response) => {
-                // Null-body statuses: Response(stream, {status: 204}) throws
-                // per the Fetch spec, which would escape this resolver and
-                // hang the artifact's await forever.
-                if (response.status === 204 || response.status === 205 || response.status === 304) {
-                  try {
-                    resolve(new Response(null, {
-                      status: response.status,
-                      statusText: response.statusText,
-                      headers: response.headers
-                    }));
-                  } catch (err) {
-                    // Invalid statusText/header bytes can throw here too.
-                    reject(new TypeError(
-                      'Bridge fetch: unconstructable response (status ' + response.status + ')'
-                    ));
-                  }
-                  return;
-                }
-                // Create a ReadableStream for the response body
-                const stream = new ReadableStream({
-                  start(controller) {
-                    streamControllers.set(channelId, controller);
-                  },
-                  cancel() {
-                    streamControllers.delete(channelId);
-                  }
-                });
-                
-                // Create and return the Response with the stream. Response()
-                // requires status in [200, 599]; an opaque/no-cors fetch
-                // forwards status 0, which would throw here and escape the
-                // resolver, hanging the artifact's await. Surface it as a
-                // network-error-shaped rejection instead.
-                try {
-                  resolve(new Response(stream, {
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: response.headers
-                  }));
-                } catch (err) {
-                  streamControllers.delete(channelId);
-                  reject(new TypeError(
-                    'Bridge fetch: unconstructable response (status ' + response.status + ')'
-                  ));
-                }
-              },
-              reject,
-              channelId
-            });
-            
-            realParent.postMessage({
-              type: 'proxyFetch',
-              id,
-              url,
-              init,
-              channelId
-            }, '*');
-          });
-        };
-
-        window.addEventListener('message', async (event) => {
-          // Only the embedding parent may drive the bridge — sibling and
-          // nested frames can also postMessage into this window.
-          if (event.source !== realParent) return;
-          if (event.data.type === 'takeScreenshot') {
-            // Echo the request's nonce so the requester can correlate the
-            // reply to ITS request — a reply without the expected nonce
-            // (e.g. from a stale pre-remount artifact) is ignored upstream.
-            const screenshotNonce = event.data.nonce;
-            const rootElement = document.getElementById('artifacts-component-root-html');
-            if (!rootElement) {
-              realParent.postMessage({
-                type: 'screenshotError',
-                nonce: screenshotNonce,
-                error: new Error('Root element not found'),
-              }, '*');
-              return;
-            }
-            // Catch CDN load failures and toPng errors so the parent always
-            // gets a response instead of hanging forever.
-            try {
-              const htmlToImage = await loadHtmlToImage();
-              const screenshot = await htmlToImage.toPng(rootElement, {
-                imagePlaceholder:
-                  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjePDgwX8ACOQDoNsk0PMAAAAASUVORK5CYII=",
-              });
-              realParent.postMessage({
-                type: 'screenshotData',
-                nonce: screenshotNonce,
-                data: screenshot,
-              }, '*');
-            } catch (err) {
-              realParent.postMessage({
-                type: 'screenshotError',
-                nonce: screenshotNonce,
-                error: err instanceof Error ? err : new Error(String(err)),
-              }, '*');
-            }
-          } else if (event.data.type === 'claudeComplete') {
-            const callback = callbacksMap.get(event.data.id);
-            if (!callback) return;
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.completion);
-            }
-            callbacksMap.delete(event.data.id);
-          } else if (event.data.type === 'proxyFetchResponse') {
-            const callback = callbacksMap.get(event.data.id);
-            if (!callback) return;
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-              callbacksMap.delete(event.data.id);
-            } else {
-              // Initial response with headers, status, etc.
-              callback.resolve({
-                status: event.data.status,
-                statusText: event.data.statusText,
-                headers: event.data.headers
-              });
-              // Don't delete the callback yet if streaming
-              if (!event.data.body) {
-                callbacksMap.delete(event.data.id);
-              }
-            }
-          } else if (event.data.type === 'proxyFetchStream') {
-            // Handle streaming data chunks
-            const controller = streamControllers.get(event.data.channelId);
-            if (controller) {
-              if (event.data.error) {
-                controller.error(new Error(event.data.error));
-                streamControllers.delete(event.data.channelId);
-              } else if (event.data.done) {
-                controller.close();
-                streamControllers.delete(event.data.channelId);
-                // Clean up the callback
-                const callback = Array.from(callbacksMap.entries()).find(
-                  ([_, value]) => value.channelId === event.data.channelId
-                );
-                if (callback) {
-                  callbacksMap.delete(callback[0]);
-                }
-              } else if (event.data.chunk) {
-                controller.enqueue(new Uint8Array(event.data.chunk));
-              }
-            }
-          } else if (event.data.type === 'storageGet') {
-            const callback = callbacksMap.get(event.data.id);
-            if (!callback) return;
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.result);
-            }
-            callbacksMap.delete(event.data.id);
-          } else if (event.data.type === 'storageSet') {
-            const callback = callbacksMap.get(event.data.id);
-            if (!callback) return;
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.result);
-            }
-            callbacksMap.delete(event.data.id);
-          } else if (event.data.type === 'storageDelete') {
-            const callback = callbacksMap.get(event.data.id);
-            if (!callback) return;
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.result);
-            }
-            callbacksMap.delete(event.data.id);
-          } else if (event.data.type === 'storageList') {
-            const callback = callbacksMap.get(event.data.id);
-            if (!callback) return;
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.result);
-            }
-            callbacksMap.delete(event.data.id);
-          }
-        });
-
-        window.addEventListener('click', (event) => {
-          const isEl = event.target instanceof HTMLElement;
-          if (!isEl) return;
-    
-          // find ancestor links
-          const linkEl = event.target.closest("a");
-          if (!linkEl || !linkEl.href) return;
-    
-          event.preventDefault();
-          event.stopImmediatePropagation();
-    
-          if (linkEl.href.startsWith("blob-request:")) {
-            const blob = getBlobFromURL(linkEl.href);
-            if (!blob) return;
-            void blob.arrayBuffer().then((data) => {
-              realParent.postMessage({
-                type: "downloadFile",
-                filename: linkEl.download,
-                data,
-                mimeType: blob.type || "application/octet-stream",
-              });
-            });
-          } else if (linkEl.href.startsWith("data:")) {
-            const [header, base64Data] = linkEl.href.split(",");
-            const mimeMatch = header.match(/data:([^;]+)/);
-            const mimeType = mimeMatch ? mimeMatch[1] : "application/octet-stream";
-            const binaryString = atob(base64Data);
-            const data = Uint8Array.from(binaryString, (c) =>
-              c.charCodeAt(0),
-            ).buffer;
-            realParent.postMessage({
-              type: "downloadFile",
-              filename: linkEl.download,
-              data,
-              mimeType,
-            });
-          } else {
-            let linkUrl;
-            try {
-              linkUrl = new URL(linkEl.href);
-            } catch (error) {
-              return;
-            }
-    
-            if (linkUrl.hostname === window.location.hostname) return;
-      
-            realParent.postMessage({
-              type: 'openExternal',
-              href: linkEl.href,
-            }, '*');
-          }
-      });
-
-        const originalOpen = window.open;
-        window.open = function (url) {
-          realParent.postMessage({
-            type: "openExternal",
-            href: url,
-          }, "*");
-        };
-
-        window.addEventListener('error', (event) => {
-          realParent.postMessage({ type: 'console', message: 'Uncaught Error: ' + event.message }, '*');
-        });
-      })();
-    </script>
-  <style id="claude-scrollbar">@layer claude-scrollbar{*{scrollbar-width:thin}html{scrollbar-color:rgb(128 128 128 / 50%) transparent}}</style>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Shahd Mohamed Siddiq | English Language Instructor &amp; TEFL Specialist</title>
@@ -468,7 +69,7 @@
 
   *{margin:0;padding:0;box-sizing:border-box;}
 
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;scroll-padding-top:84px;}
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{animation:none !important; transition:none !important;}
@@ -572,6 +173,13 @@
   html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] .section-tag{font-family:'Cairo', var(--font-display);}
   html[dir="rtl"] .wordmark{font-family:'Cairo', var(--font-hand);}
   html[dir="rtl"] p{text-align:right;hyphens:none;-webkit-hyphens:none;}
+html[dir="rtl"] .about-grid, html[dir="rtl"] .contact-box, html[dir="rtl"] .section-head{text-align:right;}
+html[dir="rtl"] .credential-strip .cred{border-left:0;border-right:2px solid var(--yellow);padding-left:0;padding-right:14px;}
+html[dir="rtl"] .spine{padding-left:0;padding-right:34px;}
+html[dir="rtl"] .spine::before{left:auto;right:4px;}
+html[dir="rtl"] .entry::before{left:auto;right:-34px;}
+html[dir="rtl"] .entry:hover{transform:translateX(-3px);}
+html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[dir="rtl"] .mobile-menu{right:auto;left:0;border-left:none;border-right:1px solid var(--line-strong);transform:translateX(-100%);}
   html[dir="rtl"] .mobile-menu.open{transform:translateX(0);}
 
@@ -740,6 +348,11 @@
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1;transform:none;transition:none;}
   }
+  .reveal-item{opacity:0;transform:translateY(18px) scale(.985);transition:opacity .65s cubic-bezier(.4,.1,.2,1),transform .65s cubic-bezier(.4,.1,.2,1);}
+  .reveal-item.in-view{opacity:1;transform:translateY(0) scale(1);}
+  .approach-card,.material-card,.dev-card,.skill-block,.contact-box{transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;background:linear-gradient(145deg,rgba(255,255,255,.018),transparent);}
+  .approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover{transform:translateY(-5px);border-color:var(--yellow);box-shadow:0 14px 30px rgba(0,0,0,.14);}
+  @media (prefers-reduced-motion: reduce){.reveal-item{opacity:1;transform:none;transition:none;}.approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover{transform:none;box-shadow:none;}}
   .grid-4.reveal.in-view .approach-card,
   .materials-grid.reveal.in-view .material-card{
     animation:cardIn 0.5s cubic-bezier(.4,.1,.2,1) backwards;
@@ -775,10 +388,10 @@
     border:1px solid var(--line-strong);background:var(--ink-2);
     display:flex;align-items:center;justify-content:center;flex-shrink:0;
   }
-  .about-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .about-photo img{width:100%;height:100%;object-fit:contain;display:block;background:#fff;transform:translateY(0);}
   @media (min-width:768px){
     .about-photo{overflow:hidden;}
-    .about-photo img{transform:scale(1.06);transform-origin:center;will-change:transform;}
+    .about-photo img{transform:translateY(0);transform-origin:center;will-change:transform;}
   }
   .about-photo .ph-fallback{
     font-family:var(--font-hand);color:var(--muted);font-size:1rem;text-align:center;padding:10px;
@@ -881,7 +494,14 @@
   .dev-card .proj-link{margin-top:12px;font-size:0.86rem;}
 
   /* ---------- skills / languages ---------- */
-  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:36px;}
+  .skills-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;}
+  .skill-block{border:1px solid var(--line-strong);border-radius:8px;padding:24px;position:relative;overflow:hidden;}
+  .skill-block::before{content:"";position:absolute;inset-inline-start:0;top:0;width:3px;height:100%;background:var(--yellow);opacity:.8;}
+  .skill-block.languages-block{border-color:rgba(217,128,152,.5);}
+  .skill-block.languages-block::before{background:var(--pink);}
+  .skill-block h3{font-family:var(--font-display);font-size:1.25rem;font-weight:500;margin-bottom:18px;color:var(--chalk);}
+  .skill-block .skill-group{margin-top:16px;}
+  .skill-block .skill-group:first-of-type{margin-top:0;}
   .skill-group h4{
     font-family:var(--font-hand);font-size:1.15rem;color:var(--yellow);
     margin-bottom:12px;transform:rotate(-1deg);display:inline-block;
@@ -976,7 +596,7 @@
   }
 
   @media (max-width:720px){
-    .skills-grid{grid-template-columns:1fr;gap:28px;}
+    .skills-grid{grid-template-columns:1fr;gap:20px;}
     .dev-grid{grid-template-columns:1fr;gap:18px;}
     .grid-4{grid-template-columns:1fr;}
     .materials-grid{grid-template-columns:1fr;}
@@ -1644,15 +1264,14 @@ const SITE_AR = {
   }
   const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(SITE.links.email);
   const contactEmailBtn = document.getElementById('contactEmailBtn');
-  contactEmailBtn.href = gmailComposeUrl;
-  contactEmailBtn.target = '_blank';
-  contactEmailBtn.rel = 'noopener noreferrer';
+  const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  contactEmailBtn.href = isMobileDevice ? 'mailto:' + SITE.links.email : gmailComposeUrl;
+  if(!isMobileDevice){ contactEmailBtn.target = '_blank'; contactEmailBtn.rel = 'noopener noreferrer'; }
+  contactEmailBtn.title = isMobileDevice ? 'Open your email app' : 'Open Gmail compose';
   document.getElementById('contactLinkedinBtn').href = SITE.links.linkedin;
   document.getElementById('contactCvBtn').href = SITE.links.cv;
-  contactEmailBtn.addEventListener('click', function(e){
-    if(navigator.clipboard && SITE.links.email){
-      navigator.clipboard.writeText(SITE.links.email).then(showToast);
-    }
+  contactEmailBtn.addEventListener('click', function(){
+    if(navigator.clipboard && SITE.links.email){ navigator.clipboard.writeText(SITE.links.email).then(showToast).catch(() => {}); }
   });
 
   // Everything below depends on which language is active.
@@ -1685,7 +1304,7 @@ const SITE_AR = {
 
     // What I do
     document.getElementById('whatIDoGrid').innerHTML = data.whatIDo.map(item => `
-      <div class="approach-card">
+      <div class="approach-card reveal-item">
         <h3>${item.title}</h3>
         <p>${item.desc}</p>
       </div>
@@ -1693,7 +1312,7 @@ const SITE_AR = {
 
     // How I teach
     document.getElementById('howITeachGrid').innerHTML = data.howITeach.map(item => `
-      <div class="approach-card">
+      <div class="approach-card reveal-item">
         <span class="num">${item.num}</span>
         <h3>${item.title}</h3>
         <p>${item.desc}</p>
@@ -1716,7 +1335,7 @@ const SITE_AR = {
 
     // Teaching materials
     document.getElementById('materialsGrid').innerHTML = data.materials.map(m => `
-      <a class="material-card" href="${m.href || SITE.links.portfolioFolder}" target="_blank" rel="noopener noreferrer">
+      <a class="material-card reveal-item" href="${m.href || SITE.links.portfolioFolder}" target="_blank" rel="noopener noreferrer">
         <span class="mname">${m.title}</span>
         <span class="arrow">${externalIcon}</span>
       </a>
@@ -1746,7 +1365,7 @@ const SITE_AR = {
 
     // Professional development
     document.getElementById('developmentGrid').innerHTML = data.development.map((d, i) => `
-      <div class="dev-card">
+      <div class="dev-card reveal-item">
         <h3>${d.title}</h3>
         <div class="place">${d.place}</div>
         ${SITE.development[i].href ? `<div>${projectLink({label: lang === 'ar' ? 'عرض الشهادة' : 'View certificate', href: SITE.development[i].href})}</div>` : ''}
@@ -1756,26 +1375,31 @@ const SITE_AR = {
     // Skills + languages
     const sl = SKILL_LABELS[lang];
     document.getElementById('skillsGrid').innerHTML = `
-      <div class="skill-group">
-        <h4>${sl.teaching}</h4>
-        <ul>${data.skills.teaching.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
+      <div class="skill-block skills-block reveal-item">
+        <h3>${lang === 'ar' ? 'المهارات' : 'Skills'}</h3>
+        <div class="skill-group">
+          <h4>${sl.teaching}</h4>
+          <ul>${data.skills.teaching.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
+        </div>
+        <div class="skill-group">
+          <h4>${sl.soft}</h4>
+          <ul>${data.skills.soft.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
+        </div>
+        <div class="skill-group">
+          <h4>${sl.hard}</h4>
+          <ul>${data.skills.hard.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
+        </div>
       </div>
-      <div class="skill-group">
-        <h4>${sl.soft}</h4>
-        <ul>${data.skills.soft.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
-      </div>
-      <div class="skill-group">
-        <h4>${sl.hard}</h4>
-        <ul>${data.skills.hard.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
-      </div>
-      <div class="skill-group">
-        <h4>${sl.languages}</h4>
-        <ul>${data.skills.languages.map(l => `<li><span>${l.name}</span>${l.level ? `<span class="lvl">${l.level}</span>` : ''}</li>`).join('')}</ul>
+      <div class="skill-block languages-block reveal-item">
+        <h3>${sl.languages}</h3>
+        <div class="skill-group">
+          <ul>${data.skills.languages.map(l => `<li><span>${l.name}</span>${l.level ? `<span class="lvl">${l.level}</span>` : ''}</li>`).join('')}</ul>
+        </div>
       </div>
     `;
 
     // Creative dimension
-    document.getElementById('creativeRow').innerHTML = data.creative.map(c => `<span class="creative-item">${c}</span>`).join('');
+    document.getElementById('creativeRow').innerHTML = data.creative.map(c => `<span class="creative-item reveal-item">${c}</span>`).join('');
     document.getElementById('creativeLead').textContent = data.creativeLead;
 
     // Contact
@@ -1868,9 +1492,11 @@ const SITE_AR = {
   const langToggle = document.getElementById('langToggle');
   const langToggleMobile = document.getElementById('langToggleMobile');
   function applyLanguage(lang){
+    lang = lang === 'ar' ? 'ar' : 'en';
     const html = document.documentElement;
     html.setAttribute('lang', lang);
     html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.body.classList.toggle('is-rtl', lang === 'ar');
     renderContent(lang === 'ar' ? SITE_AR : SITE, lang);
     applyStaticText(lang);
     const nextLabel = lang === 'ar' ? 'English' : 'العربية';
@@ -1889,7 +1515,7 @@ const SITE_AR = {
 
   let startLang = 'en';
   try{ startLang = localStorage.getItem('siteLang') || 'en'; }catch(e){}
-  applyLanguage(startLang);
+  applyLanguage(startLang === 'ar' ? 'ar' : 'en');
 
   /* ---------- interactivity ---------- */
 
@@ -1943,7 +1569,7 @@ const SITE_AR = {
   }
 
   // reveal on scroll (timeline dots, tense diagram, and every .reveal section/card)
-  const revealTargets = document.querySelectorAll('.entry, .tense-diagram, .reveal');
+  const revealTargets = document.querySelectorAll('.entry, .tense-diagram, .reveal, .reveal-item');
   if('IntersectionObserver' in window){
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1952,7 +1578,7 @@ const SITE_AR = {
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
     revealTargets.forEach(el => io.observe(el));
   } else {
     // no IntersectionObserver support: show everything immediately, no motion lost
@@ -1997,9 +1623,9 @@ const SITE_AR = {
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const center = rect.top + rect.height / 2;
     // small, clamped offset so the image never exposes an edge inside its frame
-    let offset = (center - vh / 2) * 0.05;
-    offset = Math.max(Math.min(offset, 8), -8);
-    aboutPhotoImg.style.transform = `scale(1.06) translateY(${offset}px)`;
+    let offset = (center - vh / 2) * 0.035;
+    offset = Math.max(Math.min(offset, 6), -6);
+    aboutPhotoImg.style.transform = `translateY(${offset}px)`;
   }
 
   let scrollTicking = false;
