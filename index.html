@@ -1443,6 +1443,20 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
   @media (prefers-reduced-motion:reduce){.creative-item:hover,.project-details .proj-link:hover{transform:none;}}
 
+
+  /* ---------- targeted mobile drawer refinement v2.4 ---------- */
+  @media (max-width:860px){
+    .mobile-menu>a[data-nav]{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid transparent;border-radius:10px;transition:background-color .2s ease,border-color .2s ease,color .2s ease;}
+    .mobile-menu>a[data-nav]:hover,.mobile-menu>a[data-nav]:focus-visible{background:rgba(255,255,255,.04);border-color:rgba(231,184,78,.28);}
+    .mobile-nav-index{flex:0 0 2ch;color:var(--muted);font-family:var(--font-body);font-size:.72rem;letter-spacing:.08em;}
+    html[dir="rtl"] .mobile-menu>a[data-nav]{flex-direction:row-reverse;justify-content:flex-start;}
+    .mobile-social-dock{display:flex;align-items:center;gap:10px;margin-top:4px;padding-top:6px;}
+    .mobile-social-dock a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:9999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:var(--chalk-dim);text-decoration:none;font-family:var(--font-body);font-size:.88rem;font-weight:600;transition:color .2s ease,border-color .2s ease,background-color .2s ease,transform .2s ease;}
+    .mobile-social-dock a:hover,.mobile-social-dock a:focus-visible{color:var(--yellow);border-color:rgba(231,184,78,.55);background:rgba(231,184,78,.08);transform:translateY(-2px);}
+    .creative-item[href] .creative-external{font-size:.95rem;color:var(--yellow);line-height:1;}
+  }
+  @media (prefers-reduced-motion:reduce){.mobile-social-dock a:hover{transform:none;}}
+
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -1503,17 +1517,22 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 <div class="menu-backdrop" id="menuBackdrop"></div>
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
   <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close menu"><span class="close-icon" aria-hidden="true">×</span><span id="mobileMenuCloseLabel">Close menu</span></button>
-  <a href="#about" data-nav="about">About</a>
-  <a href="#teaching" data-nav="teaching">Teaching</a>
-  <a href="#work" data-nav="work">Work</a>
-  <a href="#experience" data-nav="experience">Experience</a>
-  <a href="#credentials" data-nav="credentials">Credentials</a>
-  <a href="#contact" data-nav="contact">Contact</a>
+  <a href="#about" data-nav="about"><span class="mobile-nav-index" aria-hidden="true">01</span><span>About</span></a>
+  <a href="#teaching" data-nav="teaching"><span class="mobile-nav-index" aria-hidden="true">02</span><span>Teaching</span></a>
+  <a href="#work" data-nav="work"><span class="mobile-nav-index" aria-hidden="true">03</span><span>Work</span></a>
+  <a href="#experience" data-nav="experience"><span class="mobile-nav-index" aria-hidden="true">04</span><span>Experience</span></a>
+  <a href="#credentials" data-nav="credentials"><span class="mobile-nav-index" aria-hidden="true">05</span><span>Credentials</span></a>
+  <a href="#contact" data-nav="contact"><span class="mobile-nav-index" aria-hidden="true">06</span><span>Contact</span></a>
   <div class="mm-divider"></div>
   <div class="mobile-menu-utility">
     <a href="#" id="portfolioLinkMobile" target="_blank" rel="noopener noreferrer">Portfolio</a>
     <a href="#" id="cvLinkMobile" target="_blank" rel="noopener noreferrer">Download CV</a>
     <a href="#" id="linkedinLinkMobile" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <div class="mobile-social-dock" aria-label="Social links">
+      <a href="#" id="mobileLinkedinDock" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
+      <a href="https://www.instagram.com/shahd_mohamed__2004" id="mobileInstagramDock" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><span aria-hidden="true">◎</span></a>
+      <a href="#" id="mobileEmailDock" aria-label="Email"><span aria-hidden="true">@</span></a>
+    </div>
     <div class="mm-divider"></div>
     <button class="lang-toggle lang-toggle-mobile" id="langToggleMobile" aria-label="Switch to Arabic">العربية</button>
     <button class="theme-toggle theme-toggle-mobile" id="themeToggleMobile" aria-label="Switch to light mode" aria-pressed="false">
@@ -2094,6 +2113,8 @@ const SITE_AR = {
   document.getElementById('cvLinkMobile').href = SITE.links.cv;
   document.getElementById('linkedinLinkDesktop').href = SITE.links.linkedin;
   document.getElementById('linkedinLinkMobile').href = SITE.links.linkedin;
+  document.getElementById('mobileLinkedinDock').href = SITE.links.linkedin;
+  document.getElementById('mobileEmailDock').href = 'mailto:' + encodeURIComponent(SITE.links.email) + '?subject=' + encodeURIComponent('Portfolio enquiry');
   document.getElementById('portfolioLinkDesktop').href = SITE.links.portfolioFolder;
   document.getElementById('portfolioLinkMobile').href = SITE.links.portfolioFolder;
   document.getElementById('materialsPortfolioLink').href = SITE.links.portfolioFolder;
@@ -2243,7 +2264,12 @@ const SITE_AR = {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5.5h5.2A2.8 2.8 0 0 1 13 8.3v10.2a2.8 2.8 0 0 0-2.8-2.8H5v-10.2Z"/><path d="M19 5.5h-5.2A2.8 2.8 0 0 0 11 8.3v10.2a2.8 2.8 0 0 1 2.8-2.8H19v-10.2Z"/></svg>',
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m7 16 3.2-4 2.2 2.6 1.6-1.8L17 16"/><circle cx="9" cy="8.5" r="1.2"/></svg>'
     ];
-    document.getElementById('creativeRow').innerHTML = data.creative.map((c, i) => `<span class="creative-item reveal-item"><span class="creative-icon">${creativeIcons[i] || creativeIcons[0]}</span><span>${c}</span></span>`).join('');
+    document.getElementById('creativeRow').innerHTML = data.creative.map((c, i) => {
+      const item = `<span class="creative-icon">${creativeIcons[i] || creativeIcons[0]}</span><span>${c}</span>`;
+      return i === 0
+        ? `<a class="creative-item reveal-item" href="https://www.instagram.com/shahd_mohamed__2004" target="_blank" rel="noopener noreferrer" aria-label="${lang === 'ar' ? 'التصوير الفوتوغرافي على Instagram' : 'Photography on Instagram'}">${item}<span class="creative-external" aria-hidden="true">↗</span></a>`
+        : `<span class="creative-item reveal-item">${item}</span>`;
+    }).join('');
     document.getElementById('creativeLead').textContent = data.creativeLead;
     document.getElementById('creativeLead').classList.add('creative-lead');
 
@@ -2302,7 +2328,10 @@ const SITE_AR = {
     const i = lang === 'ar' ? 1 : 0;
     document.querySelectorAll('[data-nav]').forEach(a => {
       const pair = NAV_LABELS[a.getAttribute('data-nav')];
-      if(pair) a.textContent = pair[i];
+      if(!pair) return;
+      const label = a.querySelector(':scope > span:not(.mobile-nav-index)');
+      if(label) label.textContent = pair[i];
+      else a.textContent = pair[i];
     });
     document.querySelectorAll('.side-rail a[data-rail]').forEach(a => {
       const pair = RAIL_LABELS[a.getAttribute('data-rail')];
