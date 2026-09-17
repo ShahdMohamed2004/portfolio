@@ -869,6 +869,50 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html{scroll-behavior:auto;}
     .skill-block .skill-group{opacity:1;transform:none;transition:none;}
   }
+  /* ---------- light mode: editorial warm paper ---------- */
+  html[data-theme="light"]{
+    --paper:#FAF8F5;
+    --paper-deep:#F4EFEA;
+    --card-paper:#F3ECE4;
+    --card-border:rgba(91,20,37,.12);
+    --card-shadow:0 4px 20px -2px rgba(91,20,37,.05);
+  }
+  html[data-theme="light"] body::before{
+    background:linear-gradient(180deg,#FAF8F5 0%,#F4EFEA 100%);
+  }
+  html[data-theme="light"] body::after{
+    background:radial-gradient(420px circle at var(--cursor-x,50%) var(--cursor-y,20%),rgba(91,20,37,.055),transparent 72%);
+  }
+  html[data-theme="light"] .credential-strip .cred,
+  html[data-theme="light"] .approach-card,
+  html[data-theme="light"] .material-card,
+  html[data-theme="light"] .dev-card,
+  html[data-theme="light"] .skill-block,
+  html[data-theme="light"] .contact-box,
+  html[data-theme="light"] .accordion-card,
+  html[data-theme="light"] .project-details{
+    background:linear-gradient(135deg,rgba(255,255,255,.95) 0%,#F3ECE4 100%);
+    border-color:var(--card-border);
+    box-shadow:var(--card-shadow);
+  }
+  html[data-theme="light"] .credential-strip .cred{
+    border-left-color:var(--yellow);
+  }
+  html[dir="rtl"][data-theme="light"] .credential-strip .cred{
+    border-left-color:var(--card-border);
+    border-right-color:var(--yellow);
+  }
+  html[data-theme="light"] .approach-card:hover,
+  html[data-theme="light"] .material-card:hover,
+  html[data-theme="light"] .dev-card:hover,
+  html[data-theme="light"] .skill-block:hover,
+  html[data-theme="light"] .contact-box:hover{
+    border-color:rgba(91,20,37,.28);
+    box-shadow:0 10px 26px -4px rgba(91,20,37,.11);
+  }
+  html[data-theme="light"] section:nth-of-type(even):not(#home){
+    background:linear-gradient(180deg,rgba(91,20,37,.018),transparent 72%);
+  }
   /* ---------- compact mobile composition ----------
      Keep every hero element inside the viewport with predictable rhythm.
      The timeline keeps its visual reading order even when page direction is RTL. */
