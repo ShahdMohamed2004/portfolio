@@ -120,12 +120,14 @@
   :focus-visible{outline:2px solid var(--yellow);outline-offset:3px;}
 
   .skip-link{
-    position:absolute;left:-9999px;top:0;
+    position:absolute;left:0;top:0;
+    transform:translate(-120%,-120%);
     background:var(--yellow);color:var(--ink);
     padding:12px 20px;font-weight:600;font-size:0.9rem;
     z-index:300;border-radius:0 0 4px 0;
+    transition:transform .18s ease;
   }
-  .skip-link:focus{left:0;}
+  .skip-link:focus{transform:translate(0,0);}
 
   .scroll-progress{
     position:fixed;top:0;left:0;height:3px;width:0%;
