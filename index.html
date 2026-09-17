@@ -2360,10 +2360,13 @@ const SITE_AR = {
   let scrollTicking = false;
   function onScrollFrame(){
     updateHeaderAndProgress();
-    // Mobile keeps native scrolling: avoid layout reads for section scenes,
-    // timeline progress, parallax, and active-link calculations on every tick.
+    // Mobile keeps native scrolling. Retain only the small visual timeline
+    // updates that create the scroll-linked golden light and active-card glow;
+    // skip the more expensive navigation, section-scene, and parallax reads.
     if(mobileMQ.matches){
       updateBackToTop();
+      updateTimeline();
+      updateProjectTimelines();
       scrollTicking = false;
       return;
     }
