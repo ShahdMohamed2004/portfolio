@@ -871,6 +871,26 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html{scroll-behavior:auto;}
     .skill-block .skill-group{opacity:1;transform:none;transition:none;}
   }
+  /* ---------- robust bilingual card geometry ---------- */
+  html[dir="rtl"]{direction:rtl;}
+  html[dir="rtl"] body{direction:rtl;text-align:right;}
+  html[dir="rtl"] main,html[dir="rtl"] section,html[dir="rtl"] .section-head,html[dir="rtl"] .section-lead,html[dir="rtl"] .about-text,html[dir="rtl"] .entry,html[dir="rtl"] .project-details-body,html[dir="rtl"] .dev-card,html[dir="rtl"] .skill-block,html[dir="rtl"] .contact-box{text-align:right;}
+  html[dir="rtl"] .project-details .entry-preview,html[dir="rtl"] .project-details-body,html[dir="rtl"] .project-details-body p,html[dir="rtl"] .material-card,html[dir="rtl"] .dev-card,html[dir="rtl"] .skill-block,html[dir="rtl"] .contact-box{text-align:right;}
+  @media (max-width:720px){
+    .project-details,.material-card,.dev-card,.skill-block,.contact-box{width:100%;max-width:100%;}
+    .project-details>summary.project-summary{width:100%;padding-inline:14px 44px;}
+    html[dir="rtl"] .project-details>summary.project-summary{padding-inline:44px 14px;}
+    .project-details-body{width:100%;padding:0 14px 16px;}
+    .project-details-body p{width:100%;max-width:none;margin:0 0 14px;line-height:1.75;text-align:start;}
+    html[dir="rtl"] .project-details-body p{text-align:right;}
+    .project-details .proj-links{width:100%;align-items:stretch;}
+    .project-details .proj-link{max-width:100%;min-width:0;overflow-wrap:anywhere;}
+    .material-card{min-height:56px;padding-inline:14px;}
+    .material-card .mname{min-width:0;overflow-wrap:anywhere;}
+    .contact-links{width:100%;}
+    html[dir="rtl"] .contact-links{justify-content:flex-start;}
+    section:not(#home)::before{inset:0;border-radius:0;}
+  }
   /* ---------- full-width mobile section rhythm ----------
      Keep every section and text block inside the same readable frame. */
   @media (max-width:720px){
