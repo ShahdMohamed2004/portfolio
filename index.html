@@ -603,15 +603,23 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .meta-label{font-family:var(--font-hand);color:var(--yellow);font-size:0.95rem;margin-right:6px;}
 
   .proj-links{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:16px;}
-  .project-details{margin-top:18px;border:1px solid transparent;border-top-color:var(--line);border-radius:6px;transition:border-color .25s ease,background .25s ease,box-shadow .25s ease;}
-  .project-details summary{list-style:none;cursor:pointer;position:relative;padding:14px 42px 14px 0;color:var(--chalk);font-size:.94rem;font-weight:500;transition:color .2s ease;}
+  .project-details{margin-top:18px;border:1px solid transparent;border-top-color:var(--line);border-radius:6px;position:relative;overflow:hidden;isolation:isolate;transition:transform .32s cubic-bezier(.2,.7,.2,1),border-color .25s ease,background .25s ease,box-shadow .32s ease;}
+  .project-details::before{content:"";position:absolute;inset:0;z-index:0;opacity:0;background:radial-gradient(220px circle at var(--card-x,50%) var(--card-y,50%),rgba(231,184,78,.13),transparent 72%);transition:opacity .3s ease;pointer-events:none;}
+  @media (hover:hover) and (pointer:fine){
+    .project-details:hover{transform:translateY(-4px);border-color:rgba(231,184,78,.52);background:rgba(231,184,78,.035);box-shadow:0 16px 30px rgba(0,0,0,.17),0 0 0 1px rgba(231,184,78,.05);}
+    .project-details:hover::before{opacity:1;}
+    .project-details:hover .entry-preview h3{color:var(--yellow);transform:translateX(4px);}
+    .project-details:hover .badge{border-color:rgba(231,184,78,.44);color:var(--chalk);transform:translateY(-1px);}
+    .project-details .entry-preview h3,.project-details .badge{transition:transform .28s ease,color .25s ease,border-color .25s ease;}
+  }
+  .project-details summary{list-style:none;cursor:pointer;position:relative;z-index:1;padding:14px 42px 14px 0;color:var(--chalk);font-size:.94rem;font-weight:500;transition:color .2s ease;}
   .project-details > summary.project-summary{padding:18px 42px 18px 0;}
   .project-details summary::-webkit-details-marker{display:none;}
   .project-details summary::after{content:'+';position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:1.3rem;color:var(--yellow);}
   .project-details[open] summary::after{content:'−';}
   .project-details[open]{border-color:var(--line-strong);background:rgba(231,184,78,.035);box-shadow:0 10px 24px rgba(0,0,0,.08);}
   .project-details summary:hover,.project-details summary:focus-visible{color:var(--text-accent);}
-  .project-details-body{padding:0 14px 14px;color:var(--chalk-dim);animation:detailsReveal .28s ease both;}
+  .project-details-body{position:relative;z-index:1;padding:0 14px 14px;color:var(--chalk-dim);animation:detailsReveal .28s ease both;}
   @keyframes detailsReveal{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
   .project-details-body p{max-width:56ch;}
   .project-details .proj-links{display:flex;flex-direction:row;flex-wrap:wrap;gap:10px;margin-top:18px;}
@@ -621,7 +629,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[dir="rtl"] .project-details summary{padding-right:0;padding-left:42px;}
   html[dir="rtl"] .project-details > summary.project-summary{padding-right:0;padding-left:42px;}
   html[dir="rtl"] .project-details summary::after{right:auto;left:12px;}
-  @media (prefers-reduced-motion:reduce){.project-details-body{animation:none;}.project-details .proj-link{transition:none;}}
+  @media (prefers-reduced-motion:reduce){.project-details,.project-details::before,.project-details .entry-preview h3,.project-details .badge{transition:none;}.project-details-body{animation:none;}.project-details .proj-link{transition:none;}}
   .proj-link{
     display:inline-flex;align-items:center;gap:6px;font-size:0.92rem;color:var(--chalk);
     text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:4px;
@@ -1878,6 +1886,26 @@ const SITE_AR = {
       });
     }, {passive:true});
     document.addEventListener('pointerleave', () => document.body.classList.remove('cursor-glow'));
+  }
+
+  const workSpine = document.getElementById('workSpine');
+  if(workSpine && fineMQ.matches && !reducedMQ.matches){
+    let cardGlowFrame = 0;
+    let pendingCard = null;
+    let pendingEvent = null;
+    workSpine.addEventListener('pointermove', (event) => {
+      pendingCard = event.target.closest('.project-details');
+      pendingEvent = event;
+      if(cardGlowFrame || !pendingCard) return;
+      cardGlowFrame = requestAnimationFrame(() => {
+        if(pendingCard && pendingEvent){
+          const rect = pendingCard.getBoundingClientRect();
+          pendingCard.style.setProperty('--card-x', `${pendingEvent.clientX - rect.left}px`);
+          pendingCard.style.setProperty('--card-y', `${pendingEvent.clientY - rect.top}px`);
+        }
+        cardGlowFrame = 0;
+      });
+    }, {passive:true});
   }
 
   // reveal on scroll (timeline dots, section heads, and every card)
