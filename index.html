@@ -869,6 +869,19 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html{scroll-behavior:auto;}
     .skill-block .skill-group{opacity:1;transform:none;transition:none;}
   }
+  /* ---------- viewport safety across LTR and RTL ----------
+     Decorative layers may extend visually, but content must never be cropped. */
+  .wrap,main.wrap,section,header,nav,.hero,.about-grid,.credential-strip,.cta-row,.grid-4,.materials-grid,.dev-grid,.skills-grid,.contact-box,.entry,.entry details,.project-details,.project-details-body{min-width:0;}
+  img,svg,video,canvas{max-width:100%;}
+  h1,h2,h3,p,a,button,summary{overflow-wrap:anywhere;}
+  @media (max-width:720px){
+    section:not(#home)::before{inset:18px 0;}
+    .hero::before{inset:-40px 0 -10% 0;}
+    .hero::after{right:0;}
+    .credential-strip,.cta-row,.grid-4,.materials-grid,.dev-grid,.skills-grid{width:100%;}
+    .entry details,.entry summary,.timeline-detail>summary{min-width:0;}
+    .timeline-detail>summary h3,.entry-preview h3{max-width:calc(100% - 2px);}
+  }
   /* ---------- restrained card micro-interactions ----------
      Short, low-amplitude feedback keeps the editorial feel calm and tactile. */
   .approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details{
