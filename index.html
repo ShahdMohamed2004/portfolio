@@ -189,6 +189,7 @@ html[dir="rtl"] .about-grid, html[dir="rtl"] .contact-box, html[dir="rtl"] .sect
 html[dir="rtl"] .credential-strip .cred{border-left:0;border-right:2px solid var(--yellow);padding-left:0;padding-right:14px;}
 html[dir="rtl"] .spine{padding-left:0;padding-right:34px;}
 html[dir="rtl"] .spine::before{left:auto;right:4px;}
+html[dir="rtl"] .spine::after{left:auto;right:4px;}
 html[dir="rtl"] .entry::before{left:auto;right:-34px;}
 html[dir="rtl"] .entry:hover{transform:translateX(-3px);}
 html[dir="rtl"] .contact-links{justify-content:flex-start;}
@@ -696,10 +697,31 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[data-theme="light"] .entry .gpa,html[data-theme="light"] .meta-label,html[data-theme="light"] .skill-group li .lvl{color:var(--text-accent);}
 
   /* ---------- creative dimension ---------- */
-  .creative-row{display:flex;flex-wrap:wrap;gap:34px;align-items:baseline;margin-bottom:26px;}
-  .creative-item{font-family:var(--font-hand);font-size:1.35rem;color:var(--chalk-dim);transform:rotate(-1deg);}
-  .creative-item:nth-child(2){transform:rotate(0.8deg);color:var(--pink);}
-  .creative-item:nth-child(3){transform:rotate(-0.6deg);color:var(--yellow);}
+  .creative-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px;}
+  .creative-item{
+    display:inline-flex;align-items:center;gap:8px;min-height:42px;
+    padding:9px 14px;border:1px solid var(--line-strong);border-radius:999px;
+    color:var(--chalk-dim);font-family:var(--font-body);font-size:.9rem;
+    text-decoration:none;transition:color .25s ease,border-color .25s ease,
+      background .25s ease,transform .25s ease;
+  }
+  .creative-item:nth-child(2){color:var(--pink);}
+  .creative-item:nth-child(3){color:var(--yellow);}
+  .creative-item:hover,.creative-item:focus-visible{
+    color:var(--chalk);border-color:var(--yellow);
+    background:rgba(231,184,78,.07);transform:translateY(-2px);
+  }
+  .creative-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 18px;}
+  .creative-icon svg{width:18px;height:18px;display:block;}
+  .creative-lead{
+    max-width:58ch;padding:14px 16px;border:1px solid var(--line);
+    border-radius:10px;background:rgba(255,255,255,.018);
+  }
+  html[dir="rtl"] .creative-row{direction:rtl;}
+  html[dir="rtl"] .creative-item{direction:rtl;text-align:right;}
+  @media (prefers-reduced-motion:reduce){
+    .creative-item{transition:none;}
+  }
 
   /* ---------- contact ---------- */
   .contact-box{border:1px solid var(--line-strong);border-radius:4px;padding:44px;}
@@ -1157,6 +1179,31 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     }
     html[dir="rtl"] p,html[dir="rtl"] .project-details-body p,html[dir="rtl"] .entry p,
     html[dir="rtl"] .about-text p,html[dir="rtl"] .contact-box p{direction:rtl;text-align:justify !important;}
+  }
+
+  /* Final RTL mirror, placed after the base timeline declarations so the
+     existing LTR geometry is mirrored without inventing new offsets. */
+  html[dir="rtl"] .spine{
+    padding-inline-start:0;
+    padding-inline-end:34px;
+  }
+  html[dir="rtl"] .spine::before,
+  html[dir="rtl"] .spine::after{
+    inset-inline-start:auto;
+    inset-inline-end:4px;
+  }
+  html[dir="rtl"] .spine>.entry::before{
+    inset-inline-start:auto;
+    inset-inline-end:-34px;
+  }
+  @media (max-width:768px){
+    html[dir="rtl"] .spine{
+      padding-inline-start:0;
+      padding-inline-end:28px;
+    }
+    html[dir="rtl"] .spine::before{inset-inline-start:auto;inset-inline-end:5px;}
+    html[dir="rtl"] .spine::after{inset-inline-start:auto;inset-inline-end:4px;}
+    html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-28px;}
   }
 
   /* Final mobile control geometry: the badge/content and action affordance
@@ -1984,8 +2031,14 @@ const SITE_AR = {
     `;
 
     // Creative dimension
-    document.getElementById('creativeRow').innerHTML = data.creative.map(c => `<span class="creative-item reveal-item">${c}</span>`).join('');
+    const creativeIcons = [
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7.5a2.5 2.5 0 0 1 2.5-2.5h11A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5v-9Z"/><circle cx="9" cy="10" r="2"/><path d="m4 16 4.5-4 3.2 2.8 2.3-2 6 5.2"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5.5h5.2A2.8 2.8 0 0 1 13 8.3v10.2a2.8 2.8 0 0 0-2.8-2.8H5v-10.2Z"/><path d="M19 5.5h-5.2A2.8 2.8 0 0 0 11 8.3v10.2a2.8 2.8 0 0 1 2.8-2.8H19v-10.2Z"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m7 16 3.2-4 2.2 2.6 1.6-1.8L17 16"/><circle cx="9" cy="8.5" r="1.2"/></svg>'
+    ];
+    document.getElementById('creativeRow').innerHTML = data.creative.map((c, i) => `<span class="creative-item reveal-item"><span class="creative-icon">${creativeIcons[i] || creativeIcons[0]}</span><span>${c}</span></span>`).join('');
     document.getElementById('creativeLead').textContent = data.creativeLead;
+    document.getElementById('creativeLead').classList.add('creative-lead');
 
     // Contact
     document.getElementById('contactIntro').textContent = data.contact.intro;
