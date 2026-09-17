@@ -1238,6 +1238,38 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     }
   }
 
+  /* Project cards: recover the width lost to nested mobile gutters without
+     changing the desktop card geometry or reducing readable text sizes. */
+  @media (max-width:640px){
+    .project-details{scroll-margin-top:96px;}
+    .project-details>summary.project-summary{
+      padding-block:20px 14px !important;
+      padding-inline:10px !important;
+      line-height:1.3;
+    }
+    .project-details>summary.project-summary .entry-preview{
+      min-width:0;
+      padding-inline-end:0;
+    }
+    .project-details>summary.project-summary .entry-preview h3{
+      line-height:1.3;
+    }
+    .project-details-body{
+      padding:0 10px 12px !important;
+    }
+    .project-details-body .meta-row{margin-top:8px;}
+    .project-details .proj-links{
+      gap:8px;
+      margin-top:12px;
+      align-items:stretch;
+    }
+    .project-details .proj-link{
+      min-height:42px;
+      padding:8px 10px;
+      line-height:1.35;
+    }
+  }
+
 </style>
 </head>
 <body id="artifacts-component-root-html">
