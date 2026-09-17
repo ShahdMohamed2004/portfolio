@@ -869,6 +869,27 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html{scroll-behavior:auto;}
     .skill-block .skill-group{opacity:1;transform:none;transition:none;}
   }
+  /* ---------- restrained card micro-interactions ----------
+     Short, low-amplitude feedback keeps the editorial feel calm and tactile. */
+  .approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details{
+    transition:transform 220ms cubic-bezier(.2,.7,.2,1),border-color 220ms ease,box-shadow 220ms ease,background 220ms ease;
+  }
+  .approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover,.credential-strip .cred:hover,.project-details:hover{
+    transform:translateY(-3px);
+  }
+  .approach-card:active,.material-card:active,.dev-card:active,.skill-block:active,.contact-box:active,.credential-strip .cred:active,.project-details:active{
+    transform:translateY(-1px);
+  }
+  .approach-card:focus-within,.material-card:focus-within,.dev-card:focus-within,.skill-block:focus-within,.contact-box:focus-within,.credential-strip .cred:focus-within,.project-details:focus-within{
+    border-color:var(--yellow);
+    box-shadow:0 8px 24px -6px rgba(91,20,37,.14);
+  }
+  @media (hover:none){
+    .approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover,.credential-strip .cred:hover,.project-details:hover{transform:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details{transition:none;}
+  }
   /* ---------- light mode: editorial warm paper ---------- */
   html[data-theme="light"]{
     --paper:#FAF8F5;
