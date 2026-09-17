@@ -46,6 +46,7 @@
     --chalk-dim:#B7C2B9;
     --muted:#8FA098;
     --yellow:#E7B84E;
+    --accent-deep:#5B1425;
     --text-accent:#E7B84E;
     --stat-color:#E7B84E;
     --pink:#D98098;
@@ -56,7 +57,7 @@
     --font-hand:'Caveat', cursive;
     --font-body:'Space Grotesk', sans-serif;
 
-    --max:760px;
+    --max:1280px;
   }
 
   html[data-theme="light"]{
@@ -67,8 +68,10 @@
     --muted:#6B786F;
     --line:rgba(21,40,37,0.14);
     --line-strong:rgba(21,40,37,0.28);
-    --text-accent:#92400E;
-    --stat-color:#7A5B20;
+    --yellow:#5B1425;
+    --accent-deep:#5B1425;
+    --text-accent:#4A0E17;
+    --stat-color:#4A0E17;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -392,7 +395,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover{transform:translateY(-5px);border-color:var(--yellow);box-shadow:0 14px 30px rgba(0,0,0,.14);}
   @media (prefers-reduced-motion: reduce){.reveal-item{opacity:1;transform:none;transition:none;}.approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover{transform:none;box-shadow:none;}}
   #main-content{view-transition-name:portfolio-content;transition:opacity 220ms cubic-bezier(.2,.7,.2,1),transform 220ms cubic-bezier(.2,.7,.2,1);}
-  #main-content.language-switching{opacity:.12;transform:translateY(4px);filter:blur(1px);transition-duration:90ms;}
+  #main-content.language-switching{opacity:0;transform:none;filter:none;transition:opacity 180ms ease-in-out;}
   @supports (view-transition-name: none){::view-transition-old(portfolio-content),::view-transition-new(portfolio-content){animation-duration:180ms;animation-timing-function:cubic-bezier(.2,.7,.2,1);}}
   @media (prefers-reduced-motion: reduce){#main-content,#main-content.language-switching{opacity:1;filter:none;transform:none;transition:none;}}
   .grid-4.reveal.in-view .approach-card,
@@ -830,12 +833,12 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   /* Final mobile/RTL stability pass. Keep the page inside the viewport and
      remove the desktop timeline spine on narrow screens. */
   html, body{width:100%;max-width:100%;overflow-x:hidden;}
-  main.wrap{width:100%;max-width:760px;}
+  main.wrap{width:100%;max-width:var(--max);}
   header, header nav{width:100%;max-width:none;}
   html[dir="rtl"] header nav, html[dir="rtl"] .nav-utility{direction:rtl;}
   html[dir="rtl"] .hero, html[dir="rtl"] section{direction:rtl;}
   @media (max-width:720px){
-    main.wrap{padding-left:18px;padding-right:18px;}
+    main.wrap{padding-left:24px;padding-right:24px;}
     /* Keep the vertical timeline visible on phones, with compact dots and a
        comfortable reading gutter in both LTR and RTL layouts. */
     .spine{padding-left:26px;padding-right:0;}
@@ -860,7 +863,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   @media (max-width:420px){
     header{padding-top:12px;padding-bottom:12px;}
     header nav{padding-left:12px;padding-right:12px;}
-    main.wrap{padding-left:16px;padding-right:16px;}
+    main.wrap{padding-left:20px;padding-right:20px;}
   }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
@@ -1327,10 +1330,10 @@ const SITE = {
 const SITE_AR = {
   name: "شهد محمد",
   fullName: "شهد محمد صديق",
-  title: "مدرّسة لغة إنجليزية | أخصائية TEFL",
+  title: "مدرّسة لغة إنجليزية | متخصصة في تدريس اللغة الإنجليزية (TEFL)",
   heroNote: "منفتحة على فرص نوعية في التدريس وتكنولوجيا التعليم",
   heroHeadline: "نُعلِّم لنُبصر، ونتعلَّم لنكون",
-  heroLead: "أنا مُدرّسة لغة إنجليزية وأخصائية TEFL أركّز على جعل المفاهيم اللغوية المعقّدة أوضح وأكثر بصرية وأسهل في التطبيق.",
+  heroLead: "أنا مُدرّسة لغة إنجليزية ومتخصصة في تدريس اللغة الإنجليزية (TEFL)، أركّز على جعل المفاهيم اللغوية المعقّدة أوضح وأكثر بصرية وأسهل في التطبيق.",
 
   links: SITE.links,
 
@@ -1341,7 +1344,7 @@ const SITE_AR = {
 
   about: {
     photo: SITE.about.photo,
-    bio: "أنا مُدرّسة لغة إنجليزية وأخصائية TEFL ومصممة تعليمية حاصلة على درجة مزدوجة من جامعة MSA وجامعة بيدفوردشير، وكان تخصصي الجامعي هو TEFL. أجمع بين التدريس داخل الفصل والتصميم الرقمي لتطوير أطر بصرية للقواعد، ولوحات قصصية تفاعلية، وأدوات تقييم رقمية. يركّز عملي على تبسيط المفاهيم اللغوية المعقّدة، ومواءمة التقييم مع أهداف التعلّم، وتصميم خبرات تعليمية واضحة وجذابة تنطلق من الممارسة الصفية."
+    bio: "أنا مُدرّسة لغة إنجليزية ومتخصصة في تدريس اللغة الإنجليزية (TEFL) ومصممة تعليمية حاصلة على درجة مزدوجة من جامعة MSA وجامعة بيدفوردشير، وكان تخصصي الجامعي هو TEFL. أجمع بين التدريس داخل الفصل والتصميم الرقمي لتطوير أطر بصرية للقواعد، ولوحات قصصية تفاعلية، وأدوات تقييم رقمية. يركّز عملي على تبسيط المفاهيم اللغوية المعقّدة، ومواءمة التقييم مع أهداف التعلّم، وتصميم خبرات تعليمية واضحة وجذابة تنطلق من الممارسة الصفية."
   },
 
   whatIDo: [
@@ -1450,11 +1453,11 @@ const SITE_AR = {
   education: [
     { flag: "درجة علمية", title: "بكالوريوس اللغة الإنجليزية والترجمة", place: "جامعة MSA · معدل تراكمي 3.57 / 4.00", links: [] },
     { flag: "درجة علمية", title: "درجة مزدوجة", place: "جامعة بيدفوردشير · معدل تراكمي 3.73 / 4.00", links: [] },
-    { flag: "تخصص جامعي", title: "تخصص TEFL", place: "تدريس اللغة الإنجليزية كلغة أجنبية", links: [] }
+    { flag: "تخصص جامعي", title: "تخصص تدريس اللغة الإنجليزية (TEFL)", place: "تدريس اللغة الإنجليزية كلغة أجنبية", links: [] }
   ],
 
   development: [
-    { title: "تخصص TEFL", place: "تدريس اللغة الإنجليزية كلغة أجنبية" },
+    { title: "تخصص تدريس اللغة الإنجليزية (TEFL)", place: "تدريس اللغة الإنجليزية كلغة أجنبية" },
     { title: "الذكاء الاصطناعي وتكنولوجيا التعليم", place: "تدريب تطبيقي على أدوات تكنولوجيا التعليم" },
     { title: "مهارات العرض والتقديم", place: "تدريب أكاديمي ومهني على العرض والتقديم" }
   ],
@@ -1492,7 +1495,7 @@ const SITE_AR = {
     intro: "مهتم بالتعرف على ممارستي التدريسية أو مشاريعي التعليمية أو باستكشاف فرص تعاون؟ لا تتردد في التواصل."
   },
 
-  footer: "شهد محمد صديق | مدرّسة لغة إنجليزية وأخصائية TEFL"
+  footer: "شهد محمد صديق | مدرّسة لغة إنجليزية ومتخصصة في تدريس اللغة الإنجليزية (TEFL)"
 };
 
 /* =====================================================================
