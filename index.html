@@ -650,8 +650,13 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .skill-block h3{font-family:var(--font-display);font-size:1.25rem;font-weight:500;margin-bottom:18px;color:var(--chalk);}
   .skill-block .skill-group{margin-top:16px;}
   .skill-block .skill-group:first-of-type{margin-top:0;}
-  /* Content cards are rendered by JavaScript after the initial reveal observer is created. */
-  .materials-grid .reveal-item,.skills-grid .reveal-item{opacity:1;transform:none;}
+  /* Content cards are rendered by JavaScript and re-bound to the reveal observer after render. */
+  .skills-grid .skill-block:nth-child(2){--reveal-delay:90ms;}
+  .skill-block .skill-group{opacity:0;transform:translateY(12px);will-change:transform,opacity;transition:opacity .5s ease,transform .5s ease;}
+  .skill-block.in-view .skill-group{opacity:1;transform:translateY(0);}
+  .skill-block.in-view .skill-group:nth-of-type(2){transition-delay:80ms;}
+  .skill-block.in-view .skill-group:nth-of-type(3){transition-delay:160ms;}
+  .skill-block.in-view .skill-group:nth-of-type(4){transition-delay:240ms;}
   .skill-group h4{
     font-family:var(--font-hand);font-size:1.15rem;color:var(--text-accent);
     margin-bottom:12px;transform:rotate(-1deg);display:inline-block;
@@ -781,7 +786,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
   @media (max-width:720px){
     .skills-grid{grid-template-columns:1fr;gap:20px;max-width:none;}
-    #howITeachGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+    #howITeachGrid{grid-template-columns:1fr;gap:14px;}
+    #howITeachGrid .accordion-card{min-height:0;}
     .entry-preview{gap:7px;}
     .entry-preview h3{font-size:1.2rem;}
     .timeline-detail > summary{gap:7px;}
@@ -839,6 +845,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
+    .skill-block .skill-group{opacity:1;transform:none;transition:none;}
   }
 </style>
 </head>
