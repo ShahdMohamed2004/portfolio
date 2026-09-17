@@ -109,6 +109,8 @@
     pointer-events:none;
     background:radial-gradient(circle at 50% 0%, #10261f 0%, #0d1e18 42%, #081410 100%);
   }
+  body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;background:radial-gradient(420px circle at var(--cursor-x,50%) var(--cursor-y,20%),rgba(231,184,78,.09),transparent 72%);transition:opacity .45s ease;}
+  body.cursor-glow::after{opacity:1;}
 
   a{color:inherit;}
   ::selection{background:var(--yellow);color:var(--ink);}
@@ -331,7 +333,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     display:flex;flex-wrap:wrap;gap:28px;
     margin-bottom:36px;padding-top:6px;
   }
-  .credential-strip .cred{border-left:2px solid var(--yellow);padding-left:14px;}
+  .credential-strip .cred{border:1px solid rgba(231,184,78,.2);border-left:2px solid var(--yellow);border-radius:8px;padding:13px 16px;background:linear-gradient(145deg,rgba(231,184,78,.07),rgba(255,255,255,.012));box-shadow:0 10px 24px rgba(0,0,0,.08);transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;}
+  .credential-strip .cred:hover{transform:translateY(-4px);border-color:rgba(231,184,78,.55);box-shadow:0 16px 30px rgba(0,0,0,.16);}
   .credential-strip .cred .deg{
     font-family:var(--font-display);font-size:1rem;color:var(--chalk);
     line-height:1.35;margin-bottom:2px;
@@ -388,9 +391,10 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .approach-card,.material-card,.dev-card,.skill-block,.contact-box{transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;background:linear-gradient(145deg,rgba(255,255,255,.018),transparent);}
   .approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover{transform:translateY(-5px);border-color:var(--yellow);box-shadow:0 14px 30px rgba(0,0,0,.14);}
   @media (prefers-reduced-motion: reduce){.reveal-item{opacity:1;transform:none;transition:none;}.approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover{transform:none;box-shadow:none;}}
-  #main-content{transition:opacity 250ms ease,filter 250ms ease;}
-  #main-content.language-switching{opacity:0;filter:blur(4px);transition-duration:150ms;}
-  @media (prefers-reduced-motion: reduce){#main-content,#main-content.language-switching{opacity:1;filter:none;transition:none;}}
+  #main-content{view-transition-name:portfolio-content;transition:opacity 220ms cubic-bezier(.2,.7,.2,1),transform 220ms cubic-bezier(.2,.7,.2,1);}
+  #main-content.language-switching{opacity:.12;transform:translateY(4px);filter:blur(1px);transition-duration:90ms;}
+  @supports (view-transition-name: none){::view-transition-old(portfolio-content),::view-transition-new(portfolio-content){animation-duration:180ms;animation-timing-function:cubic-bezier(.2,.7,.2,1);}}
+  @media (prefers-reduced-motion: reduce){#main-content,#main-content.language-switching{opacity:1;filter:none;transform:none;transition:none;}}
   .grid-4.reveal.in-view .approach-card,
   .materials-grid.reveal.in-view .material-card{
     animation:cardIn 0.5s cubic-bezier(.4,.1,.2,1) backwards;
@@ -410,7 +414,10 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 
   /* ---------- section shell ---------- */
-  section{padding:80px 0;border-top:1px solid var(--line);position:relative;scroll-margin-top:84px;}
+  section{padding:80px 0;border-top:1px solid var(--line);position:relative;scroll-margin-top:84px;isolation:isolate;}
+  section:not(#home)::before{content:"";position:absolute;inset:18px -18px;background:radial-gradient(ellipse at 12% 18%,rgba(231,184,78,.055),transparent 48%);border-radius:18px;pointer-events:none;z-index:-1;}
+  section:nth-of-type(even):not(#home){background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 72%);}
+  section:nth-of-type(even):not(#home)::before{background:radial-gradient(ellipse at 88% 24%,rgba(217,128,152,.045),transparent 48%);}
   section .section-head h2{transition:transform .55s cubic-bezier(.2,.7,.2,1),color .4s ease;}
   section .section-tag{transition:letter-spacing .5s ease,opacity .4s ease;}
   section.section-active .section-head h2{transform:translateX(8px);color:var(--chalk);}
@@ -421,10 +428,14 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html[dir="rtl"] section.section-active .section-head h2{transform:translateX(-4px);}
   }
   @media (prefers-reduced-motion:reduce){
-    section .section-head h2,section .section-tag{transition:none;}
+    body::after{display:none;}
+    section .section-head h2,section .section-tag,section .section-head::after{transition:none;}
     section.section-active .section-head h2{transform:none;}
   }
-  .section-head{margin-bottom:52px;}
+  .section-head{margin-bottom:52px;position:relative;}
+  .section-head::after{content:"";display:block;width:42px;height:2px;margin-top:18px;background:linear-gradient(90deg,var(--yellow),transparent);transform-origin:left;transition:width .55s cubic-bezier(.2,.7,.2,1);}
+  section.section-active .section-head::after{width:96px;}
+  html[dir="rtl"] .section-head::after{margin-left:0;margin-right:auto;transform:scaleX(-1);}
   .section-tag{
     font-family:var(--font-hand);font-size:1.2rem;color:var(--yellow);
     display:block;margin-bottom:6px;transform:rotate(-1deg);
@@ -1774,15 +1785,13 @@ const SITE_AR = {
     };
     if(reducedMQ.matches){ finish(); return; }
     const content = document.getElementById('main-content');
-    const transition = () => {
-      content.classList.add('language-switching');
-      window.setTimeout(() => {
-        finish();
-        requestAnimationFrame(() => content.classList.remove('language-switching'));
-      }, 150);
-    };
-    if(document.startViewTransition){ document.startViewTransition(transition); }
-    else transition();
+    // Keep the locale update synchronous: delaying it inside View Transition
+    // made the whole page feel heavy, especially on mobile browsers.
+    content.classList.add('language-switching');
+    finish();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => content.classList.remove('language-switching'));
+    });
   }
   langToggle.addEventListener('click', toggleLanguage);
   langToggleMobile.addEventListener('click', toggleLanguage);
@@ -1858,6 +1867,17 @@ const SITE_AR = {
       heroEl.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
       heroEl.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
     });
+    let glowFrame = 0;
+    document.addEventListener('pointermove', (e) => {
+      if(glowFrame) return;
+      glowFrame = requestAnimationFrame(() => {
+        document.body.style.setProperty('--cursor-x', `${e.clientX}px`);
+        document.body.style.setProperty('--cursor-y', `${e.clientY}px`);
+        document.body.classList.add('cursor-glow');
+        glowFrame = 0;
+      });
+    }, {passive:true});
+    document.addEventListener('pointerleave', () => document.body.classList.remove('cursor-glow'));
   }
 
   // reveal on scroll (timeline dots, section heads, and every card)
