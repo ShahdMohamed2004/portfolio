@@ -377,16 +377,20 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .reveal{
     opacity:0;transform:translateY(18px);
     transition:opacity 0.65s cubic-bezier(.4,.1,.2,1), transform 0.65s cubic-bezier(.4,.1,.2,1);
+    will-change:transform,opacity;
   }
   .reveal.in-view{opacity:1;transform:translateY(0);}
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1;transform:none;transition:none;}
   }
-  .reveal-item{opacity:0;transform:translateY(18px) scale(.985);transition:opacity .65s cubic-bezier(.4,.1,.2,1),transform .65s cubic-bezier(.4,.1,.2,1);}
+  .reveal-item{opacity:0;transform:translateY(20px);transition:opacity .65s cubic-bezier(.4,.1,.2,1) var(--reveal-delay,0ms),transform .65s cubic-bezier(.4,.1,.2,1) var(--reveal-delay,0ms);will-change:transform,opacity;}
   .reveal-item.in-view{opacity:1;transform:translateY(0) scale(1);}
   .approach-card,.material-card,.dev-card,.skill-block,.contact-box{transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;background:linear-gradient(145deg,rgba(255,255,255,.018),transparent);}
   .approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover{transform:translateY(-5px);border-color:var(--yellow);box-shadow:0 14px 30px rgba(0,0,0,.14);}
   @media (prefers-reduced-motion: reduce){.reveal-item{opacity:1;transform:none;transition:none;}.approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover{transform:none;box-shadow:none;}}
+  #main-content{transition:opacity 250ms ease,filter 250ms ease;}
+  #main-content.language-switching{opacity:0;filter:blur(4px);transition-duration:150ms;}
+  @media (prefers-reduced-motion: reduce){#main-content,#main-content.language-switching{opacity:1;filter:none;transition:none;}}
   .grid-4.reveal.in-view .approach-card,
   .materials-grid.reveal.in-view .material-card{
     animation:cardIn 0.5s cubic-bezier(.4,.1,.2,1) backwards;
@@ -395,6 +399,11 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .grid-4 .approach-card:nth-child(2){animation-delay:0.12s;}
   .grid-4 .approach-card:nth-child(3){animation-delay:0.19s;}
   .grid-4 .approach-card:nth-child(4){animation-delay:0.26s;}
+  .reveal-item:nth-child(2){--reveal-delay:70ms;}
+  .reveal-item:nth-child(3){--reveal-delay:140ms;}
+  .reveal-item:nth-child(4){--reveal-delay:210ms;}
+  .reveal-item:nth-child(5){--reveal-delay:280ms;}
+  .reveal-item:nth-child(6){--reveal-delay:350ms;}
   @keyframes cardIn{
     from{opacity:0;transform:translateY(14px);}
     to{opacity:1;transform:translateY(0);}
@@ -530,8 +539,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[dir="rtl"] .timeline-detail > summary{align-items:flex-end;padding-right:0;padding-left:38px;}
   .accordion-card{border:1px solid var(--line-strong);border-radius:4px;transition:border-color .25s ease,transform .25s ease;}
   /* Dynamic Arabic cards must remain visible even when rendered after the observer starts. */
-  .accordion-card.reveal-item{opacity:1;transform:none;transition:border-color .25s ease,box-shadow .25s ease;}
-  .accordion-card.reveal-item.in-view{opacity:1;transform:none;}
+  .accordion-card.reveal-item{transition:opacity .65s cubic-bezier(.4,.1,.2,1) var(--reveal-delay,0ms),transform .65s cubic-bezier(.4,.1,.2,1) var(--reveal-delay,0ms),border-color .25s ease,box-shadow .25s ease;}
   .accordion-card[open]{border-color:var(--yellow);}
   .accordion-card summary{list-style:none;cursor:pointer;padding:20px 48px 20px 20px;position:relative;font-family:var(--font-display);font-size:1.08rem;font-weight:500;}
   .accordion-card summary::-webkit-details-marker{display:none;}
@@ -570,6 +578,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .entry .place{font-size:0.9rem;color:var(--muted);margin-bottom:10px;}
   .entry p{color:var(--chalk-dim);max-width:56ch;font-size:0.98rem;}
   .entry .stat-line{font-size:0.88rem;color:var(--stat-color);margin-top:10px;font-family:var(--font-body);}
+  .project-details-body .stat-line{margin-top:0;margin-bottom:14px;padding:10px 12px;border-inline-start:2px solid var(--yellow);background:rgba(231,184,78,.06);}
   .entry ul.point-list{margin-top:12px;padding-left:18px;color:var(--chalk-dim);font-size:0.94rem;}
   .entry ul.point-list li{margin-bottom:4px;text-align:justify;}
 
@@ -1553,10 +1562,10 @@ const SITE_AR = {
               <span class="entry-flag ${SITE.projects[i].flag === 'core project' ? 'core' : ''}">${p.flag}</span>
               <h3>${p.title}</h3>
               <div class="badges">${p.badges.map(b => `<span class="badge">${b}</span>`).join('')}</div>
-              ${p.stat ? `<div class="stat-line">${p.stat}</div>` : ''}
             </div>
           </summary>
           <div class="project-details-body">
+            ${p.stat ? `<div class="stat-line">${p.stat}</div>` : ''}
             <p>${p.description}</p>
             ${p.role ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الدور' : 'Role'}</span>${p.role}</div>` : ''}
             ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${p.tools}</div>` : ''}
@@ -1631,6 +1640,7 @@ const SITE_AR = {
     document.getElementById('contactIntro').textContent = data.contact.intro;
 
     document.getElementById('footerText').textContent = `${data.footer} · © ${new Date().getFullYear()}`;
+    observeRevealTargets();
   }
 
   // Static UI text (nav, section headers, buttons) — not part of SITE/SITE_AR
@@ -1740,18 +1750,32 @@ const SITE_AR = {
   }
   function toggleLanguage(){
     const current = document.documentElement.getAttribute('lang') === 'ar' ? 'ar' : 'en';
-    applyLanguage(current === 'ar' ? 'en' : 'ar');
-    // Never leave a direction-sensitive drawer in an inconsistent state.
-    const menu = document.getElementById('mobileMenu');
-    const backdrop = document.getElementById('menuBackdrop');
-    const menuButton = document.getElementById('hamburgerBtn');
-    if(menu) menu.classList.remove('open');
-    if(backdrop) backdrop.classList.remove('open');
-    document.body.classList.remove('menu-open');
-    if(menuButton) {
-      menuButton.setAttribute('aria-expanded', 'false');
-      menuButton.setAttribute('aria-label', document.documentElement.lang === 'ar' ? 'فتح القائمة' : 'Open menu');
-    }
+    const next = current === 'ar' ? 'en' : 'ar';
+    const finish = () => {
+      applyLanguage(next);
+      // Never leave a direction-sensitive drawer in an inconsistent state.
+      const menu = document.getElementById('mobileMenu');
+      const backdrop = document.getElementById('menuBackdrop');
+      const menuButton = document.getElementById('hamburgerBtn');
+      if(menu) menu.classList.remove('open');
+      if(backdrop) backdrop.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      if(menuButton) {
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', document.documentElement.lang === 'ar' ? 'فتح القائمة' : 'Open menu');
+      }
+    };
+    if(reducedMQ.matches){ finish(); return; }
+    const content = document.getElementById('main-content');
+    const transition = () => {
+      content.classList.add('language-switching');
+      window.setTimeout(() => {
+        finish();
+        requestAnimationFrame(() => content.classList.remove('language-switching'));
+      }, 150);
+    };
+    if(document.startViewTransition){ document.startViewTransition(transition); }
+    else transition();
   }
   langToggle.addEventListener('click', toggleLanguage);
   langToggleMobile.addEventListener('click', toggleLanguage);
@@ -1829,22 +1853,27 @@ const SITE_AR = {
     });
   }
 
-  // reveal on scroll (timeline dots, tense diagram, and every .reveal section/card)
-  const revealTargets = document.querySelectorAll('.entry, .tense-diagram, .reveal, .reveal-item');
-  if('IntersectionObserver' in window){
-    const io = new IntersectionObserver((entries) => {
+  // reveal on scroll (timeline dots, section heads, and every card)
+  var revealObserver = null;
+  function observeRevealTargets(){
+    const revealTargets = document.querySelectorAll('.entry, .tense-diagram, .reveal, .reveal-item');
+    if(revealObserver){ revealTargets.forEach(el => revealObserver.observe(el)); return; }
+    if('IntersectionObserver' in window){
+      revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if(entry.isIntersecting){
           entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
+          revealObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    revealTargets.forEach(el => io.observe(el));
-  } else {
+      revealTargets.forEach(el => revealObserver.observe(el));
+    } else {
     // no IntersectionObserver support: show everything immediately, no motion lost
     revealTargets.forEach(el => el.classList.add('in-view'));
+    }
   }
+  observeRevealTargets();
 
   // ---- all continuous scroll-position work batched into one rAF tick ----
   let parallaxActive = desktopMQ.matches && !reducedMQ.matches && !!aboutPhotoImg;
