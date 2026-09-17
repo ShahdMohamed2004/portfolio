@@ -869,6 +869,28 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html{scroll-behavior:auto;}
     .skill-block .skill-group{opacity:1;transform:none;transition:none;}
   }
+  /* ---------- compact mobile composition ----------
+     Keep every hero element inside the viewport with predictable rhythm.
+     The timeline keeps its visual reading order even when page direction is RTL. */
+  @media (max-width:720px){
+    main.wrap{padding-inline:20px;}
+    .hero{padding:112px 0 48px;}
+    .hero-note{font-size:1rem;margin-bottom:18px;padding:6px 11px;}
+    html[dir="rtl"] .hero-note{font-size:.92rem;margin-bottom:18px;padding:5px 11px;}
+    h1{font-size:clamp(2rem,8.6vw,2.8rem);line-height:1.18;margin-bottom:18px;max-width:100%;}
+    .hero p.lead{font-size:1rem;line-height:1.75;margin-bottom:22px;}
+    .credential-strip{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:24px;padding-top:0;}
+    .credential-strip .cred{width:100%;padding:12px 14px;}
+    .credential-strip .cred .deg{font-size:.98rem;}
+    .credential-strip .cred .school,.credential-strip .cred .gpa{font-size:.82rem;}
+    .cta-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;align-items:stretch;}
+    .cta-row .btn{width:100%;max-width:none;padding:11px 8px;text-align:center;font-size:.9rem;}
+    .tense-diagram{width:100%;max-width:none;margin-top:34px;}
+    .tense-diagram svg{direction:ltr;overflow:visible;}
+    .tense-diagram .tick-label{opacity:.7;}
+    .tense-diagram .tense-label{opacity:.58;}
+    section{padding:58px 0;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
