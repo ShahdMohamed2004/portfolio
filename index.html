@@ -62,17 +62,17 @@
   }
 
   html[data-theme="light"]{
-    --ink:#F5F1E6;
-    --ink-2:#EAE3D1;
-    --chalk:#17241F;
+    --ink:#FAF8F5;
+    --ink-2:#F0F3EE;
+    --chalk:#0D1A15;
     --chalk-dim:#3C4A43;
-    --muted:#6B786F;
-    --line:rgba(21,40,37,0.14);
-    --line-strong:rgba(21,40,37,0.28);
-    --yellow:#5B1425;
-    --accent-deep:#5B1425;
-    --text-accent:#4A0E17;
-    --stat-color:#4A0E17;
+    --muted:#5E6C63;
+    --yellow:#C59B4C;
+    --accent-deep:#25473A;
+    --text-accent:#805F25;
+    --stat-color:#805F25;
+    --line:rgba(13,26,21,0.13);
+    --line-strong:rgba(13,26,21,0.24);
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -222,7 +222,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .theme-toggle .icon-sun{display:none;}
   html[data-theme="light"] .theme-toggle .icon-moon{display:none;}
   html[data-theme="light"] .theme-toggle .icon-sun{display:block;}
-  html[data-theme="light"] body::before{background:radial-gradient(circle at 50% 0%,#e7eee7 0%,#d6e1d8 48%,#b9cbbd 100%);}
+  html[data-theme="light"] body::before{background:linear-gradient(135deg,#FAF8F5 0%,#F8F7F1 46%,#E9EFE9 100%);}
   html[data-theme="light"] .hero-note{background:rgba(23,36,31,.06);border-color:rgba(23,36,31,.18);}
   html[data-theme="light"] .side-rail{filter:drop-shadow(0 4px 12px rgba(23,36,31,.08));}
 
@@ -1048,10 +1048,10 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   /* ---------- light mode: editorial warm paper ---------- */
   html[data-theme="light"]{
     --paper:#FAF8F5;
-    --paper-deep:#F4EFEA;
-    --card-paper:#F3ECE4;
-    --card-border:rgba(91,20,37,.12);
-    --card-shadow:0 4px 20px -2px rgba(91,20,37,.05);
+    --paper-deep:#F1F4EF;
+    --card-paper:rgba(255,255,255,.86);
+    --card-border:rgba(37,71,58,.14);
+    --card-shadow:0 10px 26px -14px rgba(20,55,42,.24);
   }
   html[data-theme="light"] body::before{
     background:linear-gradient(180deg,#FAF8F5 0%,#F4EFEA 100%);
@@ -1067,7 +1067,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[data-theme="light"] .contact-box,
   html[data-theme="light"] .accordion-card,
   html[data-theme="light"] .project-details{
-    background:linear-gradient(135deg,rgba(255,255,255,.95) 0%,#F3ECE4 100%);
+    background:linear-gradient(135deg,rgba(255,255,255,.9) 0%,rgba(233,239,233,.82) 100%);
     border-color:var(--card-border);
     box-shadow:var(--card-shadow);
   }
@@ -1078,6 +1078,9 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     border-left-color:var(--card-border);
     border-right-color:var(--yellow);
   }
+  html[data-theme="light"] header.scrolled{background:rgba(250,248,245,.86);}
+  html[data-theme="light"] .mobile-menu{background:rgba(250,248,245,.94);}
+  html[data-theme="light"] .side-rail{filter:drop-shadow(0 4px 12px rgba(20,55,42,.08));}
   html[data-theme="light"] .approach-card:hover,
   html[data-theme="light"] .material-card:hover,
   html[data-theme="light"] .dev-card:hover,
@@ -1448,7 +1451,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   @media (max-width:860px){
     .mobile-menu>a[data-nav]{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid transparent;border-radius:10px;transition:background-color .2s ease,border-color .2s ease,color .2s ease;}
     .mobile-menu>a[data-nav]:hover,.mobile-menu>a[data-nav]:focus-visible{background:rgba(255,255,255,.04);border-color:rgba(231,184,78,.28);}
-    .mobile-nav-index{flex:0 0 2ch;color:var(--muted);font-family:var(--font-body);font-size:.72rem;letter-spacing:.08em;}
+    .mobile-nav-index{display:none !important;}
     html[dir="rtl"] .mobile-menu>a[data-nav]{flex-direction:row-reverse;justify-content:flex-start;}
     .mobile-social-dock{display:flex;align-items:center;gap:10px;margin-top:4px;padding-top:6px;}
     .mobile-social-dock a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:9999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:var(--chalk-dim);text-decoration:none;font-family:var(--font-body);font-size:.88rem;font-weight:600;transition:color .2s ease,border-color .2s ease,background-color .2s ease,transform .2s ease;}
@@ -1463,6 +1466,31 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .teaching-video iframe{display:block;width:100%;height:100%;border:0;}
   @media (max-width:640px){.teaching-video{margin-bottom:14px;border-radius:10px;}}
 
+  /* ---------- premium interaction layer ---------- */
+  header{transition:background .28s ease,box-shadow .28s ease,border-color .28s ease;}
+  header.scrolled{box-shadow:0 14px 36px -24px rgba(0,0,0,.55);}
+  .hero{isolation:isolate;}
+  .hero::before{content:"";position:absolute;inset:8% 6% auto 42%;height:58%;background:radial-gradient(circle,rgba(231,184,78,.07),transparent 68%);filter:blur(18px);opacity:0;pointer-events:none;transition:opacity .8s ease;z-index:-1;}
+  .hero.mouse-glow::before{opacity:1;background:radial-gradient(circle at var(--mx,70%) var(--my,40%),rgba(231,184,78,.12),transparent 58%);}
+  .hero-note,.hero h1,.hero .lead,.hero .credential-strip,.hero .cta-row,.hero .tense-diagram{opacity:0;transform:translateY(18px);}
+  .hero.hero-ready .hero-note{opacity:1;transform:none;transition:opacity .55s ease .08s,transform .7s cubic-bezier(.23,1,.32,1) .08s;}
+  .hero.hero-ready h1{opacity:1;transform:none;transition:opacity .7s ease .18s,transform .8s cubic-bezier(.23,1,.32,1) .18s;}
+  .hero.hero-ready .lead{opacity:1;transform:none;transition:opacity .65s ease .3s,transform .7s cubic-bezier(.23,1,.32,1) .3s;}
+  .hero.hero-ready .credential-strip{opacity:1;transform:none;transition:opacity .65s ease .4s,transform .7s cubic-bezier(.23,1,.32,1) .4s;}
+  .hero.hero-ready .cta-row{opacity:1;transform:none;transition:opacity .65s ease .5s,transform .7s cubic-bezier(.23,1,.32,1) .5s;}
+  .hero.hero-ready .tense-diagram{opacity:1;transform:none;transition:opacity .7s ease .62s,transform .8s cubic-bezier(.23,1,.32,1) .62s;}
+  .hero .cta-row .btn{transition:transform .18s cubic-bezier(.23,1,.32,1),color .2s ease,border-color .2s ease,background .2s ease;}
+  .hero .cta-row .btn:active{transform:scale(.97);}
+  .project-details,.approach-card,.material-card,.dev-card,.skill-block,.contact-box{will-change:transform;}
+  .project-details::after,.approach-card::after,.material-card::after,.dev-card::after,.skill-block::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;background:radial-gradient(180px circle at var(--card-x,50%) var(--card-y,50%),rgba(231,184,78,.10),transparent 70%);transition:opacity .3s ease;}
+  .project-details:hover::after,.approach-card:hover::after,.material-card:hover::after,.dev-card:hover::after,.skill-block:hover::after{opacity:1;}
+  .side-rail::after{content:"";position:absolute;right:1px;top:4px;width:3px;height:calc(var(--rail-progress,0) * 1%);max-height:calc(100% - 8px);background:var(--yellow);border-radius:99px;transform-origin:top;pointer-events:none;opacity:.8;}
+  html[dir="rtl"] .side-rail::after{right:auto;left:1px;}
+  @media (prefers-reduced-motion:reduce){
+    .hero::before{display:none;}
+    .hero-note,.hero h1,.hero .lead,.hero .credential-strip,.hero .cta-row,.hero .tense-diagram{opacity:1;transform:none;}
+    .project-details::after,.approach-card::after,.material-card::after,.dev-card::after,.skill-block::after{display:none;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -1552,7 +1580,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 <main id="main-content" class="wrap">
 
   <!-- HERO -->
-  <section class="hero" id="home" style="border-top:none;">
+  <section class="hero" id="home" data-scene="hero" style="border-top:none;">
     <span class="hero-note" id="heroNote"></span>
     <h1 id="heroHeadline">Teaching to See, Learning to Be</h1>
     <p class="lead" id="heroLead"></p>
@@ -2714,7 +2742,24 @@ const SITE_AR = {
     requestScrollUpdate();
   }, {passive:true});
   onScrollFrame(); // run once on load so everything starts in the right state
-
+  // Hero entrance: a calm editorial reveal, skipped for reduced-motion users.
+  const heroIntro = document.querySelector('.hero');
+  if(heroIntro){
+    requestAnimationFrame(() => heroIntro.classList.add('hero-ready'));
+  }
+  // Header and rail retain context while scrolling through the long-form story.
+  const siteHeader = document.getElementById('siteHeader');
+  const sideRail = document.getElementById('sideRail');
+  function updateChromeState(){
+    const y = window.scrollY || 0;
+    siteHeader.classList.toggle('scrolled', y > 18);
+    if(sideRail){
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      sideRail.style.setProperty('--rail-progress', String(Math.max(0, Math.min(100, y / max * 100))));
+    }
+  }
+  updateChromeState();
+  window.addEventListener('scroll', updateChromeState, {passive:true});
   // light / dark mode toggle
   const root = document.documentElement;
   const themeToggle = document.getElementById('themeToggle');
