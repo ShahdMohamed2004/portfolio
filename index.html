@@ -871,6 +871,17 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html{scroll-behavior:auto;}
     .skill-block .skill-group{opacity:1;transform:none;transition:none;}
   }
+  /* ---------- full-width mobile section rhythm ----------
+     Keep every section and text block inside the same readable frame. */
+  @media (max-width:720px){
+    main.wrap>section{width:100%;max-width:none;}
+    .about-grid,.about-text,.about-text p,.section-head,.section-lead,.entry p,.contact-box p{width:100%;max-width:none;min-width:0;}
+    .about-grid{grid-template-columns:minmax(0,1fr);gap:28px;justify-items:stretch;}
+    .about-photo{width:140px;max-width:100%;}
+    .about-text p,.entry p,.section-lead,.approach-card p,.contact-box p,.materials-note{text-align:start;}
+    html[dir="rtl"] .about-text p,html[dir="rtl"] .entry p,html[dir="rtl"] .section-lead,html[dir="rtl"] .approach-card p,html[dir="rtl"] .contact-box p,html[dir="rtl"] .materials-note{text-align:end;}
+    .about-name,.about-role,.about-text,.entry,.project-details,.material-card,.dev-card,.skill-block,.contact-box{overflow-wrap:anywhere;}
+  }
   /* ---------- viewport safety across LTR and RTL ----------
      Decorative layers may extend visually, but content must never be cropped. */
   .wrap,main.wrap,section,header,nav,.hero,.about-grid,.credential-strip,.cta-row,.grid-4,.materials-grid,.dev-grid,.skills-grid,.contact-box,.entry,.entry details,.project-details,.project-details-body{min-width:0;}
