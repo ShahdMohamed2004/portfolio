@@ -440,6 +440,10 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .work-count{font-size:.75rem;color:var(--chalk-dim);white-space:nowrap;}
   .work-empty{padding:20px 0;color:var(--chalk-dim);}
   .entry.is-filtered{display:none;}
+  .availability-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;}
+  .availability-item{flex:1 1 190px;min-width:0;padding:16px 18px;border-inline-start:2px solid var(--yellow);border-block:1px solid rgba(231,184,78,.2);background:rgba(255,255,255,.025);color:var(--chalk-dim);line-height:1.5;}
+  html[data-theme="light"] .availability-item{background:rgba(255,255,255,.5);color:var(--text-main);border-block-color:rgba(91,20,37,.12);}
+  @media (max-width:720px){.availability-strip{display:grid;grid-template-columns:1fr;gap:8px;margin-top:18px;}.availability-item{padding:13px 14px;}}
   .featured-case{position:relative;margin:34px 0 0;border:1px solid rgba(231,184,78,.4);border-radius:16px;overflow:hidden;background:linear-gradient(135deg,rgba(231,184,78,.12),rgba(255,255,255,.025));box-shadow:0 12px 34px rgba(0,0,0,.14);}
   .featured-case-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:58px;padding:14px 18px;border:0;background:transparent;color:var(--chalk);font:inherit;font-size:1rem;font-weight:600;text-align:start;cursor:pointer;}
   .featured-case-toggle:hover,.featured-case-toggle:focus-visible{color:var(--yellow);background:rgba(231,184,78,.06);}
@@ -1783,6 +1787,18 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     <p class="section-lead" id="creativeLead"></p>
   </section>
 
+  <!-- AVAILABILITY -->
+  <section id="availability">
+    <div class="section-head reveal">
+      <span class="section-tag" id="availabilityTag">currently available for</span>
+      <h2 id="availabilityHeading">Where I can contribute</h2>
+    </div>
+    <div class="availability-strip reveal" role="list" aria-label="Current areas of interest">
+      <span class="availability-item" id="availabilityTeaching" role="listitem">English Language Teaching</span>
+      <span class="availability-item" id="availabilityDesign" role="listitem">Curriculum &amp; Assessment Design</span>
+      <span class="availability-item" id="availabilityEdtech" role="listitem">EdTech &amp; Digital Learning Projects</span>
+    </div>
+  </section>
   <!-- CONTACT -->
   <section id="contact">
     <div class="section-head reveal">
@@ -2285,8 +2301,8 @@ const SITE_AR = {
 
   // Everything below depends on which language is active.
   const SKILL_LABELS = {
-    en: { teaching: "Teaching Skills", soft: "Soft Skills", hard: "Hard Skills", languages: "Languages" },
-    ar: { teaching: "المهارات التدريسية", soft: "المهارات الشخصية", hard: "المهارات التقنية", languages: "اللغات" }
+    en: { teaching: "Instructional Design", soft: "Classroom Practice", hard: "Educational Technology", languages: "Languages" },
+    ar: { teaching: "التصميم التعليمي", soft: "الممارسة الصفية", hard: "تكنولوجيا التعليم", languages: "اللغات" }
   };
 
   function renderContent(data, lang){
@@ -2452,6 +2468,14 @@ const SITE_AR = {
     document.getElementById('creativeLead').textContent = data.creativeLead;
     document.getElementById('creativeLead').classList.add('creative-lead');
 
+    // Availability strip
+    const availability = lang === 'ar' ? {tag:'متاحة حاليًا لـ', heading:'مجالات أستطيع أن أساهم فيها', teaching:'تدريس اللغة الإنجليزية', design:'تصميم المناهج والتقييم', edtech:'مشروعات تكنولوجيا التعليم والتعلّم الرقمي'} : {tag:'currently available for', heading:'Where I can contribute', teaching:'English Language Teaching', design:'Curriculum & Assessment Design', edtech:'EdTech & Digital Learning Projects'};
+    document.getElementById('availabilityTag').textContent = availability.tag;
+    document.getElementById('availabilityHeading').textContent = availability.heading;
+    document.getElementById('availabilityTeaching').textContent = availability.teaching;
+    document.getElementById('availabilityDesign').textContent = availability.design;
+    document.getElementById('availabilityEdtech').textContent = availability.edtech;
+    document.getElementById('availability').querySelector('.availability-strip').setAttribute('aria-label', availability.heading);
     // Contact
     document.getElementById('contactIntro').textContent = data.contact.intro;
 
@@ -2493,7 +2517,7 @@ const SITE_AR = {
   };
   const BUTTON_TEXT = {
     btnCredentials: ["View credentials", "عرض المؤهلات"],
-    btnWork: ["Explore my work", "استعرض أعمالي"],
+    btnWork: ["View featured project", "عرض المشروع المميز"],
     portfolioLinkDesktop: ["Portfolio", "ملف الأعمال"], portfolioLinkMobile: ["Portfolio", "ملف الأعمال"],
     materialsPortfolioLink: ["View full portfolio", "عرض ملف الأعمال الكامل"],
     cvLinkDesktop: ["Download CV", "تحميل السيرة الذاتية"], cvLinkMobile: ["Download CV", "تحميل السيرة الذاتية"],
