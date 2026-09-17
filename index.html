@@ -872,6 +872,42 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html{scroll-behavior:auto;}
     .skill-block .skill-group{opacity:1;transform:none;transition:none;}
   }
+
+  /* Mobile uses the browser's native scroll path. Keep the fixed header from
+     covering anchor targets without adding extra blank space to the layout. */
+  section{scroll-margin-top:84px;}
+  @media (max-width:767px){
+    html,body{scroll-behavior:auto;-webkit-overflow-scrolling:touch;}
+    section{scroll-margin-top:92px;}
+    .project-details>summary.project-summary,
+    .timeline-detail>summary{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:nowrap;
+      gap:10px;
+      padding-inline:14px;
+    }
+    .project-details>summary.project-summary .entry-preview,
+    .timeline-detail>summary .entry-flag,
+    .timeline-detail>summary h3{min-width:0;}
+    .project-details>summary.project-summary .entry-preview{flex:1 1 auto;padding-inline-end:0;}
+    .project-details summary::after,
+    .entry summary::after{
+      position:static;
+      transform:none;
+      flex:0 0 32px;
+      width:32px;
+      min-width:32px;
+      height:32px;
+      min-height:32px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    html[dir="rtl"] .project-details>summary.project-summary,
+    html[dir="rtl"] .timeline-detail>summary{padding-inline:14px;}
+  }
   /* ---------- strict design enforcement: v2.0.1 ----------
      Do not replace the editorial justification choice on mobile. */
   p,.description,.card-text,.section-subtitle,.materials-note,.project-details-body p,
@@ -1121,6 +1157,38 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     }
     html[dir="rtl"] p,html[dir="rtl"] .project-details-body p,html[dir="rtl"] .entry p,
     html[dir="rtl"] .about-text p,html[dir="rtl"] .contact-box p{direction:rtl;text-align:justify !important;}
+  }
+
+  /* Final mobile control geometry: the badge/content and action affordance
+     share a flex row instead of competing through absolute positioning. */
+  @media (max-width:767px){
+    .project-details>summary.project-summary,
+    .timeline-detail>summary{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:nowrap;
+      gap:10px;
+      padding-inline:14px !important;
+    }
+    .project-details>summary.project-summary .entry-preview{
+      flex:1 1 auto;
+      min-width:0;
+      padding-inline-end:0;
+    }
+    .project-details summary::after,
+    .entry summary::after{
+      position:static;
+      transform:none;
+      flex:0 0 32px;
+      width:32px;
+      min-width:32px;
+      height:32px;
+      min-height:32px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
   }
 
 </style>
@@ -2078,6 +2146,7 @@ const SITE_AR = {
   const backToTop = document.getElementById('backToTop');
   const aboutPhotoImg = document.querySelector('.about-photo img');
   const desktopMQ = window.matchMedia('(min-width:768px)');
+  const mobileMQ = window.matchMedia('(max-width:767px)');
   const reducedMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   // mobile menu
@@ -2291,6 +2360,13 @@ const SITE_AR = {
   let scrollTicking = false;
   function onScrollFrame(){
     updateHeaderAndProgress();
+    // Mobile keeps native scrolling: avoid layout reads for section scenes,
+    // timeline progress, parallax, and active-link calculations on every tick.
+    if(mobileMQ.matches){
+      updateBackToTop();
+      scrollTicking = false;
+      return;
+    }
     updateSpy();
     updateRailSpy();
     updateBackToTop();
