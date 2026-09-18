@@ -1555,6 +1555,85 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .hero-note,.hero h1,.hero .lead,.hero .credential-strip,.hero .cta-row,.hero .tense-diagram{opacity:1;transform:none;}
     .project-details::after,.approach-card::after,.material-card::after,.dev-card::after,.skill-block::after{display:none;}
   }
+
+/* ---------- desktop interaction system ----------
+   Editorial depth, discovery cues, and pointer-responsive surfaces.
+   Deliberately scoped away from touch layouts and reduced-motion users. */
+@media (min-width:768px) and (hover:hover) and (pointer:fine) {
+  main.wrap > section:not(#home) {
+    position:relative;
+    transition:opacity .45s ease, transform .45s cubic-bezier(.2,.7,.2,1);
+  }
+  main.wrap > section:not(#home)::after {
+    content:"";
+    position:absolute;
+    top:clamp(28px,4vw,64px);
+    inset-inline-end:-18px;
+    width:2px;
+    height:42px;
+    background:linear-gradient(var(--yellow),transparent);
+    opacity:0;
+    transform:scaleY(.35);
+    transform-origin:top;
+    transition:opacity .45s ease,transform .45s ease;
+    pointer-events:none;
+  }
+  main.wrap > section.section-active:not(#home)::after { opacity:.72; transform:scaleY(1); }
+
+  .hero h1, .hero .lead, .hero .credential-strip, .hero .cta-row {
+    transition:transform .5s cubic-bezier(.2,.7,.2,1), opacity .5s ease;
+  }
+  .hero.mouse-glow h1 { transform:translate3d(calc((var(--mx,50%) - 50%)/32), calc((var(--my,50%) - 50%)/42), 0); }
+  .hero.mouse-glow .lead { transform:translate3d(calc((var(--mx,50%) - 50%)/52), calc((var(--my,50%) - 50%)/62), 0); }
+
+  .approach-card, .material-card, .dev-card, .skill-block, .contact-box,
+  .credential-strip .cred, .project-details {
+    position:relative;
+    isolation:isolate;
+    will-change:transform;
+  }
+  .approach-card::after, .material-card::after, .dev-card::after,
+  .skill-block::after, .contact-box::after, .credential-strip .cred::after,
+  .project-details::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    border-radius:inherit;
+    background:radial-gradient(180px circle at var(--card-x,50%) var(--card-y,0%),rgba(231,184,78,.11),transparent 72%);
+    opacity:0;
+    transition:opacity .3s ease;
+    pointer-events:none;
+  }
+  .approach-card:hover::after, .material-card:hover::after, .dev-card:hover::after,
+  .skill-block:hover::after, .contact-box:hover::after, .credential-strip .cred:hover::after,
+  .project-details:hover::after { opacity:1; }
+
+  .project-details:hover { transform:translate3d(0,-5px,0) rotateX(.25deg); }
+  .project-details .entry-preview h3 { transition:transform .3s ease,color .3s ease; }
+  .project-details:hover .entry-preview h3 { transform:translateX(5px); }
+  html[dir="rtl"] .project-details:hover .entry-preview h3 { transform:translateX(-5px); }
+
+  .material-card:hover, .dev-card:hover, .approach-card:hover,
+  .skill-block:hover, .credential-strip .cred:hover { transform:translate3d(0,-4px,0); }
+  .material-card .arrow { transition:transform .3s ease; }
+  .material-card:hover .arrow { transform:translateX(4px); }
+  html[dir="rtl"] .material-card:hover .arrow { transform:translateX(-4px); }
+
+  .side-rail { transition:filter .35s ease; }
+  .side-rail:hover { filter:drop-shadow(0 0 12px rgba(231,184,78,.12)); }
+  .back-to-top { box-shadow:0 10px 24px rgba(0,0,0,.14); }
+  .back-to-top:hover { transform:translateY(-3px) scale(1.04); }
+}
+@media (min-width:768px) and (hover:hover) and (pointer:fine) and (prefers-reduced-motion:reduce) {
+  main.wrap > section:not(#home), main.wrap > section:not(#home)::after,
+  .hero h1, .hero .lead, .hero .credential-strip, .hero .cta-row,
+  .approach-card, .material-card, .dev-card, .skill-block, .contact-box,
+  .credential-strip .cred, .project-details, .back-to-top { transition:none; transform:none; }
+  .approach-card::after, .material-card::after, .dev-card::after,
+  .skill-block::after, .contact-box::after, .credential-strip .cred::after,
+  .project-details::after { display:none; }
+}
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -2788,6 +2867,35 @@ const SITE_AR = {
         }
         cardGlowFrame = 0;
       });
+    }, {passive:true});
+  }
+
+  // Desktop interaction system: one delegated pointer field for all tactile surfaces.
+  // It is intentionally disabled for touch and reduced-motion contexts.
+  const desktopInteractionMQ = window.matchMedia('(min-width:768px) and (hover:hover) and (pointer:fine)');
+  if(desktopInteractionMQ.matches && !reducedMQ.matches){
+    const interactiveSelector = '.approach-card, .material-card, .dev-card, .skill-block, .contact-box, .credential-strip .cred, .project-details';
+    let pointerFrame = 0;
+    let pendingPointer = null;
+    document.addEventListener('pointermove', (event) => {
+      const surface = event.target.closest(interactiveSelector);
+      pendingPointer = surface ? { surface, x:event.clientX, y:event.clientY } : null;
+      if(pointerFrame) return;
+      pointerFrame = requestAnimationFrame(() => {
+        if(pendingPointer){
+          const rect = pendingPointer.surface.getBoundingClientRect();
+          pendingPointer.surface.style.setProperty('--card-x', `${pendingPointer.x - rect.left}px`);
+          pendingPointer.surface.style.setProperty('--card-y', `${pendingPointer.y - rect.top}px`);
+        }
+        pointerFrame = 0;
+      });
+    }, {passive:true});
+    document.addEventListener('pointerout', (event) => {
+      const surface = event.target.closest(interactiveSelector);
+      if(surface && !surface.contains(event.relatedTarget)){
+        surface.style.removeProperty('--card-x');
+        surface.style.removeProperty('--card-y');
+      }
     }, {passive:true});
   }
 
