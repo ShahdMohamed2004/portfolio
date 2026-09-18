@@ -374,8 +374,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .tense-diagram .tick-label{font-family:var(--font-hand);font-size:15px;fill:var(--chalk-dim);opacity:.45;transition:opacity .35s ease,fill .35s ease;}
   .tense-diagram .tense-label{font-family:var(--font-body);font-size:10px;fill:var(--muted);letter-spacing:.02em;opacity:.35;transition:opacity .35s ease,fill .35s ease;}
   .tense-diagram .timeline-base{stroke:rgba(239,234,216,.28);stroke-width:1.6;fill:none;stroke-linecap:round;}
-  .tense-diagram .spine-path{stroke:var(--gold-line-active);stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:620;stroke-dashoffset:620;transition:stroke-dashoffset .08s linear;}
-  .tense-diagram .spine-glow{stroke:var(--yellow);stroke-width:4;fill:none;stroke-linecap:round;opacity:.28;filter:blur(4px);stroke-dasharray:620;stroke-dashoffset:620;transition:stroke-dashoffset .08s linear;}
+  .tense-diagram .spine-path{stroke:var(--gold-line-active);stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke;transition:stroke-dashoffset .08s linear;}
+  .tense-diagram .spine-glow{stroke:var(--yellow);stroke-width:4;fill:none;stroke-linecap:round;opacity:.28;filter:blur(4px);stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke;transition:stroke-dashoffset .08s linear;}
   .tense-diagram circle{fill:var(--ink);stroke:var(--muted);stroke-width:1.5;opacity:.45;transition:opacity .3s ease,stroke .3s ease,fill .3s ease,transform .3s ease;transform-box:fill-box;transform-origin:center;}
   .tense-diagram .timeline-dot.active{fill:var(--yellow);stroke:var(--yellow);opacity:1;transform:scale(1.65);filter:drop-shadow(0 0 6px rgba(231,184,78,.55));}
   .tense-diagram .timeline-label.active{opacity:1;fill:var(--yellow);}
@@ -1835,9 +1835,9 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
     <div class="tense-diagram" id="tenseDiagram">
       <svg viewBox="0 0 640 110" aria-hidden="true">
-        <path class="timeline-base" d="M10,60 H630" aria-hidden="true" />
-        <path class="spine-glow" d="M10,60 H630" aria-hidden="true" />
-        <path class="spine-path" d="M10,60 H630" />
+        <path class="timeline-base" d="M10,60 H630" pathLength="1" aria-hidden="true" />
+        <path class="spine-glow" d="M10,60 H630" pathLength="1" aria-hidden="true" />
+        <path class="spine-path" d="M10,60 H630" pathLength="1" />
         <circle class="timeline-dot" data-point="0" cx="10" cy="60" r="4"></circle>
         <circle class="timeline-dot" data-point="1" cx="320" cy="60" r="4"></circle>
         <circle class="timeline-dot" data-point="2" cx="630" cy="60" r="4"></circle>
@@ -3132,7 +3132,7 @@ const SITE_AR = {
     const pathData = rtl ? 'M630,60 H10' : 'M10,60 H630';
     if(path) path.setAttribute('d', pathData);
     if(glow) glow.setAttribute('d', pathData);
-    const dash = 620 * (1 - progress);
+    const dash = 1 - progress;
     if(path) path.style.strokeDashoffset = String(dash);
     if(glow) glow.style.strokeDashoffset = String(dash);
     diagram.classList.toggle('in-view', progress > 0.02);
