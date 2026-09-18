@@ -1193,6 +1193,20 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       backdrop-filter:none !important;
       -webkit-backdrop-filter:none !important;
     }
+    /* Mobile browsers keep the fixed header over the scrolling surface.
+       Use a solid surface here so headings and case-study content never show
+       through the navigation while the user is reading. */
+    header,
+    header.scrolled{
+      background:var(--ink-2);
+      border-bottom-color:var(--line-strong);
+      box-shadow:0 8px 20px -16px rgba(0,0,0,.72);
+    }
+    html[data-theme="light"] header,
+    html[data-theme="light"] header.scrolled{
+      background:var(--ink-2);
+      box-shadow:0 8px 20px -16px rgba(20,55,42,.32);
+    }
     body::after,.hero::before,.hero::after,.side-rail,.menu-backdrop{filter:none !important;}
     .hero::after{display:none;}
     .project-details::before{display:none;}
