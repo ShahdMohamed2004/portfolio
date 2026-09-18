@@ -1753,6 +1753,51 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-photo img,.entry.reveal-item .entry-preview h3,.project-details .proj-link,.btn,.creative-item{transition:none;}
     .about-photo:hover img,.about-photo:focus-visible img{transform:none;}
   }
+
+  /* ---------- bidirectional interaction corrections ----------
+     Keep the drawer's physical origin independent from text direction, and
+     let project content flow from the correct inline edge. */
+  html[dir="ltr"] .mobile-menu{
+    left:0;right:auto;
+    border-inline-start:0;border-inline-end:1px solid var(--line-strong);
+    transform:translateX(-100%);box-shadow:18px 0 42px rgba(0,0,0,.22);
+  }
+  html[dir="ltr"] .mobile-menu.open{transform:translateX(0);}
+  html[dir="rtl"] .mobile-menu{
+    right:0;left:auto;
+    border-inline-start:1px solid var(--line-strong);border-inline-end:0;
+    transform:translateX(100%);box-shadow:-18px 0 42px rgba(0,0,0,.22);
+    direction:rtl;text-align:start;
+  }
+  html[dir="rtl"] .mobile-menu.open{transform:translateX(0);}
+  html[dir="ltr"] .mobile-menu a{transform:translateX(-14px);}
+  html[dir="rtl"] .mobile-menu a{transform:translateX(14px);}
+  @keyframes menuLinkInRTL{to{opacity:1;transform:translateX(0);}}
+  html[dir="rtl"] .mobile-menu.open a{animation-name:menuLinkInRTL;}
+  html[dir="rtl"] .mobile-menu-close{left:auto;right:16px;}
+  html[dir="rtl"] .mobile-menu>a[data-nav],
+  html[dir="rtl"] .mobile-menu-utility>a,
+  html[dir="rtl"] .mobile-menu-utility button{flex-direction:row-reverse;justify-content:flex-start;text-align:right;}
+  html[dir="rtl"] .mobile-social-dock{justify-content:flex-start;}
+  html[dir="rtl"] .project-details,
+  html[dir="rtl"] .project-details-body,
+  html[dir="rtl"] .entry-preview,
+  html[dir="rtl"] .featured-case,
+  html[dir="rtl"] .featured-case-copy{direction:rtl;text-align:right;}
+  html[dir="rtl"] .project-details>summary.project-summary{flex-direction:row-reverse;}
+  html[dir="rtl"] .project-details .proj-links{flex-direction:row-reverse;justify-content:flex-start;}
+  html[dir="rtl"] .project-details .proj-link{flex-direction:row-reverse;justify-content:flex-start;}
+  html[dir="rtl"] .credential-strip{justify-content:flex-start;}
+  .credential-strip .cred{min-width:190px;}
+  @media (max-width:720px){
+    .credential-strip .cred{min-width:0;}
+    .credential-strip .cred,.credential-strip .cred *{text-align:start;}
+    html[dir="rtl"] .credential-strip .cred,
+    html[dir="rtl"] .credential-strip .cred *{text-align:right;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html[dir="ltr"] .mobile-menu a,html[dir="rtl"] .mobile-menu a{transform:none;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -2928,12 +2973,16 @@ const SITE_AR = {
   const hamburger = document.getElementById('hamburgerBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   const backdrop = document.getElementById('menuBackdrop');
+  let menuBeforeOpen = null;
+  const menuFocusables = () => [...mobileMenu.querySelectorAll('a,button')].filter(el => !el.hasAttribute('disabled'));
   function closeMenu(){
     mobileMenu.classList.remove('open');
     backdrop.classList.remove('open');
     document.body.classList.remove('menu-open');
     hamburger.setAttribute('aria-expanded', 'false');
     hamburger.setAttribute('aria-label', document.documentElement.lang === 'ar' ? 'فتح القائمة' : 'Open menu');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    if(menuBeforeOpen && typeof menuBeforeOpen.focus === 'function') requestAnimationFrame(() => menuBeforeOpen.focus());
   }
   hamburger.addEventListener('click', function(){
     const open = mobileMenu.classList.toggle('open');
@@ -2941,11 +2990,26 @@ const SITE_AR = {
     document.body.classList.toggle('menu-open', open);
     hamburger.setAttribute('aria-expanded', String(open));
     hamburger.setAttribute('aria-label', open ? (document.documentElement.lang === 'ar' ? 'إغلاق القائمة' : 'Close menu') : (document.documentElement.lang === 'ar' ? 'فتح القائمة' : 'Open menu'));
+    mobileMenu.setAttribute('aria-hidden', String(!open));
+    if(open){
+      menuBeforeOpen = document.activeElement;
+      requestAnimationFrame(() => document.getElementById('mobileMenuClose').focus());
+    }
   });
   backdrop.addEventListener('click', closeMenu);
   document.getElementById('mobileMenuClose').addEventListener('click', closeMenu);
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-  document.addEventListener('keydown', (event) => { if(event.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu(); });
+  mobileMenu.setAttribute('aria-hidden', 'true');
+  document.addEventListener('keydown', (event) => {
+    if(!mobileMenu.classList.contains('open')) return;
+    if(event.key === 'Escape'){ event.preventDefault(); closeMenu(); return; }
+    if(event.key !== 'Tab') return;
+    const items = menuFocusables();
+    if(!items.length) return;
+    const first = items[0], last = items[items.length - 1];
+    if(event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
+    else if(!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
+  });
   let menuTouchStartX = 0;
   mobileMenu.addEventListener('touchstart', (event) => {
     if(event.touches.length === 1) menuTouchStartX = event.touches[0].clientX;
@@ -3151,8 +3215,10 @@ const SITE_AR = {
     const rect = diagram.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const progress = reducedMQ.matches ? 1 : Math.max(0, Math.min(1, (vh * 0.84 - rect.top) / (vh * 0.72)));
-    const rtl = document.documentElement.dir === 'rtl';
-    const pathData = rtl ? 'M630,60 H10' : 'M10,60 H630';
+    // Progress is one semantic state in both locales. Arabic changes the
+    // reading layout, but must not reverse Past → Present → Future or make
+    // the line appear to grow from the Future when scrolling upward.
+    const pathData = 'M10,60 H630';
     if(path) path.setAttribute('d', pathData);
     if(glow) glow.setAttribute('d', pathData);
     const dash = 1 - progress;
