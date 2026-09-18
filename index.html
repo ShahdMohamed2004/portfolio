@@ -449,6 +449,11 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .featured-case-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:58px;padding:14px 18px;border:0;background:transparent;color:var(--chalk);font:inherit;font-size:1rem;font-weight:600;text-align:start;cursor:pointer;}
   .featured-case-toggle:hover,.featured-case-toggle:focus-visible{color:var(--yellow);background:rgba(231,184,78,.06);}
   .featured-case-toggle-icon{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(231,184,78,.5);border-radius:50%;color:var(--yellow);font-size:1.2rem;font-weight:400;line-height:1;transition:color .28s ease,border-color .28s ease,background-color .28s ease;}
+  .case-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:18px 0 20px;}
+  .case-flow span{padding:8px 10px;border-block-start:2px solid var(--line-strong);color:var(--chalk-dim);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;}
+  .case-flow span:first-child{border-color:var(--yellow);color:var(--yellow);}
+  html[dir="rtl"] .case-flow{direction:rtl;}
+  @media (max-width:600px){.case-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}.case-flow span{font-size:.68rem;}}
   .featured-case-content{display:grid;grid-template-rows:0fr;transition:grid-template-rows .48s cubic-bezier(.4,.1,.2,1);}
   .featured-case-content-inner{min-height:0;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);gap:28px;align-items:stretch;padding:0 clamp(22px,4vw,42px);opacity:0;transform:translateY(-8px);transition:opacity .28s ease,transform .48s cubic-bezier(.4,.1,.2,1),padding-bottom .48s cubic-bezier(.4,.1,.2,1);}
   .featured-case.is-open{border-color:rgba(231,184,78,.62);background:linear-gradient(135deg,rgba(231,184,78,.15),rgba(255,255,255,.03));box-shadow:0 20px 44px rgba(0,0,0,.24),0 0 0 1px rgba(231,184,78,.08) inset;}
@@ -826,6 +831,22 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .back-to-top.show{opacity:1;visibility:visible;transform:translateY(0);}
   .back-to-top:hover, .back-to-top:focus-visible{border-color:var(--yellow);color:var(--yellow);}
   .back-to-top svg{width:18px;height:18px;display:block;}
+
+  .where-am-i{
+    position:fixed;top:12px;inset-inline-end:18px;z-index:151;
+    color:var(--chalk-dim);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;color-mix(in srgb,var(--chalk-dim) 72%,transparent);
+  }
+  .where-am-i.is-visible{opacity:.72;}
+  .where-am-i strong{color:var(--yellow);font-weight:500;}
+  .journey-section{position:relative;}
+  @media (min-width:769px){
+    #experience::before,#credentials::before,#development::before{background:linear-gradient(90deg,transparent 0%,rgba(231,184,78,.08) 50%,transparent 100%);}
+  }
+  @media (max-width:768px){
+    .where-am-i{top:auto;bottom:14px;inset-inline-start:16px;inset-inline-end:auto;font-size:.58rem;}
+  }
+  @media (prefers-reduced-motion:reduce){.where-am-i{transition:none;}}
 
   /* ---------- side rail (full-site section nav) ---------- */
   .side-rail{
@@ -1805,6 +1826,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <div class="scroll-progress" id="scrollProgress"></div>
+<div class="where-am-i" id="whereAmI" aria-live="polite"><span id="whereAmINumber">01</span> / <strong id="whereAmILabel">HOME</strong></div>
 
 <header id="siteHeader">
   <nav>
@@ -1975,6 +1997,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
         <div class="featured-case-copy">
           <span class="section-tag" id="featuredCaseLabel">Featured case study</span>
           <h3 id="featuredCaseTitle"></h3>
+          <div class="case-flow" id="featuredCaseFlow" aria-label="Case study structure"><span>Challenge</span><span>Idea</span><span>Process</span><span>Result</span></div>
           <p id="featuredCaseText"></p>
           <div class="featured-case-meta" id="featuredCaseMeta"></div>
           <div class="proj-links" id="featuredCaseLinks"></div>
@@ -2003,7 +2026,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </section>
 
   <!-- EXPERIENCE -->
-  <section id="experience">
+  <section id="experience" class="journey-section">
     <div class="section-head reveal">
       <span class="section-tag">in the classroom</span>
       <h2>Teaching experience</h2>
@@ -2012,7 +2035,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </section>
 
   <!-- CREDENTIALS: education + development -->
-  <section id="credentials">
+  <section id="credentials" class="journey-section">
     <div class="section-head reveal">
       <span class="section-tag">qualifications</span>
       <h2>Education</h2>
@@ -2020,7 +2043,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     <div class="spine" id="educationSpine"></div>
   </section>
 
-  <section id="development">
+  <section id="development" class="journey-section">
     <div class="section-head reveal">
       <span class="section-tag">always learning</span>
       <h2>Professional development</h2>
@@ -2085,14 +2108,12 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </div>
 </div>
 <footer>
-
-<footer>
   <span id="footerText"></span>
 </footer>
 
 <div class="toast" id="toast">Email copied to clipboard</div>
 
-<button class="back-to-top" id="backToTop" aria-label="Back to top">
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
@@ -2786,6 +2807,13 @@ const SITE_AR = {
     railCv: ["CV", "السيرة الذاتية"], railPortfolio: ["Portfolio", "ملف الأعمال"], railLinkedin: ["LinkedIn", "LinkedIn"],
     railLangToggle: ["العربية", "English"], railThemeToggle: ["Light mode", "الوضع الفاتح"]
   };
+  const WHERE_LABELS = {
+    home: ['HOME','الرئيسية'], about: ['ABOUT','نبذة عني'], 'what-i-do': ['WHAT I DO','ماذا أفعل'],
+    teaching: ['TEACHING','التدريس'], work: ['WORK','الأعمال'], materials: ['MATERIALS','المواد'],
+    experience: ['EXPERIENCE','الخبرة'], credentials: ['EDUCATION','التعليم'], development: ['DEVELOPMENT','التطوير'],
+    skills: ['SKILLS','المهارات'], creative: ['CREATIVE','اهتمامات'], contact: ['CONTACT','تواصل']
+  };
+  const CASE_FLOW_LABELS = {en:['Challenge','Idea','Process','Result'],ar:['التحدي','الفكرة','العملية','النتيجة']};
   const SECTION_TEXT = {
     about: { tag: ["who I am", "من أنا"], heading: ["About", "نبذة عني"] },
     "what-i-do": { tag: ["day to day", "يوميًا"], heading: ["What I do", "ماذا أفعل"] },
@@ -2853,6 +2881,8 @@ const SITE_AR = {
     document.getElementById('backToTop').setAttribute('aria-label', lang === 'ar' ? 'العودة للأعلى' : 'Back to top');
     document.getElementById('mobileMenuCloseLabel').textContent = lang === 'ar' ? 'إغلاق القائمة' : 'Close menu';
     document.getElementById('mobileMenuClose').setAttribute('aria-label', lang === 'ar' ? 'إغلاق القائمة' : 'Close menu');
+    document.getElementById('whereAmI').setAttribute('aria-label', lang === 'ar' ? 'موقعك الحالي في الصفحة' : 'Current section');
+    document.querySelectorAll('#featuredCaseFlow span').forEach((el, index) => { el.textContent = CASE_FLOW_LABELS[lang][index]; });
   }
 
   // Language toggle
@@ -3153,6 +3183,16 @@ const SITE_AR = {
         a.classList.toggle('active', active);
         if(active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
       });
+      const where = document.getElementById('whereAmI');
+      const whereNumber = document.getElementById('whereAmINumber');
+      const whereLabel = document.getElementById('whereAmILabel');
+      const whereIndex = railSections.indexOf(current);
+      const labels = WHERE_LABELS[current.id] || ['SECTION','قسم'];
+      if(where && whereNumber && whereLabel){
+        whereNumber.textContent = String(Math.max(1, whereIndex + 1)).padStart(2,'0');
+        whereLabel.textContent = labels[document.documentElement.lang === 'ar' ? 1 : 0];
+        where.classList.toggle('is-visible', window.scrollY > 180);
+      }
     }
   }
 
@@ -3238,6 +3278,8 @@ const SITE_AR = {
     // updates that create the scroll-linked golden light and active-card glow;
     // skip the more expensive navigation, section-scene, and parallax reads.
     if(mobileMQ.matches){
+      updateSpy();
+      updateRailSpy();
       updateBackToTop();
       updateTimeline();
       updateProjectTimelines();
@@ -3260,6 +3302,7 @@ const SITE_AR = {
     }
   }
   document.addEventListener('scroll', requestScrollUpdate, {passive:true});
+  window.addEventListener('scroll', requestScrollUpdate, {passive:true});
   window.addEventListener('resize', () => {
     parallaxActive = desktopMQ.matches && !reducedMQ.matches && !!aboutPhotoImg;
     if(!parallaxActive && aboutPhotoImg){ aboutPhotoImg.style.removeProperty('--photo-parallax'); }
