@@ -444,13 +444,16 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .availability-item{flex:1 1 190px;min-width:0;padding:16px 18px;border-inline-start:2px solid var(--yellow);border-block:1px solid rgba(231,184,78,.2);background:rgba(255,255,255,.025);color:var(--chalk-dim);line-height:1.5;}
   html[data-theme="light"] .availability-item{background:rgba(255,255,255,.5);color:var(--text-main);border-block-color:rgba(91,20,37,.12);}
   @media (max-width:720px){.availability-strip{display:grid;grid-template-columns:1fr;gap:8px;margin-top:18px;}.availability-item{padding:13px 14px;}}
-  .featured-case{position:relative;margin:34px 0 0;border:1px solid rgba(231,184,78,.4);border-radius:16px;overflow:hidden;background:linear-gradient(135deg,rgba(231,184,78,.12),rgba(255,255,255,.025));box-shadow:0 12px 34px rgba(0,0,0,.14);}
+  .featured-case{position:relative;margin:34px 0 0;border:1px solid rgba(231,184,78,.34);border-radius:16px;overflow:hidden;background:linear-gradient(135deg,rgba(231,184,78,.105),rgba(255,255,255,.022));box-shadow:0 14px 34px rgba(0,0,0,.18),0 1px 0 rgba(255,255,255,.035) inset;transition:border-color .42s ease,box-shadow .42s ease,background .42s ease;}
   .featured-case-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:58px;padding:14px 18px;border:0;background:transparent;color:var(--chalk);font:inherit;font-size:1rem;font-weight:600;text-align:start;cursor:pointer;}
   .featured-case-toggle:hover,.featured-case-toggle:focus-visible{color:var(--yellow);background:rgba(231,184,78,.06);}
-  .featured-case-toggle-icon{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(231,184,78,.5);border-radius:50%;color:var(--yellow);font-size:1.35rem;font-weight:400;line-height:1;transition:transform .2s ease,background-color .2s ease;}
-  .featured-case.is-open .featured-case-toggle-icon{transform:rotate(45deg);background:rgba(231,184,78,.12);}
-  .featured-case-content{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);gap:28px;align-items:stretch;padding:0 clamp(22px,4vw,42px) clamp(22px,4vw,42px);}
-  .featured-case.is-open .featured-case-content{animation:featuredCaseIn .22s ease-out;}
+  .featured-case-toggle-icon{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(231,184,78,.5);border-radius:50%;color:var(--yellow);font-size:1.2rem;font-weight:400;line-height:1;transition:color .28s ease,border-color .28s ease,background-color .28s ease;}
+  .featured-case-content{display:grid;grid-template-rows:0fr;transition:grid-template-rows .48s cubic-bezier(.4,.1,.2,1);}
+  .featured-case-content-inner{min-height:0;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);gap:28px;align-items:stretch;padding:0 clamp(22px,4vw,42px);opacity:0;transform:translateY(-8px);transition:opacity .28s ease,transform .48s cubic-bezier(.4,.1,.2,1),padding-bottom .48s cubic-bezier(.4,.1,.2,1);}
+  .featured-case.is-open{border-color:rgba(231,184,78,.62);background:linear-gradient(135deg,rgba(231,184,78,.15),rgba(255,255,255,.03));box-shadow:0 20px 44px rgba(0,0,0,.24),0 0 0 1px rgba(231,184,78,.08) inset;}
+  .featured-case.is-open .featured-case-content{grid-template-rows:1fr;}
+  .featured-case.is-open .featured-case-content-inner{opacity:1;transform:none;padding-bottom:clamp(22px,4vw,42px);}
+  .featured-case.is-open .featured-case-toggle-icon{background:rgba(231,184,78,.12);}
   @keyframes featuredCaseIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
   html[data-theme="light"] .featured-case{background:linear-gradient(135deg,rgba(231,184,78,.22),rgba(255,255,255,.82));box-shadow:0 12px 34px rgba(91,20,37,.08);}
   .featured-case::before{content:"";position:absolute;inset:auto -12% -45% 35%;height:260px;background:radial-gradient(circle,rgba(231,184,78,.2),transparent 68%);pointer-events:none;}
@@ -475,10 +478,10 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .work-filter{flex:0 0 auto;min-height:40px;}
     .work-count{font-size:.72rem;}
     .featured-case{margin-top:28px;}
-    .featured-case-content{grid-template-columns:1fr;gap:20px;padding:0 18px 22px;}
+    .featured-case-content-inner{grid-template-columns:1fr;gap:20px;padding-inline:18px;}
     .case-visual{min-height:170px;order:-1;}
   }
-  @media (prefers-reduced-motion:reduce){.work-filter,.featured-case-toggle-icon{transition:none;}.featured-case.is-open .featured-case-content{animation:none;}}
+  @media (prefers-reduced-motion:reduce){.work-filter,.featured-case-toggle-icon,.featured-case,.featured-case-content,.featured-case-content-inner{transition:none;}.featured-case-content{grid-template-rows:1fr;}.featured-case-content-inner{opacity:1;transform:none;padding-bottom:22px;}}
 
   @media (max-width:720px){
     section.section-active .section-head h2{transform:translateX(4px);}
@@ -1702,6 +1705,30 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .scroll-progress,.side-rail::after,.section-head::after,.tense-diagram .spine-glow,
   .featured-case.is-open .featured-case-toggle-icon{box-shadow:none;}
 }
+  /* ---------- visual depth pass ---------- */
+  main.wrap > section:not(#home){
+    position:relative;
+    isolation:isolate;
+  }
+  main.wrap > section:not(#home)::before{
+    content:"";position:absolute;inset:18px -4vw 18px;z-index:-1;pointer-events:none;
+    border-block:1px solid rgba(239,234,216,.035);
+    background:radial-gradient(ellipse at 12% 0%,rgba(231,184,78,.035),transparent 42%),linear-gradient(180deg,rgba(255,255,255,.012),transparent 45%);
+    opacity:.8;
+  }
+  .approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details{
+    box-shadow:0 8px 22px rgba(0,0,0,.11),0 1px 0 rgba(255,255,255,.025) inset;
+  }
+  .approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover,.credential-strip .cred:hover,.project-details:hover{
+    box-shadow:0 16px 30px rgba(0,0,0,.18),0 0 0 1px rgba(231,184,78,.06) inset;
+  }
+  .spine::after,.scroll-progress,.side-rail::after,.section-head::after,.tense-diagram .spine-glow{
+    box-shadow:0 0 5px var(--gold-glow-color),0 0 12px var(--gold-glow-soft);
+  }
+  .case-visual-featured strong{position:relative;z-index:1;text-shadow:0 8px 22px rgba(231,184,78,.16);}
+  @media (prefers-reduced-motion:reduce){
+    main.wrap > section:not(#home)::before,.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details{box-shadow:none;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -1873,7 +1900,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <button class="featured-case-toggle" id="featuredCaseToggle" type="button" aria-expanded="false" aria-controls="featuredCaseContent">
         <span>Featured case study</span><span class="featured-case-toggle-icon" aria-hidden="true">+</span>
       </button>
-      <div class="featured-case-content" id="featuredCaseContent" hidden>
+      <div class="featured-case-content" id="featuredCaseContent">
+        <div class="featured-case-content-inner">
         <div class="featured-case-copy">
           <span class="section-tag" id="featuredCaseLabel">Featured case study</span>
           <h3 id="featuredCaseTitle"></h3>
@@ -1886,6 +1914,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
           <strong>87%</strong>
           <span id="featuredCaseVisualText">reported engagement increase</span>
           <i></i><i></i><i></i>
+        </div>
         </div>
       </div>
     </article>
@@ -2479,7 +2508,7 @@ const SITE_AR = {
     const openProjectIndexes = [...document.querySelectorAll('#workSpine .project-details')]
       .map((details, index) => details.open ? index : -1).filter(index => index >= 0);
     const activeProjectFilter = document.querySelector('#workFilters .work-filter[aria-pressed="true"]')?.dataset.filter || 'all';
-    const featuredWasOpen = document.getElementById('featuredCaseToggle')?.getAttribute('aria-expanded') === 'true';
+    const featuredWasOpen = document.getElementById('featuredCase')?.classList.contains('is-open');
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
     document.getElementById('heroHeadline').textContent = data.heroHeadline;
@@ -2567,10 +2596,10 @@ const SITE_AR = {
     document.getElementById('featuredCaseVisualText').textContent = lang === 'ar' ? 'الزيادة المبلغ عنها في التفاعل' : 'reported engagement increase';
     const featuredToggle = document.getElementById('featuredCaseToggle');
     const featuredContent = document.getElementById('featuredCaseContent');
-    featuredContent.hidden = !featuredWasOpen;
     document.getElementById('featuredCase').classList.toggle('is-open', featuredWasOpen);
     featuredToggle.setAttribute('aria-expanded', String(featuredWasOpen));
     featuredToggle.querySelector('span:first-child').textContent = lang === 'ar' ? 'دراسة حالة مميزة' : 'Featured case study';
+    featuredToggle.querySelector('.featured-case-toggle-icon').textContent = featuredWasOpen ? '×' : '+';
     featuredToggle.setAttribute('aria-label', featuredWasOpen
       ? (lang === 'ar' ? 'إغلاق دراسة الحالة المميزة' : 'Close featured case study')
       : (lang === 'ar' ? 'فتح دراسة الحالة المميزة' : 'Open featured case study'));
@@ -2579,7 +2608,7 @@ const SITE_AR = {
       featuredToggle.setAttribute('aria-expanded', String(!open));
       featuredToggle.setAttribute('aria-label', !open ? (lang === 'ar' ? 'إغلاق دراسة الحالة المميزة' : 'Close featured case study') : (lang === 'ar' ? 'فتح دراسة الحالة المميزة' : 'Open featured case study'));
       document.getElementById('featuredCase').classList.toggle('is-open', !open);
-      featuredContent.hidden = open;
+      featuredToggle.querySelector('.featured-case-toggle-icon').textContent = open ? '+' : '×';
     };
 
     // Teaching materials
