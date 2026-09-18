@@ -1451,6 +1451,16 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html[dir="rtl"] .section-head::after{margin-inline-start:0;margin-inline-end:auto;transform:none;}
     section:not(#home){scroll-margin-top:calc(84px + env(safe-area-inset-top));}
 
+    /* The featured case study is editorial body copy, not a narrow text
+       column. Forced justification creates large word gaps on phones. */
+    .featured-case p{
+      text-align:start !important;
+      text-justify:auto;
+      hyphens:none;
+      -webkit-hyphens:none;
+      word-spacing:normal;
+    }
+
     .spine>.entry,.project-details,.creative-lead,.contact-box,.approach-card,.dev-card,.skill-block{
       background:rgba(255,255,255,.025);border-color:rgba(231,184,78,.16);box-shadow:0 6px 22px rgba(0,0,0,.18);
     }
