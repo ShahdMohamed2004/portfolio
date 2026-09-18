@@ -1730,6 +1730,29 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   @media (prefers-reduced-motion:reduce){
     main.wrap > section:not(#home)::before,.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details{box-shadow:none;}
   }
+  /* ---------- experience design pass: clarity first ---------- */
+  .hero-note{letter-spacing:.045em;text-transform:none;}
+  .hero h1{max-width:12ch;text-wrap:balance;}
+  .hero .lead{max-width:48ch;text-wrap:pretty;}
+  .about-photo .ph-fallback{display:block;min-height:100%;background:linear-gradient(135deg,rgba(231,184,78,.16),transparent 52%),repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 1px,transparent 1px 12px);}
+  .about-photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .45s cubic-bezier(.2,.7,.2,1),filter .45s ease;}
+  .about-photo:hover img,.about-photo:focus-visible img{transform:scale(1.02);}
+  .entry.reveal-item .entry-preview h3{transition:color .35s ease,transform .45s cubic-bezier(.2,.7,.2,1);}
+  .entry.reveal-item.in-view .entry-preview h3{transform:translateY(0);}
+  .entry.reveal-item:not(.in-view) .entry-preview h3{transform:translateY(6px);}
+  .project-details .proj-link,.btn,.creative-item{transition:transform .22s ease,background-color .22s ease,border-color .22s ease,color .22s ease;}
+  .project-details .proj-link:hover,.btn-text:hover,.creative-item:hover{transform:translateY(-2px);}
+  @media (max-width:767px){
+    header.mobile-compact nav{min-height:52px;padding-block:8px;}
+    header.mobile-compact .wordmark{font-size:.88rem;}
+    header.mobile-compact .nav-utility{transform:scale(.94);transform-origin:100% 50%;}
+    .hero h1{max-width:100%;}
+    .entry.reveal-item:not(.in-view) .entry-preview h3{transform:translateY(3px);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .about-photo img,.entry.reveal-item .entry-preview h3,.project-details .proj-link,.btn,.creative-item{transition:none;}
+    .about-photo:hover img,.about-photo:focus-visible img{transform:none;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -1858,7 +1881,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <h2>About</h2>
     </div>
     <div class="about-grid reveal">
-      <div class="about-photo" id="aboutPhoto" role="button" tabindex="0" aria-controls="photoLightbox" aria-label="Open Shahd's photo"> <span class="ph-fallback">Add a photo of<br>Shahd here</span></div>
+      <div class="about-photo" id="aboutPhoto" role="button" tabindex="0" aria-controls="photoLightbox" aria-label="Open Shahd's photo"> <span class="ph-fallback" aria-hidden="true"></span></div>
       <div class="about-text">
         <div class="about-who">
           <h3 class="about-name" id="aboutName"></h3>
@@ -3185,9 +3208,16 @@ const SITE_AR = {
   // Header and rail retain context while scrolling through the long-form story.
   const siteHeader = document.getElementById('siteHeader');
   const sideRail = document.getElementById('sideRail');
+  let previousScrollY = window.scrollY || 0;
   function updateChromeState(){
     const y = window.scrollY || 0;
     siteHeader.classList.toggle('scrolled', y > 18);
+    if(mobileMQ.matches){
+      siteHeader.classList.toggle('mobile-compact', y > 84 && y >= previousScrollY);
+    } else {
+      siteHeader.classList.remove('mobile-compact');
+    }
+    previousScrollY = y;
     if(sideRail){
       const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       sideRail.style.setProperty('--rail-progress', String(Math.max(0, Math.min(100, y / max * 100))));
@@ -3228,7 +3258,9 @@ const SITE_AR = {
   themeToggle.addEventListener('click', toggleTheme);
   themeToggleMobile.addEventListener('click', toggleTheme);
   railThemeToggle.addEventListener('click', toggleTheme);
-  applyTheme('dark');
+  let initialTheme = 'dark';
+  try{ initialTheme = localStorage.getItem('siteTheme') === 'light' ? 'light' : 'dark'; }catch(e){}
+  applyTheme(initialTheme);
 
   backToTop.addEventListener('click', function(){
     window.scrollTo({ top: 0, behavior: 'smooth' });
