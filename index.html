@@ -539,8 +539,22 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     object-position:center;
     display:block;
     background:transparent;
-    transform:translateY(0);
+    transform:translateY(var(--photo-parallax,0px)) perspective(700px) rotateX(var(--photo-tilt-x,0deg)) rotateY(var(--photo-tilt-y,0deg));
+    transform-origin:center;
+    transition:transform .18s ease-out;
   }
+  .about-photo[role="button"]{cursor:zoom-in;}
+  .about-photo[role="button"]:focus-visible{outline:2px solid var(--yellow);outline-offset:5px;}
+  body.photo-lightbox-open{overflow:hidden;}
+  .photo-lightbox{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:24px;}
+  .photo-lightbox[hidden]{display:none;}
+  .photo-lightbox-backdrop{position:absolute;inset:0;background:rgba(4,12,9,.82);backdrop-filter:blur(8px);}
+  .photo-lightbox-panel{position:relative;z-index:1;display:grid;place-items:center;max-width:min(92vw,520px);max-height:92vh;padding:18px;border:1px solid rgba(231,184,78,.55);border-radius:16px;background:var(--panel);box-shadow:0 24px 80px rgba(0,0,0,.45);}
+  .photo-lightbox-panel h2{margin:0 36px 12px;font-family:var(--font-display);font-size:1rem;color:var(--chalk);font-weight:500;text-align:center;}
+  .photo-lightbox-panel img{display:block;max-width:100%;max-height:78vh;width:auto;height:auto;object-fit:contain;border-radius:8px;}
+  .photo-lightbox-close{position:absolute;inset-block-start:8px;inset-inline-end:10px;width:32px;height:32px;border:1px solid rgba(231,184,78,.5);border-radius:50%;background:transparent;color:var(--chalk);font-size:1.5rem;line-height:1;cursor:pointer;}
+  .photo-lightbox-close:hover,.photo-lightbox-close:focus-visible{color:var(--yellow);background:rgba(231,184,78,.1);}
+  @media (prefers-reduced-motion:reduce){.about-photo img{transition:none;}.photo-lightbox-backdrop{backdrop-filter:none;}}
   @media (min-width:768px){
     .about-photo{overflow:hidden;}
     .about-photo img{transform:translateY(0);transform-origin:center;will-change:transform;}
@@ -1668,7 +1682,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <h2>About</h2>
     </div>
     <div class="about-grid reveal">
-      <div class="about-photo" id="aboutPhoto"><span class="ph-fallback">Add a photo of<br>Shahd here</span></div>
+      <div class="about-photo" id="aboutPhoto" role="button" tabindex="0" aria-controls="photoLightbox" aria-label="Open Shahd's photo"> <span class="ph-fallback">Add a photo of<br>Shahd here</span></div>
       <div class="about-text">
         <div class="about-who">
           <h3 class="about-name" id="aboutName"></h3>
@@ -1816,6 +1830,15 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </section>
 
 </main>
+<div class="photo-lightbox" id="photoLightbox" hidden role="dialog" aria-modal="true" aria-labelledby="photoLightboxTitle">
+  <div class="photo-lightbox-backdrop" data-photo-close></div>
+  <div class="photo-lightbox-panel" role="document">
+    <button class="photo-lightbox-close" id="photoLightboxClose" type="button" aria-label="Close photo">×</button>
+    <h2 id="photoLightboxTitle">Shahd Mohamed Siddiq</h2>
+    <img id="photoLightboxImage" alt="Photo of Shahd Mohamed Siddiq">
+  </div>
+</div>
+<footer>
 
 <footer>
   <span id="footerText"></span>
@@ -2640,6 +2663,48 @@ const SITE_AR = {
   const desktopMQ = window.matchMedia('(min-width:768px)');
   const mobileMQ = window.matchMedia('(max-width:767px)');
   const reducedMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // Personal photo: accessible lightbox on every device, subtle pointer tilt on desktop only.
+  const aboutPhoto = document.getElementById('aboutPhoto');
+  const photoLightbox = document.getElementById('photoLightbox');
+  const photoLightboxImage = document.getElementById('photoLightboxImage');
+  const photoLightboxClose = document.getElementById('photoLightboxClose');
+  let photoBeforeOpen = null;
+  function currentPhotoImage(){ return aboutPhoto ? aboutPhoto.querySelector('img') : null; }
+  function openPhotoLightbox(){
+    const image = currentPhotoImage();
+    if(!image || !photoLightbox) return;
+    photoLightboxImage.src = image.currentSrc || image.src;
+    photoLightboxImage.alt = image.alt || (document.documentElement.lang === 'ar' ? 'صورة شهد محمد صديق' : 'Photo of Shahd Mohamed Siddiq');
+    photoLightbox.hidden = false;
+    document.body.classList.add('photo-lightbox-open');
+    photoBeforeOpen = document.activeElement;
+    photoLightboxClose.focus();
+  }
+  function closePhotoLightbox(){
+    if(!photoLightbox || photoLightbox.hidden) return;
+    photoLightbox.hidden = true;
+    photoLightboxImage.removeAttribute('src');
+    document.body.classList.remove('photo-lightbox-open');
+    if(photoBeforeOpen && photoBeforeOpen.focus) photoBeforeOpen.focus(); else if(aboutPhoto) aboutPhoto.focus();
+  }
+  if(aboutPhoto){
+    aboutPhoto.addEventListener('click', openPhotoLightbox);
+    aboutPhoto.addEventListener('keydown', (event) => { if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openPhotoLightbox(); } });
+  }
+  photoLightboxClose.addEventListener('click', closePhotoLightbox);
+  photoLightbox.querySelectorAll('[data-photo-close]').forEach(el => el.addEventListener('click', closePhotoLightbox));
+  document.addEventListener('keydown', (event) => { if(event.key === 'Escape') closePhotoLightbox(); });
+  if(aboutPhoto && desktopMQ.matches && !reducedMQ.matches){
+    aboutPhoto.addEventListener('pointermove', (event) => {
+      const rect = aboutPhoto.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - .5;
+      const y = (event.clientY - rect.top) / rect.height - .5;
+      aboutPhoto.style.setProperty('--photo-tilt-x', `${(-y * 3).toFixed(2)}deg`);
+      aboutPhoto.style.setProperty('--photo-tilt-y', `${(x * 4).toFixed(2)}deg`);
+    }, {passive:true});
+    aboutPhoto.addEventListener('pointerleave', () => { aboutPhoto.style.removeProperty('--photo-tilt-x'); aboutPhoto.style.removeProperty('--photo-tilt-y'); });
+  }
+  // mobile menu
 
   // mobile menu
   const hamburger = document.getElementById('hamburgerBtn');
@@ -2792,7 +2857,7 @@ const SITE_AR = {
     // small, clamped offset so the image never exposes an edge inside its frame
     let offset = (center - vh / 2) * 0.035;
     offset = Math.max(Math.min(offset, 6), -6);
-    aboutPhotoImg.style.transform = `translateY(${offset}px)`;
+    aboutPhotoImg.style.setProperty('--photo-parallax', `${offset}px`);
   }
 
   function updateSectionScenes(){
@@ -2880,7 +2945,7 @@ const SITE_AR = {
   document.addEventListener('scroll', requestScrollUpdate, {passive:true});
   window.addEventListener('resize', () => {
     parallaxActive = desktopMQ.matches && !reducedMQ.matches && !!aboutPhotoImg;
-    if(!parallaxActive && aboutPhotoImg){ aboutPhotoImg.style.transform = ''; }
+    if(!parallaxActive && aboutPhotoImg){ aboutPhotoImg.style.removeProperty('--photo-parallax'); }
     requestScrollUpdate();
   }, {passive:true});
   onScrollFrame(); // run once on load so everything starts in the right state
