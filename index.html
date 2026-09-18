@@ -1634,6 +1634,43 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .skill-block::after, .contact-box::after, .credential-strip .cred::after,
   .project-details::after { display:none; }
 }
+
+/* ---------- restrained interaction tokens ----------
+   Glow belongs to moving state indicators and active controls, never to
+   every static border or card. The values are intentionally low-contrast. */
+:root{
+  --gold-glow-color:rgba(231,184,78,.48);
+  --gold-glow-soft:rgba(231,184,78,.26);
+  --gold-glow-faint:rgba(231,184,78,.12);
+  --gold-line-color:#d9ad45;
+  --gold-line-active:#f0c95a;
+  --focus-ring:0 0 0 3px rgba(231,184,78,.2);
+}
+.scroll-progress,
+.side-rail::after,
+.section-head::after,
+.tense-diagram .spine-glow{
+  box-shadow:0 0 4px var(--gold-glow-color),0 0 10px var(--gold-glow-soft);
+}
+.scroll-progress{background:var(--gold-line-active);}
+.section-head::after{background:linear-gradient(90deg,var(--gold-line-active),transparent);}
+.work-filter[aria-pressed="true"],
+.featured-case-toggle:focus-visible,
+.project-details:focus-within,
+.accordion-card:focus-within{
+  box-shadow:var(--focus-ring);
+}
+.featured-case-toggle-icon{box-shadow:0 0 0 0 transparent;}
+.featured-case.is-open .featured-case-toggle-icon{box-shadow:0 0 5px var(--gold-glow-soft);}
+@media (max-width:767px){
+  .scroll-progress,.side-rail::after,.section-head::after,.tense-diagram .spine-glow{
+    box-shadow:0 0 3px var(--gold-glow-soft),0 0 7px var(--gold-glow-faint);
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .scroll-progress,.side-rail::after,.section-head::after,.tense-diagram .spine-glow,
+  .featured-case.is-open .featured-case-toggle-icon{box-shadow:none;}
+}
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -2408,6 +2445,10 @@ const SITE_AR = {
   };
 
   function renderContent(data, lang){
+    const openProjectIndexes = [...document.querySelectorAll('#workSpine .project-details')]
+      .map((details, index) => details.open ? index : -1).filter(index => index >= 0);
+    const activeProjectFilter = document.querySelector('#workFilters .work-filter[aria-pressed="true"]')?.dataset.filter || 'all';
+    const featuredWasOpen = document.getElementById('featuredCaseToggle')?.getAttribute('aria-expanded') === 'true';
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
     document.getElementById('heroHeadline').textContent = data.heroHeadline;
@@ -2450,15 +2491,15 @@ const SITE_AR = {
       const visualLetters = category === 'research' ? 'R / 01' : category === 'edtech' ? 'E / 02' : category === 'teaching' ? 'T / 06' : 'D / 03';
       return `
       <div class="entry" data-step="${i + 1}" data-category="${category}">
-        <details class="project-details">
-          <summary class="project-summary" aria-label="${lang === 'ar' ? 'عرض المنهجية والروابط' : 'View methodology & links'}">
+        <details class="project-details" id="projectDetails-${i}" data-project-index="${i}">
+          <summary class="project-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض المنهجية والروابط' : 'View methodology & links'}">
             <div class="entry-preview">
               <span class="entry-flag ${SITE.projects[i].flag === 'core project' ? 'core' : ''}">${p.flag}</span>
               <h3>${p.title}</h3>
               <div class="badges">${p.badges.map(b => `<span class="badge">${b}</span>`).join('')}</div>
             </div>
           </summary>
-          <div class="project-details-body">
+          <div class="project-details-body" id="projectDetailsBody-${i}">
             <div class="project-visual" aria-hidden="true">${visualLetters}</div>
             ${p.video ? `<div class="teaching-video" aria-label="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching demonstration video'}"><iframe src="${p.video}" title="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching Demonstration video'}" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>` : ''}
             ${p.stat ? `<div class="stat-line">${p.stat}</div>` : ''}
@@ -2470,6 +2511,13 @@ const SITE_AR = {
         </details>
       </div>`;
     }).join('');
+    document.querySelectorAll('#workSpine .project-details').forEach((details, index) => {
+      const summary = details.querySelector('summary');
+      const syncState = () => summary.setAttribute('aria-expanded', String(details.open));
+      details.addEventListener('toggle', syncState);
+      if(openProjectIndexes.includes(index)) details.open = true;
+      syncState();
+    });
     const updateProjectFilter = (filter = 'all') => {
       document.querySelectorAll('#workFilters .work-filter').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.filter === filter)));
       const entries = [...document.querySelectorAll('#workSpine .entry')];
@@ -2478,7 +2526,7 @@ const SITE_AR = {
       document.getElementById('workCount').textContent = lang === 'ar' ? `${visible} أعمال` : `${visible} ${visible === 1 ? 'project' : 'projects'}`;
     };
     document.querySelectorAll('#workFilters .work-filter').forEach(btn => btn.addEventListener('click', () => updateProjectFilter(btn.dataset.filter)));
-    updateProjectFilter();
+    updateProjectFilter(activeProjectFilter);
     const featured = data.projects[0];
     document.getElementById('featuredCaseLabel').textContent = lang === 'ar' ? 'دراسة حالة مميزة' : 'Featured case study';
     document.getElementById('featuredCaseTitle').textContent = featured.title;
@@ -2488,8 +2536,13 @@ const SITE_AR = {
     document.getElementById('featuredCaseVisualText').textContent = lang === 'ar' ? 'الزيادة المبلغ عنها في التفاعل' : 'reported engagement increase';
     const featuredToggle = document.getElementById('featuredCaseToggle');
     const featuredContent = document.getElementById('featuredCaseContent');
+    featuredContent.hidden = !featuredWasOpen;
+    document.getElementById('featuredCase').classList.toggle('is-open', featuredWasOpen);
+    featuredToggle.setAttribute('aria-expanded', String(featuredWasOpen));
     featuredToggle.querySelector('span:first-child').textContent = lang === 'ar' ? 'دراسة حالة مميزة' : 'Featured case study';
-    featuredToggle.setAttribute('aria-label', lang === 'ar' ? 'فتح دراسة الحالة المميزة' : 'Open featured case study');
+    featuredToggle.setAttribute('aria-label', featuredWasOpen
+      ? (lang === 'ar' ? 'إغلاق دراسة الحالة المميزة' : 'Close featured case study')
+      : (lang === 'ar' ? 'فتح دراسة الحالة المميزة' : 'Open featured case study'));
     featuredToggle.onclick = () => {
       const open = featuredToggle.getAttribute('aria-expanded') === 'true';
       featuredToggle.setAttribute('aria-expanded', String(!open));
