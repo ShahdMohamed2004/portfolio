@@ -373,8 +373,9 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .tense-diagram svg{width:100%;height:auto;display:block;overflow:visible;}
   .tense-diagram .tick-label{font-family:var(--font-hand);font-size:15px;fill:var(--chalk-dim);opacity:.45;transition:opacity .35s ease,fill .35s ease;}
   .tense-diagram .tense-label{font-family:var(--font-body);font-size:10px;fill:var(--muted);letter-spacing:.02em;opacity:.35;transition:opacity .35s ease,fill .35s ease;}
-  .tense-diagram .spine-path{stroke:var(--chalk);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-dasharray:640;stroke-dashoffset:640;transition:stroke-dashoffset .08s linear;}
-  .tense-diagram .spine-glow{stroke:var(--yellow);stroke-width:4;fill:none;stroke-linecap:round;opacity:.18;filter:blur(4px);stroke-dasharray:640;stroke-dashoffset:640;}
+  .tense-diagram .timeline-base{stroke:rgba(239,234,216,.28);stroke-width:1.6;fill:none;stroke-linecap:round;}
+  .tense-diagram .spine-path{stroke:var(--gold-line-active);stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:620;stroke-dashoffset:620;transition:stroke-dashoffset .08s linear;}
+  .tense-diagram .spine-glow{stroke:var(--yellow);stroke-width:4;fill:none;stroke-linecap:round;opacity:.28;filter:blur(4px);stroke-dasharray:620;stroke-dashoffset:620;transition:stroke-dashoffset .08s linear;}
   .tense-diagram circle{fill:var(--ink);stroke:var(--muted);stroke-width:1.5;opacity:.45;transition:opacity .3s ease,stroke .3s ease,fill .3s ease,transform .3s ease;transform-box:fill-box;transform-origin:center;}
   .tense-diagram .timeline-dot.active{fill:var(--yellow);stroke:var(--yellow);opacity:1;transform:scale(1.65);filter:drop-shadow(0 0 6px rgba(231,184,78,.55));}
   .tense-diagram .timeline-label.active{opacity:1;fill:var(--yellow);}
@@ -1834,6 +1835,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
     <div class="tense-diagram" id="tenseDiagram">
       <svg viewBox="0 0 640 110" aria-hidden="true">
+        <path class="timeline-base" d="M10,60 H630" aria-hidden="true" />
         <path class="spine-glow" d="M10,60 H630" aria-hidden="true" />
         <path class="spine-path" d="M10,60 H630" />
         <circle class="timeline-dot" data-point="0" cx="10" cy="60" r="4"></circle>
@@ -1886,7 +1888,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </section>
 
   <!-- SELECTED WORK -->
-  <section id="work">
+  <section id="work" class="reveal">
     <div class="section-head reveal">
       <span class="section-tag">what I build</span>
       <h2>Selected work</h2>
@@ -2550,7 +2552,7 @@ const SITE_AR = {
       const category = projectCategory(p);
       const visualLetters = category === 'research' ? 'R / 01' : category === 'edtech' ? 'E / 02' : category === 'teaching' ? 'T / 06' : 'D / 03';
       return `
-      <div class="entry" data-step="${i + 1}" data-category="${category}">
+      <div class="entry reveal-item" data-step="${i + 1}" data-category="${category}">
         <details class="project-details" id="projectDetails-${i}" data-project-index="${i}">
           <summary class="project-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض المنهجية والروابط' : 'View methodology & links'}">
             <div class="entry-preview">
@@ -2797,6 +2799,7 @@ const SITE_AR = {
     document.body.classList.toggle('is-rtl', lang === 'ar');
     renderContent(lang === 'ar' ? SITE_AR : SITE, lang);
     applyStaticText(lang);
+    window.requestAnimationFrame(() => updateTimeline());
     const nextLabel = lang === 'ar' ? 'English' : 'العربية';
     langToggle.textContent = nextLabel;
     langToggle.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
@@ -3125,7 +3128,11 @@ const SITE_AR = {
     const rect = diagram.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const progress = reducedMQ.matches ? 1 : Math.max(0, Math.min(1, (vh * 0.84 - rect.top) / (vh * 0.72)));
-    const dash = 640 * (1 - progress);
+    const rtl = document.documentElement.dir === 'rtl';
+    const pathData = rtl ? 'M630,60 H10' : 'M10,60 H630';
+    if(path) path.setAttribute('d', pathData);
+    if(glow) glow.setAttribute('d', pathData);
+    const dash = 620 * (1 - progress);
     if(path) path.style.strokeDashoffset = String(dash);
     if(glow) glow.style.strokeDashoffset = String(dash);
     diagram.classList.toggle('in-view', progress > 0.02);
