@@ -1906,6 +1906,43 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   #workSpine .entry.reveal-item{
     transition-delay:var(--reveal-delay,0ms);
   }
+  /* ---------- English Selected Work LTR contract ----------
+     The locale is owned by html[dir]. Keep this correction isolated to the
+     actual work section so Arabic mirroring remains unchanged elsewhere. */
+  html[dir="ltr"] #work,
+  html[dir="ltr"] #work *{
+    direction:ltr;
+  }
+  html[dir="ltr"] #work,
+  html[dir="ltr"] #work .section-head,
+  html[dir="ltr"] #work .work-toolbar,
+  html[dir="ltr"] #work .entry,
+  html[dir="ltr"] #work .entry-preview,
+  html[dir="ltr"] #work .project-details-body{
+    text-align:start;
+  }
+  html[dir="ltr"] #work .entry-preview{
+    align-items:flex-start;
+  }
+  html[dir="ltr"] #work .project-details > summary.project-summary{
+    flex-direction:row;
+    padding-inline-start:42px;
+    padding-inline-end:0;
+  }
+  html[dir="ltr"] #work .project-details summary::after{
+    inset-inline-start:auto;
+    inset-inline-end:12px;
+  }
+  html[dir="ltr"] #work .project-details .proj-links{
+    flex-direction:row;
+    justify-content:flex-start;
+  }
+  html[dir="ltr"] #work .project-details .proj-link{
+    flex-direction:row;
+  }
+  html[dir="ltr"] #contact .contact-links{
+    justify-content:center;
+  }
   @media (max-width:720px){
     html[dir="rtl"] .spine{
       padding-inline-start:0;
