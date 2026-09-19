@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="asset-version" content="2.1.0" />
 <meta name="theme-color" content="#152825" />
+<meta name="color-scheme" content="dark light" />
+<link rel="canonical" href="https://shahdmohamed2004.github.io/portfolio/" />
 <title>Shahd Mohamed Siddiq | TEFL Graduate &amp; Aspiring English Language Educator</title>
 <meta name="description" content="Portfolio of Shahd Mohamed Siddiq: TEFL graduate and aspiring English language educator developing instructional, assessment, and digital learning projects." />
 
@@ -83,6 +85,19 @@
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{animation:none !important; transition:none !important;}
+  }
+
+  /* UX system pass: predictable anchors, touch targets, and safe-area support. */
+  :where(section[id]){scroll-margin-top:clamp(76px, 10vw, 104px);}
+  :where(button,a,[role="button"]){-webkit-tap-highlight-color:transparent;}
+  :where(button,.btn,.work-filter,.mobile-menu a,.nav-links a){min-height:44px;}
+  @supports (padding: env(safe-area-inset-top)){
+    header{padding-top:max(20px, env(safe-area-inset-top));}
+    .mobile-menu{padding-bottom:max(30px, env(safe-area-inset-bottom));}
+  }
+  @media (max-width:767px){
+    .wrap{padding-inline:clamp(16px, 5vw, 24px);}
+    .nav-links,.nav-utility{gap:14px;}
   }
 
   html{background:#081410;}
@@ -2620,7 +2635,7 @@ const SITE_AR = {
     document.getElementById('aboutRole').textContent = data.title;
     document.getElementById('aboutBio').textContent = data.about.bio;
     if(data.about.photo){
-      document.getElementById('aboutPhoto').innerHTML = `<img src="${data.about.photo}" alt="Photo of ${SITE.fullName}">`;
+      document.getElementById('aboutPhoto').innerHTML = `<img src="${data.about.photo}" alt="Photo of ${SITE.fullName}" loading="lazy" decoding="async">`;
     }
 
     // What I do
