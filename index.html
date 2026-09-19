@@ -2010,29 +2010,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <span class="work-count" id="workCount" aria-live="polite"></span>
     </div>
     <div class="spine" id="workSpine"></div>
-    <article class="featured-case reveal" id="featuredCase" aria-labelledby="featuredCaseTitle">
-      <button class="featured-case-toggle" id="featuredCaseToggle" type="button" aria-expanded="false" aria-controls="featuredCaseContent">
-        <span>Featured case study</span><span class="featured-case-toggle-icon" aria-hidden="true">+</span>
-      </button>
-      <div class="featured-case-content" id="featuredCaseContent">
-        <div class="featured-case-content-inner">
-        <div class="featured-case-copy">
-          <span class="section-tag" id="featuredCaseLabel">Featured case study</span>
-          <h3 id="featuredCaseTitle"></h3>
-          <div class="case-flow" id="featuredCaseFlow" aria-label="Case study structure"><span>Challenge</span><span>Idea</span><span>Process</span><span>Result</span></div>
-          <p id="featuredCaseText"></p>
-          <div class="featured-case-meta" id="featuredCaseMeta"></div>
-          <div class="proj-links" id="featuredCaseLinks"></div>
-        </div>
-        <div class="case-visual case-visual-featured" aria-hidden="true">
-          <span class="case-visual-kicker">CASE / 01</span>
-          <strong>87%</strong>
-          <span id="featuredCaseVisualText">reported more active participation</span>
-          <i></i><i></i><i></i>
-        </div>
-        </div>
-      </div>
-    </article>
   </section>
 
   <!-- TEACHING MATERIALS -->
@@ -2621,7 +2598,6 @@ const SITE_AR = {
     const openProjectIndexes = [...document.querySelectorAll('#workSpine .project-details')]
       .map((details, index) => details.open ? index : -1).filter(index => index >= 0);
     const activeProjectFilter = document.querySelector('#workFilters .work-filter[aria-pressed="true"]')?.dataset.filter || 'all';
-    const featuredWasOpen = document.getElementById('featuredCase')?.classList.contains('is-open');
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
     document.getElementById('heroHeadline').textContent = data.heroHeadline;
@@ -2674,12 +2650,34 @@ const SITE_AR = {
           </summary>
           <div class="project-details-body" id="projectDetailsBody-${i}">
             <div class="project-visual" aria-hidden="true">${visualLetters}</div>
+            ${i === 0 ? `
+            <div class="featured-case embedded-case-study is-open" aria-labelledby="graduationCaseTitle">
+              <div class="featured-case-content">
+                <div class="featured-case-content-inner">
+                  <div class="featured-case-copy">
+                    <span class="section-tag">${lang === 'ar' ? 'مشروع التخرج' : 'Graduation project'}</span>
+                    <h3 id="graduationCaseTitle">${p.title}</h3>
+                    <div class="case-flow" aria-label="${lang === 'ar' ? 'هيكل المشروع' : 'Project structure'}">${CASE_FLOW_LABELS[lang].map(label => `<span>${label}</span>`).join('')}</div>
+                    <p>${p.description}</p>
+                    <div class="featured-case-meta"><span>${p.stat}</span><span>${p.role}</span></div>
+                    ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${p.tools}</div>` : ''}
+                    <div class="proj-links">${p.links.map(projectLink).join('')}</div>
+                  </div>
+                  <div class="case-visual case-visual-featured" aria-label="${lang === 'ar' ? 'نتيجة المشروع: 87٪ من الطلاب أفادوا بمشاركة أكثر نشاطًا' : 'Project finding: 87% of students reported more active participation'}">
+                    <span class="case-visual-kicker">${lang === 'ar' ? 'مشروع / 01' : 'PROJECT / 01'}</span>
+                    <strong>87%</strong>
+                    <span>${lang === 'ar' ? 'مشاركة أكثر نشاطًا وفق إفادات الطلاب' : 'reported more active participation'}</span>
+                    <i></i><i></i><i></i>
+                  </div>
+                </div>
+              </div>
+            </div>` : `
             ${p.video ? `<div class="teaching-video" aria-label="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching demonstration video'}"><iframe src="${p.video}" title="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching Demonstration video'}" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>` : ''}
             ${p.stat ? `<div class="stat-line">${p.stat}</div>` : ''}
             <p>${p.description}</p>
             ${p.role ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الدور' : 'Role'}</span>${p.role}</div>` : ''}
             ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${p.tools}</div>` : ''}
-            <div class="proj-links">${p.links.map(projectLink).join('')}</div>
+            <div class="proj-links">${p.links.map(projectLink).join('')}</div>`}
           </div>
         </details>
       </div>`;
@@ -2700,29 +2698,6 @@ const SITE_AR = {
     };
     document.querySelectorAll('#workFilters .work-filter').forEach(btn => btn.addEventListener('click', () => updateProjectFilter(btn.dataset.filter)));
     updateProjectFilter(activeProjectFilter);
-    const featured = data.projects[0];
-    document.getElementById('featuredCaseLabel').textContent = lang === 'ar' ? 'دراسة حالة مميزة' : 'Featured case study';
-    document.getElementById('featuredCaseTitle').textContent = featured.title;
-    document.getElementById('featuredCaseText').textContent = featured.description;
-    document.getElementById('featuredCaseMeta').innerHTML = `<span>${featured.stat || (lang === 'ar' ? 'مشروع بحثي تطبيقي' : 'Applied research project')}</span><span>${featured.role || ''}</span>`;
-    document.getElementById('featuredCaseLinks').innerHTML = featured.links.slice(0, 2).map(projectLink).join('');
-    document.getElementById('featuredCaseVisualText').textContent = lang === 'ar' ? 'مشاركة أكثر نشاطًا وفق إفادات الطلاب' : 'reported more active participation';
-    const featuredToggle = document.getElementById('featuredCaseToggle');
-    const featuredContent = document.getElementById('featuredCaseContent');
-    document.getElementById('featuredCase').classList.toggle('is-open', featuredWasOpen);
-    featuredToggle.setAttribute('aria-expanded', String(featuredWasOpen));
-    featuredToggle.querySelector('span:first-child').textContent = lang === 'ar' ? 'دراسة حالة مميزة' : 'Featured case study';
-    featuredToggle.querySelector('.featured-case-toggle-icon').textContent = featuredWasOpen ? '×' : '+';
-    featuredToggle.setAttribute('aria-label', featuredWasOpen
-      ? (lang === 'ar' ? 'إغلاق دراسة الحالة المميزة' : 'Close featured case study')
-      : (lang === 'ar' ? 'فتح دراسة الحالة المميزة' : 'Open featured case study'));
-    featuredToggle.onclick = () => {
-      const open = featuredToggle.getAttribute('aria-expanded') === 'true';
-      featuredToggle.setAttribute('aria-expanded', String(!open));
-      featuredToggle.setAttribute('aria-label', !open ? (lang === 'ar' ? 'إغلاق دراسة الحالة المميزة' : 'Close featured case study') : (lang === 'ar' ? 'فتح دراسة الحالة المميزة' : 'Open featured case study'));
-      document.getElementById('featuredCase').classList.toggle('is-open', !open);
-      featuredToggle.querySelector('.featured-case-toggle-icon').textContent = open ? '+' : '×';
-    };
 
     // Teaching materials
     document.getElementById('materialsGrid').innerHTML = data.materials.map(m => `
@@ -2904,7 +2879,6 @@ const SITE_AR = {
     document.getElementById('mobileMenuCloseLabel').textContent = lang === 'ar' ? 'إغلاق القائمة' : 'Close menu';
     document.getElementById('mobileMenuClose').setAttribute('aria-label', lang === 'ar' ? 'إغلاق القائمة' : 'Close menu');
     document.getElementById('whereAmI').setAttribute('aria-label', lang === 'ar' ? 'موقعك الحالي في الصفحة' : 'Current section');
-    document.querySelectorAll('#featuredCaseFlow span').forEach((el, index) => { el.textContent = CASE_FLOW_LABELS[lang][index]; });
   }
 
   // Language toggle
