@@ -1957,6 +1957,87 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     }
     html[dir="rtl"] .contact-box p{text-align:center !important;}
   }
+  /* ---------- Arabic Selected Work component contract ----------
+     Mirror only the work timeline and its descendants; keep the card shell
+     and reading order intentional at every viewport. */
+  html[dir="rtl"] #work,
+  html[dir="rtl"] #work *{
+    direction:rtl;
+  }
+  html[dir="rtl"] #work,
+  html[dir="rtl"] #work .section-head,
+  html[dir="rtl"] #work .work-toolbar,
+  html[dir="rtl"] #work .entry,
+  html[dir="rtl"] #work .entry-preview,
+  html[dir="rtl"] #work .project-details-body{
+    text-align:right;
+  }
+  html[dir="rtl"] #work .spine{
+    padding-inline-start:34px;
+    padding-inline-end:0;
+  }
+  html[dir="rtl"] #work .spine::before{
+    inset-inline-start:4px;
+    inset-inline-end:auto;
+  }
+  html[dir="rtl"] #work .spine::after{
+    inset-inline-start:3px;
+    inset-inline-end:auto;
+  }
+  html[dir="rtl"] #work .spine > .entry::before{
+    inset-inline-start:-34px;
+    inset-inline-end:auto;
+  }
+  html[dir="rtl"] #work .entry-preview{
+    align-items:flex-end;
+  }
+  html[dir="rtl"] #work .badges{
+    justify-content:flex-start;
+  }
+  html[dir="rtl"] #work .project-details > summary.project-summary{
+    flex-direction:row;
+    padding-inline-start:42px;
+    padding-inline-end:0;
+  }
+  html[dir="rtl"] #work .project-details summary::after{
+    inset-inline-start:12px;
+    inset-inline-end:auto;
+  }
+  html[dir="rtl"] #work .project-details .proj-links{
+    flex-direction:row-reverse;
+    justify-content:flex-start;
+  }
+  html[dir="rtl"] #work .project-details .proj-link{
+    flex-direction:row-reverse;
+    justify-content:flex-start;
+    text-align:right;
+  }
+  @media (max-width:720px){
+    html[dir="rtl"] #work .spine{
+      padding-inline-start:28px !important;
+      padding-inline-end:0 !important;
+    }
+    html[dir="rtl"] #work .spine::before{inset-inline-start:5px;inset-inline-end:auto;}
+    html[dir="rtl"] #work .spine::after{inset-inline-start:4px;inset-inline-end:auto;}
+    html[dir="rtl"] #work .spine > .entry::before{inset-inline-start:-28px;inset-inline-end:auto;}
+    html[dir="rtl"] #work .project-details > summary.project-summary{
+      flex-direction:row;
+      padding-inline:14px !important;
+    }
+    html[dir="rtl"] #work .project-details .entry-preview{
+      align-items:flex-end;
+      text-align:right;
+    }
+    html[dir="rtl"] #work .project-details .proj-links{
+      flex-direction:column;
+      align-items:stretch;
+    }
+    html[dir="rtl"] #work .project-details .proj-link{
+      flex-direction:row-reverse;
+      justify-content:flex-start;
+      text-align:right;
+    }
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
