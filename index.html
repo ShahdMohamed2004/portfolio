@@ -387,8 +387,10 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .tense-diagram .tick-label{font-family:var(--font-hand);font-size:15px;fill:var(--chalk-dim);opacity:.45;transition:opacity .35s ease,fill .35s ease;}
   .tense-diagram .tense-label{font-family:var(--font-body);font-size:10px;fill:var(--muted);letter-spacing:.02em;opacity:.35;transition:opacity .35s ease,fill .35s ease;}
   .tense-diagram .timeline-base{stroke:rgba(239,234,216,.28);stroke-width:1.6;fill:none;stroke-linecap:round;}
-  .tense-diagram .spine-path{stroke:var(--gold-line-active);stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke;transition:stroke-dashoffset .08s linear;}
-  .tense-diagram .spine-glow{stroke:var(--yellow);stroke-width:4;fill:none;stroke-linecap:round;opacity:.28;filter:blur(4px);stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke;transition:stroke-dashoffset .08s linear;}
+  /* Keep scroll-linked drawing calm and legible: the previous 80ms linear
+     transition made the progress jump aggressively between scroll frames. */
+  .tense-diagram .spine-path{stroke:var(--gold-line-active);stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke;transition:stroke-dashoffset .28s cubic-bezier(.22,1,.36,1);}
+  .tense-diagram .spine-glow{stroke:var(--yellow);stroke-width:4;fill:none;stroke-linecap:round;opacity:.28;filter:blur(4px);stroke-dasharray:1;stroke-dashoffset:1;vector-effect:non-scaling-stroke;transition:stroke-dashoffset .28s cubic-bezier(.22,1,.36,1);}
   .tense-diagram circle{fill:var(--ink);stroke:var(--muted);stroke-width:1.5;opacity:.45;transition:opacity .3s ease,stroke .3s ease,fill .3s ease,transform .3s ease;transform-box:fill-box;transform-origin:center;}
   .tense-diagram .timeline-dot.active{fill:var(--yellow);stroke:var(--yellow);opacity:1;transform:scale(1.65);filter:drop-shadow(0 0 6px rgba(231,184,78,.55));}
   .tense-diagram .timeline-label.active{opacity:1;fill:var(--yellow);}
