@@ -849,14 +849,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .contact-box p{color:var(--chalk-dim);max-width:50ch;margin-bottom:28px;}
   .contact-links{display:flex;flex-wrap:wrap;align-items:center;gap:16px;}
 
-  .toast{
-    position:fixed;left:50%;bottom:30px;transform:translate(-50%, 20px);
-    background:var(--chalk);color:var(--ink);padding:12px 22px;border-radius:4px;
-    font-size:0.9rem;font-weight:500;opacity:0;pointer-events:none;
-    transition:opacity 0.25s ease, transform 0.25s ease;z-index:200;
-  }
-  .toast.show{opacity:1;transform:translate(-50%, 0);}
-
   footer{
     text-align:center;padding:36px 24px;font-size:0.82rem;color:var(--muted);
     border-top:1px solid var(--line);
@@ -1842,6 +1834,92 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   @media (prefers-reduced-motion:reduce){
     html[dir="ltr"] .mobile-menu a,html[dir="rtl"] .mobile-menu a{transform:none;}
   }
+\n  /* ---------- native RTL layout contract ----------
+     Arabic is mirrored at the component level; the English layout remains untouched. */
+  html[dir="rtl"] main,
+  html[dir="rtl"] section,
+  html[dir="rtl"] .project-details,
+  html[dir="rtl"] .project-details-body,
+  html[dir="rtl"] .entry-preview,
+  html[dir="rtl"] .featured-case,
+  html[dir="rtl"] .featured-case-copy,
+  html[dir="rtl"] .contact-box{
+    direction:rtl;
+  }
+  html[dir="rtl"] .spine{
+    padding-inline-start:0;
+    padding-inline-end:34px;
+  }
+  html[dir="rtl"] .spine::before{
+    inset-inline-start:auto;
+    inset-inline-end:4px;
+  }
+  html[dir="rtl"] .spine::after{
+    inset-inline-start:auto;
+    inset-inline-end:3px;
+  }
+  html[dir="rtl"] .spine > .entry::before{
+    inset-inline-start:auto;
+    inset-inline-end:-34px;
+  }
+  html[dir="rtl"] .spine > .entry{
+    border-inline-start-color:transparent;
+  }
+  html[dir="rtl"] .spine > .entry.timeline-active{
+    border-inline-start-color:var(--yellow);
+    background:linear-gradient(270deg,rgba(231,184,78,.07),transparent 34%);
+  }
+  html[dir="rtl"] .entry-preview,
+  html[dir="rtl"] .timeline-detail > summary{
+    align-items:flex-end;
+    text-align:end;
+  }
+  html[dir="rtl"] .project-details > summary.project-summary{
+    display:flex;
+    flex-direction:row-reverse;
+    padding-inline-start:42px;
+    padding-inline-end:0;
+  }
+  html[dir="rtl"] .project-details summary::after{
+    inset-inline-start:12px;
+    inset-inline-end:auto;
+  }
+  html[dir="rtl"] .project-details .proj-links{
+    flex-direction:row-reverse;
+    justify-content:flex-start;
+  }
+  html[dir="rtl"] .project-details .proj-link{
+    flex-direction:row-reverse;
+  }
+  html[dir="rtl"] .contact-box{
+    align-items:center;
+    text-align:center;
+  }
+  html[dir="rtl"] .contact-box p{
+    margin-inline:auto;
+    text-align:center;
+  }
+  html[dir="rtl"] .contact-links{
+    justify-content:center;
+    width:100%;
+  }
+  #workSpine .entry.reveal-item{
+    transition-delay:var(--reveal-delay,0ms);
+  }
+  @media (max-width:720px){
+    html[dir="rtl"] .spine{
+      padding-inline-start:0;
+      padding-inline-end:28px;
+    }
+    html[dir="rtl"] .spine::before{inset-inline-end:5px;}
+    html[dir="rtl"] .spine::after{inset-inline-end:4px;}
+    html[dir="rtl"] .spine > .entry::before{inset-inline-end:-28px;}
+    html[dir="rtl"] .project-details .proj-links{
+      flex-direction:column;
+      align-items:stretch;
+    }
+    html[dir="rtl"] .contact-box p{text-align:center !important;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -2090,7 +2168,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     <div class="contact-box">
       <p id="contactIntro"></p>
       <div class="contact-links">
-        <a class="btn btn-solid" href="#" id="contactEmailBtn">Email</a>
+        <a class="btn btn-solid" href="#" id="contactEmailBtn" aria-label="Open Gmail compose">Email</a>
         <a class="btn btn-text" href="#" id="contactLinkedinBtn" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a class="btn btn-text" href="#" id="contactCvBtn" target="_blank" rel="noopener noreferrer">Download CV</a>
       </div>
@@ -2110,7 +2188,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   <span id="footerText"></span>
 </footer>
 
-<div class="toast" id="toast">Email copied to clipboard</div>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
@@ -2562,7 +2639,10 @@ const SITE_AR = {
   document.getElementById('linkedinLinkDesktop').href = SITE.links.linkedin;
   document.getElementById('linkedinLinkMobile').href = SITE.links.linkedin;
   document.getElementById('mobileLinkedinDock').href = SITE.links.linkedin;
-  document.getElementById('mobileEmailDock').href = 'mailto:' + encodeURIComponent(SITE.links.email) + '?subject=' + encodeURIComponent('Portfolio enquiry');
+  const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(SITE.links.email);
+  document.getElementById('mobileEmailDock').href = gmailComposeUrl;
+  document.getElementById('mobileEmailDock').target = '_blank';
+  document.getElementById('mobileEmailDock').rel = 'noopener noreferrer';
   document.getElementById('portfolioLinkDesktop').href = SITE.links.portfolioFolder;
   document.getElementById('portfolioLinkMobile').href = SITE.links.portfolioFolder;
   document.getElementById('materialsPortfolioLink').href = SITE.links.portfolioFolder;
@@ -2571,19 +2651,14 @@ const SITE_AR = {
   document.getElementById('railLinkedin').href = SITE.links.linkedin;
   document.getElementById('btnCV').href = SITE.links.cv;
   document.getElementById('btnLinkedin').href = SITE.links.linkedin;
-  // Open the visitor's default mail app with Shahd already in the To field.
-  const mailtoUrl = 'mailto:' + encodeURIComponent(SITE.links.email) + '?subject=' + encodeURIComponent('Portfolio enquiry');
+  // Open Gmail compose with the existing portfolio address in the To field.
   const contactEmailBtn = document.getElementById('contactEmailBtn');
-  contactEmailBtn.href = mailtoUrl;
-  contactEmailBtn.removeAttribute('target');
-  contactEmailBtn.removeAttribute('rel');
-  contactEmailBtn.title = 'Open your email app';
+  contactEmailBtn.href = gmailComposeUrl;
+  contactEmailBtn.target = '_blank';
+  contactEmailBtn.rel = 'noopener noreferrer';
+  contactEmailBtn.title = 'Open Gmail compose';
   document.getElementById('contactLinkedinBtn').href = SITE.links.linkedin;
   document.getElementById('contactCvBtn').href = SITE.links.cv;
-  contactEmailBtn.addEventListener('click', function(){
-    if(navigator.clipboard && SITE.links.email){ navigator.clipboard.writeText(SITE.links.email).then(showToast).catch(() => {}); }
-  });
-
   // Everything below depends on which language is active.
   const SKILL_LABELS = {
     en: { teaching: "Instructional Design", soft: "Classroom Practice", hard: "Educational Technology", languages: "Languages" },
@@ -3035,13 +3110,6 @@ const SITE_AR = {
     if((!rtl && deltaX > 72) || (rtl && deltaX < -72)) closeMenu();
     menuTouchStartX = 0;
   }, {passive:true});
-
-  // toast
-  function showToast(){
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2200);
-  }
 
   // subtle cursor-reactive glow in the hero (desktop pointers only)
   const heroEl = document.querySelector('.hero');
