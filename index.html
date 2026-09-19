@@ -116,8 +116,8 @@
   }
 
   p{
-    text-align:justify;
-    text-justify:inter-word;
+    text-align:start;
+    text-justify:auto;
     hyphens:auto;
     -webkit-hyphens:auto;
   }
@@ -1530,20 +1530,15 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .project-details .proj-link{display:flex;align-items:center;justify-content:flex-start;width:100%;min-height:40px;padding:8px 14px;border-radius:8px;font-size:.9rem;line-height:1.4;text-decoration:none;background:rgba(255,255,255,.025);}
     .project-details .proj-link svg{width:16px;min-width:16px;height:16px;min-height:16px;}
 
-    .contact-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%;}
-    #contactEmailBtn{grid-column:1 / -1;width:100%;justify-content:center;}
-    #contactLinkedinBtn,#contactCvBtn{width:100%;justify-content:center;text-align:center;}
+    .contact-links{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;}
+    .contact-links .btn{width:auto;max-width:100%;justify-content:center;text-align:center;}
+    #contactEmailBtn,#contactLinkedinBtn,#contactCvBtn{align-self:center;}
     .contact-links .btn{min-height:44px;padding:10px 12px;}
 
     footer{padding:28px 20px calc(84px + env(safe-area-inset-bottom));font-size:12px;line-height:1.6;}
     #footerText{display:block;max-width:34ch;margin-inline:auto;overflow-wrap:anywhere;}
     .back-to-top{right:16px;bottom:16px;}
   }
-  @media (max-width:380px){
-    .contact-links{grid-template-columns:1fr;}
-    #contactEmailBtn{grid-column:auto;}
-  }
-
 
   /* ---------- premium mobile visual refinement v2.3 ---------- */
   @media (max-width:768px){
@@ -1956,87 +1951,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       align-items:stretch;
     }
     html[dir="rtl"] .contact-box p{text-align:center !important;}
-  }
-  /* ---------- Arabic Selected Work component contract ----------
-     Mirror only the work timeline and its descendants; keep the card shell
-     and reading order intentional at every viewport. */
-  html[dir="rtl"] #work,
-  html[dir="rtl"] #work *{
-    direction:rtl;
-  }
-  html[dir="rtl"] #work,
-  html[dir="rtl"] #work .section-head,
-  html[dir="rtl"] #work .work-toolbar,
-  html[dir="rtl"] #work .entry,
-  html[dir="rtl"] #work .entry-preview,
-  html[dir="rtl"] #work .project-details-body{
-    text-align:right;
-  }
-  html[dir="rtl"] #work .spine{
-    padding-inline-start:34px;
-    padding-inline-end:0;
-  }
-  html[dir="rtl"] #work .spine::before{
-    inset-inline-start:4px;
-    inset-inline-end:auto;
-  }
-  html[dir="rtl"] #work .spine::after{
-    inset-inline-start:3px;
-    inset-inline-end:auto;
-  }
-  html[dir="rtl"] #work .spine > .entry::before{
-    inset-inline-start:-34px;
-    inset-inline-end:auto;
-  }
-  html[dir="rtl"] #work .entry-preview{
-    align-items:flex-end;
-  }
-  html[dir="rtl"] #work .badges{
-    justify-content:flex-start;
-  }
-  html[dir="rtl"] #work .project-details > summary.project-summary{
-    flex-direction:row;
-    padding-inline-start:42px;
-    padding-inline-end:0;
-  }
-  html[dir="rtl"] #work .project-details summary::after{
-    inset-inline-start:12px;
-    inset-inline-end:auto;
-  }
-  html[dir="rtl"] #work .project-details .proj-links{
-    flex-direction:row-reverse;
-    justify-content:flex-start;
-  }
-  html[dir="rtl"] #work .project-details .proj-link{
-    flex-direction:row-reverse;
-    justify-content:flex-start;
-    text-align:right;
-  }
-  @media (max-width:720px){
-    html[dir="rtl"] #work .spine{
-      padding-inline-start:28px !important;
-      padding-inline-end:0 !important;
-    }
-    html[dir="rtl"] #work .spine::before{inset-inline-start:5px;inset-inline-end:auto;}
-    html[dir="rtl"] #work .spine::after{inset-inline-start:4px;inset-inline-end:auto;}
-    html[dir="rtl"] #work .spine > .entry::before{inset-inline-start:-28px;inset-inline-end:auto;}
-    html[dir="rtl"] #work .project-details > summary.project-summary{
-      flex-direction:row;
-      padding-inline:14px !important;
-    }
-    html[dir="rtl"] #work .project-details .entry-preview{
-      align-items:flex-end;
-      text-align:right;
-    }
-    html[dir="rtl"] #work .project-details .proj-links{
-      flex-direction:column;
-      align-items:stretch;
-    }
-    html[dir="rtl"] #work .project-details .proj-link{
-      flex-direction:row-reverse;
-      justify-content:flex-start;
-      text-align:right;
-    }
   }
 </style>
 </head>
