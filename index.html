@@ -506,6 +506,35 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
   @media (prefers-reduced-motion:reduce){.work-filter,.featured-case-toggle-icon,.featured-case,.featured-case-content,.featured-case-content-inner{transition:none;}.featured-case-content{grid-template-rows:1fr;}.featured-case-content-inner{opacity:1;transform:none;padding-bottom:22px;}}
 
+  /* Graduation project: functional hierarchy without decorative identifier panels. */
+  .embedded-case-study{margin-top:28px;border-radius:10px;background:rgba(255,255,255,.018);box-shadow:none;}
+  .embedded-case-study::before,.embedded-case-study .case-visual,.project-visual,.case-flow{display:none !important;}
+  .embedded-case-study.is-open{border-color:var(--line-strong);background:transparent;box-shadow:none;}
+  .embedded-case-study .featured-case-content{display:block;}
+  .embedded-case-study .featured-case-content-inner{display:block;padding:24px clamp(16px,3vw,30px) 26px;opacity:1;transform:none;}
+  .embedded-case-study .featured-case-copy{max-width:820px;}
+  .embedded-case-study .section-tag{margin-bottom:8px;transform:none;font-size:1rem;letter-spacing:.02em;}
+  .embedded-case-study h3{margin:0 0 14px;font-size:clamp(1.55rem,3vw,2.35rem);line-height:1.18;}
+  .embedded-case-study .project-description{max-width:68ch;margin:0 0 22px;color:var(--chalk-dim);line-height:1.75;text-align:start;}
+  .project-facts{display:grid;gap:12px;margin:0 0 20px;max-width:68ch;}
+  .project-facts>div{display:grid;grid-template-columns:minmax(72px,100px) minmax(0,1fr);gap:14px;padding-top:11px;border-top:1px solid var(--line);}
+  .project-facts dt{color:var(--yellow);font-family:var(--font-hand);font-size:1.05rem;line-height:1.4;}
+  .project-facts dd{margin:0;color:var(--chalk-dim);line-height:1.55;overflow-wrap:anywhere;}
+  .project-finding{display:grid;gap:4px;max-width:68ch;margin:0 0 20px;padding:12px 14px;border-inline-start:2px solid var(--yellow);background:rgba(231,184,78,.045);}
+  .project-finding strong{font-size:.78rem;color:var(--yellow);font-weight:600;letter-spacing:.04em;}
+  .project-finding span{color:var(--chalk-dim);line-height:1.55;}
+  .embedded-case-study .proj-links{margin-top:8px;gap:10px;}
+  @media (max-width:640px){
+    .embedded-case-study .featured-case-content-inner{padding:20px 14px 22px;}
+    .project-facts>div{grid-template-columns:1fr;gap:3px;}
+    .project-finding{padding:11px 12px;}
+    .embedded-case-study .proj-links{display:grid;grid-template-columns:minmax(0,1fr);}
+    .embedded-case-study .proj-link{width:100%;justify-content:space-between;}
+  }
+  @media (min-width:641px){.embedded-case-study .proj-links{display:flex;flex-wrap:wrap;}}
+  @media (min-width:769px){.embedded-case-study{margin-inline:0;}.embedded-case-study .featured-case-content-inner{padding-inline:28px;}}
+  @media (prefers-reduced-motion:reduce){.embedded-case-study,.embedded-case-study .featured-case-content-inner{transition:none;}}
+
   @media (max-width:720px){
     section.section-active .section-head h2{transform:translateX(4px);}
     html[dir="rtl"] section.section-active .section-head h2{transform:translateX(-4px);}
@@ -2139,9 +2168,10 @@ const SITE = {
     portfolioFolder: "https://drive.google.com/drive/folders/1_SgYq2bi8oCfyzkCNLl3ZWqLtBG197CM",
     linkedin: "https://www.linkedin.com/in/shahd-mohamed-5b2525294/",
     email: "shahdmohamed25042004@gmail.com",
-    // TODO: once you have a scanned degree certificate on Drive, paste its link here
-    // and change btnCredentials in the script below to point at it instead of #credentials.
-    degreeCertificate: ""
+    degreeCertificates: {
+      en: "https://drive.google.com/file/d/1oEygDGRY-7iWa6sv3Oi2oX--IOU9Bpne/view?usp=drivesdk",
+      ar: "https://drive.google.com/file/d/1VAiipDPb8_iw5ODrGcVe2RYvqtGJnufc/view?usp=drivesdk"
+    }
   },
 
   credentials: [
@@ -2570,11 +2600,6 @@ const SITE_AR = {
   document.getElementById('railLinkedin').href = SITE.links.linkedin;
   document.getElementById('btnCV').href = SITE.links.cv;
   document.getElementById('btnLinkedin').href = SITE.links.linkedin;
-  if(SITE.links.degreeCertificate){
-    document.getElementById('btnCredentials').href = SITE.links.degreeCertificate;
-    document.getElementById('btnCredentials').target = '_blank';
-    document.getElementById('btnCredentials').rel = 'noopener noreferrer';
-  }
   // Open the visitor's default mail app with Shahd already in the To field.
   const mailtoUrl = 'mailto:' + encodeURIComponent(SITE.links.email) + '?subject=' + encodeURIComponent('Portfolio enquiry');
   const contactEmailBtn = document.getElementById('contactEmailBtn');
@@ -2637,11 +2662,10 @@ const SITE_AR = {
     document.getElementById('workFilters').innerHTML = Object.entries(projectCategories).map(([key, label]) => `<button class="work-filter" type="button" data-filter="${key}" aria-pressed="${key === 'all'}">${label}</button>`).join('');
     document.getElementById('workSpine').innerHTML = data.projects.map((p, i) => {
       const category = projectCategory(p);
-      const visualLetters = category === 'research' ? 'R / 01' : category === 'edtech' ? 'E / 02' : category === 'teaching' ? 'T / 06' : 'D / 03';
       return `
       <div class="entry reveal-item" data-step="${i + 1}" data-category="${category}">
         <details class="project-details" id="projectDetails-${i}" data-project-index="${i}">
-          <summary class="project-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض المنهجية والروابط' : 'View methodology & links'}">
+          <summary class="project-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض تفاصيل المشروع والروابط' : 'View project details & links'}">
             <div class="entry-preview">
               <span class="entry-flag ${SITE.projects[i].flag === 'core project' ? 'core' : ''}">${p.flag}</span>
               <h3>${p.title}</h3>
@@ -2649,7 +2673,6 @@ const SITE_AR = {
             </div>
           </summary>
           <div class="project-details-body" id="projectDetailsBody-${i}">
-            <div class="project-visual" aria-hidden="true">${visualLetters}</div>
             ${i === 0 ? `
             <div class="featured-case embedded-case-study is-open" aria-labelledby="graduationCaseTitle">
               <div class="featured-case-content">
@@ -2657,17 +2680,13 @@ const SITE_AR = {
                   <div class="featured-case-copy">
                     <span class="section-tag">${lang === 'ar' ? 'مشروع التخرج' : 'Graduation project'}</span>
                     <h3 id="graduationCaseTitle">${p.title}</h3>
-                    <div class="case-flow" aria-label="${lang === 'ar' ? 'هيكل المشروع' : 'Project structure'}">${CASE_FLOW_LABELS[lang].map(label => `<span>${label}</span>`).join('')}</div>
-                    <p>${p.description}</p>
-                    <div class="featured-case-meta"><span>${p.stat}</span><span>${p.role}</span></div>
-                    ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${p.tools}</div>` : ''}
+                    <p class="project-description">${p.description}</p>
+                    <dl class="project-facts">
+                      <div><dt>${lang === 'ar' ? 'الدور' : 'Role'}</dt><dd>${p.role}</dd></div>
+                      ${p.tools ? `<div><dt>${lang === 'ar' ? 'الأدوات' : 'Tools'}</dt><dd>${p.tools}</dd></div>` : ''}
+                    </dl>
+                    ${p.stat ? `<div class="project-finding"><strong>${lang === 'ar' ? 'نتيجة موثقة' : 'Documented finding'}</strong><span>${p.stat}</span></div>` : ''}
                     <div class="proj-links">${p.links.map(projectLink).join('')}</div>
-                  </div>
-                  <div class="case-visual case-visual-featured" aria-label="${lang === 'ar' ? 'نتيجة المشروع: 87٪ من الطلاب أفادوا بمشاركة أكثر نشاطًا' : 'Project finding: 87% of students reported more active participation'}">
-                    <span class="case-visual-kicker">${lang === 'ar' ? 'مشروع / 01' : 'PROJECT / 01'}</span>
-                    <strong>87%</strong>
-                    <span>${lang === 'ar' ? 'مشاركة أكثر نشاطًا وفق إفادات الطلاب' : 'reported more active participation'}</span>
-                    <i></i><i></i><i></i>
                   </div>
                 </div>
               </div>
@@ -2810,7 +2829,6 @@ const SITE_AR = {
     experience: ['EXPERIENCE','الخبرة'], credentials: ['EDUCATION','التعليم'], development: ['DEVELOPMENT','التطوير'],
     skills: ['SKILLS','المهارات'], creative: ['CREATIVE','اهتمامات'], contact: ['CONTACT','تواصل']
   };
-  const CASE_FLOW_LABELS = {en:['Challenge','Idea','Process','Result'],ar:['التحدي','الفكرة','العملية','النتيجة']};
   const SECTION_TEXT = {
     about: { tag: ["who I am", "من أنا"], heading: ["About", "نبذة عني"] },
     "what-i-do": { tag: ["day to day", "يوميًا"], heading: ["What I do", "ماذا أفعل"] },
@@ -2826,7 +2844,7 @@ const SITE_AR = {
     contact: { tag: ["get in touch", "تواصل معي"], heading: ["Let's connect", "لنتواصل"] }
   };
   const BUTTON_TEXT = {
-    btnCredentials: ["View credentials", "عرض المؤهلات"],
+    btnCredentials: ["View Egyptian degree certificate", "عرض شهادة التخرج المصرية"],
     btnWork: ["View featured project", "عرض المشروع المميز"],
     portfolioLinkDesktop: ["Portfolio", "ملف الأعمال"], portfolioLinkMobile: ["Portfolio", "ملف الأعمال"],
     materialsPortfolioLink: ["View full portfolio", "عرض ملف الأعمال الكامل"],
@@ -2871,6 +2889,13 @@ const SITE_AR = {
       const el = document.getElementById(id);
       if(el) el.textContent = BUTTON_TEXT[id][i];
     });
+    const certificateLink = SITE.links.degreeCertificates[lang];
+    const credentialsButton = document.getElementById('btnCredentials');
+    if(certificateLink && credentialsButton){
+      credentialsButton.href = certificateLink;
+      credentialsButton.target = '_blank';
+      credentialsButton.rel = 'noopener noreferrer';
+    }
     document.getElementById('linkedinLinkDesktop').textContent = 'LinkedIn';
     document.getElementById('linkedinLinkMobile').textContent = 'LinkedIn';
     document.getElementById('contactLinkedinBtn').textContent = 'LinkedIn';
