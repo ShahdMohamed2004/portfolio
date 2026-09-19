@@ -201,7 +201,7 @@
   html[dir="rtl"] body{font-family:'Cairo', var(--font-body);}
   html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] .section-tag{font-family:'Cairo', var(--font-display);}
   html[dir="rtl"] .wordmark{font-family:'Cairo', var(--font-hand);}
-  html[dir="rtl"] p{text-align:right;hyphens:none;-webkit-hyphens:none;}
+  html[dir="rtl"] p{text-align:justify;text-justify:inter-word;hyphens:none;-webkit-hyphens:none;}
 html[dir="rtl"] .about-grid, html[dir="rtl"] .contact-box, html[dir="rtl"] .section-head{text-align:right;}
 html[dir="rtl"] .credential-strip .cred{border-left:0;border-right:2px solid var(--yellow);padding-left:0;padding-right:14px;}
 html[dir="rtl"] .entry:hover{transform:translateX(-3px);}
@@ -1502,7 +1502,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
     /* The featured case study is editorial body copy, not a narrow text
        column. Forced justification creates large word gaps on phones. */
-    .featured-case p{
+    html[dir="ltr"] .featured-case p{
       text-align:start !important;
       text-justify:auto;
       hyphens:none;
@@ -1543,12 +1543,13 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   /* ---------- premium mobile visual refinement v2.3 ---------- */
   @media (max-width:768px){
     .creative-lead{
-      padding:1.25rem;text-align:start !important;line-height:1.7;color:var(--chalk-dim);
+      padding:1.25rem;line-height:1.7;color:var(--chalk-dim);
       border:1px solid rgba(231,184,78,.22);border-radius:18px;
       background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.01));
       box-shadow:0 8px 24px rgba(0,0,0,.3);
     }
-    html[dir="rtl"] .creative-lead{text-align:start !important;}
+    html[dir="ltr"] .creative-lead{text-align:start !important;text-justify:auto;}
+    html[dir="rtl"] .creative-lead{text-align:justify !important;text-justify:inter-word;}
     .creative-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px;}
     .creative-item{
       display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:9999px;
@@ -1607,9 +1608,11 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .hero .cta-row .btn{transition:transform .18s cubic-bezier(.23,1,.32,1),color .2s ease,border-color .2s ease,background .2s ease;}
   .hero .cta-row .btn:active{transform:scale(.97);}
   /* Content refinement: keep the editorial layout concise and improve mobile reading. */
-  .hero p.lead{text-align:start !important;hyphens:none;-webkit-hyphens:none;max-width:46ch;}
+  html[dir="ltr"] .hero p.lead{text-align:start !important;hyphens:none;-webkit-hyphens:none;max-width:46ch;}
+  html[dir="rtl"] .hero p.lead{text-align:justify !important;text-justify:inter-word;hyphens:none;-webkit-hyphens:none;max-width:46ch;}
   @media (max-width:767px){
-    .hero p.lead{text-align:start !important;word-break:normal;overflow-wrap:normal;}
+    html[dir="ltr"] .hero p.lead{text-align:start !important;word-break:normal;overflow-wrap:normal;}
+    html[dir="rtl"] .hero p.lead{text-align:justify !important;text-justify:inter-word;word-break:normal;overflow-wrap:normal;}
   }
   .project-details,.approach-card,.material-card,.dev-card,.skill-block,.contact-box{will-change:transform;}
   .project-details::after,.approach-card::after,.material-card::after,.dev-card::after,.skill-block::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;background:radial-gradient(180px circle at var(--card-x,50%) var(--card-y,50%),rgba(231,184,78,.10),transparent 70%);transition:opacity .3s ease;}
@@ -1888,11 +1891,12 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
   html[dir="rtl"] .contact-box{
     align-items:center;
-    text-align:center;
+    text-align:right;
   }
   html[dir="rtl"] .contact-box p{
     margin-inline:auto;
-    text-align:center;
+    text-align:justify;
+    text-justify:inter-word;
   }
   html[dir="rtl"] .contact-links{
     justify-content:center;
@@ -1950,7 +1954,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       flex-direction:column;
       align-items:stretch;
     }
-    html[dir="rtl"] .contact-box p{text-align:center !important;}
+    html[dir="rtl"] .contact-box p{text-align:justify !important;text-justify:inter-word;}
   }
 </style>
 </head>
