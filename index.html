@@ -204,10 +204,6 @@
   html[dir="rtl"] p{text-align:right;hyphens:none;-webkit-hyphens:none;}
 html[dir="rtl"] .about-grid, html[dir="rtl"] .contact-box, html[dir="rtl"] .section-head{text-align:right;}
 html[dir="rtl"] .credential-strip .cred{border-left:0;border-right:2px solid var(--yellow);padding-left:0;padding-right:14px;}
-html[dir="rtl"] .spine{padding-left:0;padding-right:34px;}
-html[dir="rtl"] .spine::before{left:auto;right:4px;}
-html[dir="rtl"] .spine::after{left:auto;right:4px;}
-html[dir="rtl"] .entry::before{left:auto;right:-34px;}
 html[dir="rtl"] .entry:hover{transform:translateX(-3px);}
 html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[dir="rtl"] .mobile-menu{right:auto;left:0;border-left:none;border-right:1px solid var(--line-strong);transform:translateX(-100%);}
@@ -649,13 +645,13 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 
   /* ---------- spine / timeline component ---------- */
-  .spine{position:relative;padding-left:34px;}
+  .spine{position:relative;padding-inline-start:34px;padding-inline-end:0;}
   .spine::before{
-    content:"";position:absolute;left:4px;top:6px;bottom:6px;width:1px;
+    content:"";position:absolute;inset-inline-start:4px;inset-inline-end:auto;top:6px;bottom:6px;width:1px;
     background:var(--line-strong);z-index:0;
   }
   .spine::after{
-    content:"";position:absolute;left:3px;top:6px;width:2px;height:calc(var(--spine-progress, 0) * 1%);
+    content:"";position:absolute;inset-inline-start:3px;inset-inline-end:auto;top:6px;width:2px;height:calc(var(--spine-progress, 0) * 1%);
     max-height:calc(100% - 12px);background:var(--yellow);border-radius:999px;z-index:1;
     transition:height .4s ease,background .4s ease;box-shadow:0 0 8px rgba(231,184,78,.28);
   }
@@ -664,16 +660,15 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .entry details:last-child{padding-bottom:0;}
   .entry summary{list-style:none;cursor:pointer;position:relative;padding:8px 38px 8px 0;transition:color .25s ease;}
   .entry summary::-webkit-details-marker{display:none;}
-  .entry summary::after{content:'+';position:absolute;right:4px;top:4px;width:25px;height:25px;border:1px solid var(--line-strong);border-radius:50%;display:grid;place-items:center;color:var(--yellow);font-size:1.1rem;line-height:1;transition:transform .25s ease,background .25s ease;}
+  .entry summary::after{content:'+';position:absolute;inset-inline-end:4px;inset-inline-start:auto;top:4px;width:25px;height:25px;border:1px solid var(--line-strong);border-radius:50%;display:grid;place-items:center;color:var(--yellow);font-size:1.1rem;line-height:1;transition:transform .25s ease,background .25s ease;}
   .entry details[open] summary::after{content:'−';transform:rotate(180deg);background:rgba(231,184,78,.12);}
   .entry summary:hover,.entry summary:focus-visible{color:var(--yellow);}
   .entry details > :not(summary){margin-left:0;}
   .timeline-detail > summary{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 38px 14px 0;}
   .timeline-detail > summary .entry-flag{display:inline-flex;width:max-content;max-width:100%;margin:0;padding:3px 9px;border:1px solid currentColor;border-radius:999px;font-family:var(--font-body);font-size:.68rem;line-height:1.25;letter-spacing:.08em;text-transform:uppercase;white-space:normal;}
   .timeline-detail > summary h3{margin:0;line-height:1.35;}
-  html[dir="rtl"] .entry summary{padding-right:0;padding-left:38px;}
-  html[dir="rtl"] .entry summary::after{right:auto;left:4px;}
-  html[dir="rtl"] .timeline-detail > summary{align-items:flex-end;padding-right:0;padding-left:38px;}
+  .timeline-detail > summary{padding-inline:14px 38px;}
+  html[dir="rtl"] .timeline-detail > summary{align-items:flex-end;}
   .accordion-card{border:1px solid var(--line-strong);border-radius:4px;transition:border-color .25s ease,transform .25s ease;}
   /* Dynamic Arabic cards must remain visible even when rendered after the observer starts. */
   .accordion-card.reveal-item{transition:opacity .65s cubic-bezier(.4,.1,.2,1) var(--reveal-delay,0ms),transform .65s cubic-bezier(.4,.1,.2,1) var(--reveal-delay,0ms),border-color .25s ease,box-shadow .25s ease;}
@@ -691,7 +686,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .entry:hover{transform:translateX(3px);}
   .entry:last-child{padding-bottom:0;}
   .entry::before{
-    content:"";position:absolute;left:-34px;top:6px;width:9px;height:9px;
+    content:"";position:absolute;inset-inline-start:-34px;inset-inline-end:auto;top:6px;width:9px;height:9px;
     border-radius:50%;background:var(--ink);border:1.5px solid var(--muted);
     transition:background 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
   }
@@ -1008,24 +1003,21 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     main.wrap{padding-left:24px;padding-right:24px;}
     /* Keep the vertical timeline visible on phones, with compact dots and a
        comfortable reading gutter in both LTR and RTL layouts. */
-    .spine{padding-left:26px;padding-right:0;}
-    .spine::before{display:block;left:5px;right:auto;top:8px;bottom:8px;background:var(--line-strong);}
-    .entry::before{display:block;left:-26px;right:auto;top:12px;width:8px;height:8px;}
+    .spine{padding-inline-start:26px;padding-inline-end:0;}
+    .spine::before{display:block;inset-inline-start:5px;inset-inline-end:auto;top:8px;bottom:8px;background:var(--line-strong);}
+    .entry::before{display:block;inset-inline-start:-26px;inset-inline-end:auto;top:12px;width:8px;height:8px;}
     .entry:hover,html[dir="rtl"] .entry:hover{transform:none;}
     .entry.timeline-active{background:linear-gradient(90deg,rgba(231,184,78,.055),transparent 55%);}
     html[dir="rtl"] .entry.timeline-active{background:linear-gradient(270deg,rgba(231,184,78,.055),transparent 55%);}
-    html[dir="rtl"] .spine{padding-left:0;padding-right:26px;}
-    html[dir="rtl"] .spine::before{left:auto;right:5px;}
-    html[dir="rtl"] .entry::before{left:auto;right:-26px;}
-    .spine::after{left:4px;}
-    html[dir="rtl"] .spine::after{left:auto;right:4px;}
+    .spine::after{inset-inline-start:4px;inset-inline-end:auto;}
     .hero{padding-top:116px;}
     .hero h1{max-width:100%;font-size:clamp(2rem,9vw,3rem);}
     .hero p.lead,.about-text p,.entry p,.section-lead{max-width:100%;}
     .credential-strip{width:100%;}
     .credential-strip .cred{min-width:0;}
-    .cta-row{align-items:stretch;}
-    .cta-row .btn{max-width:100%;}
+    .cta-row{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch;gap:8px;width:100%;}
+    .cta-row .btn{width:100%;max-width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;}
+    .tense-diagram{width:100%;max-width:none;margin-top:28px;padding-top:24px;border-top:1px solid var(--line);}
   }
   @media (max-width:420px){
     header{padding-top:12px;padding-bottom:12px;}
@@ -1116,8 +1108,10 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .material-card .arrow,.proj-link svg{flex-shrink:0;min-width:36px;min-height:36px;display:grid;place-items:center;}
   @media (max-width:480px){
     main.wrap>section{padding-inline:16px;}
-    .spine{margin-inline-start:16px;padding-inline-start:20px;}
-    html[dir="rtl"] .spine{margin-inline-start:16px;padding-inline-start:0;padding-inline-end:20px;}
+    .spine{margin-inline-start:16px;padding-inline-start:20px;padding-inline-end:0;}
+    .spine::before{inset-inline-start:5px;}
+    .spine::after{inset-inline-start:4px;}
+    .entry::before{inset-inline-start:-20px;}
     .project-details,.material-card,.skill-block,.contact-box,.dev-card{width:100%;}
     .project-details>summary.project-summary,.timeline-detail>summary{padding-inline:0 42px;}
     html[dir="rtl"] .project-details>summary.project-summary,html[dir="rtl"] .timeline-detail>summary{padding-inline:42px 0;}
@@ -1248,7 +1242,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .credential-strip .cred{width:100%;padding:12px 14px;}
     .credential-strip .cred .deg{font-size:.98rem;}
     .credential-strip .cred .school,.credential-strip .cred .gpa{font-size:.82rem;}
-    .cta-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;align-items:stretch;}
+    .cta-row{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;align-items:stretch;}
     .cta-row .btn{width:100%;max-width:none;padding:11px 8px;text-align:center;font-size:.9rem;}
     .tense-diagram{width:100%;max-width:none;margin-top:34px;}
     .tense-diagram svg{direction:ltr;overflow:visible;}
@@ -1340,30 +1334,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html[dir="rtl"] .about-text p,html[dir="rtl"] .contact-box p{direction:rtl;text-align:justify !important;}
   }
 
-  /* Final RTL mirror, placed after the base timeline declarations so the
-     existing LTR geometry is mirrored without inventing new offsets. */
-  html[dir="rtl"] .spine{
-    padding-inline-start:0;
-    padding-inline-end:34px;
-  }
-  html[dir="rtl"] .spine::before,
-  html[dir="rtl"] .spine::after{
-    inset-inline-start:auto;
-    inset-inline-end:4px;
-  }
-  html[dir="rtl"] .spine>.entry::before{
-    inset-inline-start:auto;
-    inset-inline-end:-34px;
-  }
-  @media (max-width:768px){
-    html[dir="rtl"] .spine{
-      padding-inline-start:0;
-      padding-inline-end:28px;
-    }
-    html[dir="rtl"] .spine::before{inset-inline-start:auto;inset-inline-end:5px;}
-    html[dir="rtl"] .spine::after{inset-inline-start:auto;inset-inline-end:4px;}
-    html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-28px;}
-  }
+  /* The timeline is anchored to inline-start, so RTL mirrors the complete
+     component rather than requiring separate physical left/right offsets. */
 
   /* Final mobile control geometry: the badge/content and action affordance
      share a flex row instead of competing through absolute positioning. */
@@ -1968,7 +1940,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     <div class="credential-strip" id="credentialStrip"></div>
 
     <div class="cta-row">
-      <a class="btn btn-solid" href="#credentials" id="btnCredentials">View credentials</a>
       <a class="btn btn-text" href="#" id="btnCV" target="_blank" rel="noopener noreferrer">Download CV</a>
       <a class="btn btn-text" href="#" id="btnLinkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a class="btn btn-text" href="#work" id="btnWork">Explore my work</a>
@@ -2318,7 +2289,7 @@ const SITE = {
       flag: "degree",
       title: "B.A. in English Language and Translation",
       place: "MSA University · GPA 3.57 / 4.00",
-      links: []
+      links: [{ label: "View Egyptian degree certificate", href: "https://drive.google.com/file/d/1oEygDGRY-7iWa6sv3Oi2oX--IOU9Bpne/view?usp=drivesdk" }]
     },
     {
       flag: "degree",
@@ -2523,7 +2494,7 @@ const SITE_AR = {
   ],
 
   education: [
-    { flag: "درجة علمية", title: "بكالوريوس اللغة الإنجليزية والترجمة", place: "جامعة MSA · معدل تراكمي 3.57 / 4.00", links: [] },
+    { flag: "درجة علمية", title: "بكالوريوس اللغة الإنجليزية والترجمة", place: "جامعة MSA · معدل تراكمي 3.57 / 4.00", links: [{ label: "عرض شهادة التخرج المصرية", href: "https://drive.google.com/file/d/1VAiipDPb8_iw5ODrGcVe2RYvqtGJnufc/view?usp=drivesdk" }]  },
     { flag: "درجة علمية", title: "درجة مزدوجة", place: "جامعة بيدفوردشير · معدل تراكمي 3.73 / 4.00", links: [] },
     { flag: "تخصص جامعي", title: "تخصص تدريس اللغة الإنجليزية (TEFL)", place: "تدريس اللغة الإنجليزية كلغة أجنبية", links: [] }
   ],
@@ -2844,7 +2815,6 @@ const SITE_AR = {
     contact: { tag: ["get in touch", "تواصل معي"], heading: ["Let's connect", "لنتواصل"] }
   };
   const BUTTON_TEXT = {
-    btnCredentials: ["View Egyptian degree certificate", "عرض شهادة التخرج المصرية"],
     btnWork: ["View featured project", "عرض المشروع المميز"],
     portfolioLinkDesktop: ["Portfolio", "ملف الأعمال"], portfolioLinkMobile: ["Portfolio", "ملف الأعمال"],
     materialsPortfolioLink: ["View full portfolio", "عرض ملف الأعمال الكامل"],
@@ -2889,13 +2859,6 @@ const SITE_AR = {
       const el = document.getElementById(id);
       if(el) el.textContent = BUTTON_TEXT[id][i];
     });
-    const certificateLink = SITE.links.degreeCertificates[lang];
-    const credentialsButton = document.getElementById('btnCredentials');
-    if(certificateLink && credentialsButton){
-      credentialsButton.href = certificateLink;
-      credentialsButton.target = '_blank';
-      credentialsButton.rel = 'noopener noreferrer';
-    }
     document.getElementById('linkedinLinkDesktop').textContent = 'LinkedIn';
     document.getElementById('linkedinLinkMobile').textContent = 'LinkedIn';
     document.getElementById('contactLinkedinBtn').textContent = 'LinkedIn';
