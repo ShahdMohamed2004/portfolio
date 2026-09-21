@@ -6,6 +6,7 @@
 <meta name="asset-version" content="2.1.0" />
 <meta name="theme-color" content="#152825" />
 <meta name="color-scheme" content="dark light" />
+<meta name="mobile-web-app-capable" content="yes" />
 <link rel="canonical" href="https://shahdmohamed2004.github.io/portfolio/" />
 <title>Shahd Mohamed Siddiq | TEFL Graduate &amp; Aspiring English Language Educator</title>
 <meta name="description" content="Portfolio of Shahd Mohamed Siddiq: TEFL graduate and aspiring English language educator developing instructional, assessment, and digital learning projects." />
@@ -26,6 +27,7 @@
 <!-- Favicon -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23152825'/%3E%3Ctext x='32' y='45' font-family='Georgia, serif' font-size='34' fill='%23E7B84E' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
 <link rel="manifest" href="manifest.webmanifest" />
+<link rel="preload" as="image" href="assets/about.webp" type="image/webp" />
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -82,6 +84,11 @@
   *{margin:0;padding:0;box-sizing:border-box;}
 
   html{scroll-behavior:smooth;scroll-padding-top:84px;}
+  @supports (view-transition-name: root){
+    @media (prefers-reduced-motion: no-preference){
+      ::view-transition-old(root),::view-transition-new(root){animation-duration:.28s;}
+    }
+  }
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{animation:none !important; transition:none !important;}
@@ -2063,7 +2070,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
-<div class="scroll-progress" id="scrollProgress"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 <div class="where-am-i" id="whereAmI" aria-live="polite"><span id="whereAmINumber">01</span> / <strong id="whereAmILabel">HOME</strong></div>
 
 <header id="siteHeader">
@@ -2824,7 +2831,7 @@ const SITE_AR = {
     document.getElementById('aboutRole').textContent = data.title;
     document.getElementById('aboutBio').textContent = data.about.bio;
     if(data.about.photo){
-      document.getElementById('aboutPhoto').innerHTML = `<img src="${data.about.photo}" alt="Photo of ${SITE.fullName}" loading="lazy" decoding="async">`;
+      document.getElementById('aboutPhoto').innerHTML = `<img src="${data.about.photo}" alt="Photo of ${SITE.fullName}" width="1087" height="1447" loading="lazy" decoding="async">`;
     }
 
     // What I do
@@ -3578,6 +3585,7 @@ const SITE_AR = {
   const railThemeToggle = document.getElementById('railThemeToggle');
   const railThemeLabel = document.getElementById('railThemeLabel');
   const mobileLabel = themeToggleMobile.querySelector('.tt-label');
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
   function applyTheme(theme){
     if(theme === 'light'){
@@ -3586,6 +3594,7 @@ const SITE_AR = {
       root.removeAttribute('data-theme');
     }
     const isLight = theme === 'light';
+    if(themeColorMeta) themeColorMeta.setAttribute('content', isLight ? '#FAF8F5' : '#152825');
     themeToggle.setAttribute('aria-pressed', String(isLight));
     themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
     themeToggleMobile.setAttribute('aria-pressed', String(isLight));
@@ -3597,7 +3606,12 @@ const SITE_AR = {
   function toggleTheme(){
     const isLight = root.getAttribute('data-theme') === 'light';
     const next = isLight ? 'dark' : 'light';
-    applyTheme(next);
+    const updateTheme = () => applyTheme(next);
+    if(document.startViewTransition && !reducedMQ.matches){
+      document.startViewTransition(updateTheme);
+    } else {
+      updateTheme();
+    }
     try{ localStorage.setItem('siteTheme', next); }catch(e){}
   }
 
