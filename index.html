@@ -2219,6 +2219,85 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .materials-note,.contact-box p,.project-details-body p,.accordion-body p,
     .creative-lead{max-width:100%;}
   }
+
+  /* ---------- About card: editorial, creative and safe in both directions ---------- */
+  .about-card{
+    position:relative;
+    grid-template-columns:minmax(150px,220px) minmax(0,1fr);
+    gap:clamp(26px,5vw,58px);
+    align-items:center;
+    padding:clamp(22px,4vw,46px);
+    border:1px solid rgba(231,184,78,.34);
+    border-radius:22px;
+    background:
+      radial-gradient(circle at 12% 10%,rgba(231,184,78,.13),transparent 30%),
+      linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+    box-shadow:0 22px 52px rgba(0,0,0,.16),0 1px 0 rgba(255,255,255,.06) inset;
+    overflow:visible;
+    isolation:isolate;
+  }
+  .about-card::before{
+    content:"";
+    position:absolute;
+    inset:12px;
+    border:1px solid rgba(231,184,78,.12);
+    border-radius:15px;
+    pointer-events:none;
+    z-index:-1;
+  }
+  .about-card::after{
+    content:"ABOUT / 01";
+    position:absolute;
+    inset-block-start:18px;
+    inset-inline-end:24px;
+    color:var(--yellow);
+    font-size:.65rem;
+    letter-spacing:.16em;
+    opacity:.7;
+    pointer-events:none;
+  }
+  .about-card .about-photo{
+    width:100%;
+    max-width:220px;
+    border-radius:16px;
+    border-color:rgba(231,184,78,.5);
+    box-shadow:12px 14px 0 rgba(231,184,78,.12),0 18px 38px rgba(0,0,0,.2);
+  }
+  .about-card .about-text{min-width:0;padding-inline-end:clamp(0px,2vw,20px);}
+  .about-kicker{
+    display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;
+    color:var(--yellow);font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .about-kicker::before{content:"";width:28px;height:1px;background:var(--yellow);}
+  .about-card .about-name{font-size:clamp(1.55rem,3vw,2.25rem);line-height:1.12;margin-bottom:7px;}
+  .about-card .about-role{max-width:62ch;margin-top:0;line-height:1.55;}
+  .about-card .about-bio{
+    max-width:66ch;
+    margin-top:20px;
+    color:var(--chalk-dim);
+    line-height:1.9;
+    text-align:justify !important;
+    text-align-last:start;
+    text-justify:inter-word;
+    overflow-wrap:anywhere;
+    hyphens:auto;
+    -webkit-hyphens:auto;
+  }
+  html[dir="rtl"] .about-card .about-bio{hyphens:none;-webkit-hyphens:none;}
+  .about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;}
+  .about-tag{padding:6px 10px;border:1px solid rgba(231,184,78,.28);border-radius:999px;color:var(--chalk-dim);font-size:.74rem;line-height:1.35;}
+  html[dir="rtl"] .about-card::after{content:"نبذة / ٠١";letter-spacing:.04em;}
+  html[data-theme="light"] .about-card{background:linear-gradient(135deg,rgba(255,255,255,.86),rgba(231,184,78,.12));box-shadow:0 20px 46px rgba(91,20,37,.09),0 1px 0 rgba(255,255,255,.8) inset;}
+  @media (max-width:767px){
+    .about-card{grid-template-columns:minmax(0,1fr) !important;gap:24px !important;padding:28px 20px 24px;border-radius:18px;}
+    .about-card::after{inset-block-start:15px;inset-inline-end:18px;font-size:.58rem;}
+    .about-card .about-photo{width:126px;height:164px;justify-self:start;box-shadow:8px 9px 0 rgba(231,184,78,.12),0 14px 28px rgba(0,0,0,.18);}
+    html[dir="rtl"] .about-card .about-photo{justify-self:end;}
+    .about-card .about-text{padding:0;}
+    .about-card .about-bio{margin-top:16px;text-align:start !important;line-height:1.82;hyphens:none;-webkit-hyphens:none;}
+    html[dir="rtl"] .about-card .about-bio{text-align:end !important;}
+    .about-tags{margin-top:18px;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -2346,14 +2425,20 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <span class="section-tag">who I am</span>
       <h2>About</h2>
     </div>
-    <div class="about-grid reveal">
+    <div class="about-grid about-card reveal">
       <div class="about-photo" id="aboutPhoto" role="button" tabindex="0" aria-controls="photoLightbox" aria-label="Open Shahd's photo"> <span class="ph-fallback" aria-hidden="true"></span></div>
       <div class="about-text">
+        <span class="about-kicker" id="aboutKicker">A little about me</span>
         <div class="about-who">
           <h3 class="about-name" id="aboutName"></h3>
           <p class="about-role" id="aboutRole"></p>
         </div>
-        <p id="aboutBio"></p>
+        <p class="about-bio" id="aboutBio"></p>
+        <div class="about-tags" aria-label="Areas of interest">
+          <span class="about-tag" id="aboutTagOne">TEFL</span>
+          <span class="about-tag" id="aboutTagTwo">Learning design</span>
+          <span class="about-tag" id="aboutTagThree">EdTech</span>
+        </div>
       </div>
     </div>
   </section>
@@ -3222,6 +3307,12 @@ const SITE_AR = {
     contactEmailBtn: ["Email", "البريد الإلكتروني"],
     contactCvBtn: ["Download CV", "تحميل السيرة الذاتية"]
   };
+  const ABOUT_TEXT = {
+    aboutKicker: ["A little about me", "نبذة صغيرة عني"],
+    aboutTagOne: ["TEFL", "TEFL"],
+    aboutTagTwo: ["Learning design", "تصميم التعلّم"],
+    aboutTagThree: ["EdTech", "التقنية التعليمية"]
+  };
 
   function applyStaticText(lang){
     const i = lang === 'ar' ? 1 : 0;
@@ -3256,6 +3347,10 @@ const SITE_AR = {
     Object.keys(BUTTON_TEXT).forEach(id => {
       const el = document.getElementById(id);
       if(el) el.textContent = BUTTON_TEXT[id][i];
+    });
+    Object.keys(ABOUT_TEXT).forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.textContent = ABOUT_TEXT[id][i];
     });
     document.getElementById('linkedinLinkDesktop').textContent = 'LinkedIn';
     document.getElementById('linkedinLinkMobile').textContent = 'LinkedIn';
