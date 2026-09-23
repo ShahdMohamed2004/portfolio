@@ -2313,6 +2313,109 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card .about-photo{width:104px;height:136px;}
     .about-card .about-bio{font-size:.9rem;}
   }
+
+  /* ---------- final breathing-room layout pass ---------- */
+  .hero::after{display:none !important;}
+  main.wrap>section:not(#home){padding-inline:clamp(10px,2.2vw,30px);}
+  .hero{padding-inline:clamp(8px,2vw,28px);}
+  .hero h1{max-width:13ch;margin-bottom:30px;}
+  .hero p.lead{max-width:58ch;margin-bottom:36px;line-height:1.9;}
+  .hero .credential-strip{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    max-width:900px;
+    gap:18px;
+    margin:40px 0 34px;
+    padding:0;
+  }
+  .hero .credential-strip .cred{
+    min-width:0;
+    min-height:118px;
+    padding:22px 24px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    border-radius:12px;
+  }
+  .credential-strip .cred .deg{font-size:1.05rem;line-height:1.5;}
+  .credential-strip .cred .school,.credential-strip .cred .gpa{font-size:.9rem;line-height:1.6;}
+  .cta-row{gap:18px;margin-top:6px;}
+  .tense-diagram{margin-top:64px;}
+  .section-head{padding-inline:8px;}
+  .section-head h2{line-height:1.2;}
+  .about-card{padding:clamp(34px,5vw,58px);gap:clamp(38px,6vw,78px);}
+  .about-card .about-text{padding-inline:0;}
+  .about-card .about-bio{max-width:72ch;line-height:2.02;}
+  .about-card .about-role{max-width:72ch;line-height:1.75;}
+  .about-tags{gap:10px;margin-top:28px;}
+  .about-tag{padding:7px 12px;}
+  #about .section-tag{transform:none;}
+  #about::after{display:none;}
+
+  /* Every readable paragraph keeps one predictable measure and edge inset. */
+  html[dir="ltr"] p,html[dir="rtl"] p,
+  html[dir="ltr"] .point-list li,html[dir="rtl"] .point-list li,
+  html[dir="ltr"] .project-facts dd,html[dir="rtl"] .project-facts dd,
+  html[dir="ltr"] .meta-row,html[dir="rtl"] .meta-row{
+    text-align:justify !important;
+    text-align-last:start;
+    text-justify:inter-word;
+    overflow-wrap:break-word;
+    word-spacing:normal;
+  }
+  html[dir="ltr"] .hero p.lead,html[dir="rtl"] .hero p.lead,
+  html[dir="ltr"] .about-role,html[dir="rtl"] .about-role,
+  html[dir="ltr"] .about-bio,html[dir="rtl"] .about-bio{
+    text-align:justify !important;
+    text-align-last:start;
+    text-justify:inter-word;
+  }
+  html[dir="rtl"] p,html[dir="rtl"] .point-list li,html[dir="rtl"] .project-facts dd,html[dir="rtl"] .meta-row{
+    line-height:2;
+    hyphens:none;
+    -webkit-hyphens:none;
+  }
+  html[dir="ltr"] p,html[dir="ltr"] .point-list li,html[dir="ltr"] .project-facts dd,html[dir="ltr"] .meta-row{
+    hyphens:auto;
+    -webkit-hyphens:auto;
+  }
+  @media (min-width:768px){
+    main.wrap>section:not(#home){padding-block:clamp(88px,8vw,126px);}
+    .about-card{min-height:430px;}
+    .about-card .about-photo{max-height:330px;}
+    .about-card .about-text{align-self:center;}
+  }
+  @media (min-width:768px) and (max-width:1100px){
+    .hero .credential-strip{max-width:760px;}
+    .hero .credential-strip .cred{padding:20px;}
+    .about-card{gap:34px;padding:34px;}
+  }
+  @media (max-width:767px){
+    main.wrap{padding-inline:20px !important;}
+    main.wrap>section:not(#home){padding-inline:0;padding-block:64px;}
+    .hero{padding-inline:0;padding-top:132px !important;padding-bottom:88px !important;}
+    .hero h1{max-width:100%;margin-bottom:22px;}
+    .hero p.lead{max-width:100%;margin-bottom:28px;line-height:1.9;}
+    .hero .credential-strip{grid-template-columns:minmax(0,1fr);gap:14px;margin:32px 0 28px;}
+    .hero .credential-strip .cred{min-height:0;padding:20px 18px;}
+    .cta-row{gap:10px;margin-top:0;}
+    .tense-diagram{margin-top:48px;}
+    .section-head{padding-inline:0;margin-bottom:32px !important;}
+    .about-card{min-height:0;padding:30px 22px 28px;gap:26px;}
+    .about-card .about-text{text-align:center;}
+    .about-card .about-bio{line-height:1.95;max-width:100%;}
+    html[dir="rtl"] .about-card .about-bio{line-height:2.05;}
+    .about-tags{margin-top:22px;gap:8px;}
+    .about-tag{padding:6px 10px;}
+    .approach-card,.material-card,.dev-card,.skill-block,.contact-box,.project-details{padding-inline:20px !important;}
+    .entry p,.project-details-body p,.contact-box p,.section-lead{line-height:1.9;}
+  }
+  @media (max-width:420px){
+    main.wrap{padding-inline:16px !important;}
+    .hero .credential-strip .cred{padding:18px 16px;}
+    .about-card{padding:26px 17px 24px;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
@@ -3299,7 +3402,7 @@ const SITE_AR = {
     skills: ['SKILLS','المهارات'], creative: ['CREATIVE','اهتمامات'], contact: ['CONTACT','تواصل']
   };
   const SECTION_TEXT = {
-    about: { tag: ["01 / About", "01 / نبذة عني"], heading: ["About", "نبذة عني"] },
+    about: { tag: ["About", "نبذة عني"], heading: ["About", "نبذة عني"] },
     "what-i-do": { tag: ["day to day", "يوميًا"], heading: ["What I do", "ماذا أفعل"] },
     teaching: { tag: ["approach", "المنهجية"], heading: ["How I teach", "طريقة تدريسي"] },
     work: { tag: ["what I build", "ما أبنيه"], heading: ["Selected work", "أعمال مختارة"] },
@@ -3377,8 +3480,7 @@ const SITE_AR = {
     document.getElementById('whereAmI').setAttribute('aria-label', lang === 'ar' ? 'موقعك الحالي في الصفحة' : 'Current section');
   }
 
-  function normalizeArabicPunctuation(lang){
-    if(lang !== 'ar') return;
+  function normalizeLocalePunctuation(lang){
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     const textNodes = [];
     let node;
@@ -3386,7 +3488,9 @@ const SITE_AR = {
       if(node.parentElement && !node.parentElement.closest('script,style')) textNodes.push(node);
     }
     textNodes.forEach(textNode => {
-      textNode.nodeValue = textNode.nodeValue.replace(/,/g, '،');
+      textNode.nodeValue = lang === 'ar'
+        ? textNode.nodeValue.replace(/,/g, '،')
+        : textNode.nodeValue.replace(/،/g, ',');
     });
   }
 
@@ -3410,7 +3514,7 @@ const SITE_AR = {
     langToggleMobile.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
     railLangToggle.querySelector('.rail-label').textContent = lang === 'ar' ? 'English' : 'العربية';
     railLangToggle.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
-    normalizeArabicPunctuation(lang);
+    normalizeLocalePunctuation(lang);
     try{ localStorage.setItem('siteLang', lang); }catch(e){}
   }
   function toggleLanguage(){
