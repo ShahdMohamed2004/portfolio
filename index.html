@@ -47,7 +47,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Caveat:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Cairo:wght@400;500;600;700&display=swap&v=2.1.0" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Caveat:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap&v=2.2.0" rel="stylesheet">
 
 <style>
   :root{
@@ -2223,7 +2223,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   /* ---------- About card: editorial, creative and safe in both directions ---------- */
   .about-card{
     position:relative;
-    grid-template-columns:minmax(150px,220px) minmax(0,1fr);
+    grid-template-columns:minmax(190px,32%) minmax(0,1fr);
     gap:clamp(26px,5vw,58px);
     align-items:center;
     padding:clamp(22px,4vw,46px);
@@ -2245,20 +2245,9 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     pointer-events:none;
     z-index:-1;
   }
-  .about-card::after{
-    content:"ABOUT / 01";
-    position:absolute;
-    inset-block-start:18px;
-    inset-inline-end:24px;
-    color:var(--yellow);
-    font-size:.65rem;
-    letter-spacing:.16em;
-    opacity:.7;
-    pointer-events:none;
-  }
   .about-card .about-photo{
     width:100%;
-    max-width:220px;
+    max-width:none;
     border-radius:16px;
     border-color:rgba(231,184,78,.5);
     box-shadow:12px 14px 0 rgba(231,184,78,.12),0 18px 38px rgba(0,0,0,.2);
@@ -2286,17 +2275,43 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[dir="rtl"] .about-card .about-bio{hyphens:none;-webkit-hyphens:none;}
   .about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;}
   .about-tag{padding:6px 10px;border:1px solid rgba(231,184,78,.28);border-radius:999px;color:var(--chalk-dim);font-size:.74rem;line-height:1.35;}
-  html[dir="rtl"] .about-card::after{content:"نبذة / ٠١";letter-spacing:.04em;}
   html[data-theme="light"] .about-card{background:linear-gradient(135deg,rgba(255,255,255,.86),rgba(231,184,78,.12));box-shadow:0 20px 46px rgba(91,20,37,.09),0 1px 0 rgba(255,255,255,.8) inset;}
+  /* The hero rectangle was a decorative pseudo-element, not content. It was
+     extending into the hero's reading area and looked like an empty panel. */
+  @media (min-width:900px){.hero::after{display:none;}}
+
+  /* About owns a quieter marker than the generic section underline. */
+  #about .section-head::after{display:none;}
+  #about .section-head{margin-bottom:28px;}
+  html[dir="rtl"] #about,
+  html[dir="rtl"] #about *{font-family:'IBM Plex Sans Arabic',sans-serif;}
+  html[dir="rtl"] #about .section-tag{font-weight:600;letter-spacing:.02em;}
+  html[dir="rtl"] #about .about-name{font-weight:600;line-height:1.35;}
+  html[dir="rtl"] #about .about-role{font-weight:500;line-height:1.8;}
+  html[dir="rtl"] #about .about-bio{line-height:2;text-align:justify !important;text-justify:inter-word;}
+
+  @media (min-width:768px) and (max-width:899px){
+    .about-card{grid-template-columns:minmax(170px,30%) minmax(0,1fr);gap:28px;padding:28px;}
+    .about-card .about-photo{max-height:290px;}
+  }
   @media (max-width:767px){
-    .about-card{grid-template-columns:minmax(0,1fr) !important;gap:24px !important;padding:28px 20px 24px;border-radius:18px;}
-    .about-card::after{inset-block-start:15px;inset-inline-end:18px;font-size:.58rem;}
-    .about-card .about-photo{width:126px;height:164px;justify-self:start;box-shadow:8px 9px 0 rgba(231,184,78,.12),0 14px 28px rgba(0,0,0,.18);}
-    html[dir="rtl"] .about-card .about-photo{justify-self:end;}
-    .about-card .about-text{padding:0;}
-    .about-card .about-bio{margin-top:16px;text-align:start !important;line-height:1.82;hyphens:none;-webkit-hyphens:none;}
-    html[dir="rtl"] .about-card .about-bio{text-align:end !important;}
-    .about-tags{margin-top:18px;}
+    #about .section-head{margin-bottom:22px !important;}
+    .about-card{grid-template-columns:minmax(0,1fr) !important;gap:22px !important;padding:26px 18px 22px;border-radius:18px;}
+    .about-card .about-photo{width:116px;height:150px;justify-self:center;}
+    .about-card .about-text{padding:0;text-align:center;}
+    .about-kicker{justify-content:center;margin-bottom:12px;letter-spacing:.1em;}
+    .about-kicker::before{display:none;}
+    .about-card .about-name{font-size:clamp(1.35rem,7vw,1.8rem);line-height:1.25;}
+    .about-card .about-role{font-size:.76rem;line-height:1.65;}
+    .about-card .about-bio{margin-top:16px;line-height:1.85;text-align:start !important;}
+    html[dir="rtl"] .about-card .about-bio{text-align:justify !important;line-height:2;}
+    .about-tags{justify-content:center;margin-top:17px;gap:7px;}
+    .about-tag{padding:5px 9px;font-size:.7rem;}
+  }
+  @media (max-width:420px){
+    .about-card{padding:22px 15px 19px;}
+    .about-card .about-photo{width:104px;height:136px;}
+    .about-card .about-bio{font-size:.9rem;}
   }
 </style>
 </head>
@@ -3284,7 +3299,7 @@ const SITE_AR = {
     skills: ['SKILLS','المهارات'], creative: ['CREATIVE','اهتمامات'], contact: ['CONTACT','تواصل']
   };
   const SECTION_TEXT = {
-    about: { tag: ["who I am", "من أنا"], heading: ["About", "نبذة عني"] },
+    about: { tag: ["01 / About", "01 / نبذة عني"], heading: ["About", "نبذة عني"] },
     "what-i-do": { tag: ["day to day", "يوميًا"], heading: ["What I do", "ماذا أفعل"] },
     teaching: { tag: ["approach", "المنهجية"], heading: ["How I teach", "طريقة تدريسي"] },
     work: { tag: ["what I build", "ما أبنيه"], heading: ["Selected work", "أعمال مختارة"] },
