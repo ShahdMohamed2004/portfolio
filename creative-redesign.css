@@ -1,0 +1,211 @@
+/* Shahd — Learning Lab / experimental art-direction layer
+   This file intentionally sits on top of the original system so the original
+   structure, content model, links, language switching and interactions remain intact. */
+:root{
+  --lab-wine:#5b1425;
+  --lab-wine-deep:#351019;
+  --lab-rose:#b56b76;
+  --lab-cream:#f4eee6;
+  --lab-paper:#fbf7f1;
+  --lab-ink:#241a1d;
+  --lab-muted:#75696a;
+  --lab-line:rgba(91,20,37,.18);
+  --lab-shadow:0 22px 55px rgba(60,22,30,.12);
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'Space Grotesk', Arial, sans-serif;
+}
+
+/* Light mode is the first-look art direction; the original toggle still controls dark mode. */
+html[data-theme="light"]{
+  --ink:var(--lab-paper);
+  --ink-2:#eee5dc;
+  --chalk:var(--lab-ink);
+  --chalk-dim:#675b5d;
+  --muted:#927f81;
+  --yellow:var(--lab-wine);
+  --accent-deep:var(--lab-wine);
+  --text-accent:var(--lab-wine);
+  --stat-color:var(--lab-wine);
+  --pink:var(--lab-rose);
+  --line:var(--lab-line);
+  --line-strong:rgba(91,20,37,.28);
+}
+
+html[data-theme="light"] body::before{
+  background:
+    radial-gradient(circle at 78% 4%,rgba(181,107,118,.13),transparent 22rem),
+    linear-gradient(180deg,#fbf7f1 0%,#f1e9df 48%,#faf7f2 100%);
+}
+html[data-theme="light"] body{color:var(--lab-ink);}
+html[data-theme="light"] header{color:var(--lab-ink);}
+html[data-theme="light"] header.scrolled{background:rgba(251,247,241,.88);border-bottom-color:rgba(91,20,37,.15);}
+html[data-theme="light"] .mobile-menu{background:rgba(251,247,241,.98);}
+
+body{font-family:var(--font-body);letter-spacing:.01em;}
+.wrap{max-width:1440px;padding-inline:clamp(28px,5vw,84px);}
+
+/* Navbar: quiet editorial masthead. */
+header{padding-block:20px;}
+nav{max-width:1440px;padding-inline:clamp(28px,5vw,84px);}
+.wordmark{font-family:var(--font-display);font-size:0;letter-spacing:-.04em;}
+.wordmark::before{content:'SM';font-size:1.55rem;font-weight:500;color:var(--lab-wine);}
+html:not([data-theme="light"]) .wordmark::before{color:var(--yellow);}
+.nav-links{gap:clamp(16px,2.4vw,34px);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;}
+.nav-utility{gap:12px;font-size:.78rem;}
+.nav-utility>a:first-child,.nav-utility>a:nth-child(2),.nav-utility>a:nth-child(3){display:none;}
+.lang-toggle,.theme-toggle{border-color:var(--line-strong);}
+
+/* A paper grain without external imagery. */
+main.wrap{position:relative;}
+main.wrap::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.16;background-image:radial-gradient(rgba(91,20,37,.22) .6px,transparent .7px);background-size:7px 7px;mix-blend-mode:multiply;}
+
+/* Hero: statement + tactile learning desk made from the existing portrait asset. */
+.hero{min-height:min(760px,calc(100vh - 50px));padding:clamp(140px,15vw,210px) 0 clamp(72px,9vw,130px);display:grid;grid-template-columns:minmax(0,.82fr) minmax(340px,1.18fr);column-gap:clamp(34px,6vw,110px);align-items:center;}
+.hero::after{content:"";position:absolute;inset:auto 0 8% auto;width:min(56vw,690px);height:min(72vw,540px);z-index:-1;opacity:1;filter:none;background:linear-gradient(150deg,rgba(91,20,37,.96),rgba(91,20,37,.82)),url('assets/about.webp') center/cover;mix-blend-mode:multiply;clip-path:polygon(12% 7%,92% 0,100% 88%,78% 100%,2% 82%,0 24%);box-shadow:var(--lab-shadow);}
+.hero::before{content:"TEACH\A DESIGN\A CREATE";white-space:pre;position:absolute;inset:auto 3% 15% auto;z-index:-1;color:rgba(255,248,239,.75);font-family:var(--font-display);font-size:clamp(2.6rem,7vw,7rem);line-height:.86;letter-spacing:-.08em;text-align:right;pointer-events:none;}
+.hero-note{font-family:var(--font-body);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--lab-wine);border:0;padding:0;background:none;margin-bottom:24px;}
+.hero h1{font-family:var(--font-display);font-size:clamp(3.4rem,7.8vw,7.6rem);line-height:.94;letter-spacing:-.065em;max-width:8.5ch;margin-bottom:26px;color:var(--lab-ink);}
+.hero h1::first-line{font-style:normal;}
+.hero p.lead{font-size:1rem;line-height:1.75;max-width:40ch;color:var(--lab-muted);margin-bottom:28px;}
+.credential-strip{display:flex;gap:0;border-top:1px solid var(--lab-line);border-bottom:1px solid var(--lab-line);margin:28px 0 30px;padding-block:14px;max-width:620px;}
+.credential-strip .cred{background:transparent;border:0;border-left:1px solid var(--lab-line);border-radius:0;padding:0 18px;box-shadow:none;}
+.credential-strip .cred:first-child{border-left:0;padding-left:0;}
+html[dir="rtl"] .credential-strip .cred{border-right:1px solid var(--lab-line);border-left:0;}
+html[dir="rtl"] .credential-strip .cred:first-child{border-right:0;padding-right:0;}
+.credential-strip .cred .deg{color:var(--lab-ink);font-family:var(--font-display);font-size:.92rem;}
+.credential-strip .cred .school,.credential-strip .cred .gpa{color:var(--lab-muted);font-size:.75rem;}
+.cta-row{gap:24px;}
+.btn{border-radius:0;font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;}
+.btn-solid,.cta-row .btn:first-child{background:var(--lab-wine);color:#fff8f1;border-color:var(--lab-wine);padding-inline:22px;}
+.btn-text{border-bottom:1px solid currentColor;}
+.tense-diagram{grid-column:1 / -1;margin-top:clamp(36px,5vw,74px);opacity:.8;}
+.tense-diagram svg{height:72px;}
+.tense-diagram .timeline-base{stroke:var(--lab-line);}
+.tense-diagram .spine-path,.tense-diagram .timeline-dot{stroke:var(--lab-wine);fill:var(--lab-wine);}
+.tense-diagram .tick-label,.tense-diagram .tense-label{fill:var(--lab-muted);font-family:var(--font-body);font-size:11px;}
+
+/* Sections become numbered editorial chapters. */
+main.wrap>section:not(#home){padding-block:clamp(76px,9vw,132px);border-top:1px solid var(--lab-line);}
+.section-head{display:grid;grid-template-columns:90px minmax(0,1fr);column-gap:18px;align-items:start;margin-bottom:46px;}
+.section-head::before{content:counter(lab-section,decimal-leading-zero);counter-increment:lab-section;grid-row:1 / span 3;font-family:var(--font-display);font-size:clamp(2rem,4vw,4rem);line-height:.9;color:var(--lab-wine);opacity:.95;}
+main.wrap{counter-reset:lab-section;}
+.section-head::after{grid-column:2;width:72px;margin-top:15px;background:var(--lab-wine);height:1px;}
+.section-tag{font-family:var(--font-body);font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:var(--lab-wine);transform:none;}
+.section-head h2{font-family:var(--font-display);font-size:clamp(2.3rem,4.2vw,4.5rem);line-height:.98;letter-spacing:-.055em;color:var(--lab-ink);}
+.section-lead{color:var(--lab-muted);max-width:52ch;}
+
+/* About / labs: retain the real photo, but frame it as an artifact. */
+.about-grid{grid-template-columns:minmax(180px,260px) minmax(0,1fr);gap:clamp(36px,7vw,110px);align-items:start;}
+.about-photo{width:100%;max-width:260px;border:0;border-radius:0;background:var(--lab-wine);padding:12px;box-shadow:var(--lab-shadow);animation:none;transform:rotate(-2deg);}
+.about-photo::after{inset:20px;border-color:rgba(255,248,239,.5);border-radius:0;}
+.about-photo img{background:var(--lab-wine);object-fit:cover;mix-blend-mode:normal;}
+.about-text{padding-top:12px;max-width:720px;}
+.about-name{font-size:clamp(2rem,4vw,4rem);letter-spacing:-.05em;color:var(--lab-ink);}
+.about-role{font-size:.72rem;letter-spacing:.14em;color:var(--lab-wine);}
+.about-text p{font-size:1.1rem;line-height:1.9;color:var(--lab-muted);max-width:58ch;}
+
+.grid-4,#howITeachGrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
+.accordion-card,.approach-card{border:1px solid var(--lab-line);border-radius:0;background:rgba(255,255,255,.24);box-shadow:none;}
+.accordion-card:hover,.approach-card:hover{border-color:var(--lab-wine);transform:translateY(-5px);box-shadow:0 14px 30px rgba(91,20,37,.08);}
+.accordion-card summary{font-family:var(--font-display);font-size:1.35rem;padding:28px 42px 28px 22px;color:var(--lab-ink);}
+.accordion-card summary::after{border:0;border-radius:0;color:var(--lab-wine);}
+.accordion-card .accordion-body{padding:0 22px 24px;color:var(--lab-muted);}
+.approach-card{padding:22px;}
+.approach-card .num{font-family:var(--font-display);font-size:2rem;color:var(--lab-wine);}
+.approach-card h3{font-size:1.25rem;}
+
+/* Selected work as exhibition labels, not generic cards. */
+#work{background:linear-gradient(180deg,rgba(91,20,37,.04),transparent 55%);}
+.work-toolbar{border-bottom:1px solid var(--lab-line);padding-bottom:18px;}
+.work-filters{gap:18px;}
+.work-filter{border:0;border-bottom:1px solid transparent;border-radius:0;color:var(--lab-muted);background:transparent;text-transform:uppercase;font-size:.66rem;letter-spacing:.14em;padding-inline:0;}
+.work-filter[aria-pressed="true"],.work-filter:hover{color:var(--lab-wine);border-bottom-color:var(--lab-wine);}
+.spine{padding-inline-start:0;}
+.spine::before,.spine::after{display:none;}
+.spine>.entry{padding:24px 0 30px;border-bottom:1px solid var(--lab-line);border-inline-start:0;}
+.spine>.entry::before{content:counter(exhibit,decimal-leading-zero);counter-increment:exhibit;inset:28px auto auto 0;width:auto;height:auto;border:0;border-radius:0;background:none;color:var(--lab-wine);font-family:var(--font-display);font-size:1.15rem;}
+#workSpine{counter-reset:exhibit;}
+.project-details{margin-left:76px;border:0;border-radius:0;background:transparent;box-shadow:none;}
+.project-details>summary.project-summary{padding:4px 44px 4px 0;}
+.project-details .entry-preview h3{font-family:var(--font-display);font-size:clamp(1.8rem,3.8vw,3.7rem);font-weight:500;letter-spacing:-.045em;color:var(--lab-ink);}
+.project-details .entry-preview .entry-flag{color:var(--lab-wine);font-family:var(--font-body);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;}
+.project-details summary::after{color:var(--lab-wine);border-color:var(--lab-wine);}
+.project-details-body{border-left:1px solid var(--lab-line);margin-top:10px;padding:20px 34px 26px;max-width:850px;}
+.project-details-body p,.project-description{color:var(--lab-muted);line-height:1.8;}
+.project-facts>div{border-color:var(--lab-line);}
+.project-facts dt{color:var(--lab-wine);}
+.project-finding{border-left-color:var(--lab-wine);background:rgba(91,20,37,.045);}
+.proj-link{color:var(--lab-wine);border-bottom-color:var(--lab-wine);}
+
+/* Materials, timelines and contact stay functional but feel like studio shelving. */
+.material-card,.dev-card,.skill-block,.contact-box{border:1px solid var(--lab-line);border-radius:0;background:rgba(255,255,255,.24);box-shadow:none;}
+.material-card:hover,.dev-card:hover,.skill-block:hover{border-color:var(--lab-wine);}
+.material-card .mname{font-family:var(--font-display);font-size:1.15rem;}
+.entry{border-left-color:var(--lab-line);}
+.entry::before{background:var(--lab-paper);border-color:var(--lab-wine);}
+.entry h3{font-family:var(--font-display);font-size:1.55rem;}
+.entry-flag{font-family:var(--font-body);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lab-wine);}
+.contact-box{padding:clamp(28px,5vw,70px);background:var(--lab-wine);color:#fff8f1;border-color:var(--lab-wine);}
+.contact-box h2,.contact-box p,.contact-box .section-tag{color:#fff8f1;}
+.contact-box .section-tag{opacity:.7;}
+.contact-links .btn{color:#fff8f1;border-color:rgba(255,248,241,.65);}
+.contact-links .btn-solid{background:#fff8f1;color:var(--lab-wine);}
+footer{background:var(--lab-wine-deep);color:#f6ede5;}
+.side-rail{color:var(--lab-wine);}
+
+/* One memorable moment: the learning path words pulse as the hero enters view. */
+.hero.hero-ready .tense-diagram .timeline-dot{animation:labPulse 2.8s ease-in-out infinite;}
+.hero.hero-ready .tense-diagram .timeline-dot:nth-of-type(2){animation-delay:.45s;}
+.hero.hero-ready .tense-diagram .timeline-dot:nth-of-type(3){animation-delay:.9s;}
+@keyframes labPulse{0%,100%{opacity:.55}50%{opacity:1;filter:drop-shadow(0 0 5px var(--lab-rose));}}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;padding-top:130px;}
+  .hero::after{inset:auto 0 4% auto;width:62vw;height:370px;opacity:.28;}
+  .hero::before{inset:auto 3% 11% auto;font-size:clamp(2.5rem,11vw,5.5rem);}
+  .hero h1{max-width:11ch;font-size:clamp(3.2rem,10vw,6rem);}
+  .grid-4,#howITeachGrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:680px){
+  .wrap{padding-inline:20px;}
+  nav{padding-inline:20px;}
+  .nav-links{display:none;}
+  .nav-utility{gap:8px;}
+  .hero{min-height:auto;padding-top:116px;padding-bottom:68px;}
+  .hero h1{font-size:clamp(2.9rem,13vw,4.8rem);}
+  .hero::after{width:82vw;height:290px;bottom:2%;}
+  .hero::before{font-size:clamp(2rem,13vw,4.1rem);bottom:9%;}
+  .credential-strip{display:grid;grid-template-columns:1fr;gap:12px;}
+  .credential-strip .cred,.credential-strip .cred:first-child{border-left:0;border-top:1px solid var(--lab-line);padding:12px 0 0;}
+  html[dir="rtl"] .credential-strip .cred,html[dir="rtl"] .credential-strip .cred:first-child{border-right:0;border-top:1px solid var(--lab-line);padding:12px 0 0;}
+  .section-head{grid-template-columns:54px minmax(0,1fr);column-gap:12px;margin-bottom:28px;}
+  .section-head::before{font-size:2rem;}
+  .section-head h2{font-size:clamp(2rem,10vw,3rem);}
+  main.wrap>section:not(#home){padding-block:68px;}
+  .about-grid{grid-template-columns:1fr;gap:30px;}
+  .about-photo{width:145px;}
+  .about-text p{font-size:1rem;}
+  .grid-4,#howITeachGrid{grid-template-columns:1fr;gap:10px;}
+  .spine>.entry{padding-block:20px;}
+  .spine>.entry::before{position:static;display:block;margin-bottom:8px;}
+  .project-details{margin-left:0;}
+  .project-details>summary.project-summary{padding-inline:0 40px;}
+  html[dir="rtl"] .project-details>summary.project-summary{padding-inline:40px 0;}
+  .project-details-body{border-left:0;border-top:1px solid var(--lab-line);padding-inline:0;}
+  .work-filters{overflow-x:auto;padding-bottom:4px;}
+  .work-filter{white-space:nowrap;}
+  .contact-box{padding:30px 20px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero.hero-ready .tense-diagram .timeline-dot{animation:none;}
+}
+/* Preserve the original intentional dark mode with the same burgundy language. */
+html:not([data-theme="light"]) .hero::after{background:linear-gradient(150deg,rgba(91,20,37,.82),rgba(20,10,14,.9)),url('assets/about.webp') center/cover;}
+html:not([data-theme="light"]) .hero h1,html:not([data-theme="light"]) .section-head h2,html:not([data-theme="light"]) .about-name,html:not([data-theme="light"]) .project-details .entry-preview h3{color:var(--chalk);}
+html:not([data-theme="light"]) .hero p.lead,html:not([data-theme="light"]) .about-text p,html:not([data-theme="light"]) .project-details-body p{color:var(--chalk-dim);}
+html:not([data-theme="light"]) .accordion-card,html:not([data-theme="light"]) .material-card,html:not([data-theme="light"]) .dev-card,html:not([data-theme="light"]) .skill-block{background:rgba(255,255,255,.025);}
+html:not([data-theme="light"]) footer{background:#12090d;}
+html[dir="rtl"] .section-head::before{grid-column:1;}
+html[dir="rtl"] .project-details{margin-left:0;margin-right:76px;}
+html[dir="rtl"] .project-details-body{border-left:0;border-right:1px solid var(--lab-line);}
+@media (max-width:680px){html[dir="rtl"] .project-details{margin-right:0;}html[dir="rtl"] .project-details-body{border-right:0;}}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,6 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Caveat:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&family=Cairo:wght@400;500;600;700&display=swap&v=2.1.0" rel="stylesheet">
+<link rel="stylesheet" href="creative-redesign.css">
 
 <style>
   :root{
@@ -2350,9 +2351,9 @@ const SITE = {
   name: "Shahd Mohamed",
   fullName: "Shahd Mohamed Siddiq",
   title: "TEFL Graduate | Aspiring English Language Educator | Instructional & Assessment Design",
-  heroNote: "exploring teaching & EdTech opportunities",
-  heroHeadline: "Teaching to See, Learning to Be",
-  heroLead: "TEFL graduate creating visual English lessons, practical assessments, and digital learning tools.",
+  heroNote: "English language × TEFL × educational design",
+  heroHeadline: "I don't just teach English. I design ways to learn it.",
+  heroLead: "Through teaching, design, and creative learning experiences, I help learners build language, confidence, and a bigger world.",
 
   // Core links — update these once and every button across the site follows.
   links: {
@@ -2576,9 +2577,9 @@ const SITE_AR = {
   name: "شهد محمد",
   fullName: "شهد محمد صديق",
   title: "خريجة TEFL | معلمة لغة إنجليزية طموحة | تصميم التعليم والتقييم",
-  heroNote: "أستكشف فرص التدريس وتكنولوجيا التعليم",
-  heroHeadline: "نُعلِّم لنُبصر، ونتعلَّم لنكون",
-  heroLead: "خريجة TEFL أصمم دروسًا بصرية للغة الإنجليزية، وتقييمات عملية، وأدوات تعلّم رقمية.",
+  heroNote: "اللغة الإنجليزية × TEFL × التصميم التعليمي",
+  heroHeadline: "لا أُدرِّس الإنجليزية فقط، بل أصمِّم طرقًا لتعلُّمها.",
+  heroLead: "من خلال التدريس والتصميم وتجارب التعلّم الإبداعية، أساعد المتعلمين على بناء اللغة والثقة ورؤية أوسع للعالم.",
 
   links: SITE.links,
 
@@ -3618,8 +3619,8 @@ const SITE_AR = {
   themeToggle.addEventListener('click', toggleTheme);
   themeToggleMobile.addEventListener('click', toggleTheme);
   railThemeToggle.addEventListener('click', toggleTheme);
-  let initialTheme = 'dark';
-  try{ initialTheme = localStorage.getItem('siteTheme') === 'light' ? 'light' : 'dark'; }catch(e){}
+  let initialTheme = 'light';
+  try{ initialTheme = localStorage.getItem('siteTheme') === 'dark' ? 'dark' : 'light'; }catch(e){}
   applyTheme(initialTheme);
 
   backToTop.addEventListener('click', function(){
