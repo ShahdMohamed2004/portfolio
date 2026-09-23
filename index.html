@@ -6,6 +6,10 @@
 <meta name="asset-version" content="2.1.0" />
 <meta name="theme-color" content="#152825" />
 <meta name="color-scheme" content="dark light" />
+<!-- GitHub Pages cannot set response headers here; this meta policy still reduces object, base, form, and mixed-content attack surface. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src https://drive.google.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'self'; form-action 'none'; upgrade-insecure-requests" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
 <meta name="mobile-web-app-capable" content="yes" />
 <link rel="canonical" href="https://shahdmohamed2004.github.io/portfolio/" />
 <title>Shahd Mohamed Siddiq | TEFL Graduate &amp; Aspiring English Language Educator</title>
@@ -2889,41 +2893,65 @@ const SITE_AR = {
 (function(){
 
   const externalIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>';
+  const SAFE_EXTERNAL_HOSTS = new Set([
+    'drive.google.com', 'mail.google.com', 'www.linkedin.com', 'linkedin.com',
+    'www.instagram.com', 'instagram.com', 'shahdmohamed2004.github.io'
+  ]);
+  function escapeHtml(value){
+    return String(value ?? '').replace(/[&<>'"]/g, character => ({
+      '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;'
+    }[character]));
+  }
+  function safeExternalUrl(value, fallback = '#'){
+    try{
+      const url = new URL(String(value), window.location.origin);
+      if(url.protocol !== 'https:' || !SAFE_EXTERNAL_HOSTS.has(url.hostname)) return fallback;
+      return url.href;
+    }catch(_){ return fallback; }
+  }
+  function safeAssetUrl(value){
+    const candidate = String(value || '');
+    return /^assets\/[a-z0-9._-]+$/i.test(candidate) ? candidate : 'assets/about.webp';
+  }
+  function safeEmbedUrl(value){
+    const url = safeExternalUrl(value, '');
+    return url && new URL(url).hostname === 'drive.google.com' ? url : '';
+  }
 
   function accordionCard(item, extra=''){
-    return `<details class="accordion-card reveal-item"><summary>${item.title}</summary><div class="accordion-body"><p>${item.desc}</p>${extra}</div></details>`;
+    return `<details class="accordion-card reveal-item"><summary>${escapeHtml(item.title)}</summary><div class="accordion-body"><p>${escapeHtml(item.desc)}</p>${extra}</div></details>`;
   }
 
   function projectLink(l){
-    return `<a class="proj-link" href="${l.href}" target="_blank" rel="noopener noreferrer">${l.label}${externalIcon}</a>`;
+    return `<a class="proj-link" href="${safeExternalUrl(l.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}${externalIcon}</a>`;
   }
 
   // Header / mobile menu CV + LinkedIn + Portfolio (language-independent)
-  document.getElementById('cvLinkDesktop').href = SITE.links.cv;
-  document.getElementById('cvLinkMobile').href = SITE.links.cv;
-  document.getElementById('linkedinLinkDesktop').href = SITE.links.linkedin;
-  document.getElementById('linkedinLinkMobile').href = SITE.links.linkedin;
-  document.getElementById('mobileLinkedinDock').href = SITE.links.linkedin;
+  document.getElementById('cvLinkDesktop').href = safeExternalUrl(SITE.links.cv);
+  document.getElementById('cvLinkMobile').href = safeExternalUrl(SITE.links.cv);
+  document.getElementById('linkedinLinkDesktop').href = safeExternalUrl(SITE.links.linkedin);
+  document.getElementById('linkedinLinkMobile').href = safeExternalUrl(SITE.links.linkedin);
+  document.getElementById('mobileLinkedinDock').href = safeExternalUrl(SITE.links.linkedin);
   const gmailComposeUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(SITE.links.email);
   document.getElementById('mobileEmailDock').href = gmailComposeUrl;
   document.getElementById('mobileEmailDock').target = '_blank';
   document.getElementById('mobileEmailDock').rel = 'noopener noreferrer';
-  document.getElementById('portfolioLinkDesktop').href = SITE.links.portfolioFolder;
-  document.getElementById('portfolioLinkMobile').href = SITE.links.portfolioFolder;
-  document.getElementById('materialsPortfolioLink').href = SITE.links.portfolioFolder;
-  document.getElementById('railCv').href = SITE.links.cv;
-  document.getElementById('railPortfolio').href = SITE.links.portfolioFolder;
-  document.getElementById('railLinkedin').href = SITE.links.linkedin;
-  document.getElementById('btnCV').href = SITE.links.cv;
-  document.getElementById('btnLinkedin').href = SITE.links.linkedin;
+  document.getElementById('portfolioLinkDesktop').href = safeExternalUrl(SITE.links.portfolioFolder);
+  document.getElementById('portfolioLinkMobile').href = safeExternalUrl(SITE.links.portfolioFolder);
+  document.getElementById('materialsPortfolioLink').href = safeExternalUrl(SITE.links.portfolioFolder);
+  document.getElementById('railCv').href = safeExternalUrl(SITE.links.cv);
+  document.getElementById('railPortfolio').href = safeExternalUrl(SITE.links.portfolioFolder);
+  document.getElementById('railLinkedin').href = safeExternalUrl(SITE.links.linkedin);
+  document.getElementById('btnCV').href = safeExternalUrl(SITE.links.cv);
+  document.getElementById('btnLinkedin').href = safeExternalUrl(SITE.links.linkedin);
   // Open Gmail compose with the existing portfolio address in the To field.
   const contactEmailBtn = document.getElementById('contactEmailBtn');
-  contactEmailBtn.href = gmailComposeUrl;
+  contactEmailBtn.href = safeExternalUrl(gmailComposeUrl);
   contactEmailBtn.target = '_blank';
   contactEmailBtn.rel = 'noopener noreferrer';
   contactEmailBtn.title = 'Open Gmail compose';
-  document.getElementById('contactLinkedinBtn').href = SITE.links.linkedin;
-  document.getElementById('contactCvBtn').href = SITE.links.cv;
+  document.getElementById('contactLinkedinBtn').href = safeExternalUrl(SITE.links.linkedin);
+  document.getElementById('contactCvBtn').href = safeExternalUrl(SITE.links.cv);
   // Everything below depends on which language is active.
   const SKILL_LABELS = {
     en: { teaching: "Instructional Design", soft: "Classroom Practice", hard: "Educational Technology", languages: "Languages" },
@@ -2941,9 +2969,9 @@ const SITE_AR = {
 
     document.getElementById('credentialStrip').innerHTML = data.credentials.map(c => `
       <div class="cred">
-        <div class="deg">${c.degree}</div>
-        <div class="school">${c.school}</div>
-        <div class="gpa">GPA ${c.gpa}</div>
+        <div class="deg">${escapeHtml(c.degree)}</div>
+        <div class="school">${escapeHtml(c.school)}</div>
+        <div class="gpa">GPA ${escapeHtml(c.gpa)}</div>
       </div>
     `).join('');
 
@@ -2952,7 +2980,7 @@ const SITE_AR = {
     document.getElementById('aboutRole').textContent = data.title;
     document.getElementById('aboutBio').textContent = data.about.bio;
     if(data.about.photo){
-      document.getElementById('aboutPhoto').innerHTML = `<img src="${data.about.photo}" alt="Photo of ${SITE.fullName}" width="1087" height="1447" loading="lazy" decoding="async">`;
+      document.getElementById('aboutPhoto').innerHTML = `<img src="${safeAssetUrl(data.about.photo)}" alt="${escapeHtml(`Photo of ${SITE.fullName}`)}" width="1087" height="1447" loading="lazy" decoding="async">`;
     }
 
     // What I do
@@ -2962,7 +2990,7 @@ const SITE_AR = {
 
     // How I teach
     document.getElementById('howITeachGrid').innerHTML = data.howITeach.map(item => `
-      <details class="accordion-card reveal-item"><summary><span class="num">${item.num}</span>${item.title}</summary><div class="accordion-body"><p>${item.desc}</p></div></details>
+      <details class="accordion-card reveal-item"><summary><span class="num">${escapeHtml(item.num)}</span>${escapeHtml(item.title)}</summary><div class="accordion-body"><p>${escapeHtml(item.desc)}</p></div></details>
     `).join('');
 
     // Selected work — filterable on desktop, swipeable chips on mobile.
@@ -2974,13 +3002,13 @@ const SITE_AR = {
     document.getElementById('workSpine').innerHTML = data.projects.map((p, i) => {
       const category = projectCategory(p);
       return `
-      <div class="entry reveal-item" data-step="${i + 1}" data-category="${category}">
+      <div class="entry reveal-item" data-step="${i + 1}" data-category="${escapeHtml(category)}">
         <details class="project-details" id="projectDetails-${i}" data-project-index="${i}">
           <summary class="project-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض تفاصيل المشروع والروابط' : 'View project details & links'}">
             <div class="entry-preview">
-              <span class="entry-flag ${SITE.projects[i].flag === 'core project' ? 'core' : ''}">${p.flag}</span>
-              <h3>${p.title}</h3>
-              <div class="badges">${p.badges.map(b => `<span class="badge">${b}</span>`).join('')}</div>
+              <span class="entry-flag ${SITE.projects[i].flag === 'core project' ? 'core' : ''}">${escapeHtml(p.flag)}</span>
+              <h3>${escapeHtml(p.title)}</h3>
+              <div class="badges">${p.badges.map(b => `<span class="badge">${escapeHtml(b)}</span>`).join('')}</div>
             </div>
           </summary>
           <div class="project-details-body" id="projectDetailsBody-${i}">
@@ -2990,23 +3018,23 @@ const SITE_AR = {
                 <div class="featured-case-content-inner">
                   <div class="featured-case-copy">
                     <span class="section-tag">${lang === 'ar' ? 'مشروع التخرج' : 'Graduation project'}</span>
-                    <h3 id="graduationCaseTitle">${p.title}</h3>
-                    <p class="project-description">${p.description}</p>
+                    <h3 id="graduationCaseTitle">${escapeHtml(p.title)}</h3>
+                    <p class="project-description">${escapeHtml(p.description)}</p>
                     <dl class="project-facts">
-                      <div><dt>${lang === 'ar' ? 'الدور' : 'Role'}</dt><dd>${p.role}</dd></div>
-                      ${p.tools ? `<div><dt>${lang === 'ar' ? 'الأدوات' : 'Tools'}</dt><dd>${p.tools}</dd></div>` : ''}
+                      <div><dt>${lang === 'ar' ? 'الدور' : 'Role'}</dt><dd>${escapeHtml(p.role)}</dd></div>
+                      ${p.tools ? `<div><dt>${lang === 'ar' ? 'الأدوات' : 'Tools'}</dt><dd>${escapeHtml(p.tools)}</dd></div>` : ''}
                     </dl>
-                    ${p.stat ? `<div class="project-finding"><strong>${lang === 'ar' ? 'نتيجة موثقة' : 'Documented finding'}</strong><span>${p.stat}</span></div>` : ''}
+                    ${p.stat ? `<div class="project-finding"><strong>${lang === 'ar' ? 'نتيجة موثقة' : 'Documented finding'}</strong><span>${escapeHtml(p.stat)}</span></div>` : ''}
                     <div class="proj-links">${p.links.map(projectLink).join('')}</div>
                   </div>
                 </div>
               </div>
             </div>` : `
-            ${p.video ? `<div class="teaching-video" aria-label="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching demonstration video'}"><iframe src="${p.video}" title="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching Demonstration video'}" loading="lazy" allow="autoplay; fullscreen" allowfullscreen></iframe></div>` : ''}
-            ${p.stat ? `<div class="stat-line">${p.stat}</div>` : ''}
-            <p>${p.description}</p>
-            ${p.role ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الدور' : 'Role'}</span>${p.role}</div>` : ''}
-            ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${p.tools}</div>` : ''}
+            ${p.video && safeEmbedUrl(p.video) ? `<div class="teaching-video" aria-label="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching demonstration video'}"><iframe src="${safeEmbedUrl(p.video)}" title="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching Demonstration video'}" loading="lazy" referrerpolicy="no-referrer" allow="autoplay; fullscreen" allowfullscreen></iframe></div>` : ''}
+            ${p.stat ? `<div class="stat-line">${escapeHtml(p.stat)}</div>` : ''}
+            <p>${escapeHtml(p.description)}</p>
+            ${p.role ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الدور' : 'Role'}</span>${escapeHtml(p.role)}</div>` : ''}
+            ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${escapeHtml(p.tools)}</div>` : ''}
             <div class="proj-links">${p.links.map(projectLink).join('')}</div>`}
           </div>
         </details>
@@ -3031,8 +3059,8 @@ const SITE_AR = {
 
     // Teaching materials
     document.getElementById('materialsGrid').innerHTML = data.materials.map(m => `
-      <a class="material-card reveal-item" href="${m.href || SITE.links.portfolioFolder}" target="_blank" rel="noopener noreferrer">
-        <span class="mname">${m.title}</span>
+      <a class="material-card reveal-item" href="${safeExternalUrl(m.href || SITE.links.portfolioFolder)}" target="_blank" rel="noopener noreferrer">
+        <span class="mname">${escapeHtml(m.title)}</span>
         <span class="arrow">${externalIcon}</span>
       </a>
     `).join('');
@@ -3040,24 +3068,24 @@ const SITE_AR = {
 
     // Experience
     document.getElementById('experienceSpine').innerHTML = data.experience.map(e => `
-      <div class="entry"><details class="timeline-detail"><summary><span class="entry-flag">${e.flag}</span><h3>${e.title}</h3></summary>
-        <div class="place">${e.place} &middot; ${e.dates}</div>
-        <ul class="point-list">${e.points.map(pt => `<li>${pt}</li>`).join('')}</ul>
+      <div class="entry"><details class="timeline-detail"><summary><span class="entry-flag">${escapeHtml(e.flag)}</span><h3>${escapeHtml(e.title)}</h3></summary>
+        <div class="place">${escapeHtml(e.place)} &middot; ${escapeHtml(e.dates)}</div>
+        <ul class="point-list">${e.points.map(pt => `<li>${escapeHtml(pt)}</li>`).join('')}</ul>
         ${e.evidence ? `<div class="proj-links">${projectLink(e.evidence)}</div>` : ''}
       </details></div>
     `).join('');
 
     // Education
     document.getElementById('educationSpine').innerHTML = data.education.map(ed => `
-      <div class="entry"><details class="timeline-detail"><summary><span class="entry-flag">${ed.flag}</span><h3>${ed.title}</h3></summary>
-        ${ed.place ? `<div class="place">${ed.place}</div>` : ''}
+      <div class="entry"><details class="timeline-detail"><summary><span class="entry-flag">${escapeHtml(ed.flag)}</span><h3>${escapeHtml(ed.title)}</h3></summary>
+        ${ed.place ? `<div class="place">${escapeHtml(ed.place)}</div>` : ''}
         ${ed.links && ed.links.length ? `<div class="proj-links">${ed.links.map(projectLink).join('')}</div>` : ''}
       </details></div>
     `).join('');
 
     // Professional development
     document.getElementById('developmentGrid').innerHTML = data.development.map((d, i) => `
-      <details class="accordion-card reveal-item"><summary>${d.title}</summary><div class="accordion-body"><div class="place">${d.place}</div>${SITE.development[i].href ? `<div>${projectLink({label: lang === 'ar' ? 'عرض الشهادة' : 'View certificate', href: SITE.development[i].href})}</div>` : ''}</div></details>
+      <details class="accordion-card reveal-item"><summary>${escapeHtml(d.title)}</summary><div class="accordion-body"><div class="place">${escapeHtml(d.place)}</div>${SITE.development[i].href ? `<div>${projectLink({label: lang === 'ar' ? 'عرض الشهادة' : 'View certificate', href: SITE.development[i].href})}</div>` : ''}</div></details>
     `).join('');
 
     // Skills + languages
@@ -3066,22 +3094,22 @@ const SITE_AR = {
       <div class="skill-block skills-block reveal-item">
         <h3>${lang === 'ar' ? 'المهارات' : 'Skills'}</h3>
         <div class="skill-group">
-          <h4>${sl.teaching}</h4>
-          <ul>${data.skills.teaching.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
+          <h4>${escapeHtml(sl.teaching)}</h4>
+          <ul>${data.skills.teaching.map(s => `<li><span>${escapeHtml(s.name)}</span></li>`).join('')}</ul>
         </div>
         <div class="skill-group">
-          <h4>${sl.soft}</h4>
-          <ul>${data.skills.soft.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
+          <h4>${escapeHtml(sl.soft)}</h4>
+          <ul>${data.skills.soft.map(s => `<li><span>${escapeHtml(s.name)}</span></li>`).join('')}</ul>
         </div>
         <div class="skill-group">
-          <h4>${sl.hard}</h4>
-          <ul>${data.skills.hard.map(s => `<li><span>${s.name}</span></li>`).join('')}</ul>
+          <h4>${escapeHtml(sl.hard)}</h4>
+          <ul>${data.skills.hard.map(s => `<li><span>${escapeHtml(s.name)}</span></li>`).join('')}</ul>
         </div>
       </div>
       <div class="skill-block languages-block reveal-item">
-        <h3>${sl.languages}</h3>
+        <h3>${escapeHtml(sl.languages)}</h3>
         <div class="skill-group">
-          <ul>${data.skills.languages.map(l => `<li><span>${l.name}</span>${l.level ? `<span class="lvl">${l.level}</span>` : ''}</li>`).join('')}</ul>
+          <ul>${data.skills.languages.map(l => `<li><span>${escapeHtml(l.name)}</span>${l.level ? `<span class="lvl">${escapeHtml(l.level)}</span>` : ''}</li>`).join('')}</ul>
         </div>
       </div>
     `;
@@ -3093,9 +3121,9 @@ const SITE_AR = {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="m7 16 3.2-4 2.2 2.6 1.6-1.8L17 16"/><circle cx="9" cy="8.5" r="1.2"/></svg>'
     ];
     document.getElementById('creativeRow').innerHTML = data.creative.map((c, i) => {
-      const item = `<span class="creative-icon">${creativeIcons[i] || creativeIcons[0]}</span><span>${c}</span>`;
+      const item = `<span class="creative-icon">${creativeIcons[i] || creativeIcons[0]}</span><span>${escapeHtml(c)}</span>`;
       return i === 0
-        ? `<a class="creative-item reveal-item" href="https://www.instagram.com/shahd_mohamed__2004" target="_blank" rel="noopener noreferrer" aria-label="${lang === 'ar' ? 'التصوير الفوتوغرافي على Instagram' : 'Photography on Instagram'}">${item}<span class="creative-external" aria-hidden="true">↗</span></a>`
+        ? `<a class="creative-item reveal-item" href="${safeExternalUrl('https://www.instagram.com/shahd_mohamed__2004')}" target="_blank" rel="noopener noreferrer" aria-label="${lang === 'ar' ? 'التصوير الفوتوغرافي على Instagram' : 'Photography on Instagram'}">${item}<span class="creative-external" aria-hidden="true">↗</span></a>`
         : `<span class="creative-item reveal-item">${item}</span>`;
     }).join('');
     document.getElementById('creativeLead').textContent = data.creativeLead;
