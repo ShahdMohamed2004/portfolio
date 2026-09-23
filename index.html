@@ -2189,6 +2189,36 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   @media (prefers-reduced-motion:reduce){
     .entry:hover,.approach-card:hover,.material-card:hover,.dev-card:hover{transform:none;}
   }
+  /* ---------- bilingual paragraph rhythm: justified, controlled, readable ---------- */
+  html[dir="ltr"] p,html[dir="rtl"] p,
+  html[dir="ltr"] .point-list li,html[dir="rtl"] .point-list li,
+  html[dir="ltr"] .project-facts dd,html[dir="rtl"] .project-facts dd,
+  html[dir="ltr"] .meta-row,html[dir="rtl"] .meta-row{
+    text-align:justify !important;
+    text-align-last:start;
+    text-justify:inter-word;
+    word-spacing:normal;
+    overflow-wrap:break-word;
+    text-wrap:pretty;
+  }
+  html[dir="ltr"] p,html[dir="ltr"] .point-list li,html[dir="ltr"] .project-facts dd,html[dir="ltr"] .meta-row{
+    hyphens:auto;
+    -webkit-hyphens:auto;
+  }
+  html[dir="rtl"] p,html[dir="rtl"] .point-list li,html[dir="rtl"] .project-facts dd,html[dir="rtl"] .meta-row{
+    hyphens:none;
+    -webkit-hyphens:none;
+    word-break:normal;
+  }
+  .about-text p,.hero p.lead,.section-lead,.approach-card p,.entry p,
+  .materials-note,.contact-box p,.project-details-body p,.accordion-body p,
+  .creative-lead{max-width:66ch;}
+  .approach-card p,.dev-card p,.accordion-body p{line-height:1.78;}
+  @media (max-width:767px){
+    .about-text p,.hero p.lead,.section-lead,.approach-card p,.entry p,
+    .materials-note,.contact-box p,.project-details-body p,.accordion-body p,
+    .creative-lead{max-width:100%;}
+  }
 </style>
 </head>
 <body id="artifacts-component-root-html">
