@@ -3173,9 +3173,6 @@ const SITE_AR = {
   document.getElementById('portfolioLinkDesktop').href = safeExternalUrl(SITE.links.portfolioFolder);
   document.getElementById('portfolioLinkMobile').href = safeExternalUrl(SITE.links.portfolioFolder);
   document.getElementById('materialsPortfolioLink').href = safeExternalUrl(SITE.links.portfolioFolder);
-  document.getElementById('railCv').href = safeExternalUrl(SITE.links.cv);
-  document.getElementById('railPortfolio').href = safeExternalUrl(SITE.links.portfolioFolder);
-  document.getElementById('railLinkedin').href = safeExternalUrl(SITE.links.linkedin);
   document.getElementById('btnCV').href = safeExternalUrl(SITE.links.cv);
   document.getElementById('btnLinkedin').href = safeExternalUrl(SITE.links.linkedin);
   // Open Gmail compose with the existing portfolio address in the To field.
@@ -3392,6 +3389,10 @@ const SITE_AR = {
     development: ["Development", "التطوير المهني"], skills: ["Skills", "المهارات"],
     creative: ["Creative", "اهتمامات أخرى"], contact: ["Contact", "تواصل"]
   };
+  const RAIL_EXTRA = {
+    railCv: ["CV", "السيرة الذاتية"], railPortfolio: ["Portfolio", "ملف الأعمال"], railLinkedin: ["LinkedIn", "LinkedIn"],
+    railLangToggle: ["العربية", "English"], railThemeToggle: ["Light mode", "الوضع الفاتح"]
+  };
   const WHERE_LABELS = {
     home: ['HOME','الرئيسية'], about: ['ABOUT','نبذة عني'], 'what-i-do': ['WHAT I DO','ماذا أفعل'],
     teaching: ['TEACHING','التدريس'], work: ['WORK','الأعمال'], materials: ['MATERIALS','المواد'],
@@ -3439,7 +3440,7 @@ const SITE_AR = {
       else a.textContent = pair[i];
     });
     document.querySelectorAll('.nav-links a[data-nav]').forEach(a => {
-      const pair = RAIL_LABELS[a.getAttribute('data-rail')];
+      const pair = RAIL_LABELS[a.getAttribute('data-nav')];
       const label = a.querySelector('.rail-label');
       if(pair && label) label.textContent = pair[i];
     });
@@ -3461,13 +3462,16 @@ const SITE_AR = {
     });
     Object.keys(BUTTON_TEXT).forEach(id => {
       const el = document.getElementById(id);
-      if(el) el.textContent = BUTTON_TEXT[id][i];
+      if(!el) return;
+      const label = el.querySelector('.utility-label');
+      if(label) label.textContent = BUTTON_TEXT[id][i];
+      else el.textContent = BUTTON_TEXT[id][i];
     });
     Object.keys(ABOUT_TEXT).forEach(id => {
       const el = document.getElementById(id);
       if(el) el.textContent = ABOUT_TEXT[id][i];
     });
-    document.getElementById('linkedinLinkDesktop').textContent = 'LinkedIn';
+    document.getElementById('linkedinLinkDesktop').querySelector('.utility-label').textContent = 'LinkedIn';
     document.getElementById('linkedinLinkMobile').textContent = 'LinkedIn';
     document.getElementById('contactLinkedinBtn').textContent = 'LinkedIn';
     document.querySelector('.skip-link').textContent = lang === 'ar' ? 'تخطَّ إلى المحتوى الرئيسي' : 'Skip to main content';
@@ -3896,7 +3900,6 @@ const SITE_AR = {
   let scrollTicking = false;
   function onScrollFrame(){
     updateHeaderAndProgress();
-    updateChromeState();
     // Mobile keeps native scrolling. Retain only the small visual timeline
     // updates that create the scroll-linked golden light and active-card glow;
     // skip the more expensive navigation, section-scene, and parallax reads.
