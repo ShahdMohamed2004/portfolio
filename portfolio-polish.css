@@ -482,3 +482,85 @@ html[data-theme='light'] .hero.shahd-badge-hero::before{
   html[data-theme='light'] body::after{display:none;}
   html[data-theme='light'] .hero.shahd-badge-hero::before{display:none;}
 }
+
+
+/* Light mode interaction pass: the same tactile card language as dark mode. */
+@media (min-width:768px) and (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  html[data-theme='light'] .accordion-card,
+  html[data-theme='light'] .material-card,
+  html[data-theme='light'] .availability-item,
+  html[data-theme='light'] .dev-card,
+  html[data-theme='light'] .skill-block,
+  html[data-theme='light'] .contact-box,
+  html[data-theme='light'] .credential-strip .cred,
+  html[data-theme='light'] .project-details{
+    transition:transform 220ms cubic-bezier(.23,1,.32,1),border-color 180ms ease-out,box-shadow 220ms ease-out;
+  }
+  html[data-theme='light'] .accordion-card::after,
+  html[data-theme='light'] .material-card::after,
+  html[data-theme='light'] .availability-item::before,
+  html[data-theme='light'] .dev-card::after,
+  html[data-theme='light'] .skill-block::after,
+  html[data-theme='light'] .contact-box::after,
+  html[data-theme='light'] .credential-strip .cred::after,
+  html[data-theme='light'] .project-details::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    border-radius:inherit;
+    pointer-events:none;
+    opacity:0;
+    background:
+      radial-gradient(180px circle at var(--card-x,50%) var(--card-y,50%),rgba(91,190,211,.25),transparent 68%),
+      radial-gradient(130px circle at calc(var(--card-x,50%) + 42px) calc(var(--card-y,50%) + 24px),rgba(231,184,78,.14),transparent 72%);
+    transition:opacity 180ms ease-out;
+  }
+  html[data-theme='light'] .accordion-card:hover,
+  html[data-theme='light'] .material-card:hover,
+  html[data-theme='light'] .availability-item:hover,
+  html[data-theme='light'] .dev-card:hover,
+  html[data-theme='light'] .skill-block:hover,
+  html[data-theme='light'] .contact-box:hover,
+  html[data-theme='light'] .credential-strip .cred:hover,
+  html[data-theme='light'] .project-details:hover{
+    transform:translateY(-5px);
+    border-color:rgba(91,190,211,.58);
+    box-shadow:0 18px 34px -18px rgba(66,129,146,.32),0 0 0 1px rgba(231,184,78,.24),inset 0 1px 0 #fff;
+  }
+  html[data-theme='light'] .accordion-card:hover::after,
+  html[data-theme='light'] .material-card:hover::after,
+  html[data-theme='light'] .dev-card:hover::after,
+  html[data-theme='light'] .skill-block:hover::after,
+  html[data-theme='light'] .contact-box:hover::after,
+  html[data-theme='light'] .credential-strip .cred:hover::after,
+  html[data-theme='light'] .project-details:hover::after,
+  html[data-theme='light'] .availability-item:hover::before{opacity:1;}
+  html[data-theme='light'] #howITeachGrid .accordion-card:hover summary,
+  html[data-theme='light'] .material-card:hover .mname,
+  html[data-theme='light'] .availability-item:hover,
+  html[data-theme='light'] .dev-card:hover h3,
+  html[data-theme='light'] .skill-block:hover h3,
+  html[data-theme='light'] .contact-box:hover h3{
+    color:#234f5a;
+    text-shadow:0 0 12px rgba(91,190,211,.30);
+  }
+  html[data-theme='light'] #howITeachGrid .accordion-card:hover .num{
+    border-color:rgba(91,190,211,.68);
+    color:#28758a;
+    box-shadow:0 0 14px -5px rgba(91,190,211,.82);
+    transform:translateY(-2px);
+  }
+  html[data-theme='light'] .material-card:hover .arrow{transform:translateX(4px);color:#b18430;}
+  html[dir='rtl'][data-theme='light'] .material-card:hover .arrow{transform:translateX(-4px);}
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme='light'] .accordion-card,
+  html[data-theme='light'] .material-card,
+  html[data-theme='light'] .availability-item,
+  html[data-theme='light'] .dev-card,
+  html[data-theme='light'] .skill-block,
+  html[data-theme='light'] .contact-box,
+  html[data-theme='light'] .credential-strip .cred,
+  html[data-theme='light'] .project-details{transform:none!important;transition:none!important;}
+}

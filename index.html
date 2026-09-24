@@ -51,7 +51,7 @@
 
   <link rel="stylesheet" href="enhancements.css?v=2.4.0">
   <link rel="stylesheet" href="shahd-card.css?v=1.2.0">
-  <link rel="stylesheet" href="portfolio-polish.css?v=1.1.7">
+  <link rel="stylesheet" href="portfolio-polish.css?v=1.1.8">
 
 <style>
   :root{
@@ -3712,7 +3712,7 @@ const SITE_AR = {
   // It is intentionally disabled for touch and reduced-motion contexts.
   const desktopInteractionMQ = window.matchMedia('(min-width:768px) and (hover:hover) and (pointer:fine)');
   if(desktopInteractionMQ.matches && !reducedMQ.matches){
-    const interactiveSelector = '.approach-card, .material-card, .dev-card, .skill-block, .contact-box, .credential-strip .cred, .project-details';
+    const interactiveSelector = '.approach-card, .accordion-card, .material-card, .availability-item, .dev-card, .skill-block, .contact-box, .credential-strip .cred, .project-details';
     let pointerFrame = 0;
     let pendingPointer = null;
     document.addEventListener('pointermove', (event) => {
