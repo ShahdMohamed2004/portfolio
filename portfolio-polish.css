@@ -590,3 +590,28 @@ html[data-theme='light'] body::after{
 @media (prefers-reduced-motion:reduce){
   html[data-theme='light'] body::before{animation:none;transform:none;}
 }
+
+
+/* Full-page light canvas: green paper base with two breathing corner lights. */
+html[data-theme='light'] body{
+  background:linear-gradient(135deg,#edf6ef 0%,#f7faf6 48%,#f1f4e8 100%);
+}
+html[data-theme='light'] body::before{
+  background:
+    radial-gradient(ellipse 43% 42% at -2% -4%,rgba(91,190,125,.42),transparent 74%),
+    radial-gradient(ellipse 41% 44% at 102% 104%,rgba(231,184,78,.34),transparent 74%),
+    linear-gradient(135deg,#edf6ef 0%,#f7faf6 48%,#f1f4e8 100%);
+  animation:light-corner-drift 13s ease-in-out infinite;
+}
+html[data-theme='light'] main.wrap>section:not(#home){
+  background-color:rgba(245,250,246,.18);
+}
+html[data-theme='light'] main.wrap>section:not(#home)::before{
+  opacity:.62;
+}
+@media (max-width:767px){
+  html[data-theme='light'] body::before{animation-duration:18s;}
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme='light'] body::before{animation:none;}
+}
