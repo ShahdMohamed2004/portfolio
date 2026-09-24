@@ -878,3 +878,19 @@ html[data-theme="light"] .hero .cta-row #btnCV:focus-visible{
 }
 html[data-theme="light"] .hero .cta-row #btnCV:hover,
 html[data-theme="light"] .hero .cta-row #btnCV:focus-visible{border-color:rgba(73,143,177,.66)!important;background:linear-gradient(135deg,rgba(174,218,234,.9),rgba(215,238,247,.82))!important;}
+
+
+/* Final specificity repair for the light-mode CV action. */
+html[data-theme="light"] #btnCV.hero-action.hero-action-primary,
+html[data-theme="light"] #btnCV.hero-action.hero-action-primary:hover,
+html[data-theme="light"] #btnCV.hero-action.hero-action-primary:focus-visible{
+  color:#28566b!important;
+  border:1px solid rgba(100,171,202,.50)!important;
+  background:linear-gradient(135deg,rgba(190,226,239,.78),rgba(222,240,247,.68))!important;
+  box-shadow:0 10px 24px -18px rgba(73,143,177,.48),inset 0 1px 0 rgba(255,255,255,.92)!important;
+}
+html[data-theme="light"] #btnCV.hero-action.hero-action-primary:hover,
+html[data-theme="light"] #btnCV.hero-action.hero-action-primary:focus-visible{
+  border-color:rgba(73,143,177,.68)!important;
+  background:linear-gradient(135deg,rgba(174,218,234,.9),rgba(215,238,247,.82))!important;
+}
