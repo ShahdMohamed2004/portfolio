@@ -564,3 +564,29 @@ html[data-theme='light'] .hero.shahd-badge-hero::before{
   html[data-theme='light'] .credential-strip .cred,
   html[data-theme='light'] .project-details{transform:none!important;transition:none!important;}
 }
+
+
+/* Experimental light background: living corner light, not a static flat fill. */
+@keyframes light-corner-drift{
+  0%,100%{transform:scale(1.02) translate3d(0,0,0);opacity:.92;}
+  50%{transform:scale(1.07) translate3d(1.2%,-.8%,0);opacity:1;}
+}
+html[data-theme='light'] body::before{
+  background:
+    radial-gradient(ellipse 42% 38% at 0% 0%,rgba(126,194,153,.34),transparent 75%),
+    radial-gradient(ellipse 38% 42% at 100% 100%,rgba(231,184,78,.26),transparent 74%),
+    linear-gradient(135deg,#f4f8f2 0%,#faf8f5 46%,#f4f5ed 100%);
+  transform-origin:center;
+  animation:light-corner-drift 13s ease-in-out infinite;
+}
+html[data-theme='light'] body::after{
+  background:
+    radial-gradient(210px circle at var(--cursor-x,50%) var(--cursor-y,20%),rgba(113,194,211,.18),transparent 72%),
+    radial-gradient(170px circle at calc(var(--cursor-x,50%) + 86px) calc(var(--cursor-y,20%) + 54px),rgba(231,184,78,.12),transparent 74%);
+}
+@media (max-width:767px){
+  html[data-theme='light'] body::before{animation-duration:18s;}
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme='light'] body::before{animation:none;transform:none;}
+}
