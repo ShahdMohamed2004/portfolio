@@ -376,3 +376,14 @@ html[data-theme="light"] body::before{background:radial-gradient(560px circle at
   html[dir="ltr"] #about .about-role,html[dir="ltr"] #about .about-bio{direction:ltr;text-align:justify!important;text-align-last:start!important;text-justify:auto!important;hyphens:auto!important;-webkit-hyphens:auto!important;word-spacing:normal!important;overflow-wrap:normal!important;}
   html[dir="rtl"] #about .about-role,html[dir="rtl"] #about .about-bio{direction:rtl;text-align:justify!important;text-align-last:start!important;text-justify:auto!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;overflow-wrap:normal!important;}
 }
+
+/* ---------- About spacing-only correction; justified alignment is intentional ---------- */
+@media (max-width:767px){
+  #about .about-card{padding-inline:clamp(24px,7vw,36px)!important;}
+  #about .about-text{width:100%;max-width:720px;margin-inline:auto;padding-inline:clamp(2px,1vw,8px)!important;}
+  #about .about-role,#about .about-bio{width:100%;max-width:68ch!important;letter-spacing:normal!important;word-spacing:normal!important;}
+  #about .about-role{margin-top:0;margin-bottom:clamp(20px,5vw,28px);line-height:1.85!important;}
+  #about .about-bio{margin-top:0!important;margin-bottom:clamp(24px,6vw,34px);line-height:1.9!important;}
+  html[dir="ltr"] #about .about-role,html[dir="ltr"] #about .about-bio{direction:ltr;text-align:justify!important;text-align-last:start!important;text-justify:inter-word!important;hyphens:none!important;-webkit-hyphens:none!important;}
+  html[dir="rtl"] #about .about-role,html[dir="rtl"] #about .about-bio{direction:rtl;text-align:justify!important;text-align-last:start!important;text-justify:inter-word!important;hyphens:none!important;-webkit-hyphens:none!important;}
+}
