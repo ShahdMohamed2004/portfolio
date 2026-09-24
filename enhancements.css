@@ -894,3 +894,29 @@ html[data-theme="light"] #btnCV.hero-action.hero-action-primary:focus-visible{
   border-color:rgba(73,143,177,.68)!important;
   background:linear-gradient(135deg,rgba(174,218,234,.9),rgba(215,238,247,.82))!important;
 }
+
+
+/* Timeline alignment + motion stability pass. */
+.spine{--spine-line-x:4px;}
+.spine::before{inset-inline-start:var(--spine-line-x);inset-inline-end:auto;}
+.spine::after{inset-inline-start:calc(var(--spine-line-x) - 1px);inset-inline-end:auto;}
+.spine>.entry::before{inset-inline-start:-35px;inset-inline-end:auto;transform-origin:center;}
+html[dir="rtl"] .spine::before{inset-inline-start:auto;inset-inline-end:var(--spine-line-x);}
+html[dir="rtl"] .spine::after{inset-inline-start:auto;inset-inline-end:calc(var(--spine-line-x) - 1px);}
+html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-35px;}
+.tense-diagram .timeline-base,.tense-diagram .spine-path,.tense-diagram .spine-glow{vector-effect:non-scaling-stroke;shape-rendering:geometricPrecision;}
+.tense-diagram circle{transform-box:fill-box;transform-origin:center;}
+.tense-diagram circle.active{transform-origin:center;}
+.tense-diagram .spine-path,.tense-diagram .spine-glow{transition:none!important;}
+@media (max-width:767px){
+  #work #workSpine.spine{--project-spine-gutter:18px;--spine-line-x:2px;}
+  #work #workSpine.spine::before{inset-inline-start:var(--spine-line-x);inset-inline-end:auto;top:4px;bottom:4px;}
+  #work #workSpine.spine::after{inset-inline-start:calc(var(--spine-line-x) - 1px);inset-inline-end:auto;top:4px;}
+  #work #workSpine .entry::before{inset-inline-start:-20px;inset-inline-end:auto;top:20px;width:9px;height:9px;}
+  html[dir="rtl"] #work #workSpine.spine::before{inset-inline-start:auto;inset-inline-end:var(--spine-line-x);}
+  html[dir="rtl"] #work #workSpine.spine::after{inset-inline-start:auto;inset-inline-end:calc(var(--spine-line-x) - 1px);}
+  html[dir="rtl"] #work #workSpine .entry::before{inset-inline-start:auto;inset-inline-end:-20px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .tense-diagram .spine-path,.tense-diagram .spine-glow{transition:none!important;}
+}
