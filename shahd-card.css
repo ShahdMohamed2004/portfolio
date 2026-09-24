@@ -1,7 +1,7 @@
-/* Host layout for the advanced Shadow-DOM card component. */
+/* Reserved grid area: all badge motion stays inside this host. */
 .hero.shahd-badge-hero{
   display:grid !important;
-  grid-template-columns:minmax(0,1.28fr) minmax(320px,.8fr);
+  grid-template-columns:minmax(0,1.2fr) minmax(320px,.9fr);
   grid-template-areas:'note badge' 'headline badge' 'lead badge' 'actions badge' 'credentials credentials' 'timeline timeline';
   column-gap:clamp(24px,4vw,64px);
   align-items:start;
@@ -10,17 +10,29 @@
 .hero.shahd-badge-hero>h1{grid-area:headline;max-width:100%;}
 .hero.shahd-badge-hero>.lead{grid-area:lead;max-width:100%;}
 .hero.shahd-badge-hero>.cta-row{grid-area:actions;align-self:start;flex-wrap:wrap;}
-.hero.shahd-badge-hero>shahd-lanyard{grid-area:badge;align-self:start;margin-top:-92px;direction:ltr;}
+.hero.shahd-badge-hero>shahd-lanyard{grid-area:badge;align-self:start;margin-top:-72px;direction:ltr;}
 .hero.shahd-badge-hero>.credential-strip{grid-area:credentials;margin-top:32px;}
 .hero.shahd-badge-hero>.tense-diagram{grid-area:timeline;}
-shahd-lanyard{display:block;width:min(100%,390px);height:430px;margin-inline:auto;}
-html[data-theme='light'] shahd-lanyard{--lanyard-hint:#5e6c63;--scene-light:rgba(23,59,49,.05);}
+shahd-lanyard{display:block;width:min(100%,440px);height:500px;margin-inline:auto;}
+html[data-theme='light'] shahd-lanyard{
+  --lanyard-hint:#455a53;
+  --scene-light:transparent;
+  --badge-glow-a:rgba(117,211,226,.38);
+  --badge-glow-b:rgba(180,153,225,.32);
+  --badge-glass-line:rgba(255,255,255,.92);
+  --badge-glass-fill:linear-gradient(135deg,rgba(255,255,255,.52),rgba(220,232,246,.26) 52%,rgba(231,221,244,.42));
+  --badge-glass-shadow:0 16px 32px -24px rgba(63,78,100,.32),inset 0 1px 0 rgba(255,255,255,.9);
+  --badge-control-bg:#f6f8f8;
+  --badge-control-border:#9aafa8;
+  --badge-control-active:#dfede9;
+  --badge-focus:#315d50;
+}
 @media(max-width:899px) and (min-width:768px){
   .hero.shahd-badge-hero{grid-template-columns:minmax(0,1fr) minmax(270px,.72fr);column-gap:20px;}
-  .hero.shahd-badge-hero>shahd-lanyard{margin-top:-30px;width:min(100%,330px);}
+  .hero.shahd-badge-hero>shahd-lanyard{margin-top:-24px;width:min(100%,340px);}
 }
 @media(max-width:767px){
   .hero.shahd-badge-hero{grid-template-columns:minmax(0,1fr);grid-template-areas:'note' 'headline' 'lead' 'actions' 'badge' 'credentials' 'timeline';padding-inline:0!important;gap:0;}
-  .hero.shahd-badge-hero>shahd-lanyard{width:min(100%,390px);height:368px;margin:18px auto 0;}
+  .hero.shahd-badge-hero>shahd-lanyard{width:min(100%,420px);height:400px;margin:18px auto 0;}
   .hero.shahd-badge-hero>.credential-strip{margin-top:24px;}
 }

@@ -3,14 +3,19 @@
   const DEFAULT_PHOTO = 'assets/about.webp';
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const style = `
-    :host{display:block;position:relative;width:100%;height:480px;min-width:0;contain:layout style;direction:ltr;color:#193b31;--card-width:184px;--card-height:276px;--clip-height:28px;--scene-light:rgba(209,182,121,.055);font-family:'Space Grotesk',Arial,sans-serif}
+    :host{display:block;position:relative;width:100%;height:500px;min-width:0;contain:layout style;direction:ltr;color:#193b31;--card-width:184px;--card-height:276px;--clip-height:28px;--scene-light:rgba(209,182,121,.055);font-family:'Space Grotesk',Arial,sans-serif}
     *,*::before,*::after{box-sizing:border-box}
     .scene{position:absolute;inset:0;isolation:isolate;overflow:hidden;border-radius:12px;background:radial-gradient(ellipse at 50% 53%,var(--scene-light),transparent 65%)}
+    .ambient{position:absolute;inset:36px 0 48px;border-radius:50%;-webkit-mask-image:radial-gradient(ellipse at 50% 54%,#000 24%,transparent 72%);mask-image:radial-gradient(ellipse at 50% 54%,#000 24%,transparent 72%);pointer-events:none;z-index:0;background:radial-gradient(ellipse at 24% 52%,var(--badge-glow-a,rgba(116,177,154,.09)),transparent 64%),radial-gradient(ellipse at 76% 68%,var(--badge-glow-b,rgba(201,166,98,.08)),transparent 62%)}
+    .glass{position:absolute;left:50%;top:37%;width:65%;height:49%;border:1px solid var(--badge-glass-line,rgba(210,220,192,.08));border-radius:24px;background:var(--badge-glass-fill,linear-gradient(135deg,#ffffff05,#ffffff00));box-shadow:var(--badge-glass-shadow,none);transform:translateX(-50%) rotate(-9deg);pointer-events:none;z-index:1}
+    .glass.second{transform:translateX(-50%) rotate(8deg);top:39%;width:62%;opacity:.65}
     canvas{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none;z-index:2}
     .assembly{position:absolute;left:0;top:0;width:0;height:0;transform-origin:0 0;z-index:3;will-change:transform}
     .assembly:focus{outline:none}
     .assembly:focus-visible:not(.pointer-focus) .card{outline:2px solid #d9b767;outline-offset:6px}
-    .card{position:absolute;left:calc(var(--card-width) / -2);top:var(--clip-height);width:var(--card-width);height:var(--card-height);padding:0;overflow:hidden;border:1px solid #e6decb;border-radius:9px;background:#f2eee3;box-shadow:1px 2px 0 #a89e83,2px 3px 0 #776e57,0 9px 15px -9px #0009, var(--shadow-x,9px) 22px 32px -16px #0009;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;color:#173b31}
+    .card{position:absolute;left:calc(var(--card-width) / -2);top:var(--clip-height);width:var(--card-width);height:var(--card-height);padding:0;overflow:hidden;border:1px solid #e6decb;border-radius:9px;background:#f2eee3;box-shadow:1px 2px 0 #a89e83,2px 3px 0 #776e57,0 9px 15px -9px #0009, var(--shadow-x,9px) 22px 32px -16px #0009;cursor:grab;touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;color:#173b31}
+    @media(hover:hover) and (pointer:fine){.card{touch-action:none}}
+    .scene.touch-drag .card{touch-action:none}
     .assembly.dragging .card{cursor:grabbing}
     .card::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:4;background:linear-gradient(var(--shine,117deg),#fff1 2%,#fff0 32%,#fff3 44%,#fff0 56%,#fff0 81%,#ffffff15);box-shadow:inset 0 0 0 2px #fff3,inset -1px 0 1px #fff8;border-radius:inherit}
     .card-top{height:32px;position:relative;display:flex;align-items:center;justify-content:space-between;padding:0 13px;color:#536457;font-size:6px;letter-spacing:1.5px;font-weight:600}
@@ -33,11 +38,19 @@
     .swivel{position:absolute;left:4px;top:12px;width:8px;height:8px;border:1px solid #697467;border-radius:3px;background:linear-gradient(90deg,#626b5c,#f0efe0 40%,#b8baa9 65%,#697261)}
     .clasp{position:absolute;left:3px;top:17px;width:10px;height:19px;border:1px solid #727a6d;border-radius:3px;background:linear-gradient(90deg,#7a8472,#f7f4e5 35%,#c6c7b4 66%,#7a8472);box-shadow:inset 0 1px #ffffffd9}
     .clasp::after{content:'';position:absolute;left:2px;top:4px;width:4px;height:10px;border-right:1px solid #747e6d;border-bottom:1px solid #747e6d;border-radius:1px;opacity:.8}
-    .hint{position:absolute;left:16px;right:16px;bottom:9px;display:flex;align-items:center;justify-content:center;gap:9px;color:var(--lanyard-hint,#a7b3a3);font-size:9px;letter-spacing:1.65px;text-transform:uppercase;pointer-events:none;transition:opacity .2s}
+    .controls{position:absolute;inset:auto 12px 6px;z-index:5;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px}
+    .hint{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--lanyard-hint,#a7b3a3);font-size:10px;letter-spacing:.35px;pointer-events:none;transition:opacity .2s}
+    .control{min-width:44px;min-height:44px;flex-shrink:0;padding:8px 12px;border:1px solid var(--badge-control-border,#a7b3a34d);border-radius:24px;background:var(--badge-control-bg,#17352c);color:var(--lanyard-hint,#cbd4c8);font:500 12px/1.3 Arial,sans-serif;cursor:pointer;touch-action:manipulation}
+    .control:focus-visible{outline:2px solid var(--badge-focus,#d9b767);outline-offset:3px}
+    .control[aria-pressed='true']{border-color:currentColor;background:var(--badge-control-active,#335749)}
+    .reset{display:grid;place-items:center;padding:8px;line-height:1}.reset svg{width:19px;height:19px}
+    .touch-toggle{display:none}
+    @media(hover:none),(pointer:coarse){.touch-toggle{display:block}.hint{display:none}}
     .hint svg{width:13px;height:13px;opacity:.65}
     .scene:has(.dragging) .hint{opacity:0}
-    @media(max-width:767px){:host{height:368px;--card-width:150px;--card-height:229px;--clip-height:26px}.card{border-radius:7px}.card-top{height:29px;padding:0 10px;font-size:5px}.portrait{height:123px;margin-inline:9px}.identity{padding:9px 10px 0}.name{font-size:14.5px;letter-spacing:-.4px}.role{font-size:6.8px;margin-top:4px}.footer{left:10px;right:10px;bottom:9px;padding-top:7px}.discipline{font-size:5px;letter-spacing:1px}.hint{font-size:8px;bottom:7px}.clasp{height:17px}.portrait-label{font-size:5px}}
+    @media(max-width:767px){:host{height:400px;--card-width:150px;--card-height:229px;--clip-height:26px}.card{border-radius:7px}.card-top{height:29px;padding:0 10px;font-size:5px}.portrait{height:123px;margin-inline:9px}.identity{padding:9px 10px 0}.name{font-size:14.5px;letter-spacing:-.4px}.role{font-size:6.8px;margin-top:4px}.footer{left:10px;right:10px;bottom:9px;padding-top:7px}.discipline{font-size:5px;letter-spacing:1px}.hint{font-size:8px;bottom:7px}.clasp{height:17px}.portrait-label{font-size:5px}}
     @media(prefers-reduced-motion:reduce){.hint{transition:none}}
+    @media(forced-colors:active){.ambient,.glass{display:none}.control,.card{border:1px solid ButtonText}.assembly:focus-visible:not(.pointer-focus) .card{outline-color:Highlight}}
   `;
   class ShahdLanyard extends HTMLElement {
     connectedCallback() {
@@ -66,7 +79,16 @@
         if (document.hidden) { this.release(); this.pause(); }
         else this.wake();
       });
-      on(this.reduced, 'change', () => { this.reset(); this.wake(); });
+      on(this.reduced, 'change', () => { this.release(); this.pause(); this.reset(); this.draw(); this.wake(); });
+      on(this.shadowRoot.querySelector('.reset'), 'click', () => { this.release(); this.pause(); this.reset(); this.draw(); });
+      on(this.touchToggle, 'click', () => {
+        const enabled=this.touchToggle.getAttribute('aria-pressed')!=='true';
+        this.release(); this.scene.classList.toggle('touch-drag',enabled);
+        this.touchToggle.setAttribute('aria-pressed',String(enabled)); this.updateLanguage();
+      });
+      this.languageObserver=new MutationObserver(()=>this.updateLanguage());
+      this.languageObserver.observe(document.documentElement,{attributes:true,attributeFilter:['lang','dir']});
+      this.updateLanguage();
       this.resizeObserver = new ResizeObserver(() => this.measure());
       this.resizeObserver.observe(this);
       this.intersection = new IntersectionObserver(entries => {
@@ -80,6 +102,7 @@
       if (!this.shadowRoot) this.attachShadow({mode:'open'});
       this.shadowRoot.innerHTML = `<style>${style}</style>
         <div class="scene">
+          <div class="ambient" aria-hidden="true"></div><div class="glass" aria-hidden="true"></div><div class="glass second" aria-hidden="true"></div>
           <canvas aria-hidden="true"></canvas>
           <div class="assembly" role="button" tabindex="0" aria-label="Shahd Mohamed, English Language Educator. Drag to move the ID card. Arrow keys to swing; Home to settle." aria-describedby="instructions">
             <div class="clip" aria-hidden="true"><i class="ring"></i><i class="swivel"></i><i class="clasp"></i></div>
@@ -91,8 +114,10 @@
               <i class="corner" aria-hidden="true"></i>
             </div>
           </div>
-          <div class="hint" id="instructions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 13V5a2 2 0 0 1 4 0v6-2a2 2 0 0 1 4 0v2a2 2 0 0 1 4 0v6c0 4-3 6-6 6-2 0-4-1-5-3l-5-6a2 2 0 0 1 3-2l3 3"/></svg><span>Drag gently. Let it settle.</span></div>
+          <div class="controls"><div class="hint" id="instructions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 13V5a2 2 0 0 1 4 0v6-2a2 2 0 0 1 4 0v2a2 2 0 0 1 4 0v6c0 4-3 6-6 6-2 0-4-1-5-3l-5-6a2 2 0 0 1 3-2l3 3"/></svg><span>Drag gently. Let it settle.</span></div><button class="control touch-toggle" type="button" aria-pressed="false">Move card</button><button class="control reset" type="button" aria-label="Reset card position" title="Reset card position"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2.5 8M3 4v6h6"/></svg></button></div>
         </div>`;
+      this.scene=this.shadowRoot.querySelector('.scene');
+      this.touchToggle=this.shadowRoot.querySelector('.touch-toggle');
       this.canvas = this.shadowRoot.querySelector('canvas');
       this.ctx = this.canvas.getContext('2d');
       this.card = this.shadowRoot.querySelector('.card');
@@ -101,9 +126,20 @@
       image.src = this.getAttribute('photo') || DEFAULT_PHOTO;
       image.onerror = () => { image.onerror = null; image.src = DEFAULT_PHOTO; };
     }
+    updateLanguage() {
+      const ar=document.documentElement.lang.startsWith('ar');
+      const enabled=this.touchToggle.getAttribute('aria-pressed')==='true';
+      this.shadowRoot.querySelector('.controls').dir=ar?'rtl':'ltr';
+      this.shadowRoot.querySelector('.hint span').textContent=ar?'اسحبي برفق واتركيها تستقر.':'Drag gently. Let it settle.';
+      this.touchToggle.textContent=ar?(enabled?'إنهاء التحريك':'تحريك البطاقة'):(enabled?'Done moving':'Move card');
+      this.touchToggle.setAttribute('aria-label',ar?(enabled?'إنهاء تحريك البطاقة واستعادة التمرير':'تفعيل سحب البطاقة؛ ينتهي بزر إنهاء التحريك'):(enabled?'Finish moving card and restore scrolling':'Enable card dragging; use Done moving to restore scrolling'));
+      const reset=this.shadowRoot.querySelector('.reset');
+      reset.title=ar?'إعادة البطاقة لمكانها':'Reset card position';reset.setAttribute('aria-label',reset.title);
+      this.assembly.setAttribute('aria-label',ar?'شهد محمد، معلمة لغة إنجليزية. اسحبي البطاقة أو استخدمي الأسهم لتحريكها وزر Home لإعادتها.':'Shahd Mohamed, English Language Educator. Drag to move the ID card. Arrow keys to swing; Home to settle.');
+    }
     disconnectedCallback() {
-      this._alive = false; this.pause(); this.abort?.abort();
-      this.resizeObserver?.disconnect(); this.intersection?.disconnect();
+      this._alive = false; this.release(); this.pause(); this.abort?.abort();
+      this.resizeObserver?.disconnect(); this.intersection?.disconnect(); this.languageObserver?.disconnect();
     }
     measure() {
       const w = this.clientWidth, h = this.clientHeight;
@@ -112,8 +148,12 @@
       this.cw = this.card.offsetWidth; this.ch = this.card.offsetHeight;
       this.clip = parseFloat(getComputedStyle(this).getPropertyValue('--clip-height')) || 28;
       this.anchor = {x:w / 2, y:15};
-      // Give the badge a little more breathing room without letting it reach the hero copy.
-      this.ropeLength = clamp(h - this.ch - this.clip - 45, 58, 142);
+      this.maxAngle=.24;
+      while(this.maxAngle>.01 && this.cw*Math.cos(this.maxAngle)+(this.ch+this.clip+3)*Math.sin(this.maxAngle)>w-24) this.maxAngle-=.01;
+      // Reserve space below the badge for elastic travel and the 44px controls.
+      this.ropeLength = clamp(h - this.ch - this.clip - 104, 58, 142);
+      this.maxStretch = Math.min(26, this.ropeLength * .22);
+      this.currentLength = this.ropeLength;
       this.linkLength = this.ropeLength / 16;
       this.dpr = Math.min(devicePixelRatio || 1, 2);
       this.canvas.width = Math.round(w * this.dpr);
@@ -123,6 +163,7 @@
     }
     reset() {
       if (!this.anchor) return;
+      this.currentLength=this.ropeLength; this.linkLength=this.ropeLength/16;
       this.nodes = Array.from({length:17}, (_, i) => ({x:this.anchor.x, y:this.anchor.y + i*this.linkLength, px:this.anchor.x, py:this.anchor.y + i*this.linkLength, mass:i === 0 ? 0 : i === 16 ? .075 : 1}));
       this.angle = 0; this.angularVelocity = 0; this.wind = 0; this.quiet = 0;
     }
@@ -131,7 +172,9 @@
       return {x:(e.clientX - rect.left)*this.w/rect.width, y:(e.clientY-rect.top)*this.h/rect.height};
     }
     grab(e) {
-      if ((e.pointerType === 'mouse' && e.button !== 0) || this.drag || !this.nodes.length) return;
+      if (!e.isPrimary || (e.pointerType === 'mouse' && e.button !== 0) || this.drag || !this.nodes.length) return;
+      // Native page scrolling wins until a touch user explicitly enables dragging.
+      if(e.pointerType==='touch' && !this.scene.classList.contains('touch-drag')) return;
       const p = this.local(e), end = this.nodes[16];
       const dx=p.x-end.x, dy=p.y-end.y, c=Math.cos(this.angle), s=Math.sin(this.angle);
       this.drag = {id:e.pointerId, x:p.x, y:p.y, offsetX:dx*c+dy*s, offsetY:-dx*s+dy*c};
@@ -151,14 +194,15 @@
       const id = this.drag.id; this.drag = null;
       this.assembly.classList.remove('dragging');
       if (this.card.hasPointerCapture(id)) this.card.releasePointerCapture(id);
-      // Do not reset previous positions: their difference carries release momentum.
+      // Reduced motion returns immediately; other users retain bounded momentum.
+      if(this.reduced.matches){this.pause();this.reset();this.draw();return;}
       this.wake();
     }
     keyboard(e) {
       this.assembly.classList.remove('pointer-focus');
       if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','Enter',' '].includes(e.key)) return;
       e.preventDefault();
-      if (e.key === 'Home') this.reset();
+      if (e.key === 'Home') { this.release(); this.pause(); this.reset(); this.draw(); return; }
       else if (!this.reduced.matches) {
         const end = this.nodes[16], force=e.shiftKey?1.8:1;
         if (['ArrowLeft','ArrowRight','Enter',' '].includes(e.key)) end.px += (e.key === 'ArrowLeft'?2.2:-2.2)*force;
@@ -175,20 +219,30 @@
       this.wind=clamp((p.x-previous.x)*.1,-2,2)*near;
       if (Math.abs(this.wind) > .02) this.wake();
     }
+    bounds(angle=this.angle) {
+      const c=Math.cos(angle),s=Math.sin(angle),half=this.cw/2;
+      const corners=[[-half,this.clip],[half,this.clip],[-half,this.clip+this.ch],[half,this.clip+this.ch],[-8,-3],[8,-3],[-8,36],[8,36]];
+      const xs=corners.map(([x,y])=>x*c-y*s),ys=corners.map(([x,y])=>x*s+y*c);
+      return {left:12-Math.min(...xs),right:this.w-12-Math.max(...xs),top:12-Math.min(...ys),bottom:this.h-64-Math.max(...ys)};
+    }
+    contain(point) {
+      const b=this.bounds();
+      point.x=clamp(point.x,b.left,b.right);point.y=clamp(point.y,b.top,b.bottom);
+      return point;
+    }
     target() {
       const c=Math.cos(this.angle), s=Math.sin(this.angle), d=this.drag;
-      let x=d.x-(d.offsetX*c-d.offsetY*s), y=d.y-(d.offsetX*s+d.offsetY*c);
-      // Bound the full rotated card, not just its centre. This prevents clipping.
-      const spread=this.cw/2+Math.sin(.12)*(this.ch+this.clip)+9;
-      x=clamp(x,Math.min(this.w/2,spread),Math.max(this.w/2,this.w-spread));
-      y=clamp(y,42,this.h-this.ch-this.clip-32);
-      const dx=x-this.anchor.x, dy=y-this.anchor.y, r=Math.hypot(dx,dy), max=this.ropeLength*.995;
-      if(r>max){x=this.anchor.x+dx/r*max;y=this.anchor.y+dy/r*max;}
-      return {x,y};
+      const p=this.contain({x:d.x-(d.offsetX*c-d.offsetY*s),y:d.y-(d.offsetX*s+d.offsetY*c)});
+      const dx=p.x-this.anchor.x,dy=p.y-this.anchor.y,r=Math.hypot(dx,dy),max=this.ropeLength+this.maxStretch;
+      if(r>max){p.x=this.anchor.x+dx/r*max;p.y=this.anchor.y+dy/r*max;}
+      return this.contain(p);
     }
     step(dt) {
       const n=this.nodes, end=n[16], beforeX=end.x, beforeY=end.y;
       const target=this.drag?this.target():null;
+      const desired=target?clamp(Math.hypot(target.x-this.anchor.x,target.y-this.anchor.y),this.ropeLength,this.ropeLength+this.maxStretch):this.ropeLength;
+      this.currentLength+=(desired-this.currentLength)*(target ? .22 : .035);
+      this.linkLength=this.currentLength/16;
       if (this.reduced.matches) {
         if(target){
           for(let i=1;i<n.length;i++){
@@ -210,14 +264,15 @@
         p.y+=vy+800*dt*dt;
       }
       if(target){
-        end.x+=(target.x-end.x)*.115;
-        end.y+=(target.y-end.y)*.115;
+        end.x+=(target.x-end.x)*.32;
+        end.y+=(target.y-end.y)*.32;
         end.px+=(end.x-end.px)*.12;
         end.py+=(end.y-end.py)*.12;
       }
       // Weighted constraints: the card is substantially heavier than each rope point.
       for(let pass=0;pass<32;pass++){
         n[0].x=this.anchor.x; n[0].y=this.anchor.y;
+        if(target){end.x=target.x;end.y=target.y;}
         for(let i=0;i<16;i++){
           const a=n[i],b=n[i+1],dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||.001;
           const correction=(len-this.linkLength)/len, total=a.mass+b.mass;
@@ -232,15 +287,12 @@
       const lean=clamp((this.anchor.x-end.x)/this.ropeLength*.18+vx*.00035,-.21,.21);
       const torque=this.drag?clamp(this.drag.offsetX/this.cw*.045,-.025,.025):0;
       this.angularVelocity+=((lean+torque-this.angle)*32-this.angularVelocity*7.5)*dt;
-      this.angle=clamp(this.angle+this.angularVelocity*dt,-.24,.24);
-      // Wall constraints use rotated corner extents and apply to the simulated endpoint.
-      const sn=Math.sin(this.angle),cs=Math.cos(this.angle),half=this.cw/2;
-      const xs=[-half*cs-this.clip*sn,half*cs-this.clip*sn,-half*cs-(this.clip+this.ch)*sn,half*cs-(this.clip+this.ch)*sn];
-      const min=8-Math.min(...xs),max=this.w-8-Math.max(...xs);
-      const oldX=end.x;end.x=clamp(end.x,min,max);
+      this.angle=clamp(this.angle+this.angularVelocity*dt,-this.maxAngle,this.maxAngle);
+      // Apply the same full-card boundary after every physics step, including release.
+      const oldX=end.x,oldY=end.y;this.contain(end);
       if(oldX!==end.x) end.px=end.x;
-      const maxY=this.h-29-(half*Math.abs(sn)+(this.clip+this.ch)*cs);
-      if(end.y>maxY){end.y=maxY;end.py=end.y;}
+      if(oldY!==end.y) end.py=end.y;
+      if(target){end.px=end.x-clamp(end.x-beforeX,-3,3);end.py=end.y-clamp(end.y-beforeY,-3,3);}
       if(!Number.isFinite(end.x+end.y+this.angle)) this.reset();
     }
     curve() {
@@ -293,12 +345,14 @@
     }
     wake() {
       if(!this._alive || this.raf || !this.visible || document.hidden || !this.nodes.length) return;
+      if(this.reduced.matches&&!this.drag){this.reset();this.draw();return;}
       this.lastFrame=0;this.accumulator=0;this.quiet=0;
       this.raf=requestAnimationFrame(t=>this.frame(t));
     }
     pause() { cancelAnimationFrame(this.raf);this.raf=0;this.lastFrame=0; }
     frame(time) {
       this.raf=0;
+      if(this.reduced.matches&&!this.drag){this.reset();this.draw();this.lastFrame=0;return;}
       const dt=this.lastFrame?Math.min((time-this.lastFrame)/1000,.04):1/60;
       this.lastFrame=time;this.accumulator+=dt;
       while(this.accumulator>=1/120){this.step(1/120);this.accumulator-=1/120;}
@@ -312,5 +366,5 @@
       else this.lastFrame=0;
     }
   }
-  customElements.define('shahd-lanyard', ShahdLanyard);
+  if(!customElements.get('shahd-lanyard')) customElements.define('shahd-lanyard', ShahdLanyard);
 })();

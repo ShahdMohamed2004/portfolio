@@ -1,0 +1,49 @@
+/* Aurora/glass refinement. Load after the existing inline style block.
+   No content selectors are hidden; the glow is decorative and never intercepts input. */
+html[data-theme='light'] body::before{
+  background:radial-gradient(ellipse 58% 48% at 92% 10%,rgba(215,238,242,.48),transparent 74%),
+    radial-gradient(ellipse 44% 44% at 73% 42%,rgba(230,219,244,.36),transparent 76%),
+    linear-gradient(135deg,#fafaf8,#f8f7f4 64%,#f3f6f3);
+}
+/* Soft ambient light belongs behind the badge; keep the reading column steady. */
+.hero.shahd-badge-hero::before{display:none;}
+.hero.shahd-badge-hero.hero-ready h1,
+.hero.shahd-badge-hero.hero-ready .lead{transform:none;}
+html[data-theme='light'] .hero .credential-strip .cred{
+  background:linear-gradient(120deg,rgba(255,255,255,.94),rgba(246,249,250,.9) 60%,rgba(239,235,247,.86));
+  border:1px solid #d4dfdf;
+  border-inline-start:2px solid #9b7b43;
+  box-shadow:0 12px 28px -24px #4c64736b,inset 0 1px 0 #fff;
+}
+/* Restore the Arabic text gutter removed by an older, more specific RTL rule. */
+html[dir='rtl'] .hero.shahd-badge-hero .credential-strip .cred{padding-inline:clamp(16px,2vw,24px);}
+/* Existing late CSS hard-codes pale text; give light mode explicit readable ink. */
+html[data-theme='light'] .nav-links a,
+html[data-theme='light'] .nav-utility a,
+html[data-theme='light'] .lang-toggle,
+html[data-theme='light'] .theme-toggle,
+html[data-theme='light'] .btn-text,
+html[data-theme='light'] .mobile-menu a,
+html[data-theme='light'] .menu-toggle{color:#41574e;}
+html[data-theme='light'] .nav-links a.active,
+html[data-theme='light'] .nav-links a:hover,
+html[data-theme='light'] .btn-text:hover,
+html[data-theme='light'] .hero-note,
+html[data-theme='light'] .credential-strip .cred .gpa{color:#785820;}
+html[data-theme='light'] .nav-utility a,
+html[data-theme='light'] .lang-toggle,
+html[data-theme='light'] .theme-toggle{border-color:#a5b5ad;}
+html[data-theme='light'] .nav-links a::after{background:#785820;}
+html[data-theme='light'] .tense-diagram .tick-label,
+html[data-theme='light'] .tense-diagram .tense-label{fill:#465c52;opacity:1;}
+html[data-theme='light'] .tense-diagram .timeline-base{stroke:#93a79e;}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  html[data-theme='light'] .hero .credential-strip .cred:hover{
+    transform:translateY(-3px);
+    border-color:#96b6b0;
+    box-shadow:0 18px 36px -26px #4c64734d,inset 0 1px 0 #fff;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .hero.shahd-badge-hero .credential-strip .cred{transform:none!important;transition:none!important;}
+}
