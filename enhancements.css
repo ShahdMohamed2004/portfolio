@@ -459,3 +459,28 @@ html[data-theme="light"] body::before{background:radial-gradient(560px circle at
   html:not([data-theme="light"]) .mobile-social-dock a{color:#e9eee7;background:rgba(255,255,255,.07);border-color:rgba(226,239,228,.16);}
   html:not([data-theme="light"]) .mobile-menu-utility .lang-toggle-mobile,html:not([data-theme="light"]) .mobile-menu-utility .theme-toggle-mobile{color:#e9eee7;background:rgba(255,255,255,.07);border-color:rgba(226,239,228,.16);}
 }
+
+/* ---------- light-mode page system: same geometry, softer luminous surfaces ---------- */
+html[data-theme="light"] body::before{background:radial-gradient(720px circle at -10% 8%,rgba(112,207,224,.14),transparent 70%),radial-gradient(680px circle at 108% 44%,rgba(184,157,226,.13),transparent 72%),radial-gradient(560px circle at 36% 100%,rgba(211,144,169,.07),transparent 74%),linear-gradient(145deg,#fbfaf5 0%,#f5f8f7 52%,#f7f3f8 100%);}
+html[data-theme="light"] .approach-card,html[data-theme="light"] .material-card,html[data-theme="light"] .dev-card,html[data-theme="light"] .skill-block,html[data-theme="light"] .contact-box,html[data-theme="light"] .credential-strip .cred,html[data-theme="light"] .accordion-card,html[data-theme="light"] .project-details,html[data-theme="light"] .about-card{color:#263936;background:rgba(255,255,255,.62);border-color:rgba(91,126,121,.22);box-shadow:0 18px 42px -34px rgba(42,72,68,.38),inset 0 1px 0 rgba(255,255,255,.90);}
+html[data-theme="light"] .approach-card:hover,html[data-theme="light"] .material-card:hover,html[data-theme="light"] .dev-card:hover,html[data-theme="light"] .skill-block:hover,html[data-theme="light"] .contact-box:hover,html[data-theme="light"] .credential-strip .cred:hover,html[data-theme="light"] .project-details:hover{border-color:rgba(202,160,71,.46);box-shadow:0 20px 42px -34px rgba(42,72,68,.42),0 0 26px -22px rgba(184,157,226,.58),inset 0 1px 0 rgba(255,255,255,.96);}
+html[data-theme="light"] .skill-block{background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(239,246,246,.56) 58%,rgba(246,241,249,.62));}
+html[data-theme="light"] .skill-block .skill-group li,html[data-theme="light"] #skillsGrid .skill-group li{color:#36524e;border-color:rgba(87,125,132,.28);background:rgba(255,255,255,.48);border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.72);}
+html[data-theme="light"] #skillsGrid .skill-group li:hover,html[data-theme="light"] #skillsGrid .skill-group li:focus-within{color:#294b50;border-color:rgba(202,160,71,.58);background:linear-gradient(100deg,rgba(111,210,222,.13),rgba(184,157,226,.13));}
+html[data-theme="light"] .skill-block h3,html[data-theme="light"] .skill-group h3,html[data-theme="light"] .dev-card h3,html[data-theme="light"] .material-card .mname{color:#263936;}
+html[data-theme="light"] .skill-block p,html[data-theme="light"] .skill-block .muted,html[data-theme="light"] .dev-card .place,html[data-theme="light"] .materials-note{color:#687b76;}
+html[data-theme="light"] main a:not(.btn):not(.proj-link):not(.wordmark){color:#245b64;text-decoration-color:rgba(36,91,100,.34);}
+html[data-theme="light"] main a:not(.btn):not(.proj-link):not(.wordmark):hover,html[data-theme="light"] main a:not(.btn):not(.proj-link):not(.wordmark):focus-visible{color:#a37824;text-decoration-color:#caa047;}
+html[data-theme="light"] .proj-link,html[data-theme="light"] .proj-link:visited{color:#245b64;}
+html[data-theme="light"] .proj-link:hover,html[data-theme="light"] .proj-link:focus-visible{color:#a37824;}
+html[data-theme="light"] #siteHeader{z-index:1000;}
+html[data-theme="light"] #siteHeader nav{background:rgba(255,255,255,.68);border-color:rgba(202,160,71,.30);box-shadow:0 14px 32px -24px rgba(42,72,68,.44),0 0 24px -20px rgba(184,157,226,.48);}
+html[data-theme="light"] #siteHeader .wordmark,html[data-theme="light"] #siteHeader .nav-links a{color:#263936;}
+html[data-theme="light"] #siteHeader .nav-links a:hover,html[data-theme="light"] #siteHeader .nav-links a:focus-visible,html[data-theme="light"] #siteHeader .nav-links a.active{color:#9a762b;}
+html[data-theme="light"] .section-head h2,html[data-theme="light"] .hero h1{color:#263936;}
+@media (max-width:767px){
+  html[data-theme="light"] main.wrap>section:not(#home){scroll-margin-top:112px;position:relative;z-index:1;}
+  html[data-theme="light"] #skills .section-head{padding-top:clamp(18px,5vw,28px);}
+  html[data-theme="light"] #skillsGrid{gap:clamp(16px,5vw,24px)!important;}
+  html[data-theme="light"] .skill-block{padding:clamp(20px,5vw,28px)!important;}
+}
