@@ -1127,3 +1127,44 @@ html[data-theme='light'] .hero .cta-row .hero-action-primary:focus-visible{
   header#siteHeader .wordmark{font-size:1rem;flex:1 1 auto;max-width:none;}
   header#siteHeader .wordmark::after{display:none;}
 }
+
+
+/* Mobile identity + icon rail refinement: Shahd Mohamed and cleaner icon tiles. */
+@media (max-width:767px){
+  header#siteHeader .wordmark{font-size:0;flex:0 0 112px;max-width:112px;letter-spacing:0;}
+  header#siteHeader .wordmark::after{content:'Shahd Mohamed';font-family:var(--font-body);font-size:.92rem;font-weight:500;letter-spacing:-.02em;white-space:nowrap;}
+  .mobile-nav-icon{
+    width:30px;
+    height:30px;
+    flex:0 0 30px;
+    padding:6px;
+    border:1px solid rgba(231,184,78,.18);
+    border-radius:10px;
+    background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
+    color:var(--chalk-dim);
+    stroke-width:1.65;
+    opacity:1;
+    transition:transform 180ms cubic-bezier(.22,1,.36,1),border-color 180ms ease,background 180ms ease,color 180ms ease,box-shadow 180ms ease;
+  }
+  .mobile-menu a:hover .mobile-nav-icon,
+  .mobile-menu a:focus-visible .mobile-nav-icon{
+    transform:translateY(-1px) scale(1.04);
+    border-color:rgba(231,184,78,.62);
+    background:rgba(231,184,78,.14);
+    color:var(--yellow);
+    box-shadow:0 6px 16px -12px rgba(231,184,78,.9);
+  }
+  .mobile-menu a:nth-of-type(1) .mobile-nav-icon{color:#d9b968;}
+  .mobile-menu a:nth-of-type(2) .mobile-nav-icon{color:#b9d4c3;}
+  .mobile-menu a:nth-of-type(3) .mobile-nav-icon{color:#c8b7d8;}
+  .mobile-menu a:nth-of-type(4) .mobile-nav-icon{color:#e1a879;}
+  .mobile-menu a:nth-of-type(5) .mobile-nav-icon{color:#d6c58d;}
+  .mobile-menu a:nth-of-type(6) .mobile-nav-icon{color:#9fc6cf;}
+  html[data-theme='light'] .mobile-nav-icon{border-color:rgba(37,71,58,.16);background:rgba(255,255,255,.58);}
+  html[data-theme='light'] .mobile-menu a:hover .mobile-nav-icon,html[data-theme='light'] .mobile-menu a:focus-visible .mobile-nav-icon{border-color:rgba(91,190,211,.58);background:rgba(91,190,211,.12);color:#277082;box-shadow:0 6px 16px -12px rgba(91,190,211,.8);}
+}
+@media (max-width:390px){
+  header#siteHeader .wordmark{flex-basis:108px;max-width:108px;}
+  header#siteHeader .wordmark::after{font-size:.86rem;}
+}
+@media (prefers-reduced-motion:reduce){.mobile-nav-icon{transition:none;}}
