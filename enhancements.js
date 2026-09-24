@@ -18,7 +18,7 @@
        flexible strap rather than an independently translated UI element. */
     const state = {
       x: 0, y: 0, vx: 0, vy: 0,
-      angle: 0, angularVelocity: 0,
+      angle: 0, angularVelocity: 0, scale: 1,
       dragging: false, pointerId: null,
       grabOffsetX: 0, grabOffsetY: 0,
       lastPointerX: 0, lastPointerY: 0, lastTime: 0,
@@ -59,7 +59,20 @@
         lanyardAnchor.setAttribute('cx', String(attachmentX));
         lanyardAnchor.setAttribute('cy', String(attachmentY));
       }
-      badge.style.transform = `translate3d(calc(-50% + ${state.x}px), ${state.y}px, 0) rotate(${state.angle}deg)`;
+      const mobile = window.innerWidth < 768;
+      const tiltX = reducedMotion.matches ? 0 : clamp((-state.y * .045) - (state.vy * .55), mobile ? -3.5 : -5, mobile ? 3.5 : 5);
+      const tiltY = reducedMotion.matches ? 0 : clamp((-state.x * .055) - (state.vx * .45), mobile ? -5 : -7, mobile ? 5 : 7);
+      const glossX = clamp(tiltY * -2.6, -20, 20);
+      const glossY = clamp(tiltX * 2.2, -14, 14);
+      const shadowX = clamp((-state.x * .08) + (state.vx * 1.2), -14, 14);
+      const shadowY = clamp(18 + (state.y * .08) + (state.vy * .8), 12, 26);
+      const shadowBlur = state.dragging ? 42 : 34;
+      const targetScale = state.dragging ? (mobile ? 1.025 : 1.04) : 1;
+      state.scale += (targetScale - state.scale) * .16;
+      badge.style.transform = `translate3d(calc(-50% + ${state.x}px), ${state.y}px, 0) rotateX(${tiltX}deg) rotateY(${tiltY}deg) rotateZ(${state.angle}deg) scale(${state.scale})`;
+      badge.style.setProperty('--gloss-x', `${glossX}px`);
+      badge.style.setProperty('--gloss-y', `${glossY}px`);
+      badge.style.setProperty('--badge-shadow', `${shadowX}px ${shadowY}px ${shadowBlur}px -18px rgba(0,0,0,${state.dragging ? '.82' : '.72'})`);
     };
 
     const requestFrame = () => {
