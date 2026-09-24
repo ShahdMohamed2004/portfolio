@@ -1,4 +1,4 @@
-/* Premium interaction layer — additive, lightweight, and reversible. */
+/* Lightweight enhancement layer for site-wide effects and project previews. */
 :root{
   --spotlight-x:50%;
   --spotlight-y:18%;
@@ -10,74 +10,12 @@ body::after{
   inset:0;
   z-index:0;
   pointer-events:none;
-  background:radial-gradient(520px circle at var(--spotlight-x) var(--spotlight-y), color-mix(in srgb, var(--yellow) 100%, transparent) 0%, transparent 68%);
+  background:radial-gradient(520px circle at var(--spotlight-x) var(--spotlight-y),color-mix(in srgb,var(--yellow) 100%,transparent) 0%,transparent 68%);
   opacity:var(--spotlight-alpha);
   transition:opacity .45s ease;
 }
 body.cursor-glow::after{opacity:var(--spotlight-alpha);}
 html[data-theme="light"] body::after{--spotlight-alpha:.055;}
-
-.hero{position:relative;isolation:isolate;}
-.badge-stage{
-  position:absolute;
-  inset-inline-end:clamp(12px,6vw,84px);
-  inset-block-start:clamp(82px,10vw,132px);
-  width:clamp(184px,18vw,238px);
-  height:clamp(264px,26vw,338px);
-  z-index:3;
-  pointer-events:none;
-  perspective:900px;
-}
-.lanyard-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;}
-.lanyard-shadow{fill:none;stroke:rgba(0,0,0,.28);stroke-width:8;stroke-linecap:round;opacity:.35;}
-.lanyard-path{fill:none;stroke:var(--yellow);stroke-width:5;stroke-linecap:round;filter:drop-shadow(0 2px 3px rgba(0,0,0,.2));}
-.lanyard-inner{fill:none;stroke:rgba(239,234,216,.45);stroke-width:1.2;stroke-linecap:round;}
-.lanyard-anchor{fill:var(--yellow);stroke:var(--ink-2);stroke-width:2;}
-.id-badge{
-  position:absolute;
-  inset-inline-start:50%;
-  inset-block-start:54px;
-  width:clamp(156px,16vw,202px);
-  aspect-ratio: .69;
-  transform:translate3d(-50%,0,0) rotate(0deg);
-  transform-origin:50% 8%;
-  transform-style:preserve-3d;
-  will-change:transform,box-shadow;
-  pointer-events:auto;
-  cursor:grab;
-  touch-action:none;
-  user-select:none;
-  border:1px solid rgba(239,234,216,.35);
-  border-radius:12px;
-  padding:8px;
-  color:#152825;
-  background:linear-gradient(145deg,#f4eedc,#d8ccb0);
-  box-shadow:var(--badge-shadow,0 20px 34px -18px rgba(0,0,0,.72)), inset 0 0 0 1px rgba(255,255,255,.42);
-  overflow:hidden;
-  transition:box-shadow .25s ease;
-}
-.id-badge::after{
-  content:"";
-  position:absolute;
-  inset:-35%;
-  pointer-events:none;
-  opacity:.2;
-  transform:translate3d(var(--gloss-x,0),var(--gloss-y,0),18px) rotate(-18deg);
-  background:linear-gradient(112deg,transparent 32%,rgba(255,255,255,.4) 47%,transparent 62%);
-  mix-blend-mode:soft-light;
-  transition:opacity .3s ease;
-}
-.id-badge:focus-visible{outline:2px solid var(--yellow);outline-offset:4px;}
-.id-badge.is-dragging{cursor:grabbing;box-shadow:var(--badge-shadow), inset 0 0 0 1px rgba(255,255,255,.55);}
-.id-badge.is-dragging::after{opacity:.34;}
-.badge-slot{height:10px;width:34px;margin:0 auto 6px;border-radius:8px;background:#b39f79;border:1px solid rgba(21,40,37,.28);}
-.badge-face{display:block;width:100%;height:clamp(96px,9vw,136px);aspect-ratio:auto;object-fit:cover;object-position:center 18%;border-radius:7px;filter:saturate(.9);}
-.badge-copy{padding:8px 4px 2px;text-align:start;}
-.badge-name{display:block;font:600 clamp(.88rem,1.25vw,1.04rem)/1.15 var(--font-display);letter-spacing:-.02em;}
-.badge-role{display:block;margin-top:5px;color:#53675b;font:500 clamp(.58rem,.8vw,.7rem)/1.25 var(--font-body);}
-.badge-rule{height:1px;margin:9px 0 7px;background:rgba(21,40,37,.24);}
-.badge-id{display:block;color:#53675b;font:600 .56rem/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;}
-.badge-hint{display:block;margin-top:8px;color:#53675b;font:500 .52rem/1.1 var(--font-body);opacity:.8;}
 
 .project-preview{
   position:fixed;
@@ -113,107 +51,13 @@ html[data-theme="light"] body::after{--spotlight-alpha:.055;}
 #skillsGrid .skill-group li:hover,#skillsGrid .skill-group li:focus-within{transform:translateY(-2px);border-color:var(--yellow);color:var(--chalk);background:rgba(231,184,78,.06);}
 #skillsGrid .skill-group li .lvl{display:none;}
 
-@media (max-width:899px){
-  .badge-stage{inset-inline-end:2vw;inset-block-start:92px;transform:scale(.9);transform-origin:top right;}
-  /* In RTL the stage belongs on the physical left, but it must keep a
-     positive viewport gutter; using only transform-origin left clips the
-     card off-screen on medium-width browsers. */
-  html[dir="rtl"] .badge-stage{
-    inset-inline-end:auto;inset-inline-start:auto;
-    left:clamp(84px,12vw,140px);right:auto;
-    transform-origin:top left;
-  }
-  html[dir="rtl"] .badge-stage .id-badge{
-    inset-inline-start:auto;inset-inline-end:auto;
-    left:50%;right:auto;
-  }
-  .hero{padding-inline-end:clamp(0px,25vw,200px);}
-}
-@media (max-width:767px){
-  .hero{padding-inline-end:0;display:flex;flex-direction:column;}
-  .hero-note{order:1;}
-  .hero h1{order:2;}
-  .hero p.lead{order:3;}
-  .badge-stage{order:4;}
-  .credential-strip{order:5;}
-  .hero .cta-row{order:6;}
-  .hero .tense-diagram{order:7;}
-  .badge-stage{position:relative;inset:auto;margin:38px auto 8px;width:min(190px,calc(100vw - 42px));height:300px;transform:none;overflow:visible;}
-  .id-badge{width:min(148px,80%);inset-block-start:46px;}
-  .badge-face{height:94px;}
-  .lanyard-path{stroke-width:4.5;}
-  .badge-hint{display:none;}
+@media(max-width:767px){
   .project-preview{position:fixed;left:16px!important;right:16px;bottom:18px;top:auto!important;width:auto;min-height:0;}
   .project-preview.is-visible{transform:translateY(0);}
 }
-@media (prefers-reduced-motion:reduce){
+@media(hover:none){#skillsGrid .skill-group li:hover{transform:none;}}
+@media(prefers-reduced-motion:reduce){
   body::after{display:none;}
-  .id-badge{transition:none;}
   .project-preview{transition:none;}
   #skillsGrid .skill-group li{transition:none;}
-}
-@media (hover:none){#skillsGrid .skill-group li:hover{transform:none;}}
-
-/* Professional ID-card skin inspired by the supplied rope-card reference. */
-.card-clip{
-  position:absolute;
-  z-index:3;
-  top:7px;
-  left:50%;
-  width:34px;
-  height:11px;
-  transform:translateX(-50%);
-  border:1px solid rgba(21,40,37,.28);
-  border-radius:8px;
-  background:linear-gradient(180deg,#c5b58c,#a9966b);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.42),0 1px 2px rgba(0,0,0,.22);
-  pointer-events:none;
-}
-.id-badge{
-  padding:0;
-  border:0;
-  border-radius:13px;
-  background:transparent;
-  box-shadow:none;
-  overflow:visible;
-}
-.card-body{
-  position:absolute;
-  inset:7px;
-  padding:13px 9px 9px;
-  border:1px solid rgba(21,40,37,.24);
-  border-radius:11px;
-  background:linear-gradient(160deg,#f2e6c7 0%,#e6d5a8 58%,#d6c18f 100%);
-  box-shadow:inset 0 1px 2px rgba(255,255,255,.58),inset 0 -2px 3px rgba(20,20,15,.18),0 20px 34px -14px rgba(20,20,15,.52);
-  color:#152825;
-  overflow:hidden;
-}
-.card-body::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(125deg,rgba(255,255,255,.22),transparent 34%,rgba(21,40,37,.05) 100%);
-}
-.card-body .badge-slot{visibility:hidden;height:10px;margin:0 auto 7px;}
-.card-body .badge-face{
-  position:relative;
-  z-index:1;
-  height:clamp(94px,9vw,132px);
-  border:1px solid rgba(21,40,37,.16);
-  border-radius:7px;
-  box-shadow:0 2px 5px rgba(20,20,15,.18);
-}
-.card-body .badge-copy{position:relative;z-index:1;padding:8px 3px 0;text-align:start;}
-.card-body .badge-name{font-family:var(--font-display);font-weight:600;color:#152825;}
-.card-body .badge-role,.card-body .badge-id,.card-body .badge-hint{color:#53675b;}
-.card-body .badge-rule{background:rgba(21,40,37,.24);}
-.card-body .badge-hint{margin-top:7px;font-size:.5rem;}
-.id-badge.is-dragging .card-body{box-shadow:inset 0 1px 2px rgba(255,255,255,.62),inset 0 -2px 3px rgba(20,20,15,.18),0 24px 38px -14px rgba(20,20,15,.6);}
-@media (max-width:767px){
-  .card-body{inset:6px;padding:12px 8px 8px;}
-  .card-body .badge-face{height:90px;}
-}
-@media (prefers-reduced-motion:reduce){
-  .card-body{transition:none;}
 }
