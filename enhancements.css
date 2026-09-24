@@ -501,3 +501,5 @@ html[data-theme="light"] .where-am-i.is-visible{opacity:.94;}
 html[data-theme="light"] .back-to-top{color:#35534f;background:rgba(255,255,255,.78);border-color:rgba(88,156,165,.34);box-shadow:0 10px 24px -16px rgba(45,82,78,.42);}
 html[data-theme="light"] .back-to-top:hover,html[data-theme="light"] .back-to-top:focus-visible{color:#a37824;border-color:rgba(202,160,71,.60);}
 html[data-theme="light"] .scroll-progress{box-shadow:0 0 7px rgba(88,156,165,.45),0 0 16px rgba(184,157,226,.20);}
+html[data-theme="light"] .where-am-i,html[data-theme="light"] .where-am-i.is-visible{background:rgba(255,255,255,.84)!important;background-color:rgba(255,255,255,.84)!important;background-image:none!important;color:#35534f!important;border:1px solid rgba(88,156,165,.42)!important;box-shadow:0 8px 22px -14px rgba(45,82,78,.38),0 0 0 1px rgba(184,157,226,.18),inset 0 1px 0 rgba(255,255,255,.96)!important;}
+html[data-theme="light"] .where-am-i strong{color:#9a762b!important;text-shadow:none!important;}
