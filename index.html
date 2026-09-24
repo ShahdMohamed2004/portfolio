@@ -3200,7 +3200,7 @@ const SITE_AR = {
 
   function renderContent(data, lang){
     const openProjectIndexes = [...document.querySelectorAll('#workSpine .project-details')]
-      .map((details, index) => details.open ? index : -1).filter(index => index >= 0);
+      .map((details, index) => details.open ? index : -1).filter(index => index >= 0).slice(-1);
     const activeProjectFilter = document.querySelector('#workFilters .work-filter[aria-pressed="true"]')?.dataset.filter || 'all';
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
@@ -3286,6 +3286,20 @@ const SITE_AR = {
       details.addEventListener('toggle', syncState);
       if(openProjectIndexes.includes(index)) details.open = true;
       syncState();
+    });
+    // Keep each interactive collection focused: opening one card closes its siblings.
+    ['#whatIDoGrid details','#howITeachGrid details','#workSpine .project-details'].forEach(selector => {
+      document.querySelectorAll(selector).forEach(details => {
+        details.addEventListener('toggle', () => {
+          if(!details.open) return;
+          const siblings = details.matches('#workSpine .project-details')
+            ? document.querySelectorAll('#workSpine .project-details')
+            : (details.parentElement?.querySelectorAll(':scope > details') || []);
+          siblings.forEach(sibling => {
+            if(sibling !== details) sibling.open = false;
+          });
+        });
+      });
     });
     const updateProjectFilter = (filter = 'all') => {
       document.querySelectorAll('#workFilters .work-filter').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.filter === filter)));

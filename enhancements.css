@@ -505,3 +505,20 @@ html[data-theme="light"] .where-am-i,html[data-theme="light"] .where-am-i.is-vis
 html[data-theme="light"] .where-am-i strong{color:#9a762b!important;text-shadow:none!important;}
 /* Remove the distracting rotating perimeter line from the projects section. */
 #work .project-details:first-of-type::before{display:none!important;animation:none!important;content:none!important;}
+
+/* Modern About identity block: editorial label, clear hierarchy, no content changes. */
+#about .about-text{position:relative;}
+#about .about-kicker{display:inline-flex;align-items:center;gap:10px;margin:0 0 18px;padding:8px 13px;border:1px solid rgba(231,184,78,.42);border-radius:10px;color:var(--yellow);background:linear-gradient(105deg,rgba(231,184,78,.10),rgba(112,207,224,.06),transparent);font-size:.70rem;line-height:1;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 8px 20px -16px rgba(231,184,78,.78),inset 0 1px 0 rgba(255,255,255,.10);}
+#about .about-kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:#e7b84e;box-shadow:0 0 0 4px rgba(231,184,78,.12),0 0 12px rgba(231,184,78,.55);}
+#about .about-who{position:relative;padding-inline-start:16px;border-inline-start:2px solid rgba(231,184,78,.56);}
+#about .about-name{margin-bottom:8px;letter-spacing:-.025em;}
+#about .about-role{max-width:58ch;}
+#about .about-tags .about-tag{border-radius:10px;background:rgba(255,255,255,.045);}
+html[dir="rtl"] #about .about-kicker{letter-spacing:normal;}
+html[data-theme="light"] #about .about-kicker{color:#9a762b;background:linear-gradient(105deg,rgba(231,184,78,.14),rgba(112,207,224,.11),rgba(184,157,226,.08));border-color:rgba(202,160,71,.48);box-shadow:0 8px 20px -16px rgba(67,105,100,.42),inset 0 1px 0 rgba(255,255,255,.92);}
+html[data-theme="light"] #about .about-who{border-inline-start-color:rgba(79,135,133,.58);}
+html[data-theme="light"] #about .about-tags .about-tag{color:#36524e;background:rgba(255,255,255,.52);border-color:rgba(87,125,132,.28);}
+@media (max-width:767px){
+  #about .about-kicker{margin-bottom:16px;padding:8px 11px;font-size:.64rem;letter-spacing:.13em;}
+  #about .about-who{padding-inline-start:13px;}
+}
