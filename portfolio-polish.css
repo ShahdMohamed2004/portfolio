@@ -244,3 +244,112 @@ html[data-theme="light"] .availability-item{
   border-inline-start-color:#9b7b43 !important;
   box-shadow:inset 0 0 0 1px rgba(91,20,37,.05),0 10px 24px -22px rgba(76,100,115,.28);
 }
+
+
+/* Mobile card system: one complete geometry for approach + evidence surfaces. */
+.accordion-card,
+.material-card{
+  box-sizing:border-box;
+  min-width:0;
+  border:1px solid rgba(239,234,216,.16);
+  border-radius:14px;
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+  box-shadow:0 8px 22px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.025);
+  overflow:hidden;
+  isolation:isolate;
+}
+.accordion-card{
+  width:100%;
+}
+.accordion-card summary{
+  box-sizing:border-box;
+  min-width:0;
+  padding:18px 20px;
+  border:0;
+  color:var(--chalk);
+  line-height:1.4;
+  overflow-wrap:anywhere;
+}
+.accordion-card summary .num{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:2.35em;
+  min-height:1.9em;
+  margin-inline-end:10px;
+  padding:.1em .45em;
+  border:1px solid rgba(231,184,78,.34);
+  border-radius:7px;
+  color:var(--yellow);
+  font-size:.78em;
+  letter-spacing:.08em;
+  line-height:1;
+}
+.accordion-card .accordion-body{
+  box-sizing:border-box;
+  padding:0 20px 19px;
+  border-top:1px solid rgba(239,234,216,.08);
+}
+.accordion-card .accordion-body p{
+  margin:15px 0 0;
+  color:var(--chalk-dim);
+  line-height:1.75;
+}
+.material-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  min-height:82px;
+  padding:18px 20px;
+  text-decoration:none;
+  color:var(--chalk);
+}
+.material-card .mname{
+  min-width:0;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.material-card .arrow{flex:0 0 auto;}
+.materials-grid{min-width:0;}
+.materials-note{
+  box-sizing:border-box;
+  max-width:62ch;
+  margin:20px 0 0;
+  padding:14px 16px;
+  border:1px solid rgba(239,234,216,.10);
+  border-radius:10px;
+  background:rgba(255,255,255,.018);
+  color:var(--muted);
+  line-height:1.7;
+}
+html[data-theme="light"] .accordion-card,
+html[data-theme="light"] .material-card{
+  border-color:rgba(91,20,37,.16);
+  background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(246,239,232,.92));
+  box-shadow:0 8px 22px rgba(91,20,37,.08),inset 0 1px 0 #fff;
+}
+html[data-theme="light"] .accordion-card .accordion-body{border-top-color:rgba(91,20,37,.10);}
+html[data-theme="light"] .materials-note{border-color:rgba(91,20,37,.12);background:rgba(255,255,255,.55);}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .accordion-card,.material-card{transition:transform 180ms cubic-bezier(.23,1,.32,1),border-color 180ms ease-out,box-shadow 180ms ease-out;}
+  .accordion-card:hover,.material-card:hover{transform:translateY(-3px);border-color:rgba(231,184,78,.45);box-shadow:0 14px 30px -18px rgba(231,184,78,.34),inset 0 1px 0 rgba(255,255,255,.04);}
+}
+@media (max-width:767px){
+  .accordion-card,.material-card{border-radius:12px;}
+  .accordion-card summary{padding:16px 15px;}
+  .accordion-card summary .num{min-width:2.2em;margin-inline-end:8px;border-radius:6px;}
+  .accordion-card .accordion-body{padding:0 15px 16px;}
+  .accordion-card .accordion-body p{margin-top:13px;line-height:1.8;}
+  .material-card{min-height:64px;padding:15px 16px;gap:12px;}
+  .material-card .mname{font-size:.94rem;line-height:1.55;}
+  .materials-note{margin-top:16px;padding:13px 14px;border-radius:10px;line-height:1.8;}
+}
+@media (max-width:380px){
+  .accordion-card summary{padding-inline:13px;}
+  .accordion-card .accordion-body{padding-inline:13px;}
+  .material-card{padding-inline:14px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .accordion-card,.material-card{transition:none!important;}
+}
