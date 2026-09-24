@@ -103,9 +103,16 @@ html[data-theme="light"] body::after{--spotlight-alpha:.055;}
   .hero{padding-inline-end:clamp(0px,25vw,200px);}
 }
 @media (max-width:767px){
-  .hero{padding-inline-end:0;}
-  .badge-stage{position:relative;inset:auto;margin:22px auto 4px;width:190px;height:258px;transform:none;}
-  .id-badge{width:148px;inset-block-start:48px;}
+  .hero{padding-inline-end:0;display:flex;flex-direction:column;}
+  .hero-note{order:1;}
+  .hero h1{order:2;}
+  .hero p.lead{order:3;}
+  .badge-stage{order:4;}
+  .credential-strip{order:5;}
+  .hero .cta-row{order:6;}
+  .hero .tense-diagram{order:7;}
+  .badge-stage{position:relative;inset:auto;margin:38px auto 8px;width:min(190px,calc(100vw - 42px));height:300px;transform:none;overflow:visible;}
+  .id-badge{width:min(148px,80%);inset-block-start:46px;}
   .badge-face{height:94px;}
   .lanyard-path{stroke-width:4.5;}
   .badge-hint{display:none;}
