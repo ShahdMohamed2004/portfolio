@@ -718,13 +718,14 @@ html[data-theme="light"] .tense-diagram{border:0;background:transparent;box-shad
 }
 #work .work-filters::before{background:color-mix(in srgb,var(--chalk-dim) 34%,transparent);}
 #work .work-filters::after{
-  right:auto;
-  width:calc((100% - 20px) * var(--filter-progress));
+  right:calc(10px + (100% - 20px) / 10);
+  width:auto;
   background:linear-gradient(90deg,var(--yellow),color-mix(in srgb,var(--yellow) 62%,var(--chalk-dim)));
+  transform:scaleX(var(--filter-progress));
   transform-origin:left center;
-  transition:width .42s cubic-bezier(.22,1,.36,1);
+  transition:transform .42s cubic-bezier(.22,1,.36,1);
 }
-html[dir="rtl"] #work .work-filters::after{left:auto;right:calc(10px + (100% - 20px) / 10);transform-origin:right center;}
+html[dir="rtl"] #work .work-filters::after{left:calc(10px + (100% - 20px) / 10);right:calc(10px + (100% - 20px) / 10);transform-origin:right center;}
 #work .work-filter{
   z-index:1;
   display:flex;
@@ -787,8 +788,8 @@ html[data-theme="light"] #work .work-filter[aria-pressed="true"] .filter-number{
   #work .work-filters{width:100%;max-width:none;grid-template-columns:repeat(5,minmax(88px,1fr));padding-inline:8px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none;}
   #work .work-filters::-webkit-scrollbar{display:none;}
   #work .work-filters::before,#work .work-filters::after{left:calc(8px + (100% - 16px) / 10);right:calc(8px + (100% - 16px) / 10);}
-  #work .work-filters::after{width:calc((100% - 16px) * var(--filter-progress));}
-  html[dir="rtl"] #work .work-filters::after{left:auto;right:calc(8px + (100% - 16px) / 10);}
+  #work .work-filters::after{left:calc(8px + (100% - 16px) / 10);right:calc(8px + (100% - 16px) / 10);width:auto;transform:scaleX(var(--filter-progress));}
+  html[dir="rtl"] #work .work-filters::after{left:calc(8px + (100% - 16px) / 10);right:calc(8px + (100% - 16px) / 10);transform-origin:right center;}
   #work .work-filter{min-height:62px;padding-inline:4px;font-size:.68rem;}
   #work .filter-label{white-space:nowrap;}
   #work .work-count{font-size:.65rem;}
@@ -900,13 +901,11 @@ html[data-theme="light"] #btnCV.hero-action.hero-action-primary:focus-visible{
 .spine{--spine-line-x:4px;}
 .spine::before{inset-inline-start:var(--spine-line-x);inset-inline-end:auto;}
 .spine::after{inset-inline-start:calc(var(--spine-line-x) - 1px);inset-inline-end:auto;}
-.spine>.entry::before{inset-inline-start:-35px;inset-inline-end:auto;transform-origin:center;}
+.spine>.entry::before{inset-inline-start:-34px;inset-inline-end:auto;transform-origin:center;}
 html[dir="rtl"] .spine::before{inset-inline-start:auto;inset-inline-end:var(--spine-line-x);}
 html[dir="rtl"] .spine::after{inset-inline-start:auto;inset-inline-end:calc(var(--spine-line-x) - 1px);}
-@media (min-width:768px){
-  /* RTL desktop mirrors the 34px gutter; keep the node centered on the rail. */
-  html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-34px;}
-}
+/* RTL mirrors the same 34px gutter; both locales share the rail center. */
+html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-34px;}
 .tense-diagram .timeline-base,.tense-diagram .spine-path,.tense-diagram .spine-glow{vector-effect:non-scaling-stroke;shape-rendering:geometricPrecision;}
 .tense-diagram circle{transform-box:fill-box;transform-origin:center;}
 .tense-diagram circle.active{transform-origin:center;}
