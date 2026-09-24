@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=2.7.0">
+<link rel="stylesheet" href="enhancements.css?v=2.9.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3301,7 +3301,14 @@ const SITE_AR = {
       });
     });
     const updateProjectFilter = (filter = 'all') => {
-      document.querySelectorAll('#workFilters .work-filter').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.filter === filter)));
+      const filterBar = document.getElementById('workFilters');
+      const filterButtons = [...filterBar.querySelectorAll('.work-filter')];
+      filterButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.filter === filter)));
+      const activeButton = filterButtons.find(btn => btn.dataset.filter === filter) || filterButtons[0];
+      if(activeButton){
+        filterBar.style.setProperty('--filter-x', `${activeButton.offsetLeft}px`);
+        filterBar.style.setProperty('--filter-w', `${activeButton.offsetWidth}px`);
+      }
       const entries = [...document.querySelectorAll('#workSpine .entry')];
       let visible = 0;
       entries.forEach(entry => { const show = filter === 'all' || entry.dataset.category === filter; entry.classList.toggle('is-filtered', !show); if(show) visible++; });
@@ -3918,6 +3925,7 @@ const SITE_AR = {
     });
   }
 
+  let projectTimelineFrame = 0;
   function updateProjectTimelines(){
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const focusY = vh * 0.52;
@@ -3935,13 +3943,20 @@ const SITE_AR = {
       const spineRect = spine.getBoundingClientRect();
       const activeRect = entries[activeIndex].getBoundingClientRect();
       const dotY = activeRect.top + Math.min(activeRect.height, 120) * 0.12 - spineRect.top;
-      const progress = Math.max(0, Math.min(100, (dotY / Math.max(1, spineRect.height - 12)) * 100));
+      const targetProgress = Math.max(0, Math.min(100, (dotY / Math.max(1, spineRect.height - 12)) * 100));
+      const previousProgress = Number(spine.dataset.spineProgress);
+      const currentProgress = Number.isFinite(previousProgress) ? previousProgress : targetProgress;
+      const progress = currentProgress + (targetProgress - currentProgress) * 0.18;
+      spine.dataset.spineProgress = String(progress);
       spine.style.setProperty('--spine-progress', String(progress));
       entries.forEach((entry, index) => {
         entry.classList.toggle('timeline-active', index === activeIndex);
         entry.classList.toggle('timeline-completed', index < activeIndex);
       });
     });
+    if(!reducedMQ.matches && Math.abs(targetProgress - progress) > 0.08 && !projectTimelineFrame){
+      projectTimelineFrame = requestAnimationFrame(() => { projectTimelineFrame = 0; updateProjectTimelines(); });
+    }
   }
 
   let timelineFrame = 0;
