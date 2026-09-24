@@ -544,3 +544,12 @@ html[data-theme="light"] #about .about-bio{border-top-color:rgba(79,135,133,.28)
 /* Light-mode background experiment: visible edge light, quiet ivory reading center. */
 html[data-theme="light"] body::before{background:radial-gradient(980px 720px at -14% 4%,rgba(111,196,222,.24),transparent 68%),radial-gradient(920px 760px at 114% 12%,rgba(159,172,211,.18),transparent 69%),radial-gradient(860px 720px at -10% 96%,rgba(69,127,130,.13),transparent 70%),radial-gradient(900px 760px at 112% 92%,rgba(183,145,207,.18),transparent 70%),radial-gradient(700px 620px at 52% 100%,rgba(201,143,165,.065),transparent 76%),radial-gradient(820px 560px at 50% 46%,rgba(255,255,255,.72),transparent 75%),linear-gradient(145deg,#fbfaf5 0%,#f7faf9 50%,#f8f4fa 100%);}
 html[data-theme="light"] body::after{opacity:.30;background:radial-gradient(420px circle at var(--cursor-x,50%) var(--cursor-y,20%),rgba(120,178,205,.10),transparent 72%),radial-gradient(760px circle at 50% 50%,rgba(255,255,255,.22),transparent 74%);}
+
+/* Keep the scroll cue directly beneath the timeline's Present marker. */
+.hero .tense-diagram{padding-bottom:48px;}
+.hero .tense-diagram .hero-scroll-cue{position:absolute;left:50%;bottom:0;margin:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;white-space:nowrap;}
+html[dir="rtl"] .hero .tense-diagram .hero-scroll-cue{left:50%;right:auto;transform:translateX(-50%);}
+@media (max-width:767px){
+  .hero .tense-diagram{padding-bottom:44px;}
+  .hero .tense-diagram .hero-scroll-cue{gap:5px;}
+}
