@@ -1281,6 +1281,54 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     section{padding:44px 0;}
   }
 
+  /* ---------- final reading/card geometry pass ----------
+     Keep Arabic and English content equally breathable. This layer is
+     intentionally last so older responsive rules cannot squeeze summaries,
+     card bodies, or justified paragraphs into narrow columns. */
+  .section-head,.about-text,.entry p,.project-details-body p,.materials-note,
+  .approach-card p,.contact-box p{max-width:72ch;}
+  .entry p,.project-details-body p,.about-text p,.section-lead,.materials-note,
+  .approach-card p,.contact-box p{
+    line-height:1.9;
+    text-align:justify !important;
+    text-justify:inter-word;
+    overflow-wrap:break-word;
+  }
+  .project-details-body,.spine>.entry{padding-inline:18px;}
+  .spine>.entry{padding-block:10px 18px;}
+  .project-details>summary.project-summary,.timeline-detail>summary{padding-block:18px;}
+  .project-details-body{padding-block:0 20px;}
+  .project-details-body p{margin-bottom:16px;}
+  .dev-card,.material-card,.skill-block,.contact-box{padding:22px 20px;}
+  .project-details,.accordion-card,.material-card,.dev-card,.skill-block,.contact-box{
+    contain:layout paint;
+  }
+  @media (min-width:721px){
+    .spine>.entry{padding-inline:18px 22px;}
+    html[dir="rtl"] .spine>.entry{padding-inline:22px 18px;}
+    html[dir="rtl"] .spine>.entry,
+    html[dir="rtl"] .project-details-body,
+    html[dir="rtl"] .about-text,
+    html[dir="rtl"] .entry p,
+    html[dir="rtl"] .project-details-body p,
+    html[dir="rtl"] .section-lead{margin-inline-start:auto;}
+  }
+  @media (max-width:720px){
+    .section-head,.about-text,.entry p,.project-details-body p,.materials-note,
+    .approach-card p,.contact-box p{max-width:none;width:100%;}
+    .spine>.entry,html[dir="rtl"] .spine>.entry{padding:8px 14px 16px !important;}
+    .project-details-body{padding:0 14px 18px !important;}
+    .project-details>summary.project-summary,.timeline-detail>summary,
+    html[dir="rtl"] .project-details>summary.project-summary,
+    html[dir="rtl"] .timeline-detail>summary{padding:16px 14px !important;}
+    .entry p,.project-details-body p,.about-text p,.section-lead,
+    .materials-note,.approach-card p,.contact-box p{line-height:1.85;}
+    .dev-card,.material-card,.skill-block,.contact-box{padding:18px 16px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .project-details,.accordion-card,.material-card,.dev-card,.skill-block,.contact-box{contain:none;}
+  }
+
   /* ---------- final RTL/mobile stability pass v2.1.0 ---------- */
   html,body{overflow-x:hidden !important;max-width:100vw !important;position:relative;}
   @media (max-width:768px){

@@ -113,8 +113,10 @@
       state.angle = clamp(state.angle, -maxAngle, maxAngle);
       updateLanyard();
 
+      // Do not keep an animation loop alive on idle mobile pages. The badge
+      // only needs another frame while it is settling or being interacted with.
       const moving = state.dragging || Math.abs(state.x - rest.x) > .04 || Math.abs(state.y - rest.y) > .04 || Math.abs(state.vx) > .04 || Math.abs(state.vy) > .04 || Math.abs(state.angle) > .04;
-      if (moving || !reducedMotion.matches) requestFrame();
+      if (moving) requestFrame();
     };
 
     const pointerPosition = event => {
