@@ -403,3 +403,51 @@ html[data-theme="light"] .materials-note{border-color:rgba(91,20,37,.12);backgro
   .nav-links a,.mobile-menu a[data-nav],.where-am-i{transition:none;}
   .nav-links a:hover,.nav-links a:focus-visible,.mobile-menu a[data-nav]:hover,.mobile-menu a[data-nav]:focus-visible{transform:none;}
 }
+
+
+/* Visible hover halo: intentionally stronger than the previous restrained pass. */
+.nav-links a,
+.mobile-menu a[data-nav]{
+  z-index:0;
+  isolation:isolate;
+}
+.nav-links a::before,
+.mobile-menu a[data-nav]::before{
+  content:"";
+  position:absolute;
+  inset:-7px -10px;
+  z-index:-1;
+  border-radius:9px;
+  background:radial-gradient(ellipse at center,rgba(231,184,78,.20),rgba(231,184,78,.06) 48%,transparent 76%);
+  opacity:0;
+  transform:scale(.88);
+  transition:opacity 180ms ease-out,transform 220ms cubic-bezier(.23,1,.32,1);
+  pointer-events:none;
+}
+.nav-links a::after,
+.mobile-menu a[data-nav]::after{
+  height:2px;
+  box-shadow:0 0 7px rgba(231,184,78,.82),0 0 16px rgba(231,184,78,.42);
+}
+.nav-links a:hover::before,
+.nav-links a:focus-visible::before,
+.mobile-menu a[data-nav]:hover::before,
+.mobile-menu a[data-nav]:focus-visible::before,
+.nav-links a.active::before{
+  opacity:1;
+  transform:scale(1);
+}
+.nav-links a:hover,
+.nav-links a:focus-visible,
+.mobile-menu a[data-nav]:hover,
+.mobile-menu a[data-nav]:focus-visible{
+  text-shadow:0 0 10px rgba(231,184,78,.58),0 0 22px rgba(231,184,78,.24);
+}
+.nav-links a.active{text-shadow:0 0 12px rgba(231,184,78,.62),0 0 24px rgba(231,184,78,.26);}
+.where-am-i.is-visible{
+  border-color:rgba(231,184,78,.56);
+  box-shadow:0 0 0 1px rgba(231,184,78,.16),0 0 24px -6px rgba(231,184,78,.92),inset 0 1px 0 rgba(255,255,255,.06);
+}
+@media (prefers-reduced-motion:reduce){
+  .nav-links a::before,.mobile-menu a[data-nav]::before{transition:none;transform:none;}
+}
