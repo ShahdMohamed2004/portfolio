@@ -320,3 +320,13 @@ html[data-theme="light"] body::before{background:radial-gradient(560px circle at
   html[dir="rtl"] #about .about-bio,html[dir="rtl"] #about .about-role{line-height:2!important;max-width:42ch;text-align:right!important;}
   .about-card{padding-inline:clamp(18px,5vw,26px)!important;}
 }
+
+/* Final About balance: keep justified copy, widen the reading measure. */
+@media (max-width:767px){
+  main.wrap{padding-inline:clamp(12px,3.8vw,20px)!important;}
+  #about{padding-inline:0!important;}
+  #about .about-card{width:100%;max-width:none;margin-inline:0;padding-inline:clamp(16px,4.8vw,24px)!important;}
+  #about .about-text{width:100%;max-width:none;}
+  html[dir="ltr"] #about .about-bio,html[dir="ltr"] #about .about-role{text-align:justify!important;text-align-last:start!important;text-justify:auto!important;hyphens:auto!important;-webkit-hyphens:auto!important;word-spacing:normal!important;overflow-wrap:normal!important;max-width:none;line-height:1.82!important;}
+  html[dir="rtl"] #about .about-bio,html[dir="rtl"] #about .about-role{text-align:justify!important;text-align-last:start!important;text-justify:auto!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;overflow-wrap:normal!important;max-width:none;line-height:2!important;}
+}
