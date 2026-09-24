@@ -54,7 +54,22 @@
       this.angle = 0; this.angularVelocity = 0; this.wind = 0;
       this.visible = true; this.drag = null; this.quiet = 0; this.nodes = [];
       this.lastPointer = null;
+      // All motion tuning lives here so it can be adjusted without hunting through the solver.
+      this.physics = {
+        gravity: 980, ropeDamping: .987, stretchDamping: .84,
+        dragFollow: .18, dragVelocity: .42, dragMaxSpeed: 18,
+        spring: 30, angularDamping: 7.2, edgeSoftness: 28,
+        maxStretchRatio: .16, maxStretchPx: 28, fixedStep: 1 / 120
+      };
       const on = (el, type, fn, options = {}) => el.addEventListener(type, fn, {...options, signal:this.abort.signal});
+      on(this.card, 'pointerdown', e => this.grab(e));
+      on(this.card, 'pointermove', e => this.move(e));
+      on(this.card, 'pointerup', e => this.release(e));
+      on(this.card, 'pointercancel', e => this.release(e));
+      on(this.card, 'lostpointercapture', e => this.release(e));
+      on(this.card, 'pointerover', e => this.breeze(e));
+      on(this.card, 'pointermove', e => this.breeze(e));
+      on(this.assembly, 'keydown', e => this.keyboard(e));
       on(window, 'blur', () => this.release());
       on(document, 'visibilitychange', () => {
         if (document.hidden) { this.release(); this.pause(); }
@@ -79,7 +94,7 @@
         <div class="scene">
           <div class="ambient" aria-hidden="true"></div><div class="glass" aria-hidden="true"></div><div class="glass second" aria-hidden="true"></div>
           <canvas aria-hidden="true"></canvas>
-          <div class="assembly" aria-hidden="true">
+          <div class="assembly" tabindex="0" role="application" aria-label="Interactive identity badge">
             <div class="clip" aria-hidden="true"><i class="ring"></i><i class="swivel"></i><i class="clasp"></i></div>
             <div class="card">
               <div class="card-top" aria-hidden="true"><span>EDUCATOR</span><i class="slot"></i><i class="brand-mark">s</i></div>
@@ -113,11 +128,12 @@
       this.cw = this.card.offsetWidth; this.ch = this.card.offsetHeight;
       this.clip = parseFloat(getComputedStyle(this).getPropertyValue('--clip-height')) || 28;
       this.anchor = {x:w / 2, y:15};
-      this.maxAngle=.24;
-      while(this.maxAngle>.01 && this.cw*Math.cos(this.maxAngle)+(this.ch+this.clip+3)*Math.sin(this.maxAngle)>w-24) this.maxAngle-=.01;
-      // Reserve space below the badge for its visual travel.
-      this.ropeLength = clamp(h - this.ch - this.clip - 104, 58, 142);
-      this.maxStretch = Math.min(26, this.ropeLength * .22);
+      this.edgePadding = clamp(Math.min(w, h) * .04, 10, 18);
+      this.maxAngle = clamp(Math.atan2(Math.max(18, w - this.cw - this.edgePadding * 2), this.ch + this.clip) * .34, .12, .34);
+      // The resting length is derived from the actual card and available host height.
+      const minRope = Math.max(40, h * .12), maxRope = Math.max(minRope + 12, h * .55);
+      this.ropeLength = clamp(h - this.ch - this.clip - Math.max(24, h * .08), minRope, maxRope);
+      this.maxStretch = Math.min(this.physics.maxStretchPx, this.ropeLength * this.physics.maxStretchRatio);
       this.currentLength = this.ropeLength;
       this.linkLength = this.ropeLength / 16;
       this.dpr = Math.min(devicePixelRatio || 1, 2);
@@ -138,26 +154,36 @@
     }
     grab(e) {
       if (!e.isPrimary || (e.pointerType === 'mouse' && e.button !== 0) || this.drag || !this.nodes.length) return;
-      // Native page scrolling wins until a touch user explicitly enables dragging.
-      if(e.pointerType==='touch' && !this.scene.classList.contains('touch-drag')) return;
       const p = this.local(e), end = this.nodes[16];
       const dx=p.x-end.x, dy=p.y-end.y, c=Math.cos(this.angle), s=Math.sin(this.angle);
-      this.drag = {id:e.pointerId, x:p.x, y:p.y, offsetX:dx*c+dy*s, offsetY:-dx*s+dy*c};
+      this.drag = {id:e.pointerId, x:p.x, y:p.y, startX:p.x, startY:p.y, axis:e.pointerType==='touch'?null:'both', vx:0, vy:0, offsetX:dx*c+dy*s, offsetY:-dx*s+dy*c, time:e.timeStamp};
       this.lastPointer = null;
       this.card.setPointerCapture(e.pointerId);
       this.assembly.classList.add('dragging', 'pointer-focus');
       this.assembly.focus({preventScroll:true});
-      e.preventDefault(); this.wake();
+      if(e.pointerType!=='touch') e.preventDefault();
+      this.wake();
     }
     move(e) {
       if (!this.drag || this.drag.id !== e.pointerId) return;
-      const p = this.local(e); this.drag.x=p.x; this.drag.y=p.y;
+      const p = this.local(e);
+      if(e.pointerType==='touch' && !this.drag.axis){
+        const dx=p.x-this.drag.startX, dy=p.y-this.drag.startY;
+        if(Math.hypot(dx,dy)<6) return;
+        if(Math.abs(dy)>Math.abs(dx)*1.12){ this.release(e); return; }
+        this.drag.axis='x'; this.scene.classList.add('touch-drag');
+      }
+      const elapsed = Math.max(1, e.timeStamp - this.drag.time) / 1000;
+      this.drag.vx = clamp((p.x - this.drag.x) / elapsed, -this.physics.dragMaxSpeed * 60, this.physics.dragMaxSpeed * 60);
+      this.drag.vy = clamp((p.y - this.drag.y) / elapsed, -this.physics.dragMaxSpeed * 60, this.physics.dragMaxSpeed * 60);
+      this.drag.x=p.x; this.drag.y=p.y; this.drag.time=e.timeStamp;
       e.preventDefault(); this.wake();
     }
     release(e) {
       if (!this.drag || (e && e.pointerId !== this.drag.id)) return;
       const id = this.drag.id; this.drag = null;
       this.assembly.classList.remove('dragging');
+      this.scene.classList.remove('touch-drag');
       if (this.card.hasPointerCapture(id)) this.card.releasePointerCapture(id);
       // Reduced motion returns immediately; other users retain bounded momentum.
       if(this.reduced.matches){this.pause();this.reset();this.draw();return;}
@@ -188,25 +214,37 @@
       const c=Math.cos(angle),s=Math.sin(angle),half=this.cw/2;
       const corners=[[-half,this.clip],[half,this.clip],[-half,this.clip+this.ch],[half,this.clip+this.ch],[-8,-3],[8,-3],[-8,36],[8,36]];
       const xs=corners.map(([x,y])=>x*c-y*s),ys=corners.map(([x,y])=>x*s+y*c);
-      return {left:12-Math.min(...xs),right:this.w-12-Math.max(...xs),top:12-Math.min(...ys),bottom:this.h-64-Math.max(...ys)};
+      const pad=this.edgePadding || 12;
+      return {left:pad-Math.min(...xs),right:this.w-pad-Math.max(...xs),top:pad-Math.min(...ys),bottom:this.h-pad-Math.max(...ys)};
     }
     contain(point) {
       const b=this.bounds();
       point.x=clamp(point.x,b.left,b.right);point.y=clamp(point.y,b.top,b.bottom);
       return point;
     }
+    soften(point) {
+      const b=this.bounds(), s=this.physics.edgeSoftness;
+      const resist=(value,min,max)=>{
+        if(value<min+s) return min+s-(min+s-value)*.28;
+        if(value>max-s) return max-s+(value-(max-s))*.28;
+        return value;
+      };
+      point.x=resist(point.x,b.left,b.right);point.y=resist(point.y,b.top,b.bottom);
+      return this.contain(point);
+    }
     target() {
       const c=Math.cos(this.angle), s=Math.sin(this.angle), d=this.drag;
-      const p=this.contain({x:d.x-(d.offsetX*c-d.offsetY*s),y:d.y-(d.offsetX*s+d.offsetY*c)});
+      const p=this.soften({x:d.x-(d.offsetX*c-d.offsetY*s),y:d.y-(d.offsetX*s+d.offsetY*c)});
       const dx=p.x-this.anchor.x,dy=p.y-this.anchor.y,r=Math.hypot(dx,dy),max=this.ropeLength+this.maxStretch;
       if(r>max){p.x=this.anchor.x+dx/r*max;p.y=this.anchor.y+dy/r*max;}
-      return this.contain(p);
+      return this.soften(p);
     }
     step(dt) {
       const n=this.nodes, end=n[16], beforeX=end.x, beforeY=end.y;
       const target=this.drag?this.target():null;
       const desired=target?clamp(Math.hypot(target.x-this.anchor.x,target.y-this.anchor.y),this.ropeLength,this.ropeLength+this.maxStretch):this.ropeLength;
-      this.currentLength+=(desired-this.currentLength)*(target ? .22 : .035);
+      const lengthRate=target ? .16 : .035;
+      this.currentLength+=(desired-this.currentLength)*lengthRate;
       this.linkLength=this.currentLength/16;
       if (this.reduced.matches) {
         if(target){
@@ -223,21 +261,22 @@
         this.angle=0; return;
       }
       for(let i=1;i<n.length;i++){
-        const p=n[i], vx=(p.x-p.px)*.982, vy=(p.y-p.py)*.982;
+        const p=n[i], vx=(p.x-p.px)*this.physics.ropeDamping, vy=(p.y-p.py)*this.physics.ropeDamping;
         p.px=p.x; p.py=p.y;
         p.x+=vx+this.wind*(i/16)*dt*dt*90;
-        p.y+=vy+800*dt*dt;
+        p.y+=vy+this.physics.gravity*dt*dt;
       }
       if(target){
-        end.x+=(target.x-end.x)*.32;
-        end.y+=(target.y-end.y)*.32;
-        end.px+=(end.x-end.px)*.12;
-        end.py+=(end.y-end.py)*.12;
+        const follow=this.physics.dragFollow;
+        end.x+=(target.x-end.x)*follow;
+        end.y+=(target.y-end.y)*follow;
+        // Carry the measured pointer velocity through the card instead of teleporting it.
+        end.px=end.x-(end.x-end.px)*this.physics.stretchDamping;
+        end.py=end.y-(end.y-end.py)*this.physics.stretchDamping;
       }
       // Weighted constraints: the card is substantially heavier than each rope point.
-      for(let pass=0;pass<32;pass++){
+      for(let pass=0;pass<20;pass++){
         n[0].x=this.anchor.x; n[0].y=this.anchor.y;
-        if(target){end.x=target.x;end.y=target.y;}
         for(let i=0;i<16;i++){
           const a=n[i],b=n[i+1],dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||.001;
           const correction=(len-this.linkLength)/len, total=a.mass+b.mass;
@@ -250,14 +289,13 @@
       // A damped angular joint: card orientation lags behind the strap and acceleration.
       const vx=(end.x-beforeX)/dt;
       const lean=clamp((this.anchor.x-end.x)/this.ropeLength*.18+vx*.00035,-.21,.21);
-      const torque=this.drag?clamp(this.drag.offsetX/this.cw*.045,-.025,.025):0;
-      this.angularVelocity+=((lean+torque-this.angle)*32-this.angularVelocity*7.5)*dt;
+      const torque=this.drag?clamp(this.drag.offsetX/this.cw*.11+this.drag.vx*.0008,-.06,.06):0;
+      this.angularVelocity+=((lean+torque-this.angle)*this.physics.spring-this.angularVelocity*this.physics.angularDamping)*dt;
       this.angle=clamp(this.angle+this.angularVelocity*dt,-this.maxAngle,this.maxAngle);
-      // Apply the same full-card boundary after every physics step, including release.
+      // Reflect only the outward component at a boundary; this gives a soft, non-sticky edge.
       const oldX=end.x,oldY=end.y;this.contain(end);
-      if(oldX!==end.x) end.px=end.x;
-      if(oldY!==end.y) end.py=end.y;
-      if(target){end.px=end.x-clamp(end.x-beforeX,-3,3);end.py=end.y-clamp(end.y-beforeY,-3,3);}
+      if(oldX!==end.x) end.px=end.x+(end.px-end.x)*-.18;
+      if(oldY!==end.y) end.py=end.y+(end.py-end.y)*-.18;
       if(!Number.isFinite(end.x+end.y+this.angle)) this.reset();
     }
     curve() {
