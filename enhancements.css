@@ -548,7 +548,7 @@ html[data-theme="light"] body{background:radial-gradient(980px 720px at -14% 4%,
 
 /* Keep the scroll cue directly beneath the timeline's Present marker. */
 .hero .tense-diagram{padding-bottom:48px;}
-.hero .tense-diagram .hero-scroll-cue{position:absolute;left:50%;bottom:0;margin:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;white-space:nowrap;}
+.hero .tense-diagram .hero-scroll-cue{position:absolute;left:50%;right:auto;bottom:0;margin:0;width:max-content;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;white-space:nowrap;}
 html[dir="rtl"] .hero .tense-diagram .hero-scroll-cue{left:50%;right:auto;transform:translateX(-50%);}
 @media (max-width:767px){
   .hero .tense-diagram{padding-bottom:44px;}
