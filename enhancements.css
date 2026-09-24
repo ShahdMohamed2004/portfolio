@@ -267,3 +267,17 @@ html[data-theme="light"] body::after{--spotlight-alpha:.055;}
 }
 @media (max-width:380px){.mobile-menu{padding:20px;border-radius:24px;}.mobile-menu::before,.mobile-menu::after{border-radius:24px;}}
 @media (prefers-reduced-motion:reduce){.mobile-menu,.menu-backdrop{transition:none!important;}.mobile-menu.open .mobile-drawer-brand,.mobile-menu.open>a[data-nav],.mobile-menu.open .mobile-menu-utility>a,.mobile-menu.open .mobile-social-dock a,.mobile-menu.open .lang-toggle-mobile,.mobile-menu.open .theme-toggle-mobile{animation:none!important;opacity:1;transform:none;}}
+
+/* ---------- tactile mobile swipe feedback ---------- */
+@media (max-width:860px){
+  .mobile-menu{touch-action:pan-y;}
+  .mobile-menu.is-swiping,
+  .mobile-menu.is-swiping.open,
+  html[dir="ltr"] .mobile-menu.is-swiping,
+  html[dir="rtl"] .mobile-menu.is-swiping{
+    transform:translate(calc(-50% + var(--swipe-x, 0px)),-50%) scale(.985)!important;
+    transition:none!important;
+  }
+  .mobile-menu.is-swiping::before{opacity:.72;}
+  .mobile-menu.is-swiping .mobile-drawer-brand,.mobile-menu.is-swiping>a[data-nav],.mobile-menu.is-swiping .mobile-menu-utility{opacity:.92;}
+}

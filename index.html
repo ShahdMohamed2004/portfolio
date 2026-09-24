@@ -3687,16 +3687,48 @@ const SITE_AR = {
     if(event.shiftKey && document.activeElement === first){ event.preventDefault(); last.focus(); }
     else if(!event.shiftKey && document.activeElement === last){ event.preventDefault(); first.focus(); }
   });
-  let menuTouchStartX = 0;
+  let menuTouchStartX = 0, menuTouchStartY = 0, menuTouchAxis = null;
   mobileMenu.addEventListener('touchstart', (event) => {
-    if(event.touches.length === 1) menuTouchStartX = event.touches[0].clientX;
+    if(event.touches.length !== 1 || !mobileMenu.classList.contains('open')) return;
+    menuTouchStartX = event.touches[0].clientX;
+    menuTouchStartY = event.touches[0].clientY;
+    menuTouchAxis = null;
+    mobileMenu.style.setProperty('--swipe-x', '0px');
   }, {passive:true});
+  mobileMenu.addEventListener('touchmove', (event) => {
+    if(!menuTouchStartX || event.touches.length !== 1) return;
+    const deltaX = event.touches[0].clientX - menuTouchStartX;
+    const deltaY = event.touches[0].clientY - menuTouchStartY;
+    if(!menuTouchAxis && (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8)) menuTouchAxis = Math.abs(deltaX) > Math.abs(deltaY) ? 'x' : 'y';
+    const rtl = document.documentElement.dir === 'rtl';
+    const outward = (!rtl && deltaX > 0) || (rtl && deltaX < 0);
+    if(menuTouchAxis === 'x' && outward){
+      event.preventDefault();
+      const resisted = deltaX * .72;
+      mobileMenu.classList.add('is-swiping');
+      mobileMenu.style.setProperty('--swipe-x', `${resisted}px`);
+    }
+  }, {passive:false});
   mobileMenu.addEventListener('touchend', (event) => {
     if(!menuTouchStartX || event.changedTouches.length !== 1) return;
     const deltaX = event.changedTouches[0].clientX - menuTouchStartX;
+    const deltaY = event.changedTouches[0].clientY - menuTouchStartY;
     const rtl = document.documentElement.dir === 'rtl';
-    if((!rtl && deltaX > 72) || (rtl && deltaX < -72)) closeMenu();
+    const outward = (!rtl && deltaX > 72) || (rtl && deltaX < -72);
+    const downward = deltaY > 88 && mobileMenu.scrollTop <= 2;
+    mobileMenu.classList.remove('is-swiping');
+    mobileMenu.style.removeProperty('--swipe-x');
+    if(outward || downward) closeMenu();
     menuTouchStartX = 0;
+    menuTouchStartY = 0;
+    menuTouchAxis = null;
+  }, {passive:true});
+  mobileMenu.addEventListener('touchcancel', () => {
+    mobileMenu.classList.remove('is-swiping');
+    mobileMenu.style.removeProperty('--swipe-x');
+    menuTouchStartX = 0;
+    menuTouchStartY = 0;
+    menuTouchAxis = null;
   }, {passive:true});
 
   // subtle cursor-reactive glow in the hero (desktop pointers only)
