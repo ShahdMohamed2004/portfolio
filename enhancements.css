@@ -120,7 +120,7 @@ html[data-theme="light"] body::after{--spotlight-alpha:.055;}
      card off-screen on medium-width browsers. */
   html[dir="rtl"] .badge-stage{
     inset-inline-end:auto;inset-inline-start:auto;
-    left:clamp(16px,2vw,28px);right:auto;
+    left:clamp(84px,12vw,140px);right:auto;
     transform-origin:top left;
   }
   html[dir="rtl"] .badge-stage .id-badge{
