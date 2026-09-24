@@ -615,3 +615,25 @@ html[data-theme='light'] main.wrap>section:not(#home)::before{
 @media (prefers-reduced-motion:reduce){
   html[data-theme='light'] body::before{animation:none;}
 }
+
+
+/* Navigation final polish: glow only, never a rectangular hover surface. */
+.nav-links a:hover,
+.nav-links a:focus-visible,
+.nav-links a.active,
+.mobile-menu a[data-nav]:hover,
+.mobile-menu a[data-nav]:focus-visible,
+.mobile-menu a[data-nav].active{
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.nav-links a::before,
+.mobile-menu a[data-nav]::before{
+  inset:-8px -12px;
+  background:radial-gradient(ellipse at center,rgba(231,184,78,.18),transparent 72%);
+}
+.nav-links a::after,
+.mobile-menu a[data-nav]::after{
+  background:var(--yellow);
+  box-shadow:0 0 8px rgba(231,184,78,.92),0 0 16px rgba(231,184,78,.40);
+}
