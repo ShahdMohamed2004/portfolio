@@ -3162,7 +3162,7 @@ const SITE_AR = {
   }
 
   function accordionCard(item, extra=''){
-    return `<details class="accordion-card reveal-item"><summary>${escapeHtml(item.title)}</summary><div class="accordion-body"><p>${escapeHtml(item.desc)}</p>${extra}</div></details>`;
+    return `<details class="accordion-card reveal-item" name="what-i-do"><summary>${escapeHtml(item.title)}</summary><div class="accordion-body"><p>${escapeHtml(item.desc)}</p>${extra}</div></details>`;
   }
 
   function projectLink(l){
@@ -3229,8 +3229,8 @@ const SITE_AR = {
     `).join('');
 
     // How I teach
-    document.getElementById('howITeachGrid').innerHTML = data.howITeach.map(item => `
-      <details class="accordion-card reveal-item"><summary><span class="num">${escapeHtml(item.num)}</span>${escapeHtml(item.title)}</summary><div class="accordion-body"><p>${escapeHtml(item.desc)}</p></div></details>
+      document.getElementById('howITeachGrid').innerHTML = data.howITeach.map(item => `
+      <details class="accordion-card reveal-item" name="how-i-teach"><summary><span class="num">${escapeHtml(item.num)}</span>${escapeHtml(item.title)}</summary><div class="accordion-body"><p>${escapeHtml(item.desc)}</p></div></details>
     `).join('');
 
     // Selected work — filterable on desktop, swipeable chips on mobile.
@@ -3243,7 +3243,7 @@ const SITE_AR = {
       const category = projectCategory(p);
       return `
       <div class="entry reveal-item" data-step="${i + 1}" data-category="${escapeHtml(category)}">
-        <details class="project-details" id="projectDetails-${i}" data-project-index="${i}">
+        <details class="project-details" id="projectDetails-${i}" data-project-index="${i}" name="selected-project">
           <summary class="project-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض تفاصيل المشروع والروابط' : 'View project details & links'}">
             <div class="entry-preview">
               <span class="entry-flag ${SITE.projects[i].flag === 'core project' ? 'core' : ''}">${escapeHtml(p.flag)}</span>
