@@ -13,182 +13,175 @@
   const lanyardAnchor = stage?.querySelector('.lanyard-anchor');
 
   if (stage && badge && lanyard && lanyardShadow && lanyardInner) {
-    /* One compact state represents the complete hanging system. The badge is
-       pulled by a damped spring and an angular spring, like a light card on a
-       flexible strap rather than an independently translated UI element. */
+    // Lightweight verlet rope: smooth while dragging, paused when idle.
+    const N = 9;
     const state = {
-      x: 0, y: 0, vx: 0, vy: 0,
-      angle: 0, angularVelocity: 0, scale: 1,
-      dragging: false, pointerId: null,
-      grabOffsetX: 0, grabOffsetY: 0,
-      lastPointerX: 0, lastPointerY: 0, lastTime: 0,
-      raf: 0, lastFrame: 0
+      points: [],
+      dragging: false,
+      pointerId: null,
+      pointer: { x: 0, y: 0, dx: 0, dy: 0 },
+      mouse: { x: 0, y: 0 },
+      mouseInStage: false,
+      raf: 0,
+      lastFrame: 0,
+      time: 0
     };
-    const metrics = { width: 0, height: 0, badgeWidth: 0, badgeHeight: 0, maxX: 0, maxY: 0, top: 54, anchorX: 0 };
-    const rest = { x: 0, y: 0, angle: 0 };
+    const metrics = { width: 0, height: 0, top: 54, anchorX: 0, ropeLen: 200, segLen: 25, maxX: 0, maxY: 0 };
 
+    const isMobile = () => window.innerWidth < 768;
     const measure = () => {
-      const stageRect = stage.getBoundingClientRect();
-      metrics.width = stageRect.width;
-      metrics.height = stageRect.height;
-      metrics.badgeWidth = badge.offsetWidth;
-      metrics.badgeHeight = badge.offsetHeight;
-      metrics.maxX = Math.max(8, (metrics.width - metrics.badgeWidth) / 2 - 4);
-      metrics.maxY = Math.max(8, metrics.height - metrics.top - metrics.badgeHeight - 5);
+      const rect = stage.getBoundingClientRect();
+      metrics.width = rect.width;
+      metrics.height = rect.height;
       metrics.anchorX = metrics.width / 2;
-      state.x = clamp(state.x, -metrics.maxX, metrics.maxX);
-      state.y = clamp(state.y, -8, metrics.maxY);
-    };
-
-    const updateLanyard = () => {
-      const attachmentX = metrics.anchorX + state.x;
-      // The endpoint is the badge's real top attachment slot, not its center.
-      const attachmentY = metrics.top + state.y + 7;
-      const dx = attachmentX - metrics.anchorX;
-      const dy = Math.max(38, attachmentY - 16);
-      const tension = clamp(Math.abs(dx) / Math.max(1, metrics.width) * 1.6, 0, .42);
-      const control1X = metrics.anchorX + dx * (.18 + tension);
-      const control2X = attachmentX - dx * (.18 + tension);
-      const control1Y = 16 + dy * .38;
-      const control2Y = attachmentY - dy * .28;
-      const path = `M ${metrics.anchorX} 16 C ${control1X} ${control1Y}, ${control2X} ${control2Y}, ${attachmentX} ${attachmentY}`;
-      lanyard.setAttribute('d', path);
-      lanyardShadow.setAttribute('d', path);
-      lanyardInner.setAttribute('d', path);
-      if (lanyardAnchor) {
-        lanyardAnchor.setAttribute('cx', String(attachmentX));
-        lanyardAnchor.setAttribute('cy', String(attachmentY));
+      const mobile = isMobile();
+      metrics.ropeLen = Math.min(metrics.height * .62, mobile ? 142 : 218);
+      metrics.segLen = metrics.ropeLen / (N - 1);
+      metrics.maxX = Math.max(8, (metrics.width - badge.offsetWidth) / 2 - 5);
+      metrics.maxY = Math.max(8, metrics.height - metrics.top - badge.offsetHeight - 6);
+      if (!state.points.length) {
+        for (let i = 0; i < N; i += 1) {
+          const y = 16 + metrics.segLen * i;
+          state.points.push({ x: metrics.anchorX, y, ox: metrics.anchorX, oy: y });
+        }
       }
-      const mobile = window.innerWidth < 768;
-      const tiltX = reducedMotion.matches ? 0 : clamp((-state.y * .045) - (state.vy * .55), mobile ? -3.5 : -5, mobile ? 3.5 : 5);
-      const tiltY = reducedMotion.matches ? 0 : clamp((-state.x * .055) - (state.vx * .45), mobile ? -5 : -7, mobile ? 5 : 7);
-      const glossX = clamp(tiltY * -2.6, -20, 20);
-      const glossY = clamp(tiltX * 2.2, -14, 14);
-      const shadowX = clamp((-state.x * .08) + (state.vx * 1.2), -14, 14);
-      const shadowY = clamp(18 + (state.y * .08) + (state.vy * .8), 12, 26);
-      const shadowBlur = state.dragging ? 42 : 34;
-      const targetScale = state.dragging ? (mobile ? 1.025 : 1.04) : 1;
-      state.scale += (targetScale - state.scale) * .16;
-      badge.style.transform = `translate3d(calc(-50% + ${state.x}px), ${state.y}px, 0) rotateX(${tiltX}deg) rotateY(${tiltY}deg) rotateZ(${state.angle}deg) scale(${state.scale})`;
-      badge.style.setProperty('--gloss-x', `${glossX}px`);
-      badge.style.setProperty('--gloss-y', `${glossY}px`);
-      badge.style.setProperty('--badge-shadow', `${shadowX}px ${shadowY}px ${shadowBlur}px -18px rgba(0,0,0,${state.dragging ? '.82' : '.72'})`);
-    };
-
-    const requestFrame = () => {
-      if (!state.raf) state.raf = requestAnimationFrame(frame);
-    };
-
-    const frame = timestamp => {
-      state.raf = 0;
-      const dt = clamp((timestamp - (state.lastFrame || timestamp)) / 16.67, .5, 2.2);
-      state.lastFrame = timestamp;
-      const mobile = window.innerWidth < 768;
-      const spring = mobile ? .105 : .075;
-      const damping = mobile ? .76 : .82;
-      const angularSpring = mobile ? .13 : .105;
-      const angularDamping = mobile ? .72 : .79;
-
-      if (!state.dragging) {
-        const idleX = reducedMotion.matches ? 0 : Math.sin(timestamp / 2100) * (mobile ? 1.1 : 1.8);
-        const idleY = reducedMotion.matches ? 0 : Math.sin(timestamp / 2650 + .8) * (mobile ? .5 : .8);
-        const targetX = rest.x + idleX;
-        const targetY = rest.y + idleY;
-        state.vx += (targetX - state.x) * spring * dt;
-        state.vy += (targetY - state.y) * spring * dt;
-        state.vx *= Math.pow(damping, dt);
-        state.vy *= Math.pow(damping, dt);
-        state.x += state.vx * dt;
-        state.y += state.vy * dt;
-
-        const targetAngle = reducedMotion.matches ? 0 : clamp(state.vx * (mobile ? 1.15 : 1.5), -10, 10);
-        state.angularVelocity += (targetAngle - state.angle) * angularSpring * dt;
-        state.angularVelocity *= Math.pow(angularDamping, dt);
-        state.angle += state.angularVelocity * dt;
-      }
-
-      const maxAngle = mobile ? 8 : 11;
-      state.x = clamp(state.x, -metrics.maxX, metrics.maxX);
-      state.y = clamp(state.y, -8, metrics.maxY);
-      state.angle = clamp(state.angle, -maxAngle, maxAngle);
-      updateLanyard();
-
-      // Do not keep an animation loop alive on idle mobile pages. The badge
-      // only needs another frame while it is settling or being interacted with.
-      const moving = state.dragging || Math.abs(state.x - rest.x) > .04 || Math.abs(state.y - rest.y) > .04 || Math.abs(state.vx) > .04 || Math.abs(state.vy) > .04 || Math.abs(state.angle) > .04;
-      if (moving) requestFrame();
+      state.points.forEach((point, index) => {
+        if (index === 0) { point.x = metrics.anchorX; point.y = 16; }
+      });
+      state.pointer.x = clamp(state.pointer.x, metrics.anchorX - metrics.maxX, metrics.anchorX + metrics.maxX);
+      state.pointer.y = clamp(state.pointer.y, metrics.top - 8, metrics.top + metrics.maxY);
+      lanyard.setAttribute('stroke-width', mobile ? '4.5' : '5');
+      lanyardShadow.setAttribute('stroke-width', mobile ? '7' : '8');
     };
 
     const pointerPosition = event => {
       const rect = stage.getBoundingClientRect();
-      return { x: event.clientX - (rect.left + metrics.anchorX), y: event.clientY - (rect.top + metrics.top) };
+      return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    };
+    const requestFrame = () => { if (!state.raf) state.raf = requestAnimationFrame(frame); };
+
+    const render = () => {
+      const points = state.points;
+      let d = `M ${points[0].x} ${points[0].y}`;
+      for (let i = 1; i < points.length - 1; i += 1) {
+        const mx = (points[i].x + points[i + 1].x) / 2;
+        const my = (points[i].y + points[i + 1].y) / 2;
+        d += ` Q ${points[i].x} ${points[i].y} ${mx} ${my}`;
+      }
+      const last = points[N - 1];
+      d += ` L ${last.x} ${last.y}`;
+      lanyard.setAttribute('d', d);
+      lanyardShadow.setAttribute('d', d);
+      lanyardInner.setAttribute('d', d);
+      const previous = points[N - 2];
+      const angle = clamp(Math.atan2(last.x - previous.x, last.y - previous.y) * 180 / Math.PI, -9, 9);
+      const x = last.x - metrics.anchorX;
+      const y = last.y - metrics.top;
+      badge.style.left = `${metrics.anchorX + x}px`;
+      badge.style.top = `${metrics.top + y}px`;
+      badge.style.transform = `translate(-50%,0) rotate(${angle}deg)`;
+      const sway = last.x - metrics.anchorX;
+      badge.style.setProperty('--gloss-x', `${clamp(-sway * .12, -12, 12)}px`);
+      badge.style.setProperty('--gloss-y', `${clamp((last.y - (metrics.top + metrics.ropeLen)) * .08, -8, 8)}px`);
+    };
+
+    const frame = timestamp => {
+      state.raf = 0;
+      const dt = clamp((timestamp - (state.lastFrame || timestamp)) / 16.67, .5, 2);
+      state.lastFrame = timestamp;
+      state.time += dt;
+      const points = state.points;
+      const last = points[N - 1];
+      if (!state.dragging) {
+        const idle = reducedMotion.matches ? 0 : Math.sin(timestamp / 1800) * (isMobile() ? .35 : .7);
+        state.pointer.x = metrics.anchorX + idle;
+        state.pointer.y = metrics.top + metrics.ropeLen;
+      } else {
+        const dx = state.pointer.x - metrics.anchorX;
+        const dy = state.pointer.y - metrics.top;
+        const distance = Math.hypot(dx, dy) || 1;
+        const maxDistance = metrics.ropeLen * 1.08;
+        if (distance > maxDistance) {
+          const scale = maxDistance / distance;
+          state.pointer.x = metrics.anchorX + dx * scale;
+          state.pointer.y = metrics.top + dy * scale;
+        }
+        last.x = state.pointer.x;
+        last.y = state.pointer.y;
+      }
+      for (let i = 1; i < N; i += 1) {
+        const point = points[i];
+        if (i === N - 1 && state.dragging) continue;
+        const vx = (point.x - point.ox) * .982;
+        const vy = (point.y - point.oy) * .982;
+        point.ox = point.x; point.oy = point.y;
+        point.x += vx;
+        point.y += vy + .48 * dt;
+      }
+      for (let pass = 0; pass < 6; pass += 1) {
+        points[0].x = metrics.anchorX; points[0].y = 16;
+        for (let i = 0; i < N - 1; i += 1) {
+          const a = points[i]; const b = points[i + 1];
+          const dx = b.x - a.x; const dy = b.y - a.y;
+          const distance = Math.hypot(dx, dy) || .001;
+          const difference = (distance - metrics.segLen) / distance;
+          const ox = dx * .5 * difference; const oy = dy * .5 * difference;
+          if (i > 0) { a.x += ox; a.y += oy; }
+          if (!(i + 1 === N - 1 && state.dragging)) { b.x -= ox; b.y -= oy; }
+        }
+      }
+      render();
+      const moving = state.dragging || Math.abs(last.x - (metrics.anchorX)) > .8 || Math.abs(last.y - (metrics.top + metrics.ropeLen)) > .8;
+      if (moving) requestFrame();
     };
 
     badge.addEventListener('pointerdown', event => {
       if (event.button !== undefined && event.button !== 0) return;
       const p = pointerPosition(event);
+      const last = state.points[N - 1];
       state.dragging = true;
       state.pointerId = event.pointerId;
-      state.grabOffsetX = p.x - state.x;
-      state.grabOffsetY = p.y - state.y;
-      state.lastPointerX = p.x;
-      state.lastPointerY = p.y;
-      state.lastTime = performance.now();
-      state.vx = state.vy = state.angularVelocity = 0;
+      state.pointer.dx = p.x - last.x; state.pointer.dy = p.y - last.y;
+      state.pointer.x = last.x; state.pointer.y = last.y;
       badge.classList.add('is-dragging');
       badge.setPointerCapture?.(event.pointerId);
       event.preventDefault();
       requestFrame();
     });
-
     badge.addEventListener('pointermove', event => {
       if (!state.dragging || event.pointerId !== state.pointerId) return;
-      const now = performance.now();
       const p = pointerPosition(event);
-      const dt = Math.max(8, now - state.lastTime);
-      const mobile = window.innerWidth < 768;
-      const resistance = mobile ? .82 : .92;
-      const nextX = clamp(p.x - state.grabOffsetX, -metrics.maxX, metrics.maxX);
-      const nextY = clamp(p.y - state.grabOffsetY, -8, metrics.maxY);
-      state.vx = clamp((nextX - state.x) / dt * 16, -12, 12);
-      state.vy = clamp((nextY - state.y) / dt * 16, -12, 12);
-      state.x += (nextX - state.x) * resistance;
-      state.y += (nextY - state.y) * resistance;
-      state.angle = clamp(state.vx * (mobile ? 1.35 : 1.7) + state.vy * .16, mobile ? -8 : -11, mobile ? 8 : 11);
-      state.lastPointerX = p.x;
-      state.lastPointerY = p.y;
-      state.lastTime = now;
+      state.pointer.x = p.x - state.pointer.dx;
+      state.pointer.y = p.y - state.pointer.dy;
       requestFrame();
+      event.preventDefault();
     });
-
     const release = event => {
       if (!state.dragging || (event.pointerId !== undefined && event.pointerId !== state.pointerId)) return;
-      state.dragging = false;
-      state.pointerId = null;
+      state.dragging = false; state.pointerId = null;
       badge.classList.remove('is-dragging');
       requestFrame();
     };
     badge.addEventListener('pointerup', release);
     badge.addEventListener('pointercancel', release);
     badge.addEventListener('lostpointercapture', release);
-
     badge.addEventListener('keydown', event => {
-      const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
-      if (!keys.includes(event.key)) return;
       const amount = event.shiftKey ? 18 : 8;
-      state.x += event.key === 'ArrowLeft' ? -amount : event.key === 'ArrowRight' ? amount : 0;
-      state.y += event.key === 'ArrowUp' ? -amount : event.key === 'ArrowDown' ? amount : 0;
-      state.x = clamp(state.x, -metrics.maxX, metrics.maxX);
-      state.y = clamp(state.y, -8, metrics.maxY);
-      state.vx = state.vy = state.angularVelocity = 0;
-      requestFrame();
-      event.preventDefault();
+      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+      const last = state.points[N - 1];
+      if (event.key === 'ArrowLeft') last.x -= amount;
+      if (event.key === 'ArrowRight') last.x += amount;
+      if (event.key === 'ArrowUp') last.y -= amount;
+      if (event.key === 'ArrowDown') last.y += amount;
+      state.pointer.x = clamp(last.x, metrics.anchorX - metrics.maxX, metrics.anchorX + metrics.maxX);
+      state.pointer.y = clamp(last.y, metrics.top - 8, metrics.top + metrics.maxY);
+      requestFrame(); event.preventDefault();
     });
-
-    measure();
-    updateLanyard();
+    stage.addEventListener('pointermove', event => { if (!state.dragging) { state.mouse = pointerPosition(event); state.mouseInStage = true; } }, { passive: true });
+    stage.addEventListener('pointerleave', () => { state.mouseInStage = false; });
+    measure(); render();
     window.addEventListener('resize', () => { measure(); requestFrame(); }, { passive: true });
-    window.addEventListener('orientationchange', () => { setTimeout(() => { measure(); requestFrame(); }, 80); }, { passive: true });
+    window.addEventListener('orientationchange', () => setTimeout(() => { measure(); requestFrame(); }, 80), { passive: true });
     requestFrame();
   }
 
