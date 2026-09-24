@@ -493,3 +493,11 @@ html[data-theme="light"] .mobile-menu::after{background:linear-gradient(180deg,t
 html[data-theme="light"] .approach-card,html[data-theme="light"] .material-card,html[data-theme="light"] .dev-card,html[data-theme="light"] .skill-block,html[data-theme="light"] .contact-box,html[data-theme="light"] .credential-strip .cred,html[data-theme="light"] .accordion-card,html[data-theme="light"] .project-details,html[data-theme="light"] .about-card{background:linear-gradient(135deg,rgba(255,255,255,.70),rgba(240,247,248,.48) 58%,rgba(247,243,250,.56));}
 html[data-theme="light"] .skill-block .skill-group li,html[data-theme="light"] #skillsGrid .skill-group li{background:linear-gradient(110deg,rgba(255,255,255,.62),rgba(235,245,247,.42));border-color:rgba(78,126,137,.30);}
 html[data-theme="light"] .skill-block .skill-group li:hover,html[data-theme="light"] #skillsGrid .skill-group li:hover{background:linear-gradient(110deg,rgba(164,219,228,.18),rgba(188,169,216,.16));}
+
+/* Light floating UI: the changing section indicator must not stay dark. */
+html[data-theme="light"] .where-am-i{color:#35534f;background:rgba(255,255,255,.76);border-color:rgba(88,156,165,.34);box-shadow:0 8px 22px -14px rgba(45,82,78,.38),0 0 0 1px rgba(184,157,226,.16),inset 0 1px 0 rgba(255,255,255,.94);}
+html[data-theme="light"] .where-am-i strong{color:#a37824;text-shadow:none;}
+html[data-theme="light"] .where-am-i.is-visible{opacity:.94;}
+html[data-theme="light"] .back-to-top{color:#35534f;background:rgba(255,255,255,.78);border-color:rgba(88,156,165,.34);box-shadow:0 10px 24px -16px rgba(45,82,78,.42);}
+html[data-theme="light"] .back-to-top:hover,html[data-theme="light"] .back-to-top:focus-visible{color:#a37824;border-color:rgba(202,160,71,.60);}
+html[data-theme="light"] .scroll-progress{box-shadow:0 0 7px rgba(88,156,165,.45),0 0 16px rgba(184,157,226,.20);}
