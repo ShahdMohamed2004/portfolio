@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=2.9.2">
+<link rel="stylesheet" href="enhancements.css?v=2.9.3">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2528,19 +2528,19 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
     <shahd-lanyard class="shahd-badge-mount" photo="assets/about.webp" aria-label="Interactive professional identity badge"></shahd-lanyard>
     <div class="tense-diagram" id="tenseDiagram">
-      <svg viewBox="0 0 640 110" aria-hidden="true">
-        <path class="timeline-base" d="M10,60 H630" pathLength="1" aria-hidden="true" />
-        <path class="spine-glow" d="M10,60 H630" pathLength="1" aria-hidden="true" />
-        <path class="spine-path" d="M10,60 H630" pathLength="1" />
-        <circle class="timeline-dot" data-point="0" cx="10" cy="60" r="4"></circle>
-        <circle class="timeline-dot" data-point="1" cx="320" cy="60" r="4"></circle>
-        <circle class="timeline-dot" data-point="2" cx="630" cy="60" r="4"></circle>
-        <text x="10" y="42" text-anchor="start" class="tick-label timeline-label" data-point="0">Past</text>
-        <text x="10" y="80" text-anchor="start" class="tense-label timeline-label" data-point="0">had taught</text>
-        <text x="320" y="42" text-anchor="middle" class="tick-label timeline-label" data-point="1">Present</text>
-        <text x="320" y="80" text-anchor="middle" class="tense-label timeline-label" data-point="1">teaches</text>
-        <text x="630" y="42" text-anchor="end" class="tick-label timeline-label" data-point="2">Future</text>
-        <text x="630" y="80" text-anchor="end" class="tense-label timeline-label" data-point="2">will teach</text>
+      <svg viewBox="0 0 640 136" aria-hidden="true">
+        <path class="timeline-base" d="M10,68 H630" pathLength="1" aria-hidden="true" />
+        <path class="spine-glow" d="M10,68 H630" pathLength="1" aria-hidden="true" />
+        <path class="spine-path" d="M10,68 H630" pathLength="1" />
+        <circle class="timeline-dot" data-point="0" cx="10" cy="68" r="4"></circle>
+        <circle class="timeline-dot" data-point="1" cx="320" cy="68" r="4"></circle>
+        <circle class="timeline-dot" data-point="2" cx="630" cy="68" r="4"></circle>
+        <text x="10" y="43" text-anchor="start" class="tick-label timeline-label" data-point="0">Past</text>
+        <text x="10" y="101" text-anchor="start" class="tense-label timeline-label" data-point="0">had taught</text>
+        <text x="320" y="43" text-anchor="middle" class="tick-label timeline-label" data-point="1">Present</text>
+        <text x="320" y="101" text-anchor="middle" class="tense-label timeline-label" data-point="1">teaches</text>
+        <text x="630" y="43" text-anchor="end" class="tick-label timeline-label" data-point="2">Future</text>
+        <text x="630" y="101" text-anchor="end" class="tense-label timeline-label" data-point="2">will teach</text>
       </svg>
       <div class="hero-scroll-cue" aria-hidden="true"><span class="hero-scroll-cue-line"></span><span>Scroll to explore</span></div>
     </div>
@@ -3985,7 +3985,7 @@ const SITE_AR = {
     // Progress is one semantic state in both locales. Arabic changes the
     // reading layout, but must not reverse Past → Present → Future or make
     // the line appear to grow from the Future when scrolling upward.
-    const pathData = 'M10,60 H630';
+    const pathData = 'M10,68 H630';
     if(path) path.setAttribute('d', pathData);
     if(glow) glow.setAttribute('d', pathData);
     const dash = 1 - progress;

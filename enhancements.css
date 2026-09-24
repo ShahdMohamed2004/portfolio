@@ -634,3 +634,37 @@ html[data-theme="light"] .tense-diagram .tense-label{fill:#6b7c76;}
   .tense-diagram .spine-path,.tense-diagram .spine-glow{transition:none;}
   .tense-diagram circle{transition:none;}
 }
+
+
+/* Hero timeline v3: a visible editorial timeline panel, same SVG and interaction model. */
+.tense-diagram{box-sizing:border-box;width:min(100%,760px);max-width:760px;margin-top:46px;padding:22px 22px 14px;border:1px solid rgba(231,184,78,.24);border-radius:18px;background:linear-gradient(115deg,rgba(255,255,255,.045),rgba(231,184,78,.045) 52%,rgba(255,255,255,.025));box-shadow:0 18px 38px -30px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.08);}
+.tense-diagram::before{content:"";display:block;width:40px;height:3px;margin:0 0 14px;border-radius:999px;background:#e7b84e;box-shadow:0 0 12px rgba(231,184,78,.25);}
+.tense-diagram svg{width:100%;height:auto;min-height:136px;}
+.tense-diagram .timeline-base{stroke:rgba(207,213,205,.36);stroke-width:2.2;}
+.tense-diagram .spine-path{stroke:#e7b84e;stroke-width:3.2;stroke-linecap:round;}
+.tense-diagram .spine-glow{stroke:#e7b84e;stroke-width:8;opacity:.18;filter:blur(4px);}
+.tense-diagram circle{r:7;fill:#14221e;stroke:rgba(214,220,211,.76);stroke-width:2;opacity:.96;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));}
+.tense-diagram circle.active{r:7;fill:#e7b84e;stroke:#fff0ba;stroke-width:2.2;transform:scale(1.38);filter:drop-shadow(0 0 7px rgba(231,184,78,.62));}
+.tense-diagram .tick-label{font-family:var(--font-display);font-size:17px;font-weight:500;fill:var(--chalk);opacity:.70;}
+.tense-diagram .tense-label{font-size:11px;letter-spacing:.055em;fill:var(--chalk-dim);opacity:.58;}
+.tense-diagram .timeline-label.active{fill:#f0c95a;opacity:1;}
+.tense-diagram .hero-scroll-cue{margin:8px auto 0;color:var(--chalk-dim);opacity:.76;}
+.tense-diagram .hero-scroll-cue-line{width:22px;height:28px;border-color:rgba(207,213,205,.48);}
+html[data-theme="light"] .tense-diagram{border-color:rgba(86,132,139,.30);background:linear-gradient(115deg,rgba(255,255,255,.74),rgba(223,242,244,.48) 52%,rgba(244,235,250,.58));box-shadow:0 18px 38px -30px rgba(45,82,78,.42),inset 0 1px 0 rgba(255,255,255,.94);}
+html[data-theme="light"] .tense-diagram::before{background:#bd8e36;}
+html[data-theme="light"] .tense-diagram .timeline-base{stroke:rgba(72,104,101,.36);}
+html[data-theme="light"] .tense-diagram .spine-path{stroke:#bd8e36;}
+html[data-theme="light"] .tense-diagram .spine-glow{stroke:#d4a449;opacity:.14;}
+html[data-theme="light"] .tense-diagram circle{fill:#fbfaf6;stroke:rgba(72,104,101,.68);}
+html[data-theme="light"] .tense-diagram circle.active{fill:#d3a044;stroke:#fff1c2;}
+html[data-theme="light"] .tense-diagram .tick-label{fill:#304e49;}
+html[data-theme="light"] .tense-diagram .tense-label{fill:#58736d;}
+@media (max-width:767px){
+  .tense-diagram{margin-top:34px;padding:18px 14px 12px;border-radius:15px;}
+  .tense-diagram::before{margin-bottom:10px;width:32px;}
+  .tense-diagram svg{min-height:126px;}
+  .tense-diagram .tick-label{font-size:14px;}
+  .tense-diagram .tense-label{font-size:9px;letter-spacing:.035em;}
+  .tense-diagram circle{r:6;}
+  .tense-diagram circle.active{r:6;}
+}
