@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=2.9.0">
+<link rel="stylesheet" href="enhancements.css?v=2.9.1">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3929,6 +3929,7 @@ const SITE_AR = {
   function updateProjectTimelines(){
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const focusY = vh * 0.52;
+    let needsProjectTimelineFrame = false;
     document.querySelectorAll('.spine').forEach(spine => {
       const entries = Array.from(spine.querySelectorAll(':scope > .entry'));
       if(!entries.length) return;
@@ -3953,8 +3954,9 @@ const SITE_AR = {
         entry.classList.toggle('timeline-active', index === activeIndex);
         entry.classList.toggle('timeline-completed', index < activeIndex);
       });
+      if(!reducedMQ.matches && Math.abs(targetProgress - progress) > 0.08) needsProjectTimelineFrame = true;
     });
-    if(!reducedMQ.matches && Math.abs(targetProgress - progress) > 0.08 && !projectTimelineFrame){
+    if(!reducedMQ.matches && needsProjectTimelineFrame && !projectTimelineFrame){
       projectTimelineFrame = requestAnimationFrame(() => { projectTimelineFrame = 0; updateProjectTimelines(); });
     }
   }
