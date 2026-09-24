@@ -204,7 +204,12 @@
   .nav-utility a:hover::after, .nav-utility a:focus-visible::after{inset-inline-end:0;}
   .nav-links a.active{color:var(--chalk);}
   .nav-links a.active::after{inset-inline-end:0;}
-  .nav-utility{display:flex;gap:22px;font-size:0.92rem;flex:0 0 auto;align-items:center;flex-shrink:0;}
+  .nav-utility{display:flex;gap:10px;font-size:0.92rem;flex:0 0 auto;align-items:center;flex-shrink:0;}
+  .nav-utility .icon-link{position:relative;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line-strong);border-radius:12px;color:var(--chalk-dim);text-decoration:none;transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease;}
+  .nav-utility .icon-link::after{display:none;}
+  .nav-utility .icon-link:hover,.nav-utility .icon-link:focus-visible{color:var(--yellow);border-color:var(--yellow);background:rgba(231,184,78,.08);transform:translateY(-2px);}
+  .nav-utility .icon-link svg{width:18px;height:18px;display:block;}
+  .utility-label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
   .hamburger{
     display:none;background:none;border:none;color:var(--chalk);
@@ -250,7 +255,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[data-theme="light"] .theme-toggle .icon-sun{display:block;}
   html[data-theme="light"] body::before{background:linear-gradient(135deg,#FAF8F5 0%,#F8F7F1 46%,#E9EFE9 100%);}
   html[data-theme="light"] .hero-note{background:rgba(23,36,31,.06);border-color:rgba(23,36,31,.18);}
-  html[data-theme="light"] .side-rail{filter:drop-shadow(0 4px 12px rgba(23,36,31,.08));}
 
   .theme-toggle-mobile{
     width:auto;height:auto;border-radius:4px;border:1px solid var(--line-strong);
@@ -900,42 +904,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   @media (prefers-reduced-motion:reduce){.where-am-i{transition:none;}}
 
   /* ---------- side rail (full-site section nav) ---------- */
-  .side-rail{
-    position:fixed;inset-inline-end:26px;inset-block-start:50%;transform:translateY(-50%);
-    z-index:120;display:flex;flex-direction:column;gap:14px;
-    max-height:calc(100vh - 32px);overflow-y:auto;overflow-x:visible;
-    padding:8px 6px 8px 0;scrollbar-gutter:stable;overscroll-behavior:contain;
-  }
-  .side-rail::-webkit-scrollbar,.mobile-menu::-webkit-scrollbar{width:5px;}
-  .side-rail::-webkit-scrollbar-thumb,.mobile-menu::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:99px;}
-  .side-rail a,.side-rail .rail-control{
-    display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--chalk-dim);
-    transition:color .25s ease,transform .25s ease;
-  }
-  .side-rail .rail-control{background:none;border:0;padding:0;font:inherit;cursor:pointer;text-align:inherit;width:100%;}
-  .side-rail a:hover,.side-rail a:focus-visible,.side-rail .rail-control:hover,.side-rail .rail-control:focus-visible{color:var(--yellow);transform:translateX(-3px);}
-  .side-rail::before{content:'';position:absolute;inset-inline-end:3px;inset-block-start:4px;inset-block-end:4px;width:1px;background:var(--line);z-index:-1;}
-  html[dir="rtl"] .side-rail a:hover,html[dir="rtl"] .side-rail a:focus-visible,html[dir="rtl"] .side-rail .rail-control:hover,html[dir="rtl"] .side-rail .rail-control:focus-visible{transform:translateX(3px);}
-  .side-rail .rail-dot{
-    width:8px;height:8px;border-radius:50%;background:var(--line-strong);
-    flex-shrink:0;transition:background 0.25s ease, transform 0.25s ease;
-  }
-  .side-rail .rail-label{
-    font-family:var(--font-body);font-size:0.78rem;opacity:0;max-width:0;
-    overflow:hidden;white-space:nowrap;transition:opacity 0.2s ease, max-width 0.2s ease;
-  }
-  .side-rail a:hover .rail-label, .side-rail a:focus-visible .rail-label{opacity:1;max-width:140px;}
-  .side-rail a:hover .rail-dot, .side-rail a:focus-visible .rail-dot,
-  .side-rail .rail-control:hover .rail-dot,.side-rail .rail-control:focus-visible .rail-dot,
-  .side-rail a.active .rail-dot{background:var(--yellow);transform:scale(1.3);}
-  .side-rail a.active .rail-label{opacity:1;max-width:140px;color:var(--chalk);}
-
-  @media (max-width:980px){
-    .side-rail{display:none;}
-  }
-  .side-rail .rail-sep{
-    display:block;width:16px;height:1px;background:var(--line-strong);margin:6px auto;
-  }
 
   @media (max-width:1000px){
     .nav-utility a{display:none;}
@@ -1247,8 +1215,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
   html[data-theme="light"] header.scrolled{background:rgba(250,248,245,.86);}
   html[data-theme="light"] .mobile-menu{background:rgba(250,248,245,.94);}
-  html[data-theme="light"] .side-rail{filter:drop-shadow(0 4px 12px rgba(20,55,42,.08));}
-  html[data-theme="light"] .approach-card:hover,
+    html[data-theme="light"] .approach-card:hover,
   html[data-theme="light"] .material-card:hover,
   html[data-theme="light"] .dev-card:hover,
   html[data-theme="light"] .skill-block:hover,
@@ -1351,7 +1318,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       background:var(--ink-2);
       box-shadow:0 8px 20px -16px rgba(20,55,42,.32);
     }
-    body::after,.hero::before,.hero::after,.side-rail,.menu-backdrop{filter:none !important;}
+    body::after,.hero::before,.hero::after,.menu-backdrop{filter:none !important;}
     .hero::after{display:none;}
     .project-details::before{display:none;}
 
@@ -1704,7 +1671,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .project-details,.approach-card,.material-card,.dev-card,.skill-block,.contact-box{will-change:transform;}
   .project-details::after,.approach-card::after,.material-card::after,.dev-card::after,.skill-block::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;background:radial-gradient(180px circle at var(--card-x,50%) var(--card-y,50%),rgba(231,184,78,.10),transparent 70%);transition:opacity .3s ease;}
   .project-details:hover::after,.approach-card:hover::after,.material-card:hover::after,.dev-card:hover::after,.skill-block:hover::after{opacity:1;}
-  .side-rail::after{content:"";position:absolute;inset-inline-end:1px;inset-block-start:4px;width:3px;height:calc(var(--rail-progress,0) * 1%);max-height:calc(100% - 8px);background:var(--yellow);border-radius:99px;transform-origin:top;pointer-events:none;opacity:.8;}
   @media (prefers-reduced-motion:reduce){
     .hero::before{display:none;}
     .hero-note,.hero h1,.hero .lead,.hero .credential-strip,.hero .cta-row,.hero .tense-diagram{opacity:1;transform:none;}
@@ -1775,8 +1741,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .material-card:hover .arrow { transform:translateX(4px); }
   html[dir="rtl"] .material-card:hover .arrow { transform:translateX(-4px); }
 
-  .side-rail { transition:filter .35s ease; }
-  .side-rail:hover { filter:drop-shadow(0 0 12px rgba(231,184,78,.12)); }
   .back-to-top { box-shadow:0 10px 24px rgba(0,0,0,.14); }
   .back-to-top:hover { transform:translateY(-3px) scale(1.04); }
 }
@@ -1802,7 +1766,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   --focus-ring:0 0 0 3px rgba(231,184,78,.2);
 }
 .scroll-progress,
-.side-rail::after,
 .section-head::after,
 .tense-diagram .spine-glow{
   box-shadow:0 0 4px var(--gold-glow-color),0 0 10px var(--gold-glow-soft);
@@ -1818,12 +1781,12 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 .featured-case-toggle-icon{box-shadow:0 0 0 0 transparent;}
 .featured-case.is-open .featured-case-toggle-icon{box-shadow:0 0 5px var(--gold-glow-soft);}
 @media (max-width:767px){
-  .scroll-progress,.side-rail::after,.section-head::after,.tense-diagram .spine-glow{
+  .scroll-progress,.section-head::after,.tense-diagram .spine-glow{
     box-shadow:0 0 3px var(--gold-glow-soft),0 0 7px var(--gold-glow-faint);
   }
 }
 @media (prefers-reduced-motion:reduce){
-  .scroll-progress,.side-rail::after,.section-head::after,.tense-diagram .spine-glow,
+  .scroll-progress,.section-head::after,.tense-diagram .spine-glow,
   .featured-case.is-open .featured-case-toggle-icon{box-shadow:none;}
 }
   /* ---------- visual depth pass ---------- */
@@ -1843,7 +1806,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   .approach-card:hover,.material-card:hover,.dev-card:hover,.skill-block:hover,.contact-box:hover,.credential-strip .cred:hover,.project-details:hover{
     box-shadow:0 16px 30px rgba(0,0,0,.18),0 0 0 1px rgba(231,184,78,.06) inset;
   }
-  .spine::after,.scroll-progress,.side-rail::after,.section-head::after,.tense-diagram .spine-glow{
+  .spine::after,.scroll-progress,.section-head::after,.tense-diagram .spine-glow{
     box-shadow:0 0 5px var(--gold-glow-color),0 0 12px var(--gold-glow-soft);
   }
   .case-visual-featured strong{position:relative;z-index:1;text-shadow:0 8px 22px rgba(231,184,78,.16);}
@@ -2488,9 +2451,15 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <a href="#contact" data-nav="contact">Contact</a>
     </div>
     <div class="nav-utility">
-      <a href="#" id="portfolioLinkDesktop" target="_blank" rel="noopener noreferrer">Portfolio</a>
-      <a href="#" id="linkedinLinkDesktop" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="#" id="cvLinkDesktop" target="_blank" rel="noopener noreferrer">Download CV</a>
+      <a class="icon-link" href="#" id="portfolioLinkDesktop" target="_blank" rel="noopener noreferrer" aria-label="Portfolio" title="Portfolio">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7.5h16v11H4z"/><path d="M8 7.5V5.8A1.8 1.8 0 0 1 9.8 4h4.4A1.8 1.8 0 0 1 16 5.8v1.7M4 12h16M10 12v1.5h4V12"/></svg><span class="utility-label">Portfolio</span>
+      </a>
+      <a class="icon-link" href="#" id="linkedinLinkDesktop" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 10v6M8 8.2v.1M11.5 16v-3.2a2.2 2.2 0 0 1 4.4 0V16M11.5 10v6"/></svg><span class="utility-label">LinkedIn</span>
+      </a>
+      <a class="icon-link" href="#" id="cvLinkDesktop" target="_blank" rel="noopener noreferrer" aria-label="Download CV" title="Download CV">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v11M8 10l4 4 4-4M5 18.5V21h14v-2.5"/></svg><span class="utility-label">Download CV</span>
+      </a>
       <button class="lang-toggle" id="langToggle" aria-label="Switch to Arabic">العربية</button>
       <button class="theme-toggle" id="themeToggle" aria-label="Switch to light mode" aria-pressed="false">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
@@ -2503,27 +2472,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </nav>
 </header>
 
-<nav class="side-rail" id="sideRail" aria-label="Section navigation">
-  <a href="#home" data-rail="home" aria-label="Home"><span class="rail-dot"></span><span class="rail-label">Home</span></a>
-  <a href="#about" data-rail="about" aria-label="About"><span class="rail-dot"></span><span class="rail-label">About</span></a>
-  <a href="#what-i-do" data-rail="what-i-do" aria-label="What I do"><span class="rail-dot"></span><span class="rail-label">What I do</span></a>
-  <a href="#teaching" data-rail="teaching" aria-label="How I teach"><span class="rail-dot"></span><span class="rail-label">How I teach</span></a>
-  <a href="#work" data-rail="work" aria-label="Selected work"><span class="rail-dot"></span><span class="rail-label">Work</span></a>
-  <a href="#materials" data-rail="materials" aria-label="Teaching materials"><span class="rail-dot"></span><span class="rail-label">Materials</span></a>
-  <a href="#experience" data-rail="experience" aria-label="Experience"><span class="rail-dot"></span><span class="rail-label">Experience</span></a>
-  <a href="#credentials" data-rail="credentials" aria-label="Education"><span class="rail-dot"></span><span class="rail-label">Education</span></a>
-  <a href="#development" data-rail="development" aria-label="Professional development"><span class="rail-dot"></span><span class="rail-label">Development</span></a>
-  <a href="#skills" data-rail="skills" aria-label="Skills"><span class="rail-dot"></span><span class="rail-label">Skills</span></a>
-  <a href="#creative" data-rail="creative" aria-label="Also into"><span class="rail-dot"></span><span class="rail-label">Creative</span></a>
-  <a href="#contact" data-rail="contact" aria-label="Contact"><span class="rail-dot"></span><span class="rail-label">Contact</span></a>
-  <span class="rail-sep" aria-hidden="true"></span>
-  <a href="#" id="railLinkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><span class="rail-dot"></span><span class="rail-label">LinkedIn</span></a>
-  <a href="#" id="railCv" target="_blank" rel="noopener noreferrer" aria-label="CV"><span class="rail-dot"></span><span class="rail-label">CV</span></a>
-  <a href="#" id="railPortfolio" target="_blank" rel="noopener noreferrer" aria-label="Portfolio"><span class="rail-dot"></span><span class="rail-label">Portfolio</span></a>
-  <span class="rail-sep" aria-hidden="true"></span>
-  <button class="rail-control" id="railLangToggle" type="button" aria-label="Switch to Arabic"><span class="rail-dot"></span><span class="rail-label">العربية</span></button>
-  <button class="rail-control" id="railThemeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false"><span class="rail-dot"></span><span class="rail-label" id="railThemeLabel">Light mode</span></button>
-</nav>
 
 <div class="menu-backdrop" id="menuBackdrop"></div>
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
@@ -3444,10 +3392,6 @@ const SITE_AR = {
     development: ["Development", "التطوير المهني"], skills: ["Skills", "المهارات"],
     creative: ["Creative", "اهتمامات أخرى"], contact: ["Contact", "تواصل"]
   };
-  const RAIL_EXTRA = {
-    railCv: ["CV", "السيرة الذاتية"], railPortfolio: ["Portfolio", "ملف الأعمال"], railLinkedin: ["LinkedIn", "LinkedIn"],
-    railLangToggle: ["العربية", "English"], railThemeToggle: ["Light mode", "الوضع الفاتح"]
-  };
   const WHERE_LABELS = {
     home: ['HOME','الرئيسية'], about: ['ABOUT','نبذة عني'], 'what-i-do': ['WHAT I DO','ماذا أفعل'],
     teaching: ['TEACHING','التدريس'], work: ['WORK','الأعمال'], materials: ['MATERIALS','المواد'],
@@ -3494,7 +3438,7 @@ const SITE_AR = {
       if(label) label.textContent = pair[i];
       else a.textContent = pair[i];
     });
-    document.querySelectorAll('.side-rail a[data-rail]').forEach(a => {
+    document.querySelectorAll('.nav-links a[data-nav]').forEach(a => {
       const pair = RAIL_LABELS[a.getAttribute('data-rail')];
       const label = a.querySelector('.rail-label');
       if(pair && label) label.textContent = pair[i];
@@ -3550,7 +3494,6 @@ const SITE_AR = {
   // Language toggle
   const langToggle = document.getElementById('langToggle');
   const langToggleMobile = document.getElementById('langToggleMobile');
-  const railLangToggle = document.getElementById('railLangToggle');
   function applyLanguage(lang){
     lang = lang === 'ar' ? 'ar' : 'en';
     const html = document.documentElement;
@@ -3565,8 +3508,6 @@ const SITE_AR = {
     langToggle.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
     langToggleMobile.textContent = nextLabel;
     langToggleMobile.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
-    railLangToggle.querySelector('.rail-label').textContent = lang === 'ar' ? 'English' : 'العربية';
-    railLangToggle.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
     normalizeLocalePunctuation(lang);
     try{ localStorage.setItem('siteLang', lang); }catch(e){}
   }
@@ -3600,13 +3541,11 @@ const SITE_AR = {
         // is mid-scroll. Recompute all scroll-linked chrome against the new
         // geometry instead of leaving a stale progress width or button state.
         requestScrollUpdate();
-        updateChromeState();
-      });
+          });
     });
   }
   langToggle.addEventListener('click', toggleLanguage);
   langToggleMobile.addEventListener('click', toggleLanguage);
-  railLangToggle.addEventListener('click', toggleLanguage);
 
   let startLang = 'en';
   try{ startLang = localStorage.getItem('siteLang') || 'en'; }catch(e){}
@@ -3619,8 +3558,6 @@ const SITE_AR = {
   const progress = document.getElementById('scrollProgress');
   const navLinks = document.querySelectorAll('.nav-links a');
   const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-  const railLinks = document.querySelectorAll('.side-rail a[data-rail]');
-  const railSections = Array.from(railLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
   const backToTop = document.getElementById('backToTop');
   const aboutPhotoImg = document.querySelector('.about-photo img');
   const desktopMQ = window.matchMedia('(min-width:768px)');
@@ -3851,19 +3788,14 @@ const SITE_AR = {
   }
 
   function updateRailSpy(){
-    let current = railSections[0];
+    let current = sections[0];
     const y = window.scrollY + 150;
-    railSections.forEach(sec => { if(sec.offsetTop <= y) current = sec; });
+    sections.forEach(sec => { if(sec.offsetTop <= y) current = sec; });
     if(current){
-      railLinks.forEach(a => {
-        const active = a.getAttribute('href') === '#' + current.id;
-        a.classList.toggle('active', active);
-        if(active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
-      });
       const where = document.getElementById('whereAmI');
       const whereNumber = document.getElementById('whereAmINumber');
       const whereLabel = document.getElementById('whereAmILabel');
-      const whereIndex = railSections.indexOf(current);
+      const whereIndex = sections.indexOf(current);
       const labels = WHERE_LABELS[current.id] || ['SECTION','قسم'];
       if(where && whereNumber && whereLabel){
         whereNumber.textContent = String(Math.max(1, whereIndex + 1)).padStart(2,'0');
@@ -3964,6 +3896,7 @@ const SITE_AR = {
   let scrollTicking = false;
   function onScrollFrame(){
     updateHeaderAndProgress();
+    updateChromeState();
     // Mobile keeps native scrolling. Retain only the small visual timeline
     // updates that create the scroll-linked golden light and active-card glow;
     // skip the more expensive navigation, section-scene, and parallax reads.
@@ -4004,9 +3937,8 @@ const SITE_AR = {
   if(heroIntro){
     requestAnimationFrame(() => heroIntro.classList.add('hero-ready'));
   }
-  // Header and rail retain context while scrolling through the long-form story.
+  // Keep the header state in the same rAF scroll pass as the rest of the UI.
   const siteHeader = document.getElementById('siteHeader');
-  const sideRail = document.getElementById('sideRail');
   let previousScrollY = window.scrollY || 0;
   function updateChromeState(){
     const y = window.scrollY || 0;
@@ -4017,19 +3949,12 @@ const SITE_AR = {
       siteHeader.classList.remove('mobile-compact');
     }
     previousScrollY = y;
-    if(sideRail){
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      sideRail.style.setProperty('--rail-progress', String(Math.max(0, Math.min(100, y / max * 100))));
-    }
   }
   updateChromeState();
-  window.addEventListener('scroll', updateChromeState, {passive:true});
   // light / dark mode toggle
   const root = document.documentElement;
   const themeToggle = document.getElementById('themeToggle');
   const themeToggleMobile = document.getElementById('themeToggleMobile');
-  const railThemeToggle = document.getElementById('railThemeToggle');
-  const railThemeLabel = document.getElementById('railThemeLabel');
   const mobileLabel = themeToggleMobile.querySelector('.tt-label');
   const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
@@ -4045,8 +3970,6 @@ const SITE_AR = {
     themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
     themeToggleMobile.setAttribute('aria-pressed', String(isLight));
     mobileLabel.textContent = isLight ? 'Dark mode' : 'Light mode';
-    railThemeLabel.textContent = isLight ? (document.documentElement.lang === 'ar' ? 'الوضع الداكن' : 'Dark mode') : (document.documentElement.lang === 'ar' ? 'الوضع الفاتح' : 'Light mode');
-    railThemeToggle.setAttribute('aria-pressed', String(isLight));
   }
 
   function toggleTheme(){
@@ -4063,7 +3986,6 @@ const SITE_AR = {
 
   themeToggle.addEventListener('click', toggleTheme);
   themeToggleMobile.addEventListener('click', toggleTheme);
-  railThemeToggle.addEventListener('click', toggleTheme);
   let initialTheme = 'dark';
   try{ initialTheme = localStorage.getItem('siteTheme') === 'light' ? 'light' : 'dark'; }catch(e){}
   applyTheme(initialTheme);
