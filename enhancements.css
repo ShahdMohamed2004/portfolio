@@ -602,3 +602,35 @@ html[data-theme="light"] header#siteHeader.scrolled{background:rgba(255,255,255,
 html[data-theme="light"] header#siteHeader nav{min-width:0;}
 @media (max-width:860px){html[data-theme="light"] header#siteHeader{inset-inline:10px;max-width:calc(100vw - 20px);padding-inline:12px;border-radius:16px;}}
 @media (max-width:420px){html[data-theme="light"] header#siteHeader{inset-inline:8px;max-width:calc(100vw - 16px);padding-inline:10px;border-radius:15px;}}
+
+
+/* Horizontal hero timeline: restrained production polish, preserving the SVG architecture. */
+.tense-diagram{width:min(100%,640px);padding-inline:4px;margin-top:52px;}
+.tense-diagram svg{overflow:visible;shape-rendering:geometricPrecision;}
+.tense-diagram .timeline-base{stroke:rgba(184,190,182,.34);stroke-width:1.5;vector-effect:non-scaling-stroke;}
+.tense-diagram .spine-path{stroke:#d8ad50;stroke-width:2;vector-effect:non-scaling-stroke;transition:none;}
+.tense-diagram .spine-glow{stroke:#e7b84e;stroke-width:5;opacity:.14;filter:blur(3px);vector-effect:non-scaling-stroke;transition:none;}
+.tense-diagram circle{r:4.5;fill:var(--ink-2);stroke:rgba(196,201,193,.68);stroke-width:1.4;opacity:.78;filter:drop-shadow(0 1px 1px rgba(0,0,0,.14));}
+.tense-diagram circle.active{fill:#e7b84e;stroke:#f6d67e;stroke-width:1.6;opacity:1;transform:scale(1.42);filter:drop-shadow(0 0 5px rgba(231,184,78,.34));}
+.tense-diagram .tick-label{font-size:14px;letter-spacing:.01em;opacity:.60;}
+.tense-diagram .tense-label{font-size:9.5px;letter-spacing:.035em;opacity:.47;}
+.tense-diagram .timeline-label.active{opacity:1;fill:#e7b84e;}
+.tense-diagram .hero-scroll-cue{position:relative;z-index:1;margin:10px auto 0;opacity:.62;}
+.tense-diagram .hero-scroll-cue-line{width:20px;height:26px;border-color:rgba(184,190,182,.44);}
+html[data-theme="light"] .tense-diagram .timeline-base{stroke:rgba(77,101,96,.30);}
+html[data-theme="light"] .tense-diagram .spine-path{stroke:#bb8d35;}
+html[data-theme="light"] .tense-diagram .spine-glow{stroke:#d3a34a;opacity:.11;}
+html[data-theme="light"] .tense-diagram circle{fill:#fbfaf6;stroke:rgba(77,101,96,.54);}
+html[data-theme="light"] .tense-diagram circle.active{fill:#d3a34a;stroke:#a87725;}
+html[data-theme="light"] .tense-diagram .tick-label{fill:#4f625d;}
+html[data-theme="light"] .tense-diagram .tense-label{fill:#6b7c76;}
+@media (max-width:767px){
+  .tense-diagram{margin-top:38px;padding-inline:0;}
+  .tense-diagram .tick-label{font-size:13px;}
+  .tense-diagram .tense-label{font-size:9px;}
+  .tense-diagram .hero-scroll-cue{margin-top:8px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .tense-diagram .spine-path,.tense-diagram .spine-glow{transition:none;}
+  .tense-diagram circle{transition:none;}
+}
