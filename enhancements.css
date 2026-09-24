@@ -115,7 +115,10 @@ html[data-theme="light"] body::after{--spotlight-alpha:.055;}
 
 @media (max-width:899px){
   .badge-stage{inset-inline-end:2vw;inset-block-start:92px;transform:scale(.9);transform-origin:top right;}
-  html[dir="rtl"] .badge-stage{transform-origin:top left;}
+  /* In RTL the stage belongs on the physical left, but it must keep a
+     positive viewport gutter; using only transform-origin left clips the
+     card off-screen on medium-width browsers. */
+  html[dir="rtl"] .badge-stage{inset-inline-end:auto;inset-inline-start:2vw;transform-origin:top left;}
   .hero{padding-inline-end:clamp(0px,25vw,200px);}
 }
 @media (max-width:767px){
