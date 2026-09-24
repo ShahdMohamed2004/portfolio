@@ -668,3 +668,10 @@ html[data-theme="light"] .tense-diagram .tense-label{fill:#58736d;}
   .tense-diagram circle{r:6;}
   .tense-diagram circle.active{r:6;}
 }
+
+
+/* Keep the elevated timeline itself, remove the surrounding card frame. */
+.tense-diagram{padding:10px 0 14px;border:0;border-radius:0;background:transparent;box-shadow:none;}
+.tense-diagram::before{display:none;}
+html[data-theme="light"] .tense-diagram{border:0;background:transparent;box-shadow:none;}
+@media (max-width:767px){.tense-diagram{padding:8px 0 12px;border-radius:0;}}
