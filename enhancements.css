@@ -306,3 +306,17 @@ html[data-theme="light"] body::before{background:radial-gradient(560px circle at
 }
 @media (max-width:360px){.hero h1{font-size:2.05rem;} .cta-row .btn{font-size:.78rem;padding-inline:9px!important;} .section-head h2{font-size:1.72rem;} .about-card{padding-inline:16px!important;}}
 @media (prefers-reduced-motion:reduce){#work .project-details:first-of-type::before{animation:none;} .shahd-badge-hero::after{display:none;}}
+
+/* ---------- mobile readability correction: natural text edges ---------- */
+@media (max-width:767px){
+  #about,.about-card{width:100%;max-width:100%;min-width:0;}
+  html[dir="ltr"] #main-content p,html[dir="ltr"] #main-content li,html[dir="ltr"] #main-content dd{
+    text-align:left!important;text-align-last:auto!important;text-justify:none!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;word-break:normal!important;overflow-wrap:normal!important;
+  }
+  html[dir="rtl"] #main-content p,html[dir="rtl"] #main-content li,html[dir="rtl"] #main-content dd{
+    text-align:right!important;text-align-last:auto!important;text-justify:none!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;word-break:normal!important;overflow-wrap:normal!important;
+  }
+  html[dir="ltr"] #about .about-bio,html[dir="ltr"] #about .about-role{line-height:1.78!important;max-width:42ch;text-align:left!important;}
+  html[dir="rtl"] #about .about-bio,html[dir="rtl"] #about .about-role{line-height:2!important;max-width:42ch;text-align:right!important;}
+  .about-card{padding-inline:clamp(18px,5vw,26px)!important;}
+}
