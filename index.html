@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=2.9.9">
+<link rel="stylesheet" href="enhancements.css?v=2.9.10">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3165,8 +3165,52 @@ const SITE_AR = {
   }
 
   function projectLink(l){
-    return `<a class="proj-link" href="${safeExternalUrl(l.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}${externalIcon}</a>`;
+    return `<a class="proj-link project-action-link" href="${safeExternalUrl(l.href)}" target="_blank" rel="noopener noreferrer"><span class="project-action-label">${escapeHtml(l.label)}</span>${externalIcon}</a>`;
   }
+
+  function projectActionBar(project, index, lang){
+    const actionLabel = lang === 'ar' ? 'إظهار روابط المشروع' : 'Show project actions';
+    const links = project.links.map(projectLink).join('');
+    return `<div class="project-actions" data-action-count="${project.links.length}">
+      <button class="project-actions-toggle" type="button" aria-expanded="false" aria-controls="projectActionsMenu-${index}" aria-label="${actionLabel}">
+        <span class="project-actions-toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="project-actions-toggle-label">${lang === 'ar' ? 'روابط' : 'Actions'}</span>
+      </button>
+      <div class="project-actions-menu" id="projectActionsMenu-${index}" aria-hidden="true">${links}</div>
+    </div>`;
+  }
+
+  function setProjectActionsOpen(actions, open){
+    if(!actions) return;
+    const toggle = actions.querySelector('.project-actions-toggle');
+    const menu = actions.querySelector('.project-actions-menu');
+    actions.classList.toggle('is-open', open);
+    toggle?.setAttribute('aria-expanded', String(open));
+    menu?.setAttribute('aria-hidden', String(!open));
+  }
+
+  document.addEventListener('click', (event) => {
+    const toggle = event.target.closest?.('.project-actions-toggle');
+    if(toggle){
+      event.preventDefault();
+      event.stopPropagation();
+      const actions = toggle.closest('.project-actions');
+      const shouldOpen = !actions?.classList.contains('is-open');
+      document.querySelectorAll('.project-actions.is-open').forEach(openActions => {
+        if(openActions !== actions) setProjectActionsOpen(openActions, false);
+      });
+      setProjectActionsOpen(actions, shouldOpen);
+      return;
+    }
+    if(!event.target.closest?.('.project-actions')){
+      document.querySelectorAll('.project-actions.is-open').forEach(actions => setProjectActionsOpen(actions, false));
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if(event.key === 'Escape'){
+      document.querySelectorAll('.project-actions.is-open').forEach(actions => setProjectActionsOpen(actions, false));
+    }
+  });
 
   // Header / mobile menu CV + LinkedIn + Portfolio (language-independent)
   document.getElementById('cvLinkDesktop').href = safeExternalUrl(SITE.links.cv);
@@ -3249,6 +3293,7 @@ const SITE_AR = {
               <h3>${escapeHtml(p.title)}</h3>
               <div class="badges">${p.badges.map(b => `<span class="badge">${escapeHtml(b)}</span>`).join('')}</div>
             </div>
+            ${projectActionBar(p, i, lang)}
           </summary>
           <div class="project-details-body" id="projectDetailsBody-${i}">
             ${i === 0 ? `
@@ -3264,7 +3309,6 @@ const SITE_AR = {
                       ${p.tools ? `<div><dt>${lang === 'ar' ? 'الأدوات' : 'Tools'}</dt><dd>${escapeHtml(p.tools)}</dd></div>` : ''}
                     </dl>
                     ${p.stat ? `<div class="project-finding"><strong>${lang === 'ar' ? 'نتيجة موثقة' : 'Documented finding'}</strong><span>${escapeHtml(p.stat)}</span></div>` : ''}
-                    <div class="proj-links">${p.links.map(projectLink).join('')}</div>
                   </div>
                 </div>
               </div>
@@ -3274,7 +3318,7 @@ const SITE_AR = {
             <p>${escapeHtml(p.description)}</p>
             ${p.role ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الدور' : 'Role'}</span>${escapeHtml(p.role)}</div>` : ''}
             ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${escapeHtml(p.tools)}</div>` : ''}
-            <div class="proj-links">${p.links.map(projectLink).join('')}</div>`}
+            `}
           </div>
         </details>
       </div>`;
