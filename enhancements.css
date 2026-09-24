@@ -343,3 +343,36 @@ html[data-theme="light"] body::before{background:radial-gradient(560px circle at
   html[dir="ltr"] #about .about-role,html[dir="ltr"] #about .about-bio{direction:ltr;text-align:left!important;text-align-last:auto!important;text-justify:none!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;overflow-wrap:normal!important;line-height:1.82!important;}
   html[dir="rtl"] #about .about-role,html[dir="rtl"] #about .about-bio{direction:rtl;text-align:right!important;text-align-last:auto!important;text-justify:none!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;overflow-wrap:normal!important;line-height:2!important;}
 }
+
+/* ---------- light-mode luxury hybrid sidebar ---------- */
+@media (max-width:860px){
+  html[data-theme="light"] .mobile-menu{
+    color:#f3eee2;
+    background:radial-gradient(260px circle at 8% 8%,rgba(68,170,132,.22),transparent 70%),radial-gradient(240px circle at 94% 40%,rgba(135,91,172,.18),transparent 72%),radial-gradient(210px circle at 20% 96%,rgba(214,109,130,.11),transparent 72%),linear-gradient(150deg,#142a24 0%,#101d1b 48%,#101318 100%);
+    border-color:rgba(231,184,78,.30);
+    box-shadow:0 24px 64px rgba(27,34,30,.34),0 0 0 1px rgba(142,98,164,.14),0 0 34px -20px rgba(231,184,78,.44);
+  }
+  html[data-theme="light"] .mobile-menu::before{background:linear-gradient(125deg,rgba(55,151,116,.24),transparent 29%,transparent 64%,rgba(214,109,130,.14));}
+  html[data-theme="light"] .mobile-menu::after{background:linear-gradient(180deg,transparent 4%,rgba(231,184,78,.72) 26%,rgba(142,98,164,.66) 62%,rgba(214,109,130,.38) 86%,transparent 98%);}
+  html[data-theme="light"] .mobile-drawer-brand{border-color:rgba(239,234,216,.16);}
+  html[data-theme="light"] .mobile-drawer-monogram{color:#f8dda0;background:linear-gradient(135deg,rgba(231,184,78,.30),rgba(142,98,164,.18));border-color:rgba(231,184,78,.52);box-shadow:0 8px 24px -16px rgba(231,184,78,.72);}
+  html[data-theme="light"] .mobile-drawer-brand-copy strong{color:#fffaf0;}
+  html[data-theme="light"] .mobile-drawer-brand-copy small{color:rgba(239,234,216,.64);}
+  html[data-theme="light"] .mobile-menu>a[data-nav]{color:#e7e8e1;background:rgba(255,255,255,.025);}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:hover,html[data-theme="light"] .mobile-menu>a[data-nav]:focus-visible{color:#f5c866;background:linear-gradient(100deg,rgba(231,184,78,.13),rgba(142,98,164,.13));}
+  html[data-theme="light"] .mobile-nav-icon{color:#d7b35d;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:nth-of-type(2) .mobile-nav-icon,html[data-theme="light"] .mobile-menu>a[data-nav]:nth-of-type(5) .mobile-nav-icon{color:#b79bda;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:nth-of-type(4) .mobile-nav-icon{color:#d990a4;}
+  html[data-theme="light"] .mobile-menu-utility>a{color:#f2c66b;background:rgba(231,184,78,.12);border-color:rgba(231,184,78,.35);}
+  html[data-theme="light"] #linkedinLinkMobile{color:#e3e7e3;background:rgba(255,255,255,.06);border-color:rgba(239,234,216,.18);}
+  html[data-theme="light"] .mobile-social-dock a{color:#e2e5df;background:rgba(255,255,255,.055);border-color:rgba(239,234,216,.16);}
+  html[data-theme="light"] .mobile-menu-utility .lang-toggle-mobile,html[data-theme="light"] .mobile-menu-utility .theme-toggle-mobile{color:#eee8d9;background:rgba(255,255,255,.055);border-color:rgba(239,234,216,.18);}
+  html[data-theme="light"] .mobile-menu-utility .theme-toggle-mobile svg{color:#f4cc72;}
+  html[data-theme="light"] .mobile-menu .mm-divider{background:linear-gradient(90deg,transparent,rgba(239,234,216,.22),transparent);}
+}
+
+/* Latest explicit instruction: keep About copy justified in both locales. */
+@media (max-width:767px){
+  html[dir="ltr"] #about .about-role,html[dir="ltr"] #about .about-bio{direction:ltr;text-align:justify!important;text-align-last:start!important;text-justify:auto!important;hyphens:auto!important;-webkit-hyphens:auto!important;word-spacing:normal!important;overflow-wrap:normal!important;}
+  html[dir="rtl"] #about .about-role,html[dir="rtl"] #about .about-bio{direction:rtl;text-align:justify!important;text-align-last:start!important;text-justify:auto!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;overflow-wrap:normal!important;}
+}
