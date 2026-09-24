@@ -637,3 +637,29 @@ html[data-theme='light'] main.wrap>section:not(#home)::before{
   background:var(--yellow);
   box-shadow:0 0 8px rgba(231,184,78,.92),0 0 16px rgba(231,184,78,.40);
 }
+
+
+/* Remove the oversized navigation halo surface; keep text and underline glow only. */
+.nav-links a::before,
+.mobile-menu a[data-nav]::before{
+  display:none !important;
+  content:none !important;
+}
+.nav-links a,
+.mobile-menu a[data-nav]{
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding-inline:0 !important;
+}
+.nav-links a:hover,
+.nav-links a:focus-visible,
+.nav-links a.active,
+.mobile-menu a[data-nav]:hover,
+.mobile-menu a[data-nav]:focus-visible,
+.mobile-menu a[data-nav].active{
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
