@@ -330,3 +330,16 @@ html[data-theme="light"] body::before{background:radial-gradient(560px circle at
   html[dir="ltr"] #about .about-bio,html[dir="ltr"] #about .about-role{text-align:justify!important;text-align-last:start!important;text-justify:auto!important;hyphens:auto!important;-webkit-hyphens:auto!important;word-spacing:normal!important;overflow-wrap:normal!important;max-width:none;line-height:1.82!important;}
   html[dir="rtl"] #about .about-bio,html[dir="rtl"] #about .about-role{text-align:justify!important;text-align-last:start!important;text-justify:auto!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;overflow-wrap:normal!important;max-width:none;line-height:2!important;}
 }
+
+/* ---------- final About reading column from the latest mobile brief ---------- */
+@media (max-width:767px){
+  #about .about-card{padding-inline:clamp(20px,6vw,32px)!important;}
+  #about .about-text{width:100%;max-width:720px;margin-inline:auto;padding-inline:0!important;}
+  #about .about-kicker{margin-bottom:clamp(16px,4vw,22px);}
+  #about .about-name{margin-bottom:clamp(12px,3vw,18px);}
+  #about .about-role{margin-bottom:clamp(18px,4vw,26px);letter-spacing:normal;}
+  #about .about-bio{max-width:66ch!important;margin-top:0!important;margin-bottom:clamp(22px,5vw,30px);letter-spacing:normal;word-spacing:normal;}
+  #about .about-tags{margin-top:0;gap:9px;}
+  html[dir="ltr"] #about .about-role,html[dir="ltr"] #about .about-bio{direction:ltr;text-align:left!important;text-align-last:auto!important;text-justify:none!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;overflow-wrap:normal!important;line-height:1.82!important;}
+  html[dir="rtl"] #about .about-role,html[dir="rtl"] #about .about-bio{direction:rtl;text-align:right!important;text-align-last:auto!important;text-justify:none!important;hyphens:none!important;-webkit-hyphens:none!important;word-spacing:normal!important;overflow-wrap:normal!important;line-height:2!important;}
+}
