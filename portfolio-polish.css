@@ -353,3 +353,53 @@ html[data-theme="light"] .materials-note{border-color:rgba(91,20,37,.12);backgro
 @media (prefers-reduced-motion:reduce){
   .accordion-card,.material-card{transition:none!important;}
 }
+
+
+/* Navigation glow: a restrained focus halo that follows the portfolio's gold ink. */
+.nav-links a,
+.mobile-menu a[data-nav]{
+  border-radius:7px;
+  transition:color 180ms ease-out,background 180ms ease-out,box-shadow 180ms ease-out,transform 180ms cubic-bezier(.23,1,.32,1);
+}
+@media (hover:hover) and (pointer:fine){
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .mobile-menu a[data-nav]:hover,
+  .mobile-menu a[data-nav]:focus-visible{
+    color:var(--yellow);
+    background:linear-gradient(90deg,rgba(231,184,78,.10),rgba(231,184,78,.025));
+    box-shadow:0 0 0 1px rgba(231,184,78,.22),0 0 18px -8px rgba(231,184,78,.86);
+    transform:translateY(-1px);
+  }
+}
+.nav-links a.active{
+  color:var(--yellow);
+  text-shadow:0 0 14px rgba(231,184,78,.30);
+}
+.nav-links a.active::after{box-shadow:0 0 8px rgba(231,184,78,.72);}
+.mobile-menu a[data-nav].active{
+  color:var(--yellow);
+  background:rgba(231,184,78,.08);
+  box-shadow:inset 3px 0 0 var(--yellow),0 0 18px -10px rgba(231,184,78,.9);
+}
+
+/* The floating section indicator is the requested side-rail companion. */
+.where-am-i{
+  padding:6px 9px;
+  border:1px solid rgba(231,184,78,.22);
+  border-radius:7px;
+  background:rgba(7,20,16,.72);
+  box-shadow:0 0 18px -10px rgba(231,184,78,.78),inset 0 1px 0 rgba(255,255,255,.035);
+  backdrop-filter:blur(8px);
+  transition:opacity 250ms ease,box-shadow 180ms ease,border-color 180ms ease;
+}
+.where-am-i.is-visible{opacity:.88;}
+.where-am-i strong{text-shadow:0 0 10px rgba(231,184,78,.46);}
+.scroll-progress{box-shadow:0 0 7px rgba(231,184,78,.75),0 0 16px rgba(231,184,78,.32);}
+@media (max-width:767px){
+  .where-am-i{padding:5px 8px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .nav-links a,.mobile-menu a[data-nav],.where-am-i{transition:none;}
+  .nav-links a:hover,.nav-links a:focus-visible,.mobile-menu a[data-nav]:hover,.mobile-menu a[data-nav]:focus-visible{transform:none;}
+}
