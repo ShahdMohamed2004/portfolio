@@ -2692,8 +2692,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   <div class="photo-lightbox-backdrop" data-photo-close></div>
   <div class="photo-lightbox-panel" role="document">
     <button class="photo-lightbox-close" id="photoLightboxClose" type="button" aria-label="Close photo">×</button>
-    <h2 id="photoLightboxTitle">Shahd Mohamed Siddiq</h2>
-    <img id="photoLightboxImage" alt="Photo of Shahd Mohamed Siddiq">
+    <h2 id="photoLightboxTitle">Shahd Mohamed</h2>
+    <img id="photoLightboxImage" alt="Photo of Shahd Mohamed">
   </div>
 </div>
 <footer>
@@ -2716,7 +2716,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 const SITE = {
 
   name: "Shahd Mohamed",
-  fullName: "Shahd Mohamed Siddiq",
+  fullName: "Shahd Mohamed",
   title: "TEFL Graduate | Aspiring English Language Educator | Instructional & Assessment Design",
   heroNote: "exploring teaching & EdTech opportunities",
   heroHeadline: "Teaching to See, Learning to Be",
@@ -2933,7 +2933,7 @@ const SITE = {
     intro: "Interested in my teaching practice, educational projects, or potential opportunities in English language education? Feel free to get in touch."
   },
 
-  footer: "Shahd Mohamed Siddiq | TEFL Graduate & Aspiring English Language Educator"
+  footer: "Shahd Mohamed | TEFL Graduate & Aspiring English Language Educator"
 };
 
 /* =====================================================================
@@ -2941,8 +2941,8 @@ const SITE = {
    to SITE.links; only display text is translated.
    ===================================================================== */
 const SITE_AR = {
-  name: "شهد محمد",
-  fullName: "شهد محمد صديق",
+  name: "Shahd Mohamed",
+  fullName: "Shahd Mohamed",
   title: "خريجة TEFL | معلمة لغة إنجليزية طموحة | تصميم التعليم والتقييم",
   heroNote: "أستكشف فرص التدريس وتكنولوجيا التعليم",
   heroHeadline: "نُعلِّم لنُبصر، ونتعلَّم لنكون",
@@ -3127,7 +3127,7 @@ const SITE_AR = {
     intro: "هل تهتمين بالتعرف على ممارستي التدريسية أو مشاريعي التعليمية أو فرص التطور في تعليم اللغة الإنجليزية؟ لا تترددي في التواصل."
   },
 
-  footer: "شهد محمد صديق | خريجة TEFL وتسعى لتطوير مسارها كمعلمة لغة إنجليزية"
+  footer: "Shahd Mohamed | خريجة TEFL وتسعى لتطوير مسارها كمعلمة لغة إنجليزية"
 };
 
 /* =====================================================================
@@ -3220,7 +3220,7 @@ const SITE_AR = {
     document.getElementById('aboutRole').textContent = data.title;
     document.getElementById('aboutBio').textContent = data.about.bio;
     if(data.about.photo){
-      document.getElementById('aboutPhoto').innerHTML = `<img src="${safeAssetUrl(data.about.photo)}" alt="${escapeHtml(`Photo of ${SITE.fullName}`)}" width="1087" height="1447" loading="lazy" decoding="async">`;
+      document.getElementById('aboutPhoto').innerHTML = `<img src="${safeAssetUrl(data.about.photo)}" alt="${escapeHtml(`Photo of Shahd Mohamed`)}" width="1087" height="1447" loading="lazy" decoding="async">`;
     }
 
     // What I do
@@ -3614,7 +3614,7 @@ const SITE_AR = {
     const image = currentPhotoImage();
     if(!image || !photoLightbox) return;
     photoLightboxImage.src = image.currentSrc || image.src;
-    photoLightboxImage.alt = image.alt || (document.documentElement.lang === 'ar' ? 'صورة شهد محمد صديق' : 'Photo of Shahd Mohamed Siddiq');
+    photoLightboxImage.alt = image.alt || 'Photo of Shahd Mohamed';
     photoLightbox.hidden = false;
     document.body.classList.add('photo-lightbox-open');
     photoBeforeOpen = document.activeElement;
