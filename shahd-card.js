@@ -112,7 +112,8 @@
       this.cw = this.card.offsetWidth; this.ch = this.card.offsetHeight;
       this.clip = parseFloat(getComputedStyle(this).getPropertyValue('--clip-height')) || 28;
       this.anchor = {x:w / 2, y:15};
-      this.ropeLength = clamp(h - this.ch - this.clip - 57, 52, 125);
+      // Give the badge a little more breathing room without letting it reach the hero copy.
+      this.ropeLength = clamp(h - this.ch - this.clip - 45, 58, 142);
       this.linkLength = this.ropeLength / 16;
       this.dpr = Math.min(devicePixelRatio || 1, 2);
       this.canvas.width = Math.round(w * this.dpr);
@@ -181,7 +182,7 @@
       const spread=this.cw/2+Math.sin(.12)*(this.ch+this.clip)+9;
       x=clamp(x,Math.min(this.w/2,spread),Math.max(this.w/2,this.w-spread));
       y=clamp(y,42,this.h-this.ch-this.clip-32);
-      const dx=x-this.anchor.x, dy=y-this.anchor.y, r=Math.hypot(dx,dy), max=this.ropeLength*.985;
+      const dx=x-this.anchor.x, dy=y-this.anchor.y, r=Math.hypot(dx,dy), max=this.ropeLength*.995;
       if(r>max){x=this.anchor.x+dx/r*max;y=this.anchor.y+dy/r*max;}
       return {x,y};
     }
@@ -205,7 +206,7 @@
       for(let i=1;i<n.length;i++){
         const p=n[i], vx=(p.x-p.px)*.982, vy=(p.y-p.py)*.982;
         p.px=p.x; p.py=p.y;
-        p.x+=vx+this.wind*(i/16)*dt*dt*120;
+        p.x+=vx+this.wind*(i/16)*dt*dt*90;
         p.y+=vy+800*dt*dt;
       }
       if(target){
@@ -224,13 +225,14 @@
           b.x-=dx*correction*b.mass/total;b.y-=dy*correction*b.mass/total;
         }
       }
-      this.wind*=.93;
+      // Let pointer movement carry through as a soft breeze instead of a sharp kick.
+      this.wind*=.945;
       // A damped angular joint: card orientation lags behind the strap and acceleration.
       const vx=(end.x-beforeX)/dt;
-      const lean=clamp((this.anchor.x-end.x)/this.ropeLength*.22+vx*.0005,-.17,.17);
+      const lean=clamp((this.anchor.x-end.x)/this.ropeLength*.18+vx*.00035,-.21,.21);
       const torque=this.drag?clamp(this.drag.offsetX/this.cw*.045,-.025,.025):0;
-      this.angularVelocity+=((lean+torque-this.angle)*40-this.angularVelocity*8)*dt;
-      this.angle=clamp(this.angle+this.angularVelocity*dt,-.20,.20);
+      this.angularVelocity+=((lean+torque-this.angle)*32-this.angularVelocity*7.5)*dt;
+      this.angle=clamp(this.angle+this.angularVelocity*dt,-.24,.24);
       // Wall constraints use rotated corner extents and apply to the simulated endpoint.
       const sn=Math.sin(this.angle),cs=Math.cos(this.angle),half=this.cw/2;
       const xs=[-half*cs-this.clip*sn,half*cs-this.clip*sn,-half*cs-(this.clip+this.ch)*sn,half*cs-(this.clip+this.ch)*sn];
