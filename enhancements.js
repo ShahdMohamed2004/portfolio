@@ -59,23 +59,4 @@
     const observer = new MutationObserver(() => skills.querySelectorAll('.skill-group li').forEach((item, index) => item.style.setProperty('--skill-delay', `${index * 35}ms`)));
     observer.observe(skills, { childList: true, subtree: true });
   }
-
-  // Small, purpose-led motion vocabulary: each family gets a distinct gesture
-  // without adding a runtime animation dependency to this static portfolio.
-  const motionFamilies = [
-    ['.nav-utility .icon-link', 'icon'],
-    ['.nav-utility .lang-toggle', 'language'],
-    ['.nav-utility .theme-toggle', 'theme'],
-    ['.nav-utility .hamburger', 'menu'],
-    ['.work-filter', 'filter'],
-    ['#skillsGrid .skill-group li', 'skill'],
-    ['.entry', 'entry'],
-    ['.btn', 'button']
-  ];
-  motionFamilies.forEach(([selector, family]) => {
-    document.querySelectorAll(selector).forEach((element, index) => {
-      element.dataset.motion = family;
-      element.style.setProperty('--motion-index', index);
-    });
-  });
 })();
