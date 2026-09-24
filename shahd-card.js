@@ -59,7 +59,7 @@
         gravity: 980, ropeDamping: .987, stretchDamping: .84,
         dragFollow: .18, dragVelocity: .42, dragMaxSpeed: 18,
         spring: 30, angularDamping: 7.2, edgeSoftness: 28,
-        maxStretchRatio: .16, maxStretchPx: 28, fixedStep: 1 / 120
+        maxStretchRatio: .34, maxStretchPx: 42, fixedStep: 1 / 120
       };
       const on = (el, type, fn, options = {}) => el.addEventListener(type, fn, {...options, signal:this.abort.signal});
       on(this.card, 'pointerdown', e => this.grab(e));
@@ -131,8 +131,9 @@
       this.edgePadding = clamp(Math.min(w, h) * .04, 10, 18);
       this.maxAngle = clamp(Math.atan2(Math.max(18, w - this.cw - this.edgePadding * 2), this.ch + this.clip) * .34, .12, .34);
       // The resting length is derived from the actual card and available host height.
-      const minRope = Math.max(40, h * .12), maxRope = Math.max(minRope + 12, h * .55);
-      this.ropeLength = clamp(h - this.ch - this.clip - Math.max(24, h * .08), minRope, maxRope);
+      const minRope = Math.max(38, h * .10), maxRope = Math.max(minRope + 12, h * .48);
+      // Compact resting hang; the extra distance is earned only while the card is pulled.
+      this.ropeLength = clamp(h - this.ch - this.clip - Math.max(30, h * .18), minRope, maxRope);
       this.maxStretch = Math.min(this.physics.maxStretchPx, this.ropeLength * this.physics.maxStretchRatio);
       this.currentLength = this.ropeLength;
       this.linkLength = this.ropeLength / 16;
