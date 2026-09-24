@@ -38,16 +38,6 @@
     .swivel{position:absolute;left:4px;top:12px;width:8px;height:8px;border:1px solid #697467;border-radius:3px;background:linear-gradient(90deg,#626b5c,#f0efe0 40%,#b8baa9 65%,#697261)}
     .clasp{position:absolute;left:3px;top:17px;width:10px;height:19px;border:1px solid #727a6d;border-radius:3px;background:linear-gradient(90deg,#7a8472,#f7f4e5 35%,#c6c7b4 66%,#7a8472);box-shadow:inset 0 1px #ffffffd9}
     .clasp::after{content:'';position:absolute;left:2px;top:4px;width:4px;height:10px;border-right:1px solid #747e6d;border-bottom:1px solid #747e6d;border-radius:1px;opacity:.8}
-    .controls{position:absolute;inset:auto 12px 6px;z-index:5;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px}
-    .hint{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--lanyard-hint,#a7b3a3);font-size:10px;letter-spacing:.35px;pointer-events:none;transition:opacity .2s}
-    .control{min-width:44px;min-height:44px;flex-shrink:0;padding:8px 12px;border:1px solid var(--badge-control-border,#a7b3a34d);border-radius:24px;background:var(--badge-control-bg,#17352c);color:var(--lanyard-hint,#cbd4c8);font:500 12px/1.3 Arial,sans-serif;cursor:pointer;touch-action:manipulation}
-    .control:focus-visible{outline:2px solid var(--badge-focus,#d9b767);outline-offset:3px}
-    .control[aria-pressed='true']{border-color:currentColor;background:var(--badge-control-active,#335749)}
-    .reset{display:grid;place-items:center;padding:8px;line-height:1}.reset svg{width:19px;height:19px}
-    .touch-toggle{display:none}
-    @media(hover:none),(pointer:coarse){.touch-toggle{display:block}.hint{display:none}}
-    .hint svg{width:13px;height:13px;opacity:.65}
-    .scene:has(.dragging) .hint{opacity:0}
     @media(max-width:767px){:host{height:400px;--card-width:150px;--card-height:229px;--clip-height:26px}.card{border-radius:7px}.card-top{height:29px;padding:0 10px;font-size:5px}.portrait{height:123px;margin-inline:9px}.identity{padding:9px 10px 0}.name{font-size:14.5px;letter-spacing:-.4px}.role{font-size:6.8px;margin-top:4px}.footer{left:10px;right:10px;bottom:9px;padding-top:7px}.discipline{font-size:5px;letter-spacing:1px}.hint{font-size:8px;bottom:7px}.clasp{height:17px}.portrait-label{font-size:5px}}
     @media(prefers-reduced-motion:reduce){.hint{transition:none}}
     @media(forced-colors:active){.ambient,.glass{display:none}.control,.card{border:1px solid ButtonText}.assembly:focus-visible:not(.pointer-focus) .card{outline-color:Highlight}}
@@ -65,27 +55,12 @@
       this.visible = true; this.drag = null; this.quiet = 0; this.nodes = [];
       this.lastPointer = null;
       const on = (el, type, fn, options = {}) => el.addEventListener(type, fn, {...options, signal:this.abort.signal});
-      on(this.card, 'pointerdown', e => this.grab(e));
-      on(this.card, 'pointermove', e => this.move(e));
-      on(this.card, 'pointerup', e => this.release(e));
-      on(this.card, 'pointercancel', e => this.release(e));
-      on(this.card, 'lostpointercapture', e => this.release(e));
-      on(this.card, 'dragstart', e => e.preventDefault());
-      on(this.assembly, 'keydown', e => this.keyboard(e));
-      on(this.assembly, 'blur', () => this.assembly.classList.remove('pointer-focus'));
-      on(this.closest('.hero, .sm-hero') || this, 'pointermove', e => this.breeze(e), {passive:true});
       on(window, 'blur', () => this.release());
       on(document, 'visibilitychange', () => {
         if (document.hidden) { this.release(); this.pause(); }
         else this.wake();
       });
       on(this.reduced, 'change', () => { this.release(); this.pause(); this.reset(); this.draw(); this.wake(); });
-      on(this.shadowRoot.querySelector('.reset'), 'click', () => { this.release(); this.pause(); this.reset(); this.draw(); });
-      on(this.touchToggle, 'click', () => {
-        const enabled=this.touchToggle.getAttribute('aria-pressed')!=='true';
-        this.release(); this.scene.classList.toggle('touch-drag',enabled);
-        this.touchToggle.setAttribute('aria-pressed',String(enabled)); this.updateLanguage();
-      });
       this.languageObserver=new MutationObserver(()=>this.updateLanguage());
       this.languageObserver.observe(document.documentElement,{attributes:true,attributeFilter:['lang','dir']});
       this.updateLanguage();
@@ -104,7 +79,7 @@
         <div class="scene">
           <div class="ambient" aria-hidden="true"></div><div class="glass" aria-hidden="true"></div><div class="glass second" aria-hidden="true"></div>
           <canvas aria-hidden="true"></canvas>
-          <div class="assembly" role="button" tabindex="0" aria-label="Shahd Mohamed, English Language Educator. Drag to move the ID card. Arrow keys to swing; Home to settle." aria-describedby="instructions">
+          <div class="assembly" aria-hidden="true">
             <div class="clip" aria-hidden="true"><i class="ring"></i><i class="swivel"></i><i class="clasp"></i></div>
             <div class="card">
               <div class="card-top" aria-hidden="true"><span>EDUCATOR</span><i class="slot"></i><i class="brand-mark">s</i></div>
@@ -114,10 +89,8 @@
               <i class="corner" aria-hidden="true"></i>
             </div>
           </div>
-          <div class="controls"><div class="hint" id="instructions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 13V5a2 2 0 0 1 4 0v6-2a2 2 0 0 1 4 0v2a2 2 0 0 1 4 0v6c0 4-3 6-6 6-2 0-4-1-5-3l-5-6a2 2 0 0 1 3-2l3 3"/></svg><span>Drag gently. Let it settle.</span></div><button class="control touch-toggle" type="button" aria-pressed="false">Move card</button><button class="control reset" type="button" aria-label="Reset card position" title="Reset card position"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2.5 8M3 4v6h6"/></svg></button></div>
         </div>`;
       this.scene=this.shadowRoot.querySelector('.scene');
-      this.touchToggle=this.shadowRoot.querySelector('.touch-toggle');
       this.canvas = this.shadowRoot.querySelector('canvas');
       this.ctx = this.canvas.getContext('2d');
       this.card = this.shadowRoot.querySelector('.card');
@@ -127,15 +100,7 @@
       image.onerror = () => { image.onerror = null; image.src = DEFAULT_PHOTO; };
     }
     updateLanguage() {
-      const ar=document.documentElement.lang.startsWith('ar');
-      const enabled=this.touchToggle.getAttribute('aria-pressed')==='true';
-      this.shadowRoot.querySelector('.controls').dir=ar?'rtl':'ltr';
-      this.shadowRoot.querySelector('.hint span').textContent=ar?'اسحبي برفق واتركيها تستقر.':'Drag gently. Let it settle.';
-      this.touchToggle.textContent=ar?(enabled?'إنهاء التحريك':'تحريك البطاقة'):(enabled?'Done moving':'Move card');
-      this.touchToggle.setAttribute('aria-label',ar?(enabled?'إنهاء تحريك البطاقة واستعادة التمرير':'تفعيل سحب البطاقة؛ ينتهي بزر إنهاء التحريك'):(enabled?'Finish moving card and restore scrolling':'Enable card dragging; use Done moving to restore scrolling'));
-      const reset=this.shadowRoot.querySelector('.reset');
-      reset.title=ar?'إعادة البطاقة لمكانها':'Reset card position';reset.setAttribute('aria-label',reset.title);
-      this.assembly.setAttribute('aria-label',ar?'شهد محمد، معلمة لغة إنجليزية. اسحبي البطاقة أو استخدمي الأسهم لتحريكها وزر Home لإعادتها.':'Shahd Mohamed, English Language Educator. Drag to move the ID card. Arrow keys to swing; Home to settle.');
+      // The badge is a visual identity element, not an editor control.
     }
     disconnectedCallback() {
       this._alive = false; this.release(); this.pause(); this.abort?.abort();
@@ -150,7 +115,7 @@
       this.anchor = {x:w / 2, y:15};
       this.maxAngle=.24;
       while(this.maxAngle>.01 && this.cw*Math.cos(this.maxAngle)+(this.ch+this.clip+3)*Math.sin(this.maxAngle)>w-24) this.maxAngle-=.01;
-      // Reserve space below the badge for elastic travel and the 44px controls.
+      // Reserve space below the badge for its visual travel.
       this.ropeLength = clamp(h - this.ch - this.clip - 104, 58, 142);
       this.maxStretch = Math.min(26, this.ropeLength * .22);
       this.currentLength = this.ropeLength;
