@@ -903,7 +903,10 @@ html[data-theme="light"] #btnCV.hero-action.hero-action-primary:focus-visible{
 .spine>.entry::before{inset-inline-start:-35px;inset-inline-end:auto;transform-origin:center;}
 html[dir="rtl"] .spine::before{inset-inline-start:auto;inset-inline-end:var(--spine-line-x);}
 html[dir="rtl"] .spine::after{inset-inline-start:auto;inset-inline-end:calc(var(--spine-line-x) - 1px);}
-html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-35px;}
+@media (min-width:768px){
+  /* RTL desktop mirrors the 34px gutter; keep the node centered on the rail. */
+  html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-34px;}
+}
 .tense-diagram .timeline-base,.tense-diagram .spine-path,.tense-diagram .spine-glow{vector-effect:non-scaling-stroke;shape-rendering:geometricPrecision;}
 .tense-diagram circle{transform-box:fill-box;transform-origin:center;}
 .tense-diagram circle.active{transform-origin:center;}
