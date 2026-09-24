@@ -405,3 +405,35 @@ html[data-theme="light"] body::before{background:radial-gradient(560px circle at
   html[data-theme="light"] .mobile-menu-utility .lang-toggle-mobile,html[data-theme="light"] .mobile-menu-utility .theme-toggle-mobile{min-height:46px;border-radius:12px!important;background:rgba(255,255,255,.05)!important;border-color:rgba(197,123,214,.34)!important;color:#f5efe3!important;}
   html[data-theme="light"] .mobile-menu-utility .theme-toggle-mobile svg{color:#f1cf78!important;}
 }
+
+/* Light mode is intentionally light: translucent ivory glass with pastel perimeter light. */
+@media (max-width:860px){
+  html[data-theme="light"] .mobile-menu{
+    color:#263531;
+    background:radial-gradient(260px circle at 4% 8%,rgba(117,218,230,.24),transparent 70%),radial-gradient(250px circle at 96% 38%,rgba(193,157,235,.22),transparent 72%),radial-gradient(220px circle at 24% 100%,rgba(246,166,196,.18),transparent 72%),linear-gradient(145deg,rgba(255,255,253,.94),rgba(239,244,243,.91) 52%,rgba(246,240,248,.94));
+    border:1px solid rgba(255,255,255,.86);
+    box-shadow:0 26px 74px rgba(45,57,59,.24),0 0 0 1px rgba(106,203,220,.42),0 0 0 3px rgba(193,157,235,.16),0 0 34px -16px rgba(246,166,196,.62);
+  }
+  html[data-theme="light"] .mobile-menu::before{background:linear-gradient(90deg,rgba(101,207,222,.62),rgba(193,157,235,.55) 56%,rgba(246,166,196,.60));}
+  html[data-theme="light"] .mobile-menu::after{background:linear-gradient(180deg,rgba(101,207,222,.02),rgba(101,207,222,.58) 24%,rgba(193,157,235,.62) 58%,rgba(246,166,196,.52) 84%,transparent);}
+  html[data-theme="light"] .mobile-drawer-brand{border-color:rgba(77,111,106,.18);}
+  html[data-theme="light"] .mobile-drawer-monogram{color:#755a20;background:linear-gradient(145deg,rgba(255,251,224,.96),rgba(225,241,239,.94));border-color:rgba(203,159,61,.62);box-shadow:0 10px 26px rgba(203,159,61,.18);}
+  html[data-theme="light"] .mobile-drawer-brand-copy strong{color:#20352f;}
+  html[data-theme="light"] .mobile-drawer-brand-copy small{color:#6b7974;}
+  html[data-theme="light"] .mobile-menu-close{background:rgba(255,255,255,.58);border-color:rgba(83,119,113,.26);color:#46645e;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]{color:#3d534e!important;background:rgba(255,255,255,.18)!important;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:hover,html[data-theme="light"] .mobile-menu>a[data-nav]:focus-visible{color:#244d50!important;background:linear-gradient(90deg,rgba(101,207,222,.18),rgba(193,157,235,.17),rgba(246,166,196,.12))!important;border-color:rgba(101,183,199,.34)!important;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]::after{opacity:.48;}
+  html[data-theme="light"] .mobile-nav-icon{color:#3ca9b6;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:nth-of-type(2) .mobile-nav-icon{color:#9976c8;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:nth-of-type(3) .mobile-nav-icon{color:#c99632;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:nth-of-type(4) .mobile-nav-icon{color:#d47d9e;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:nth-of-type(5) .mobile-nav-icon{color:#9976c8;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:nth-of-type(6) .mobile-nav-icon{color:#3ca9b6;}
+  html[data-theme="light"] .mobile-menu-utility>a{color:#3c5752!important;background:rgba(255,255,255,.56)!important;border-color:rgba(101,183,199,.28)!important;box-shadow:0 5px 16px -14px rgba(60,90,87,.55)!important;}
+  html[data-theme="light"] .mobile-menu-utility>a:hover,html[data-theme="light"] .mobile-menu-utility>a:focus-visible{color:#34525b!important;background:linear-gradient(105deg,rgba(101,207,222,.20),rgba(193,157,235,.18),rgba(246,166,196,.14))!important;border-color:rgba(161,119,204,.40)!important;}
+  html[data-theme="light"] .mobile-social-dock a{color:#3f5b57!important;background:rgba(255,255,255,.60)!important;border-color:rgba(101,183,199,.28)!important;}
+  html[data-theme="light"] .mobile-menu-utility .lang-toggle-mobile,html[data-theme="light"] .mobile-menu-utility .theme-toggle-mobile{color:#405954!important;background:rgba(255,255,255,.62)!important;border-color:rgba(161,119,204,.28)!important;}
+  html[data-theme="light"] .mobile-menu-utility .theme-toggle-mobile svg{color:#c99632!important;}
+  html[data-theme="light"] .mobile-menu .mm-divider{background:linear-gradient(90deg,transparent,rgba(88,131,126,.25),rgba(161,119,204,.26),transparent);}
+}
