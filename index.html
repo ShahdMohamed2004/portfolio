@@ -3279,27 +3279,36 @@ const SITE_AR = {
         </details>
       </div>`;
     }).join('');
-    document.querySelectorAll('#workSpine .project-details').forEach((details, index) => {
-      const summary = details.querySelector('summary');
-      const syncState = () => summary.setAttribute('aria-expanded', String(details.open));
-      details.addEventListener('toggle', syncState);
-      if(openProjectIndexes.includes(index)) details.open = true;
-      syncState();
-    });
-    // Keep each interactive collection focused: opening one card closes its siblings.
-    ['#whatIDoGrid details','#howITeachGrid details','#workSpine .project-details'].forEach(selector => {
-      document.querySelectorAll(selector).forEach(details => {
-        details.addEventListener('toggle', () => {
-          if(!details.open) return;
-          const siblings = details.matches('#workSpine .project-details')
-            ? document.querySelectorAll('#workSpine .project-details')
-            : (details.parentElement?.querySelectorAll(':scope > details') || []);
-          siblings.forEach(sibling => {
-            if(sibling !== details) sibling.open = false;
-          });
-        });
+    // Keep every details collection strictly exclusive. The explicit click
+    // fallback avoids browsers leaving multiple cards open when several
+    // dynamically-rendered details share a native `name` group.
+    const setupExclusiveDetails = (selector, groupSelector) => {
+      const cards = [...document.querySelectorAll(selector)];
+      const closeSiblings = (current) => cards.forEach(card => {
+        if(card !== current) card.open = false;
       });
-    });
+      cards.forEach((details, index) => {
+        const summary = details.querySelector(':scope > summary');
+        const syncState = () => {
+          if(summary) summary.setAttribute('aria-expanded', String(details.open));
+        };
+        details.addEventListener('toggle', () => {
+          if(details.open) closeSiblings(details);
+          syncState();
+        });
+        summary?.addEventListener('click', () => {
+          window.setTimeout(() => {
+            if(details.open) closeSiblings(details);
+            syncState();
+          }, 0);
+        });
+        if(groupSelector === '#workSpine .project-details' && openProjectIndexes.includes(index)) details.open = true;
+        syncState();
+      });
+    };
+    setupExclusiveDetails('#workSpine .project-details', '#workSpine .project-details');
+    setupExclusiveDetails('#whatIDoGrid > details', '#whatIDoGrid > details');
+    setupExclusiveDetails('#howITeachGrid > details', '#howITeachGrid > details');
     const updateProjectFilter = (filter = 'all') => {
       const filterBar = document.getElementById('workFilters');
       const filterButtons = [...filterBar.querySelectorAll('.work-filter')];
