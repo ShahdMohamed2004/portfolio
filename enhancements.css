@@ -937,3 +937,46 @@ html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-
   #work #workSpine.spine > .entry::before{inset-inline-start:-29.3px;inset-inline-end:auto;}
   html[dir="rtl"] #work #workSpine.spine > .entry::before{inset-inline-start:auto;inset-inline-end:-32px;}
 }
+
+
+/* Main hero title: a restrained editorial shimmer using the portfolio palette only. */
+#heroHeadline.shimmer-text{
+  --title-base:var(--chalk);
+  --title-accent:var(--yellow);
+  --title-highlight:color-mix(in srgb,var(--chalk) 78%,var(--yellow));
+  color:var(--title-base);
+  background-image:linear-gradient(112deg,
+    var(--title-base) 0%,
+    var(--title-base) 36%,
+    var(--title-accent) 46%,
+    var(--title-highlight) 50%,
+    var(--title-accent) 54%,
+    var(--title-base) 66%,
+    var(--title-base) 100%);
+  background-size:240% 100%;
+  background-position:200% 50%;
+  background-repeat:no-repeat;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:hero-title-shimmer 7.2s cubic-bezier(.45,0,.55,1) infinite;
+  will-change:background-position;
+}
+html[data-theme="light"] #heroHeadline.shimmer-text{
+  --title-base:var(--chalk);
+  --title-accent:var(--text-accent);
+  --title-highlight:color-mix(in srgb,var(--yellow) 72%,white);
+}
+@keyframes hero-title-shimmer{
+  0%,18%{background-position:200% 50%;}
+  58%,100%{background-position:-40% 50%;}
+}
+@media (prefers-reduced-motion:reduce){
+  #heroHeadline.shimmer-text{
+    animation:none;
+    background-position:50% 50%;
+  }
+}
+@media (max-width:767px){
+  #heroHeadline.shimmer-text{background-size:260% 100%;}
+}
