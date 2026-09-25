@@ -1085,3 +1085,232 @@ html:not([data-theme="light"]) .aurora{opacity:.68;}
 @media (prefers-reduced-motion:reduce){
   #heroHeadline.shimmer-text::after{animation:none;background-position:50% 50%;}
 }
+
+
+/* ---------- structural responsive repair: drawer, header, and icon containment ---------- */
+@media (max-width:860px){
+  /* The drawer is a modal layer: it must always sit above the fixed header and
+     floating controls instead of competing with them in the same visual plane. */
+  .menu-backdrop{
+    z-index:230 !important;
+    background:rgba(3,10,8,.70);
+    transition:opacity .3s ease,visibility .3s ease;
+  }
+  .mobile-menu,
+  html[dir="ltr"] .mobile-menu,
+  html[dir="rtl"] .mobile-menu{
+    z-index:240 !important;
+    box-sizing:border-box;
+    top:50%;
+    left:50%;
+    right:auto;
+    bottom:auto;
+    width:min(94vw,430px);
+    max-width:430px;
+    height:auto;
+    max-height:calc(100vh - 24px);
+    max-height:calc(100dvh - 24px);
+    min-height:0;
+    padding:clamp(22px,5vw,30px) clamp(18px,5.5vw,28px) max(24px,env(safe-area-inset-bottom));
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    overflow-x:visible;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    scrollbar-gutter:stable;
+    isolation:isolate;
+    transform:translate(-50%,-47%) scale(.97) !important;
+    transition:transform .36s cubic-bezier(.23,1,.32,1),opacity .24s ease,visibility .36s ease;
+  }
+  .mobile-menu.open,
+  html[dir="ltr"] .mobile-menu.open,
+  html[dir="rtl"] .mobile-menu.open{
+    transform:translate(-50%,-50%) scale(1) !important;
+  }
+  .mobile-menu > *,
+  .mobile-menu > a[data-nav],
+  .mobile-menu-utility > *{box-sizing:border-box;flex:0 0 auto;min-width:0;}
+  .mobile-menu::before,.mobile-menu::after{pointer-events:none;overflow:visible;}
+
+  /* The fixed top bar belongs behind the modal; it cannot bleed through it. */
+  body.menu-open #siteHeader{z-index:100 !important;pointer-events:none;}
+  body.menu-open #backToTop{opacity:0 !important;visibility:hidden !important;pointer-events:none !important;}
+
+  /* Give the drawer brand and close control separate, non-overlapping zones. */
+  .mobile-drawer-brand{
+    width:100%;
+    min-height:62px;
+    margin:0 0 14px;
+    padding:0 52px 16px 0;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    border-bottom:1px solid rgba(255,255,255,.13);
+  }
+  html[dir="rtl"] .mobile-drawer-brand{padding-inline:0 52px;padding-block:0 16px;}
+  .mobile-drawer-monogram{width:48px;height:48px;flex:0 0 48px;overflow:visible;}
+  .mobile-drawer-brand-copy{min-width:0;overflow:visible;}
+  .mobile-drawer-brand-copy strong,.mobile-drawer-brand-copy small{display:block;white-space:nowrap;overflow:visible;}
+  .mobile-menu-close{
+    z-index:3;
+    top:20px;
+    inset-inline-end:18px;
+    inset-inline-start:auto;
+    width:42px;
+    min-width:42px;
+    height:42px;
+    min-height:42px;
+    padding:10px;
+    display:grid;
+    place-items:center;
+    overflow:visible;
+  }
+  html[dir="rtl"] .mobile-menu-close{inset-inline-start:18px;inset-inline-end:auto;}
+  .mobile-menu-close-icon{width:20px;height:20px;display:block;overflow:visible;}
+
+  /* Navigation rows keep icon, label, and active/background space in flow. */
+  .mobile-menu > a[data-nav]{
+    width:100%;
+    min-height:58px;
+    margin:0;
+    padding:12px 14px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:nowrap;
+    border-radius:14px;
+    overflow:visible;
+    line-height:1.35;
+  }
+  .mobile-menu > a[data-nav] + a[data-nav]{margin-top:5px;}
+  .mobile-menu > a[data-nav] > span{min-width:0;overflow:visible;white-space:nowrap;}
+  .mobile-nav-icon{
+    width:24px;
+    height:24px;
+    flex:0 0 24px;
+    min-width:24px;
+    min-height:24px;
+    padding:1px;
+    display:block;
+    overflow:visible;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .mobile-menu > a[data-nav]:hover .mobile-nav-icon,
+  .mobile-menu > a[data-nav]:focus-visible .mobile-nav-icon{transform:none;}
+
+  .mobile-menu .mm-divider{width:100%;height:1px;flex:0 0 1px;margin:16px 0 14px;}
+  .mobile-menu-utility{
+    width:100%;
+    min-width:0;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:11px;
+    padding:0;
+    margin:0;
+    border:0;
+  }
+  .mobile-menu-utility > a,
+  .mobile-menu-utility .lang-toggle-mobile,
+  .mobile-menu-utility .theme-toggle-mobile{
+    width:100%;
+    min-width:0;
+    min-height:50px;
+    padding:12px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    overflow:visible;
+    line-height:1.3;
+  }
+  .mobile-menu-utility > a:nth-of-type(1),
+  .mobile-menu-utility > a:nth-of-type(2){grid-column:auto;}
+  .mobile-social-dock{
+    grid-column:1 / -1;
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
+    margin:0;
+    padding:0;
+  }
+  .mobile-social-dock a{width:100%;min-width:0;min-height:48px;height:auto;display:grid;place-items:center;overflow:visible;}
+  .mobile-menu-utility .mm-divider{grid-column:1 / -1;margin:7px 0 5px;}
+  .mobile-menu-utility .lang-toggle-mobile,
+  .mobile-menu-utility .theme-toggle-mobile{grid-column:1 / -1;justify-content:flex-start;}
+  .mobile-menu-utility .theme-toggle-mobile svg{width:20px;height:20px;min-width:20px;overflow:visible;}
+
+  /* Remove reveal transforms from the final geometry; motion must not clip edges. */
+  .mobile-menu.open > a[data-nav],
+  .mobile-menu.open .mobile-menu-utility > a,
+  .mobile-menu.open .mobile-social-dock a,
+  .mobile-menu.open .lang-toggle-mobile,
+  .mobile-menu.open .theme-toggle-mobile{transform:none;}
+}
+
+/* Light mode: the header is a compact, separate chrome surface and the drawer
+   gets an opaque reading surface so neither layer visually bleeds through. */
+@media (max-width:860px){
+  header#siteHeader,
+  html[data-theme="light"] header#siteHeader{
+    top:10px;
+    inset-inline:10px;
+    width:auto;
+    max-width:none;
+    min-height:58px;
+    padding:0;
+    z-index:100;
+    border-radius:16px;
+  }
+  header#siteHeader nav{min-height:58px;padding-inline:12px;gap:10px;}
+  header#siteHeader .wordmark{min-width:0;max-width:44vw;overflow:hidden;text-overflow:ellipsis;}
+  header#siteHeader .nav-utility{min-width:0;gap:8px;}
+  header#siteHeader .mini-control-pill{min-width:0;display:inline-flex;align-items:center;gap:8px;padding:5px 8px;border:1px solid var(--line-strong);border-radius:999px;}
+  header#siteHeader .mini-control-divider{width:1px;height:20px;background:var(--line-strong);}
+  header#siteHeader .theme-toggle{width:34px;height:34px;min-width:34px;}
+  header#siteHeader .hamburger{width:42px;height:42px;min-width:42px;padding:8px;overflow:visible;}
+  header#siteHeader .hamburger svg{width:24px;height:24px;overflow:visible;}
+  html[data-theme="light"] .mobile-menu{
+    background:#f5f8f7;
+    border-color:rgba(65,116,117,.30);
+    box-shadow:0 24px 60px rgba(42,75,74,.26),0 0 0 1px rgba(255,255,255,.75) inset;
+    color:#29443f;
+  }
+  html[data-theme="light"] .mobile-drawer-brand{border-bottom-color:rgba(65,116,117,.22);}
+  html[data-theme="light"] .mobile-drawer-brand-copy strong{color:#29443f;}
+  html[data-theme="light"] .mobile-drawer-brand-copy small{color:#6d8580;}
+  html[data-theme="light"] .mobile-menu > a[data-nav]{color:#385650;background:rgba(255,255,255,.42);border-color:rgba(79,135,133,.17);}
+  html[data-theme="light"] .mobile-nav-icon{color:#5a8a86;}
+  html[data-theme="light"] .mobile-menu .mm-divider{background:rgba(79,135,133,.24);}
+  html[data-theme="light"] .mobile-menu-utility > a,
+  html[data-theme="light"] .mobile-social-dock a,
+  html[data-theme="light"] .mobile-menu-utility .lang-toggle-mobile,
+  html[data-theme="light"] .mobile-menu-utility .theme-toggle-mobile{color:#385650;background:rgba(255,255,255,.56);border-color:rgba(79,135,133,.24);}
+}
+
+/* Dark mode: keep the same geometry but restore the intended deep green surface. */
+@media (max-width:860px){
+  html:not([data-theme="light"]) .mobile-menu{background:#10251f;border-color:rgba(225,239,231,.18);color:#e9eee7;}
+  html:not([data-theme="light"]) .mobile-drawer-brand{border-bottom-color:rgba(225,239,231,.16);}
+  html:not([data-theme="light"]) .mobile-menu > a[data-nav]{color:#e2ebe4;background:rgba(255,255,255,.045);border-color:rgba(226,239,228,.09);}
+  html:not([data-theme="light"]) .mobile-nav-icon{color:#9dd9d2;}
+  html:not([data-theme="light"]) .mobile-menu .mm-divider{background:rgba(225,239,231,.16);}
+  html:not([data-theme="light"]) .mobile-menu-utility > a,
+  html:not([data-theme="light"]) .mobile-social-dock a,
+  html:not([data-theme="light"]) .mobile-menu-utility .lang-toggle-mobile,
+  html:not([data-theme="light"]) .mobile-menu-utility .theme-toggle-mobile{color:#e9eee7;background:rgba(255,255,255,.07);border-color:rgba(226,239,228,.16);}
+}
+
+@media (max-width:380px){
+  .mobile-menu,
+  html[dir="ltr"] .mobile-menu,
+  html[dir="rtl"] .mobile-menu{width:calc(100vw - 20px);padding-inline:16px;}
+  .mobile-menu > a[data-nav]{min-height:56px;padding-inline:12px;gap:14px;}
+  .mobile-nav-icon{width:23px;height:23px;flex-basis:23px;min-width:23px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .mobile-menu,.menu-backdrop{transition:none !important;}
+}
