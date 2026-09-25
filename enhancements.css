@@ -3177,3 +3177,142 @@ html:not([data-theme="light"]) .ambient-glow::after{opacity:.36 !important;}
   #work .work-filters::before{left:3% !important;right:3% !important;top:24px !important;}
   .spine>.entry .project-details>summary.project-summary{padding-block:16px !important;}
 }
+
+
+/* ---------- light mode chromatic edge atmosphere + paper surfaces ---------- */
+html[data-theme='light']{
+  --light-cyan:91,190,211;
+  --light-violet:145,125,218;
+  --light-pink:218,137,171;
+  --light-paper:#fbfcfa;
+  --light-paper-soft:#f3f7f4;
+}
+/* A restrained three-corner light: cyan/green, violet, and pink stay at the edge. */
+html[data-theme='light'] body{
+  background:#f8faf8 !important;
+}
+html[data-theme='light'] body::before{
+  inset:-14% !important;
+  background:
+    radial-gradient(ellipse 34% 34% at -4% 4%,rgba(var(--light-cyan),.14),transparent 78%),
+    radial-gradient(ellipse 32% 34% at 104% 10%,rgba(var(--light-violet),.105),transparent 80%),
+    radial-gradient(ellipse 34% 38% at 104% 104%,rgba(var(--light-pink),.095),transparent 80%),
+    radial-gradient(ellipse 30% 34% at -4% 90%,rgba(103,186,131,.10),transparent 80%),
+    radial-gradient(ellipse 24% 20% at 50% 43%,rgba(231,184,78,.025),transparent 82%),
+    linear-gradient(135deg,#f8faf8 0%,#fbfcfb 52%,#f3f7f4 100%) !important;
+  filter:blur(14px) !important;
+  opacity:1 !important;
+}
+html[data-theme='light'] .ambient-glow{background:transparent !important;}
+html[data-theme='light'] .ambient-glow::before,
+html[data-theme='light'] .ambient-glow::after{
+  display:block !important;
+  filter:blur(58px) !important;
+  animation:none !important;
+}
+html[data-theme='light'] .ambient-glow::before{
+  background:
+    radial-gradient(ellipse 52% 42% at 0% 8%,rgba(var(--light-cyan),.12),transparent 78%),
+    radial-gradient(ellipse 38% 35% at 100% 4%,rgba(var(--light-violet),.075),transparent 80%) !important;
+  opacity:.72 !important;
+}
+html[data-theme='light'] .ambient-glow::after{
+  background:
+    radial-gradient(ellipse 45% 38% at 100% 100%,rgba(var(--light-pink),.09),transparent 80%),
+    radial-gradient(ellipse 38% 32% at 0% 100%,rgba(103,186,131,.07),transparent 82%) !important;
+  opacity:.62 !important;
+}
+/* Restore the distinctive cyan/violet/pink depth behind cards without dark papers. */
+html[data-theme='light'] .project-details,
+html[data-theme='light'] .accordion-card,
+html[data-theme='light'] .material-card,
+html[data-theme='light'] .dev-card,
+html[data-theme='light'] .skill-block,
+html[data-theme='light'] .contact-box,
+html[data-theme='light'] .credential-strip .cred,
+html[data-theme='light'] .featured-case{
+  color:var(--chalk) !important;
+  background:
+    radial-gradient(ellipse 78% 110% at 0% 0%,rgba(var(--light-cyan),.14),transparent 60%),
+    radial-gradient(ellipse 72% 100% at 100% 100%,rgba(var(--light-violet),.12),transparent 62%),
+    radial-gradient(ellipse 65% 80% at 100% 0%,rgba(var(--light-pink),.065),transparent 65%),
+    linear-gradient(145deg,rgba(255,255,255,.90),rgba(244,248,246,.82)) !important;
+  border-color:rgba(84,119,130,.22) !important;
+  box-shadow:0 16px 34px -28px rgba(48,77,72,.28),inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+html[data-theme='light'] .spine>.entry{background:transparent !important;}
+html[data-theme='light'] .project-details::after,
+html[data-theme='light'] .accordion-card::after,
+html[data-theme='light'] .material-card::after,
+html[data-theme='light'] .dev-card::after,
+html[data-theme='light'] .skill-block::after,
+html[data-theme='light'] .contact-box::after,
+html[data-theme='light'] .credential-strip .cred::after{
+  display:block !important;
+  opacity:.42 !important;
+  background:
+    radial-gradient(ellipse 70% 90% at 0% 50%,rgba(var(--light-cyan),.16),transparent 68%),
+    radial-gradient(ellipse 64% 86% at 100% 50%,rgba(var(--light-violet),.10),transparent 70%) !important;
+  filter:blur(8px);
+}
+html[data-theme='light'] .spine>.entry .project-details,
+html[data-theme='light'] .spine>.entry .project-details[open]{
+  background:
+    radial-gradient(ellipse 78% 110% at 0% 0%,rgba(var(--light-cyan),.14),transparent 60%),
+    radial-gradient(ellipse 72% 100% at 100% 100%,rgba(var(--light-violet),.12),transparent 62%),
+    radial-gradient(ellipse 65% 80% at 100% 0%,rgba(var(--light-pink),.065),transparent 65%),
+    linear-gradient(145deg,rgba(255,255,255,.90),rgba(244,248,246,.82)) !important;
+  border-bottom:1px solid rgba(84,119,130,.22) !important;
+}
+html[data-theme='light'] .spine>.entry .project-details>summary.project-summary,
+html[data-theme='light'] .spine>.entry .project-details[open]>summary.project-summary{
+  border-bottom-color:rgba(84,119,130,.20) !important;
+}
+html[data-theme='light'] .featured-case,
+html[data-theme='light'] .spine>.entry .project-details .featured-case{
+  color:var(--chalk) !important;
+  border-color:rgba(84,119,130,.22) !important;
+  box-shadow:0 12px 28px -24px rgba(48,77,72,.22),inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+html[data-theme='light'] .featured-case::before{
+  background:
+    radial-gradient(ellipse 60% 70% at 0% 50%,rgba(var(--light-cyan),.18),transparent 72%),
+    radial-gradient(ellipse 55% 65% at 100% 50%,rgba(var(--light-violet),.13),transparent 74%) !important;
+  opacity:.72 !important;
+}
+/* Keep typography readable over the restored chromatic surface. */
+html[data-theme='light'] .project-details h3,
+html[data-theme='light'] .featured-case h3,
+html[data-theme='light'] .accordion-card summary,
+html[data-theme='light'] .material-card .mname,
+html[data-theme='light'] .dev-card h3,
+html[data-theme='light'] .skill-block h3,
+html[data-theme='light'] .contact-box h3{color:#17352a !important;}
+html[data-theme='light'] .project-details-body,
+html[data-theme='light'] .featured-case p,
+html[data-theme='light'] .entry .place,
+html[data-theme='light'] .entry p{color:#49635b !important;}
+@media(max-width:767px){
+  html[data-theme='light'] body::before{filter:blur(11px) !important;}
+  html[data-theme='light'] .ambient-glow::before,
+  html[data-theme='light'] .ambient-glow::after{filter:blur(38px) !important;}
+  html[data-theme='light'] .project-details,
+  html[data-theme='light'] .accordion-card,
+  html[data-theme='light'] .material-card,
+  html[data-theme='light'] .dev-card,
+  html[data-theme='light'] .skill-block,
+  html[data-theme='light'] .contact-box,
+  html[data-theme='light'] .credential-strip .cred,
+  html[data-theme='light'] .featured-case{
+    background:
+      radial-gradient(ellipse 82% 100% at 0% 0%,rgba(var(--light-cyan),.12),transparent 62%),
+      radial-gradient(ellipse 78% 100% at 100% 100%,rgba(var(--light-violet),.10),transparent 64%),
+      radial-gradient(ellipse 62% 72% at 100% 0%,rgba(var(--light-pink),.055),transparent 68%),
+      linear-gradient(145deg,rgba(255,255,255,.92),rgba(244,248,246,.86)) !important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme='light'] body::before,
+  html[data-theme='light'] .ambient-glow::before,
+  html[data-theme='light'] .ambient-glow::after{animation:none !important;}
+}
