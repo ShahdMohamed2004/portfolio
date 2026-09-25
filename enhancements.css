@@ -1609,3 +1609,132 @@ html:not([data-theme="light"]) .aurora{opacity:.68;}
   #mobileMenu .mobile-drawer-monogram{width:44px;height:44px;flex-basis:44px;border-radius:14px;}
   #mobileMenu .mobile-drawer-monogram b{font-size:.94rem;}
 }
+
+
+/* ---------- separated brand + animated close control ---------- */
+@media (max-width: 860px){
+  .mobile-drawer-brand{
+    position:relative;
+    box-sizing:border-box;
+    direction:ltr;
+    justify-content:flex-start;
+    padding-inline:0 62px;
+  }
+
+  html[dir="rtl"] .mobile-drawer-brand{
+    direction:rtl;
+    justify-content:flex-start;
+    padding-inline:0 62px;
+  }
+
+  .mobile-menu-close{
+    position:absolute;
+    top:20px;
+    right:18px;
+    left:auto;
+    z-index:5;
+    width:42px;
+    min-width:42px;
+    height:42px;
+    min-height:42px;
+    padding:0;
+    display:grid;
+    place-items:center;
+    border:1px solid color-mix(in srgb,var(--yellow) 34%,var(--line-strong));
+    border-radius:15px;
+    background:color-mix(in srgb,var(--ink-2) 78%,white 7%);
+    color:var(--chalk-dim);
+    box-shadow:0 10px 24px -16px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.10);
+    overflow:visible;
+    transform-origin:center;
+    transition:color .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease,transform .22s cubic-bezier(.23,1,.32,1);
+  }
+
+  html[dir="rtl"] .mobile-menu-close{
+    right:auto;
+    left:18px;
+  }
+
+  .mobile-menu-close::before{
+    content:"";
+    position:absolute;
+    inset:4px;
+    border:1px solid color-mix(in srgb,var(--yellow) 24%,transparent);
+    border-radius:11px;
+    opacity:.7;
+    pointer-events:none;
+    transition:inset .22s ease,opacity .22s ease,border-color .22s ease;
+  }
+
+  .mobile-menu-close::after{
+    content:"";
+    position:absolute;
+    inset:-5px;
+    border:1px solid color-mix(in srgb,var(--yellow) 22%,transparent);
+    border-radius:19px;
+    opacity:0;
+    transform:scale(.72);
+    pointer-events:none;
+  }
+
+  .mobile-menu.open .mobile-menu-close{
+    animation:closeControlIn .5s cubic-bezier(.23,1,.32,1) .08s both;
+  }
+  .mobile-menu.open .mobile-menu-close::after{
+    animation:closeHaloIn .7s ease .18s both;
+  }
+
+  .mobile-menu-close-icon{
+    position:relative;
+    z-index:1;
+    width:20px;
+    height:20px;
+    color:currentColor;
+    transition:transform .28s cubic-bezier(.23,1,.32,1),color .22s ease;
+  }
+
+  .mobile-menu-close:hover,
+  .mobile-menu-close:focus-visible,
+  .mobile-menu-close:active{
+    color:var(--yellow);
+    border-color:color-mix(in srgb,var(--yellow) 70%,white 10%);
+    background:color-mix(in srgb,var(--yellow) 12%,var(--ink-2));
+    box-shadow:0 12px 26px -14px color-mix(in srgb,var(--yellow) 68%,transparent),inset 0 1px 0 rgba(255,255,255,.16);
+    transform:scale(1.06);
+  }
+  .mobile-menu-close:hover::before,
+  .mobile-menu-close:focus-visible::before{inset:2px;opacity:1;border-color:color-mix(in srgb,var(--yellow) 48%,transparent);}
+  .mobile-menu-close:hover .mobile-menu-close-icon,
+  .mobile-menu-close:focus-visible .mobile-menu-close-icon{transform:rotate(90deg);}
+
+  html[data-theme="light"] .mobile-menu-close{
+    background:rgba(255,255,255,.84);
+    border-color:rgba(37,71,58,.22);
+    color:#456860;
+    box-shadow:0 10px 24px -16px rgba(37,71,58,.42),inset 0 1px 0 rgba(255,255,255,.92);
+  }
+  html[data-theme="light"] .mobile-menu-close::before{border-color:rgba(197,155,76,.34);}
+  html[data-theme="light"] .mobile-menu-close::after{border-color:rgba(197,155,76,.28);}
+  html[data-theme="light"] .mobile-menu-close:hover,
+  html[data-theme="light"] .mobile-menu-close:focus-visible,
+  html[data-theme="light"] .mobile-menu-close:active{
+    color:#8a6826;
+    background:rgba(255,251,235,.96);
+    border-color:rgba(197,155,76,.68);
+    box-shadow:0 12px 26px -14px rgba(197,155,76,.58),inset 0 1px 0 rgba(255,255,255,.96);
+  }
+}
+
+@keyframes closeControlIn{
+  from{opacity:0;transform:scale(.72) rotate(-32deg);}
+  to{opacity:1;transform:scale(1) rotate(0);}
+}
+@keyframes closeHaloIn{
+  0%{opacity:0;transform:scale(.72);}
+  45%{opacity:.8;transform:scale(1.05);}
+  100%{opacity:0;transform:scale(1.18);}
+}
+@media (prefers-reduced-motion:reduce){
+  .mobile-menu.open .mobile-menu-close,.mobile-menu.open .mobile-menu-close::after{animation:none!important;}
+  .mobile-menu-close,.mobile-menu-close-icon{transition:none!important;}
+}
