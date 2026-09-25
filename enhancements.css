@@ -3316,3 +3316,155 @@ html[data-theme='light'] .entry p{color:#49635b !important;}
   html[data-theme='light'] .ambient-glow::before,
   html[data-theme='light'] .ambient-glow::after{animation:none !important;}
 }
+
+
+/* ---------- unified premium shape language: light + dark ---------- */
+:root{
+  --radius-surface:18px;
+  --radius-panel:22px;
+  --radius-control:12px;
+  --radius-chip:9px;
+}
+/* Geometry is shared by both themes; only their existing colors/glows differ. */
+.approach-card,
+.material-card,
+.dev-card,
+.skill-block,
+.contact-box,
+.credential-strip .cred,
+.accordion-card,
+.project-details,
+.featured-case,
+.about-card,
+.availability-item,
+.materials-note,
+.timeline-detail{
+  border-radius:var(--radius-surface) !important;
+  overflow:hidden;
+}
+.approach-card,
+.material-card,
+.dev-card,
+.skill-block,
+.contact-box,
+.credential-strip .cred,
+.accordion-card,
+.project-details,
+.featured-case,
+.about-card,
+.availability-item,
+.materials-note,
+.timeline-detail{
+  box-shadow:
+    0 14px 32px -28px rgba(0,0,0,.58),
+    inset 0 1px 0 rgba(255,255,255,.10) !important;
+}
+/* Timeline entries are the only intentionally open rail; their content surfaces are rounded. */
+.spine>.entry{
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.spine>.entry .project-details,
+.spine>.entry .project-details[open]{
+  border-radius:var(--radius-panel) !important;
+  overflow:hidden !important;
+  border:1px solid rgba(224,239,226,.16) !important;
+  border-bottom-color:rgba(217,181,106,.26) !important;
+  box-shadow:
+    0 18px 38px -30px rgba(0,0,0,.66),
+    inset 0 1px 0 rgba(255,255,255,.10) !important;
+}
+.spine>.entry .project-details>summary.project-summary{
+  border-bottom:0 !important;
+}
+.spine>.entry .project-details[open]>summary.project-summary{
+  border-bottom:1px solid rgba(217,181,106,.20) !important;
+}
+.spine>.entry .timeline-detail{
+  border:1px solid rgba(224,239,226,.12);
+  padding-inline:clamp(12px,2vw,18px);
+  background:rgba(255,255,255,.018);
+}
+.spine>.entry .timeline-detail>summary{padding-inline:0 !important;}
+/* Keep nested effects clipped to the same soft geometry instead of forming sharp boxes. */
+.project-details::before,
+.project-details::after,
+.featured-case::before,
+.featured-case::after,
+.approach-card::after,
+.material-card::after,
+.dev-card::after,
+.skill-block::after,
+.contact-box::after,
+.credential-strip .cred::after{
+  border-radius:inherit !important;
+}
+/* Smaller elements use the same proportional system without becoming pill-shaped. */
+.badge,
+.entry-flag,
+.proj-link,
+.project-facts>div,
+.meta-row,
+.stat-line,
+.hero-note,
+.work-count,
+.section-tag{
+  border-radius:var(--radius-chip) !important;
+}
+.btn,
+.hero-action,
+.work-filter,
+.back-to-top,
+.project-details summary::after,
+.featured-case-toggle-icon,
+.mobile-nav-icon,
+.availability-item a{
+  border-radius:var(--radius-control) !important;
+}
+/* The glowing ambient layers inherit the soft surface language. */
+html[data-theme='light'] .project-details,
+html[data-theme='light'] .featured-case,
+html[data-theme='light'] .approach-card,
+html[data-theme='light'] .material-card,
+html[data-theme='light'] .dev-card,
+html[data-theme='light'] .skill-block,
+html[data-theme='light'] .contact-box,
+html[data-theme='light'] .credential-strip .cred,
+html[data-theme='light'] .accordion-card,
+html[data-theme='light'] .timeline-detail{
+  border-color:rgba(84,119,130,.20) !important;
+  box-shadow:
+    0 16px 34px -29px rgba(48,77,72,.30),
+    0 0 24px -22px rgba(145,125,218,.32),
+    inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+html[data-theme='light'] .spine>.entry .project-details,
+html[data-theme='light'] .spine>.entry .project-details[open]{
+  border-radius:var(--radius-panel) !important;
+  border-color:rgba(84,119,130,.20) !important;
+  border-bottom-color:rgba(84,119,130,.24) !important;
+}
+html[data-theme='light'] .spine>.entry .timeline-detail{
+  border-color:rgba(84,119,130,.16) !important;
+  background:rgba(255,255,255,.42) !important;
+}
+/* Dark mode keeps its atmospheric depth while gaining the same premium geometry. */
+html:not([data-theme='light']) .spine>.entry .project-details,
+html:not([data-theme='light']) .spine>.entry .project-details[open]{
+  border-color:rgba(224,239,226,.16) !important;
+  border-bottom-color:rgba(217,181,106,.28) !important;
+}
+@media(max-width:767px){
+  :root{
+    --radius-surface:16px;
+    --radius-panel:19px;
+    --radius-control:11px;
+    --radius-chip:8px;
+  }
+  .spine>.entry .project-details,
+  .spine>.entry .project-details[open]{border-radius:var(--radius-panel) !important;}
+}
+@media(prefers-reduced-motion:reduce){
+  .approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.featured-case,.about-card,.availability-item,.timeline-detail{transition:none !important;}
+}
