@@ -2648,3 +2648,175 @@ html[data-theme="light"] .ambient-glow::after{
      users who disable motion if the surrounding atmosphere changes later. */
   @media (max-width:767px){body::before{animation:none;}}
 }
+
+
+/* ---------- art-directed glass refinement v3 ----------
+   A final, intentionally narrow override layer. It keeps the existing
+   structure/content and only improves hierarchy, surfaces, and mobile rhythm. */
+:root{
+  --glass-forest:rgba(14,38,30,.68);
+  --glass-forest-strong:rgba(17,48,37,.82);
+  --glass-border:rgba(224,239,226,.16);
+  --glass-highlight:rgba(255,255,255,.075);
+  --champagne:#d9b56a;
+}
+
+/* Keep the atmosphere soft: no visible geometric blobs or strong left-to-right
+   gradients inside the important reading surfaces. */
+.credential-strip .cred,
+.spine>.entry,
+.contact-box,
+.approach-card,
+.material-card,
+.dev-card,
+.skill-block{
+  background:
+    radial-gradient(120% 120% at 8% 0%,rgba(62,132,89,.16),transparent 56%),
+    linear-gradient(145deg,rgba(20,51,39,.76),rgba(10,27,22,.60)) !important;
+  border-color:var(--glass-border) !important;
+  box-shadow:0 16px 34px -28px rgba(0,0,0,.78),inset 0 1px 0 var(--glass-highlight) !important;
+}
+
+.credential-strip .cred::after,
+.contact-box::after,
+.spine>.entry::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  border:1px solid rgba(255,255,255,.025);
+  background:radial-gradient(70% 90% at 100% 100%,rgba(217,181,106,.045),transparent 70%);
+}
+
+.credential-strip .cred{position:relative;overflow:hidden;}
+.credential-strip .cred .gpa{color:var(--champagne);font-weight:500;letter-spacing:.01em;}
+
+/* Education cards: generous mobile gutter, clear hierarchy, restrained gold. */
+@media (max-width:767px){
+  #credentials .spine{padding-inline-start:30px !important;padding-inline-end:0 !important;}
+  #credentials .spine>.entry{margin-block:0 12px;padding:0 14px 0 0;border-inline-start:1px solid transparent;border-radius:16px;overflow:hidden;}
+  #credentials .spine>.entry:last-child{margin-bottom:0;}
+  #credentials .spine>.entry .timeline-detail{padding-bottom:0;}
+  #credentials .spine>.entry .timeline-detail>summary{min-height:92px;padding:17px 44px 17px 16px;gap:8px;}
+  #credentials .spine>.entry .timeline-detail>summary h3{font-size:1.03rem;line-height:1.42;}
+  #credentials .spine>.entry .entry-flag{color:var(--champagne);border-color:rgba(217,181,106,.36);background:rgba(217,181,106,.055);}
+  #credentials .spine>.entry .place{padding:0 16px 17px;color:var(--chalk-dim);line-height:1.65;}
+  #credentials .spine>.entry .proj-links{padding:0 16px 16px;margin-top:0;}
+  #credentials .spine>.entry.timeline-active{background:
+    radial-gradient(100% 120% at 0% 0%,rgba(62,132,89,.22),transparent 62%),
+    rgba(18,52,39,.82) !important;}
+  html[dir="rtl"] #credentials .spine{padding-inline-start:0 !important;padding-inline-end:30px !important;}
+  html[dir="rtl"] #credentials .spine>.entry .timeline-detail>summary{padding-inline:17px 44px 17px 16px;}
+  html[dir="rtl"] #credentials .spine>.entry .place{padding-inline:16px;}
+}
+
+/* Contact hierarchy: Email is the one primary action; the other two are
+   quieter glass controls with equal touch comfort. */
+.contact-box{position:relative;overflow:hidden;border-radius:18px !important;padding:clamp(28px,5vw,48px) !important;}
+.contact-box p{position:relative;z-index:1;max-width:54ch;margin-bottom:26px !important;}
+.contact-links{position:relative;z-index:1;gap:12px !important;}
+#contactEmailBtn,
+#contactLinkedinBtn,
+#contactCvBtn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;border-radius:999px !important;}
+#contactEmailBtn{padding-inline:24px;background:rgba(246,240,218,.96) !important;color:#17352a !important;border:1px solid rgba(255,250,232,.78) !important;box-shadow:0 12px 24px -18px rgba(246,240,218,.72),inset 0 1px 0 rgba(255,255,255,.9);font-weight:600;}
+#contactEmailBtn:hover,#contactEmailBtn:focus-visible{background:#fff7df !important;color:#17352a !important;transform:translateY(-2px);box-shadow:0 16px 28px -18px rgba(217,181,106,.72),inset 0 1px 0 #fff;}
+#contactLinkedinBtn,#contactCvBtn{padding-inline:16px !important;color:var(--chalk-dim) !important;text-decoration:none !important;border:1px solid rgba(224,239,226,.18) !important;background:rgba(255,255,255,.045) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055);}
+#contactLinkedinBtn:hover,#contactLinkedinBtn:focus-visible,
+#contactCvBtn:hover,#contactCvBtn:focus-visible{color:var(--champagne) !important;border-color:rgba(217,181,106,.48) !important;background:rgba(217,181,106,.09) !important;transform:translateY(-2px);}
+
+/* Re-enable blur only on the few bounded mobile glass surfaces. The previous
+   blanket mobile performance rule disabled it globally, which flattened the
+   intended premium surfaces. */
+@media (max-width:767px){
+  .credential-strip .cred,
+  #credentials .spine>.entry,
+  .contact-box,
+  .mobile-menu,
+  .mobile-menu>a[data-nav],
+  .mobile-menu-utility>a,
+  .mobile-menu-utility button,
+  .mobile-social-dock a{
+    -webkit-backdrop-filter:blur(16px) saturate(118%) !important;
+    backdrop-filter:blur(16px) saturate(118%) !important;
+  }
+  .contact-box{margin-inline:4px;}
+  .contact-links{align-items:stretch !important;}
+  .contact-links .btn{width:auto !important;max-width:100%;}
+  #contactEmailBtn{min-height:50px;}
+  #contactLinkedinBtn,#contactCvBtn{min-height:44px;}
+}
+
+/* Floating glass navigation panel: lighter, calmer, and comfortably inset. */
+@media (max-width:860px){
+  .menu-backdrop{background:rgba(3,13,9,.58) !important;backdrop-filter:blur(4px) !important;-webkit-backdrop-filter:blur(4px) !important;}
+  #mobileMenu,
+  html[dir="ltr"] #mobileMenu,
+  html[dir="rtl"] #mobileMenu{
+    top:16px !important;right:auto !important;bottom:16px !important;left:50% !important;
+    width:min(calc(100vw - 28px),390px) !important;max-width:390px !important;height:auto !important;
+    max-height:calc(100dvh - 32px) !important;padding:22px 18px max(20px,env(safe-area-inset-bottom)) !important;
+    border:1px solid rgba(224,239,226,.20) !important;border-radius:26px !important;
+    background:rgba(13,38,29,.76) !important;
+    box-shadow:0 24px 70px -34px rgba(0,0,0,.92),inset 0 1px 0 rgba(255,255,255,.10) !important;
+    transform:translate(-50%,-112%) scale(.98) !important;opacity:0;visibility:hidden;pointer-events:none;
+    transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .28s ease,visibility .42s ease !important;
+  }
+  #mobileMenu.open,
+  html[dir="ltr"] #mobileMenu.open,
+  html[dir="rtl"] #mobileMenu.open{
+    transform:translate(-50%,0) scale(1) !important;opacity:1;visibility:visible;pointer-events:auto;
+  }
+  #mobileMenu>a[data-nav]{min-height:52px !important;margin-block:3px;padding:12px 13px !important;border:1px solid transparent !important;border-radius:14px !important;background:rgba(255,255,255,.035) !important;color:#dce9e0 !important;}
+  #mobileMenu>a[data-nav]:hover,#mobileMenu>a[data-nav]:focus-visible,#mobileMenu>a[data-nav].active{background:rgba(217,181,106,.10) !important;border-color:rgba(217,181,106,.28) !important;color:#f1d38c !important;}
+  #mobileMenu>a[data-nav].active{box-shadow:inset 2px 0 0 var(--champagne) !important;}
+  html[dir="rtl"] #mobileMenu>a[data-nav].active{box-shadow:inset -2px 0 0 var(--champagne) !important;}
+  #mobileMenu .mobile-menu-utility{gap:9px !important;margin-top:6px;}
+  #mobileMenu .mobile-menu-utility>a,
+  #mobileMenu .mobile-menu-utility button,
+  #mobileMenu .mobile-social-dock a{border-color:rgba(224,239,226,.16) !important;background:rgba(255,255,255,.045) !important;color:#d7e5db !important;border-radius:999px !important;}
+  #mobileMenu .mobile-menu-utility>a:hover,#mobileMenu .mobile-menu-utility>a:focus-visible,
+  #mobileMenu .mobile-menu-utility button:hover,#mobileMenu .mobile-menu-utility button:focus-visible{border-color:rgba(217,181,106,.38) !important;background:rgba(217,181,106,.09) !important;color:#f1d38c !important;}
+  #mobileMenu .mobile-drawer-brand{margin-bottom:8px;padding-bottom:16px;}
+  #mobileMenu .mobile-menu-close{top:18px !important;inset-inline-end:16px !important;}
+}
+
+/* Hero timeline: restore a visible, smooth scroll-linked light on touch
+   devices. JS updates the dash offset; CSS interpolates between frames. */
+.tense-diagram{isolation:isolate;overflow:visible;}
+.tense-diagram svg{position:relative;z-index:2;overflow:visible;}
+.tense-diagram .timeline-base{stroke:rgba(239,234,216,.34);}
+.tense-diagram .spine-path{stroke:var(--champagne);}
+.tense-diagram .spine-glow{stroke:var(--champagne);opacity:.34;filter:blur(3px);}
+@media (max-width:767px){
+  .tense-diagram{margin-top:38px;padding-top:22px;}
+  .tense-diagram .spine-path,.tense-diagram .spine-glow{transition:stroke-dashoffset .22s cubic-bezier(.22,1,.36,1) !important;}
+  .tense-diagram .spine-glow{opacity:.42;filter:blur(2.5px);}
+  .tense-diagram .tick-label{font-size:16px;opacity:.78;}
+  .tense-diagram .tense-label{font-size:10.5px;opacity:.68;}
+  .tense-diagram circle{stroke-width:1.8;}
+  .tense-diagram .timeline-dot.active{filter:drop-shadow(0 0 5px rgba(217,181,106,.62));}
+}
+@media (prefers-reduced-motion:reduce){
+  .tense-diagram .spine-path,.tense-diagram .spine-glow{transition:none !important;animation:none !important;stroke-dashoffset:0 !important;}
+  #mobileMenu,#mobileMenu.open{transition:none !important;}
+  #contactEmailBtn:hover,#contactEmailBtn:focus-visible,#contactLinkedinBtn:hover,#contactLinkedinBtn:focus-visible,#contactCvBtn:hover,#contactCvBtn:focus-visible{transform:none;}
+}
+
+/* Light theme: keep the same forest-glass hierarchy on a warm paper base. */
+html[data-theme='light'] .credential-strip .cred,
+html[data-theme='light'] #credentials .spine>.entry,
+html[data-theme='light'] .contact-box,
+html[data-theme='light'] .approach-card,
+html[data-theme='light'] .material-card,
+html[data-theme='light'] .dev-card,
+html[data-theme='light'] .skill-block{
+  background:
+    radial-gradient(120% 120% at 8% 0%,rgba(104,166,137,.12),transparent 56%),
+    linear-gradient(145deg,rgba(255,255,255,.78),rgba(237,244,238,.68)) !important;
+  border-color:rgba(53,101,79,.18) !important;
+  box-shadow:0 16px 34px -28px rgba(37,71,58,.30),inset 0 1px 0 rgba(255,255,255,.88) !important;
+}
+html[data-theme='light'] #mobileMenu{background:rgba(247,251,247,.82) !important;border-color:rgba(53,101,79,.20) !important;}
+html[data-theme='light'] #mobileMenu>a[data-nav]{color:#355c50 !important;background:rgba(255,255,255,.34) !important;}
+html[data-theme='light'] #mobileMenu>a[data-nav]:hover,html[data-theme='light'] #mobileMenu>a[data-nav]:focus-visible,html[data-theme='light'] #mobileMenu>a[data-nav].active{color:#765a24 !important;background:rgba(217,181,106,.13) !important;border-color:rgba(197,155,76,.30) !important;}

@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=5.2.0">
+<link rel="stylesheet" href="enhancements.css?v=5.3.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -4077,12 +4077,14 @@ const SITE_AR = {
   let scrollTicking = false;
   function onScrollFrame(){
     updateHeaderAndProgress();
-    // Mobile keeps native scrolling and only updates cached navigation chrome.
-    // All geometry-heavy scene, parallax, and timeline work stays desktop-only.
+    // Mobile keeps native scrolling. The timeline is intentionally updated here
+    // as it is a visible scroll-linked component, while heavier scene/parallax
+    // work remains desktop-only for a calmer touch experience.
     if(mobileMQ.matches){
       updateSpy();
       updateRailSpy();
       updateBackToTop();
+      updateTimeline();
       scrollTicking = false;
       return;
     }
