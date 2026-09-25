@@ -3198,6 +3198,7 @@ const SITE_AR = {
     ar: { teaching: "التصميم التعليمي", soft: "الممارسة الصفية", hard: "تكنولوجيا التعليم", languages: "اللغات" }
   };
 
+  let contentRevision = 0;
   function renderContent(data, lang){
     const openProjectIndexes = [...document.querySelectorAll('#workSpine .project-details')]
       .map((details, index) => details.open ? index : -1).filter(index => index >= 0).slice(-1);
@@ -3446,6 +3447,7 @@ const SITE_AR = {
     document.getElementById('contactIntro').textContent = data.contact.intro;
 
     document.getElementById('footerText').textContent = `${data.footer} · ${lang === 'ar' ? 'آخر تحديث' : 'Updated'} 2026 · © ${new Date().getFullYear()}`;
+    contentRevision += 1;
     observeRevealTargets();
   }
 
@@ -3639,6 +3641,38 @@ const SITE_AR = {
   const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
   const sceneSections = Array.from(document.querySelectorAll('main > section'));
   const pillNav = document.querySelector('.nav-links');
+  let sectionOffsets = [];
+  let sectionOffsetsDirty = true;
+  let sectionLanguage = document.documentElement.lang;
+  let activeSection = null;
+  let railSection = null;
+  let railVisible = false;
+  let scrollNodesDirty = true;
+  let timelineNode = null;
+  let timelinePath = null;
+  let timelineGlow = null;
+  let timelinePoints = [];
+  let projectSpines = [];
+  let scrollNodesRevision = -1;
+  const whereAmI = document.getElementById('whereAmI');
+  const whereAmINumber = document.getElementById('whereAmINumber');
+  const whereAmILabel = document.getElementById('whereAmILabel');
+  function refreshSectionOffsets(){
+    sectionOffsets = sections.map(section => ({section, top:section.offsetTop}));
+    sectionOffsetsDirty = false;
+  }
+  function refreshScrollNodes(){
+    timelineNode = document.getElementById('tenseDiagram');
+    timelinePath = timelineNode?.querySelector('.spine-path') || null;
+    timelineGlow = timelineNode?.querySelector('.spine-glow') || null;
+    timelinePoints = timelineNode ? [...timelineNode.querySelectorAll('[data-point]')] : [];
+    projectSpines = [...document.querySelectorAll('.spine')].map(spine => ({
+      spine,
+      entries:[...spine.querySelectorAll(':scope > .entry')]
+    }));
+    scrollNodesDirty = false;
+    scrollNodesRevision = contentRevision;
+  }
   let pillNavTarget = null;
   function movePillNav(target, immediate = false){
     if(!pillNav || !target) return;
@@ -3913,15 +3947,18 @@ const SITE_AR = {
     const doc = document.documentElement;
     const maxScroll = Math.max(1, doc.scrollHeight - doc.clientHeight);
     const scrolled = Math.max(0, Math.min(100, (doc.scrollTop / maxScroll) * 100));
-    progress.style.width = scrolled + '%';
+    progress.style.transform = `scaleX(${scrolled / 100})`;
     header.classList.toggle('scrolled', doc.scrollTop > 40);
   }
 
   function updateSpy(){
-    let current = sections[0];
+    if(sectionLanguage !== document.documentElement.lang){ sectionLanguage = document.documentElement.lang; sectionOffsetsDirty = true; }
+    if(sectionOffsetsDirty || sectionOffsets.length !== sections.length) refreshSectionOffsets();
+    let current = sectionOffsets[0]?.section || sections[0];
     const y = window.scrollY + 120;
-    sections.forEach(sec => { if(sec.offsetTop <= y) current = sec; });
-    if(current){
+    sectionOffsets.forEach(item => { if(item.top <= y) current = item.section; });
+    if(current && current !== activeSection){
+      activeSection = current;
       navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
       mobileNavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
       const active = [...navLinks].find(a => a.classList.contains('active'));
@@ -3930,25 +3967,27 @@ const SITE_AR = {
   }
 
   function updateRailSpy(){
-    let current = sections[0];
+    if(sectionOffsetsDirty || sectionOffsets.length !== sections.length) refreshSectionOffsets();
+    let current = sectionOffsets[0]?.section || sections[0];
     const y = window.scrollY + 150;
-    sections.forEach(sec => { if(sec.offsetTop <= y) current = sec; });
+    sectionOffsets.forEach(item => { if(item.top <= y) current = item.section; });
     if(current){
-      const where = document.getElementById('whereAmI');
-      const whereNumber = document.getElementById('whereAmINumber');
-      const whereLabel = document.getElementById('whereAmILabel');
       const whereIndex = sections.indexOf(current);
       const labels = WHERE_LABELS[current.id] || ['SECTION','قسم'];
-      if(where && whereNumber && whereLabel){
-        whereNumber.textContent = String(Math.max(1, whereIndex + 1)).padStart(2,'0');
-        whereLabel.textContent = labels[document.documentElement.lang === 'ar' ? 1 : 0];
-        where.classList.toggle('is-visible', window.scrollY > 180);
+      const nextVisible = window.scrollY > 180;
+      if(whereAmI && whereAmINumber && whereAmILabel && (current !== railSection || nextVisible !== railVisible)){
+        whereAmINumber.textContent = String(Math.max(1, whereIndex + 1)).padStart(2,'0');
+        whereAmILabel.textContent = labels[document.documentElement.lang === 'ar' ? 1 : 0];
+        whereAmI.classList.toggle('is-visible', nextVisible);
+        railSection = current;
+        railVisible = nextVisible;
       }
     }
   }
 
   function updateBackToTop(){
-    backToTop.classList.toggle('show', window.scrollY > 420);
+    const shouldShow = window.scrollY > 420;
+    if(backToTop.classList.contains('show') !== shouldShow) backToTop.classList.toggle('show', shouldShow);
   }
 
   function updateAboutParallax(){
@@ -3973,13 +4012,11 @@ const SITE_AR = {
     });
   }
 
-  let projectTimelineFrame = 0;
   function updateProjectTimelines(){
+    if(scrollNodesDirty || scrollNodesRevision !== contentRevision) refreshScrollNodes();
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const focusY = vh * 0.52;
-    let needsProjectTimelineFrame = false;
-    document.querySelectorAll('.spine').forEach(spine => {
-      const allEntries = Array.from(spine.querySelectorAll(':scope > .entry'));
+    projectSpines.forEach(({spine, entries:allEntries}) => {
       const entries = allEntries.filter(entry => !entry.classList.contains('is-filtered') && entry.getClientRects().length);
       if(!entries.length) return;
       let activeIndex = 0;
@@ -3997,70 +4034,51 @@ const SITE_AR = {
       const targetProgress = activeIndex === entries.length - 1
         ? 100
         : Math.max(0, Math.min(100, (dotY / Math.max(1, spineRect.height - 12)) * 100));
-      const previousProgress = Number(spine.dataset.spineProgress);
-      const currentProgress = Number.isFinite(previousProgress) ? previousProgress : targetProgress;
-      const progress = currentProgress + (targetProgress - currentProgress) * 0.18;
-      spine.dataset.spineProgress = String(progress);
-      spine.style.setProperty('--spine-progress', String(progress));
+      spine.dataset.spineProgress = String(targetProgress);
+      spine.style.setProperty('--spine-progress', String(targetProgress));
       allEntries.forEach(entry => {
         const index = entries.indexOf(entry);
         entry.classList.toggle('timeline-active', index === activeIndex);
         entry.classList.toggle('timeline-completed', index < activeIndex);
       });
-      if(!reducedMQ.matches && Math.abs(targetProgress - progress) > 0.08) needsProjectTimelineFrame = true;
     });
-    if(!reducedMQ.matches && needsProjectTimelineFrame && !projectTimelineFrame){
-      projectTimelineFrame = requestAnimationFrame(() => { projectTimelineFrame = 0; updateProjectTimelines(); });
-    }
   }
 
-  let timelineFrame = 0;
   function updateTimeline(){
-    const diagram = document.getElementById('tenseDiagram');
+    if(scrollNodesDirty || scrollNodesRevision !== contentRevision) refreshScrollNodes();
+    const diagram = timelineNode;
     if(!diagram) return;
-    const path = diagram.querySelector('.spine-path');
-    const glow = diagram.querySelector('.spine-glow');
     const rect = diagram.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const pageAtBottom = window.scrollY + vh >= document.documentElement.scrollHeight - 2;
     const targetProgress = reducedMQ.matches || pageAtBottom
       ? 1
       : Math.max(0, Math.min(1, (vh * 0.84 - rect.top) / (vh * 0.72)));
-    const previousProgress = Number(diagram.dataset.timelineProgress);
-    const currentProgress = Number.isFinite(previousProgress) ? previousProgress : 0;
-    // A monotonic, critically damped interpolation keeps the scroll-linked
-    // rail responsive without accumulating velocity or producing a visible
-    // shimmer/overshoot when the viewport settles on a fractional pixel.
-    const progress = reducedMQ.matches
-      ? targetProgress
-      : currentProgress + ((targetProgress - currentProgress) * 0.14);
+    // Apply the scroll target in the same frame as native scrolling. CSS owns
+    // the subtle interpolation; JavaScript does not chase the target with a
+    // second recursive animation loop.
+    const progress = targetProgress;
     // Progress is one semantic state in both locales. Arabic changes the
     // reading layout, but must not reverse Past → Present → Future or make
     // the line appear to grow from the Future when scrolling upward.
     const pathData = 'M10,68 H630';
-    if(path) path.setAttribute('d', pathData);
-    if(glow) glow.setAttribute('d', pathData);
     const dash = 1 - progress;
-    if(path) path.style.strokeDashoffset = String(dash);
-    if(glow) glow.style.strokeDashoffset = String(dash);
+    if(timelinePath) timelinePath.style.strokeDashoffset = String(dash);
+    if(timelineGlow) timelineGlow.style.strokeDashoffset = String(dash);
     diagram.dataset.timelineProgress = String(progress);
     diagram.dataset.timelineVelocity = '0';
     diagram.classList.toggle('in-view', progress > 0.02);
-    diagram.querySelectorAll('[data-point]').forEach((el) => {
+    timelinePoints.forEach((el) => {
       const point = Number(el.getAttribute('data-point')) / 2;
       el.classList.toggle('active', progress >= point - 0.04);
     });
-    if(!reducedMQ.matches && Math.abs(targetProgress - progress) > 0.001 && !timelineFrame){
-      timelineFrame = requestAnimationFrame(() => { timelineFrame = 0; updateTimeline(); });
-    }
   }
 
   let scrollTicking = false;
   function onScrollFrame(){
     updateHeaderAndProgress();
-    // Mobile keeps native scrolling. Retain only the small visual timeline
-    // updates that create the scroll-linked golden light and active-card glow;
-    // skip the more expensive navigation, section-scene, and parallax reads.
+    // Mobile keeps native scrolling and only updates cached navigation chrome.
+    // All geometry-heavy scene, parallax, and timeline work stays desktop-only.
     if(mobileMQ.matches){
       updateSpy();
       updateRailSpy();
@@ -4085,6 +4103,7 @@ const SITE_AR = {
   }
   window.addEventListener('scroll', requestScrollUpdate, {passive:true});
   window.addEventListener('resize', () => {
+    sectionOffsetsDirty = true;
     parallaxActive = desktopMQ.matches && !reducedMQ.matches && !!aboutPhotoImg;
     if(!parallaxActive && aboutPhotoImg){ aboutPhotoImg.style.removeProperty('--photo-parallax'); }
     requestScrollUpdate();

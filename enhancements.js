@@ -28,7 +28,21 @@
     preview.setAttribute('aria-hidden', 'true');
     document.body.appendChild(preview);
     let active = null;
+    let previewWidth = 230;
+    let previewFrame = 0;
+    let pendingPoint = null;
     const detailsFor = target => target?.closest?.('.project-details');
+    const positionPreview = () => {
+      previewFrame = 0;
+      if(!pendingPoint || !active || !finePointer.matches) return;
+      const {x, y} = pendingPoint;
+      preview.style.setProperty('--preview-x', `${clamp(x + 18, 16, window.innerWidth - previewWidth - 16)}px`);
+      preview.style.setProperty('--preview-y', `${clamp(y + 18, 78, window.innerHeight - 150)}px`);
+    };
+    const queuePreviewPosition = (x, y) => {
+      pendingPoint = {x, y};
+      if(!previewFrame) previewFrame = requestAnimationFrame(positionPreview);
+    };
     const showPreview = (details, x, y) => {
       if (!details) return;
       const title = details.querySelector('h3')?.textContent?.trim() || 'Project';
@@ -39,14 +53,13 @@
       const strong = document.createElement('strong'); strong.textContent = title; preview.appendChild(strong);
       const span = document.createElement('span'); span.textContent = image ? 'Existing project visual' : 'Open the project card for details and links'; preview.appendChild(span);
       preview.classList.add('is-visible');
-      const width = preview.getBoundingClientRect().width;
-      preview.style.left = `${clamp(x + 18, 16, window.innerWidth - width - 16)}px`;
-      preview.style.top = `${clamp(y + 18, 78, window.innerHeight - 150)}px`;
+      previewWidth = preview.getBoundingClientRect().width;
+      queuePreviewPosition(x, y);
       active = details;
     };
-    const hidePreview = () => { preview.classList.remove('is-visible'); active = null; };
+    const hidePreview = () => { preview.classList.remove('is-visible'); active = null; pendingPoint = null; };
     work.addEventListener('pointerover', event => { if (!finePointer.matches || reducedMotion.matches) return; const details = detailsFor(event.target); if (details) showPreview(details, event.clientX, event.clientY); });
-    work.addEventListener('pointermove', event => { if (!active || !finePointer.matches) return; const width = preview.getBoundingClientRect().width; preview.style.left = `${clamp(event.clientX + 18, 16, window.innerWidth - width - 16)}px`; preview.style.top = `${clamp(event.clientY + 18, 78, window.innerHeight - 150)}px`; });
+    work.addEventListener('pointermove', event => { if (!active || !finePointer.matches) return; queuePreviewPosition(event.clientX, event.clientY); }, {passive:true});
     work.addEventListener('pointerout', event => { if (detailsFor(event.target) && !detailsFor(event.relatedTarget)) hidePreview(); });
     work.addEventListener('pointerup', event => { if (finePointer.matches) return; const details = detailsFor(event.target); if (details) showPreview(details, 0, 0); });
     work.addEventListener('focusin', event => { const details = detailsFor(event.target); if (details && !finePointer.matches) showPreview(details, 0, 0); });

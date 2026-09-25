@@ -2520,3 +2520,27 @@ body{overscroll-behavior-x:none;}
   .project-details:hover,
   .creative-item:hover{transform:none !important;}
 }
+
+/* Scroll progress stays compositor-only: JS updates scale, never layout width. */
+.scroll-progress{
+  width:100% !important;
+  transform:scaleX(0);
+  transform-origin:0 50%;
+  will-change:transform;
+}
+html[dir="rtl"] .scroll-progress{transform-origin:100% 50%;}
+@media (prefers-reduced-motion:reduce){.scroll-progress{will-change:auto;}}
+
+/* Scroll-linked geometry follows the native scroll frame without trailing lag. */
+.spine::after,
+.tense-diagram .spine-path,
+.tense-diagram .spine-glow{transition:none !important;}
+
+@media (min-width:768px){
+  .project-preview{
+    left:0 !important;
+    top:0 !important;
+    transform:translate3d(var(--preview-x,0px),var(--preview-y,8px),0) scale(.98);
+  }
+  .project-preview.is-visible{transform:translate3d(var(--preview-x,0px),var(--preview-y,0px),0) scale(1);}
+}
