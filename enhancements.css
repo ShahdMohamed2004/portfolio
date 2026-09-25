@@ -3468,3 +3468,34 @@ html:not([data-theme='light']) .spine>.entry .project-details[open]{
 @media(prefers-reduced-motion:reduce){
   .approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.featured-case,.about-card,.availability-item,.timeline-detail{transition:none !important;}
 }
+
+/* Light-mode mobile drawer contrast: keep the utility controls readable on pale glass. */
+@media (max-width:860px){
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility>a,
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility button,
+  html[data-theme="light"] #mobileMenu .mobile-social-dock a{
+    color:#111827 !important;
+    border-color:rgba(17,24,39,.18) !important;
+    background:rgba(255,255,255,.82) !important;
+    text-shadow:none !important;
+  }
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility>a:hover,
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility>a:focus-visible,
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility button:hover,
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility button:focus-visible,
+  html[data-theme="light"] #mobileMenu .mobile-social-dock a:hover,
+  html[data-theme="light"] #mobileMenu .mobile-social-dock a:focus-visible{
+    color:#000 !important;
+    border-color:rgba(17,24,39,.34) !important;
+    background:rgba(255,255,255,.98) !important;
+  }
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility .mm-divider{
+    border-color:rgba(17,24,39,.18) !important;
+    background:rgba(17,24,39,.18) !important;
+  }
+  html[data-theme="light"] #mobileMenu .theme-toggle-mobile svg,
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility svg{
+    color:#111827 !important;
+    stroke:currentColor !important;
+  }
+}
