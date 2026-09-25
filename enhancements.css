@@ -3660,3 +3660,73 @@ html[data-theme='light'] .hero .cta-row #btnCV.hero-action-primary:active{
   .hero .cta-row #btnLinkedin{grid-column:auto !important;}
   .hero .cta-row #btnWork{grid-column:1/-1;}
 }
+
+/* ---------- Light Mode atmosphere: cool off-white + soft cyan/violet depth ---------- */
+html[data-theme='light'] body{
+  background:#f7f9fb !important;
+}
+html[data-theme='light'] body::before{
+  inset:-14% !important;
+  background:
+    radial-gradient(ellipse 34% 32% at -4% 8%,rgba(91,190,211,.105),transparent 78%),
+    radial-gradient(ellipse 32% 36% at 104% 14%,rgba(145,125,218,.085),transparent 80%),
+    radial-gradient(ellipse 36% 34% at 104% 96%,rgba(91,190,211,.075),transparent 80%),
+    radial-gradient(ellipse 30% 32% at -4% 90%,rgba(145,125,218,.06),transparent 82%),
+    linear-gradient(135deg,#f7f9fb 0%,#fbfcfd 50%,#f5f8fb 100%) !important;
+  filter:blur(18px) !important;
+  opacity:1 !important;
+}
+html[data-theme='light'] main.wrap>section:not(#home)::before{
+  inset:10px -18px !important;
+  background:
+    radial-gradient(ellipse 34% 38% at 0% 18%,rgba(91,190,211,.075),transparent 78%),
+    radial-gradient(ellipse 30% 34% at 100% 82%,rgba(145,125,218,.06),transparent 80%) !important;
+  opacity:.72 !important;
+  filter:blur(18px) !important;
+}
+html[data-theme='light'] main.wrap>section:nth-of-type(even):not(#home)::before{
+  background:
+    radial-gradient(ellipse 32% 36% at 100% 18%,rgba(145,125,218,.07),transparent 80%),
+    radial-gradient(ellipse 28% 32% at 0% 82%,rgba(91,190,211,.055),transparent 80%) !important;
+}
+html[data-theme='light'] main.wrap>section:not(#home)::after{
+  background:linear-gradient(180deg,transparent,rgba(91,190,211,.025),rgba(145,125,218,.022),transparent) !important;
+}
+/* White glass cards: atmosphere stays near the edge and fades toward the center. */
+html[data-theme='light'] :where(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.featured-case,.about-card,.availability-item,.materials-note,.timeline-detail){
+  background:
+    radial-gradient(120% 105% at 0% 0%,rgba(91,190,211,.09),transparent 54%),
+    radial-gradient(110% 105% at 100% 100%,rgba(145,125,218,.075),transparent 56%),
+    linear-gradient(145deg,rgba(255,255,255,.78),rgba(250,252,253,.62)) !important;
+  border-color:rgba(94,125,150,.16) !important;
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  box-shadow:0 16px 34px -28px rgba(57,79,103,.24),0 0 28px -25px rgba(91,190,211,.18),0 0 28px -26px rgba(145,125,218,.14),inset 0 1px 0 rgba(255,255,255,.92) !important;
+  overflow:hidden;
+}
+html[data-theme='light'] :where(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.featured-case,.about-card,.availability-item,.materials-note,.timeline-detail)::before,
+html[data-theme='light'] :where(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.featured-case,.about-card,.availability-item,.materials-note,.timeline-detail)::after{
+  border-radius:inherit !important;
+}
+/* Work entries remain open rails; only their actual card surface gets the atmosphere. */
+html[data-theme='light'] .spine>.entry{background:transparent !important;box-shadow:none !important;border:0 !important;}
+html[data-theme='light'] .spine>.entry .project-details,
+html[data-theme='light'] .spine>.entry .project-details[open]{
+  background:
+    radial-gradient(120% 105% at 0% 0%,rgba(91,190,211,.085),transparent 54%),
+    radial-gradient(110% 105% at 100% 100%,rgba(145,125,218,.07),transparent 56%),
+    linear-gradient(145deg,rgba(255,255,255,.82),rgba(250,252,253,.68)) !important;
+  border-color:rgba(94,125,150,.18) !important;
+  box-shadow:0 16px 34px -28px rgba(57,79,103,.24),0 0 28px -25px rgba(91,190,211,.16),0 0 28px -26px rgba(145,125,218,.13),inset 0 1px 0 rgba(255,255,255,.94) !important;
+}
+@media (max-width:767px){
+  html[data-theme='light'] body::before{filter:blur(14px) !important;}
+  html[data-theme='light'] main.wrap>section:not(#home)::before{filter:blur(14px) !important;opacity:.62 !important;}
+  html[data-theme='light'] :where(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.featured-case,.about-card,.availability-item,.materials-note,.timeline-detail){
+    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:blur(12px);
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme='light'] body::before,html[data-theme='light'] main.wrap>section:not(#home)::before{animation:none !important;}
+}
