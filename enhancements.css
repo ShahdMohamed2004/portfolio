@@ -3499,3 +3499,12 @@ html:not([data-theme='light']) .spine>.entry .project-details[open]{
     stroke:currentColor !important;
   }
 }
+
+/* Restore the signature cyan/violet light behind the identity badge in light mode. */
+html[data-theme='light'] shahd-lanyard{
+  --badge-glow-a:rgba(117,211,226,.38) !important;
+  --badge-glow-b:rgba(180,153,225,.32) !important;
+  --badge-glass-line:rgba(255,255,255,.92) !important;
+  --badge-glass-fill:linear-gradient(135deg,rgba(255,255,255,.52),rgba(220,232,246,.26) 52%,rgba(231,221,244,.42)) !important;
+  --badge-glass-shadow:0 16px 32px -24px rgba(63,78,100,.32),inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
