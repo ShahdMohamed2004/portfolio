@@ -2334,3 +2334,33 @@ html[data-theme="light"] .section-tag,
 html[data-theme="light"] .section-head .section-tag,
 html[data-theme="light"] .project-details .entry-flag,
 html[data-theme="light"] .featured-case-meta span{color:var(--text-accent);}
+
+/* Bilingual paragraph alignment: keep readable copy justified in both directions. */
+html[dir="ltr"] #work .project-description,
+html[dir="rtl"] #work .project-description,
+html[dir="ltr"] #work .project-details-body > p,
+html[dir="rtl"] #work .project-details-body > p,
+html[dir="ltr"] #work .project-details-body .project-facts dd,
+html[dir="rtl"] #work .project-details-body .project-facts dd,
+html[dir="ltr"] #creative .creative-lead,
+html[dir="rtl"] #creative .creative-lead,
+html[dir="ltr"] #contact #contactIntro,
+html[dir="rtl"] #contact #contactIntro {
+  text-align: justify !important;
+  text-align-last: start;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+/* Arabic needs natural word wrapping rather than automatic hyphenation. */
+html[dir="rtl"] #work .project-description,
+html[dir="rtl"] #work .project-details-body > p,
+html[dir="rtl"] #work .project-details-body .project-facts dd,
+html[dir="rtl"] #creative .creative-lead,
+html[dir="rtl"] #contact #contactIntro {
+  hyphens: none;
+  -webkit-hyphens: none;
+  word-break: normal;
+}
