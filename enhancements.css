@@ -518,6 +518,58 @@ html[dir="rtl"] #about .about-kicker{letter-spacing:normal;}
 html[data-theme="light"] #about .about-kicker{color:#9a762b;background:linear-gradient(105deg,rgba(231,184,78,.14),rgba(112,207,224,.11),rgba(184,157,226,.08));border-color:rgba(202,160,71,.48);box-shadow:0 8px 20px -16px rgba(67,105,100,.42),inset 0 1px 0 rgba(255,255,255,.92);}
 html[data-theme="light"] #about .about-who{border-inline-start-color:rgba(79,135,133,.58);}
 html[data-theme="light"] #about .about-tags .about-tag{color:#36524e;background:rgba(255,255,255,.52);border-color:rgba(87,125,132,.28);}
+
+/* ---------- isolated ambient glow layer ----------
+   Decorative only: it never participates in layout or pointer hit-testing. */
+.ambient-glow{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+  contain:paint;
+  isolation:isolate;
+}
+.ambient-glow-blob{
+  position:absolute;
+  display:block;
+  width:clamp(260px,38vw,620px);
+  aspect-ratio:1;
+  border-radius:50%;
+  filter:blur(140px);
+  opacity:.28;
+  transform:translate3d(0,0,0);
+  will-change:transform;
+}
+.ambient-glow-blob-green{top:-16%;left:-12%;background:#4ADE80;}
+.ambient-glow-blob-yellow{right:-15%;bottom:-20%;width:clamp(240px,32vw,500px);background:#FDE047;opacity:.23;}
+.ambient-glow-blob-green-soft{top:38%;right:24%;width:clamp(180px,22vw,360px);background:#4ADE80;opacity:.10;}
+html[data-theme="light"] .ambient-glow-blob{opacity:.12;filter:blur(150px);}
+html[data-theme="light"] .ambient-glow-blob-yellow{opacity:.08;}
+html[data-theme="light"] .ambient-glow-blob-green-soft{opacity:.05;}
+
+/* A restrained glass surface for existing information cards only. */
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .contact-box,.material-card,.dev-card,.skill-block{
+    background:rgba(255,255,255,.045);
+    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:blur(12px);
+    border-color:rgba(255,255,255,.10);
+    border-radius:16px;
+  }
+  html[data-theme="light"] .contact-box,html[data-theme="light"] .material-card,
+  html[data-theme="light"] .dev-card,html[data-theme="light"] .skill-block{
+    background:rgba(255,255,255,.48);
+    border-color:rgba(13,26,21,.14);
+  }
+}
+@media (max-width:767px){
+  .ambient-glow-blob{filter:blur(112px);}
+  .ambient-glow-blob-green{top:-10%;left:-34%;}
+  .ambient-glow-blob-yellow{right:-34%;bottom:-10%;}
+  .ambient-glow-blob-green-soft{top:43%;right:-18%;}
+}
+@media (prefers-reduced-motion:reduce){.ambient-glow-blob{will-change:auto;}}
 @media (max-width:767px){
   #about .about-kicker{margin-bottom:16px;padding:8px 11px;font-size:.64rem;letter-spacing:.13em;}
   #about .about-who{padding-inline-start:13px;}
