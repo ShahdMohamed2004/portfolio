@@ -3730,3 +3730,11 @@ html[data-theme='light'] .spine>.entry .project-details[open]{
 @media (prefers-reduced-motion:reduce){
   html[data-theme='light'] body::before,html[data-theme='light'] main.wrap>section:not(#home)::before{animation:none !important;}
 }
+
+/* Quiet authorship markers: visible, professional, and intentionally unobtrusive. */
+.footer-ownership{display:block;max-width:72ch;margin:8px auto 0;color:var(--muted);font-size:.68rem;line-height:1.7;letter-spacing:.01em;opacity:.78;}
+.ownership-note{margin-top:14px;color:var(--muted);font-size:.68rem;line-height:1.5;letter-spacing:.02em;opacity:.72;}
+@media(max-width:767px){
+  .footer-ownership{font-size:.62rem;line-height:1.75;}
+  .ownership-note{font-size:.64rem;}
+}

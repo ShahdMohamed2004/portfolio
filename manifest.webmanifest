@@ -1,9 +1,12 @@
 {
-  "name": "Shahd Mohamed Siddiq — Portfolio",
+  "name": "Shahd Mohamed — Portfolio",
   "short_name": "Shahd Portfolio",
   "start_url": "/portfolio/",
+  "scope": "/portfolio/",
   "display": "standalone",
   "background_color": "#152825",
   "theme_color": "#152825",
-  "description": "Portfolio of Shahd Mohamed Siddiq, TEFL graduate and aspiring English language educator."
+  "description": "Portfolio of Shahd Mohamed Siddiq, TEFL graduate and aspiring English language educator.",
+  "lang": "en",
+  "dir": "ltr"
 }

@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="asset-version" content="2.1.0" />
+<meta name="author" content="Shahd Mohamed" />
+<meta name="copyright" content="© 2026 Shahd Mohamed. All Rights Reserved." />
+<meta name="application-name" content="Shahd Mohamed — Portfolio" />
 <meta name="theme-color" content="#152825" />
 <meta name="color-scheme" content="dark light" />
 <!-- GitHub Pages cannot set response headers here; this meta policy still reduces object, base, form, and mixed-content attack surface. -->
@@ -29,7 +32,7 @@
 <meta name="twitter:image" content="https://shahdmohamed2004.github.io/portfolio/og-image.png" />
 
 <!-- Favicon -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23152825'/%3E%3Ctext x='32' y='45' font-family='Georgia, serif' font-size='23' font-weight='600' letter-spacing='-2' fill='%23E7B84E' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23152825'/%3E%3Ctext x='32' y='45' font-family='Georgia, serif' font-size='23' font-weight='600' letter-spacing='-2' fill='%23E7B84E' text-anchor='middle'%3ESM%3C/text%3E%3C/svg%3E" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="preload" as="image" href="assets/about.webp" type="image/webp" />
 
@@ -37,11 +40,26 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Shahd Mohamed Siddiq",
-  "jobTitle": "Aspiring English Language Educator",
-  "alumniOf": ["MSA University", "University of Bedfordshire"],
-  "sameAs": ["https://www.linkedin.com/in/shahd-mohamed-5b2525294/"]
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://shahdmohamed2004.github.io/portfolio/#person",
+      "name": "Shahd Mohamed Siddiq",
+      "jobTitle": "Aspiring English Language Educator",
+      "url": "https://shahdmohamed2004.github.io/portfolio/",
+      "sameAs": ["https://www.linkedin.com/in/shahd-mohamed-5b2525294/"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://shahdmohamed2004.github.io/portfolio/#website",
+      "name": "Shahd Mohamed — Portfolio",
+      "url": "https://shahdmohamed2004.github.io/portfolio/",
+      "author": {"@id": "https://shahdmohamed2004.github.io/portfolio/#person"},
+      "copyrightHolder": {"@id": "https://shahdmohamed2004.github.io/portfolio/#person"},
+      "copyrightYear": 2026,
+      "description": "Portfolio of Shahd Mohamed Siddiq: TEFL graduate and aspiring English language educator developing instructional, assessment, and digital learning projects."
+    }
+  ]
 }
 </script>
 
@@ -2699,6 +2717,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 </div>
 <footer>
   <span id="footerText"></span>
+  <span class="footer-ownership" id="footerOwnership">© 2026 Shahd Mohamed. All Rights Reserved. · Original website design, content, projects, visual assets, and creative work are the intellectual property of Shahd Mohamed unless otherwise stated. · Designed &amp; Built by Shahd Mohamed.</span>
 </footer>
 
 
@@ -3286,6 +3305,7 @@ const SITE_AR = {
                     </dl>
                     ${p.stat ? `<div class="project-finding"><strong>${lang === 'ar' ? 'نتيجة موثقة' : 'Documented finding'}</strong><span>${escapeHtml(p.stat)}</span></div>` : ''}
                     <div class="proj-links">${p.links.map(projectLink).join('')}</div>
+            <div class="ownership-note">${lang === 'ar' ? 'عمل أصلي بواسطة شهد محمد.' : 'Original work by Shahd Mohamed.'}</div>
                   </div>
                 </div>
               </div>
@@ -3295,7 +3315,8 @@ const SITE_AR = {
             <p>${escapeHtml(p.description)}</p>
             ${p.role ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الدور' : 'Role'}</span>${escapeHtml(p.role)}</div>` : ''}
             ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${escapeHtml(p.tools)}</div>` : ''}
-            <div class="proj-links">${p.links.map(projectLink).join('')}</div>`}
+            <div class="proj-links">${p.links.map(projectLink).join('')}</div>
+            <div class="ownership-note">${lang === 'ar' ? 'عمل أصلي بواسطة شهد محمد.' : 'Original work by Shahd Mohamed.'}</div>`}
           </div>
         </details>
       </div>`;
@@ -3467,6 +3488,10 @@ const SITE_AR = {
     document.getElementById('contactIntro').textContent = data.contact.intro;
 
     document.getElementById('footerText').textContent = `${data.footer} · ${lang === 'ar' ? 'آخر تحديث' : 'Updated'} 2026 · © ${new Date().getFullYear()}`;
+    const ownership = document.getElementById('footerOwnership');
+    if(ownership) ownership.textContent = lang === 'ar'
+      ? '© 2026 شهد محمد. جميع الحقوق محفوظة. · تصميم ومحتوى ومشروعات وأصول إبداعية أصلية بواسطة شهد محمد ما لم يُذكر خلاف ذلك. · تصميم وتنفيذ شهد محمد.'
+      : '© 2026 Shahd Mohamed. All Rights Reserved. · Original website design, content, projects, visual assets, and creative work are the intellectual property of Shahd Mohamed unless otherwise stated. · Designed & Built by Shahd Mohamed.';
     contentRevision += 1;
     observeRevealTargets();
   }
