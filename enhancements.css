@@ -3528,3 +3528,135 @@ html:not([data-theme='light']) shahd-lanyard{
   border:0 !important;
   outline:none !important;
 }
+
+/* ---------- calm glass interaction system: desktop hover + mobile tap ---------- */
+:where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details){
+  position:relative;
+  isolation:isolate;
+  background-color:rgba(255,255,255,.032) !important;
+  background-clip:border-box;
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.075) !important;
+  transition:transform 360ms cubic-bezier(.22,1,.36,1),background-color 360ms ease,border-color 360ms ease,box-shadow 360ms ease;
+}
+:where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details)::before,
+:where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details)::after{
+  border-radius:inherit !important;
+}
+@media (hover:hover) and (pointer:fine){
+  :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):hover,
+  :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):focus-within{
+    transform:translateY(-2px);
+    background-color:rgba(255,255,255,.048) !important;
+    border-color:rgba(234,179,8,.20) !important;
+    box-shadow:0 16px 34px -28px rgba(0,0,0,.62),0 0 34px -24px rgba(234,179,8,.11),inset 0 1px 0 rgba(255,255,255,.11) !important;
+  }
+}
+/* Touch devices receive feedback only while pressing; no sticky hover color. */
+@media (hover:none), (pointer:coarse){
+  :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):active{
+    transform:translateY(1px);
+    background-color:rgba(255,255,255,.052) !important;
+    border-color:rgba(234,179,8,.18) !important;
+    box-shadow:0 10px 24px -23px rgba(0,0,0,.60),0 0 30px -25px rgba(234,179,8,.10),inset 0 1px 0 rgba(255,255,255,.12) !important;
+  }
+}
+html[data-theme='light'] :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details){
+  background-color:rgba(255,255,255,.38) !important;
+  border-color:rgba(84,119,130,.16) !important;
+  -webkit-backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px);
+}
+@media (hover:hover) and (pointer:fine){
+  html[data-theme='light'] :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):hover,
+  html[data-theme='light'] :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):focus-within{
+    background-color:rgba(255,255,255,.48) !important;
+    border-color:rgba(84,151,111,.22) !important;
+    box-shadow:0 14px 30px -26px rgba(37,71,58,.28),0 0 30px -25px rgba(234,179,8,.06),inset 0 1px 0 rgba(255,255,255,.90) !important;
+  }
+}
+@media (hover:none), (pointer:coarse){
+  html[data-theme='light'] :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):active{
+    background-color:rgba(255,255,255,.50) !important;
+    border-color:rgba(84,151,111,.20) !important;
+    box-shadow:0 10px 24px -22px rgba(37,71,58,.22),0 0 28px -25px rgba(234,179,8,.045),inset 0 1px 0 rgba(255,255,255,.92) !important;
+  }
+}
+
+/* CV and LinkedIn: compact premium glass actions, especially on mobile. */
+#btnCV,#btnLinkedin{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:48px;
+  border-radius:14px !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025)) !important;
+  -webkit-backdrop-filter:blur(15px);
+  backdrop-filter:blur(15px);
+  color:var(--chalk-dim) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 12px 24px -22px rgba(0,0,0,.68) !important;
+  transition:transform 360ms cubic-bezier(.22,1,.36,1),background 360ms ease,border-color 360ms ease,box-shadow 360ms ease,color 360ms ease;
+}
+#btnCV::before,#btnLinkedin::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  border-radius:inherit;
+  background:radial-gradient(120% 150% at 12% 0%,rgba(255,255,255,.10),transparent 62%);
+  pointer-events:none;
+}
+#btnCV:hover,#btnCV:focus-visible,#btnLinkedin:hover,#btnLinkedin:focus-visible{
+  transform:translateY(-2px);
+  border-color:rgba(234,179,8,.22) !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.035)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 14px 28px -24px rgba(0,0,0,.70),0 0 30px -25px rgba(234,179,8,.14) !important;
+}
+#btnCV:active,#btnLinkedin:active{transform:translateY(1px) scale(.992);}
+#btnCV svg,#btnLinkedin svg{opacity:.88;transition:transform 360ms cubic-bezier(.22,1,.36,1),opacity 360ms ease;}
+#btnCV:hover svg,#btnCV:focus-visible svg,#btnLinkedin:hover svg,#btnLinkedin:focus-visible svg{transform:translateY(-1px);opacity:1;}
+html[data-theme='light'] #btnCV,html[data-theme='light'] #btnLinkedin{
+  border-color:rgba(84,119,130,.18) !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.66),rgba(255,255,255,.36)) !important;
+  color:#355c50 !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 12px 24px -22px rgba(37,71,58,.24) !important;
+}
+html[data-theme='light'] #btnCV:hover,html[data-theme='light'] #btnCV:focus-visible,html[data-theme='light'] #btnLinkedin:hover,html[data-theme='light'] #btnLinkedin:focus-visible{
+  border-color:rgba(84,151,111,.28) !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(232,244,237,.48)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.96),0 14px 28px -24px rgba(37,71,58,.24),0 0 26px -25px rgba(234,179,8,.07) !important;
+}
+@media (max-width:767px){
+  .hero .cta-row{gap:10px !important;}
+  .hero .cta-row #btnCV,.hero .cta-row #btnLinkedin{
+    width:100%;
+    min-width:0;
+    min-height:50px;
+    padding-inline:14px !important;
+    border-radius:14px !important;
+    font-size:.88rem;
+  }
+  .hero .cta-row #btnCV svg,.hero .cta-row #btnLinkedin svg{width:17px;height:17px;}
+}
+@media (prefers-reduced-motion:reduce){
+  :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details),#btnCV,#btnLinkedin,#btnCV svg,#btnLinkedin svg{transition:none !important;}
+}
+
+/* Final CTA specificity pass: the CV must not inherit the legacy solid accent. */
+html[data-theme='light'] .hero .cta-row #btnCV.hero-action-primary,
+html[data-theme='light'] .hero .cta-row #btnCV.hero-action-primary:hover,
+html[data-theme='light'] .hero .cta-row #btnCV.hero-action-primary:focus-visible,
+html[data-theme='light'] .hero .cta-row #btnCV.hero-action-primary:active{
+  background:linear-gradient(145deg,rgba(255,255,255,.66),rgba(255,255,255,.36)) !important;
+  color:#355c50 !important;
+  border-color:rgba(84,119,130,.18) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.92),0 12px 24px -22px rgba(37,71,58,.24) !important;
+}
+@media (max-width:767px){
+  /* CV and LinkedIn share one balanced row; the work CTA keeps the full row. */
+  .hero .cta-row #btnCV,
+  .hero .cta-row #btnLinkedin{grid-column:auto !important;}
+  .hero .cta-row #btnWork{grid-column:1/-1;}
+}
