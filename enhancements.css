@@ -2466,3 +2466,57 @@ html[dir="rtl"] #contact #contactIntro {
 html{scroll-behavior:smooth;}
 body{overscroll-behavior-x:none;}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+
+/* ---------- Mobile performance pass: preserve depth, remove continuous cost ---------- */
+@media (max-width:767px){
+  /* Keep the deep green atmosphere, but avoid large blurred fixed layers on phones. */
+  .ambient-glow-blob,
+  .aurora::before,
+  .aurora::after{
+    filter:none !important;
+    animation:none !important;
+    will-change:auto !important;
+  }
+  .ambient-glow-blob{opacity:.12;}
+  .aurora{opacity:.42;}
+
+  /* The title highlight is decorative and continuously animated; desktop keeps it. */
+  #heroHeadline.shimmer-text::after{
+    animation:none !important;
+    background-position:50% 50%;
+    opacity:.22;
+  }
+
+  /* Avoid backdrop compositing on touch devices; the dark surfaces remain opaque. */
+  *,*::before,*::after{
+    -webkit-backdrop-filter:none !important;
+    backdrop-filter:none !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu{background:#10251f !important;}
+
+  /* Pointer-only lighting is not useful on touch and should never trigger repaints. */
+  .project-details::after,
+  .approach-card::after,
+  .material-card::after,
+  .dev-card::after,
+  .skill-block::after{display:none !important;}
+
+  /* Keep only compositor-friendly interaction properties on touch. */
+  .mobile-menu a,
+  .mobile-menu button,
+  .btn,
+  .proj-link,
+  .creative-item{transition-property:transform,opacity,color,background-color,border-color !important;}
+}
+
+@media (hover:none) and (pointer:coarse){
+  .about-photo:hover img,
+  .entry:hover,
+  .approach-card:hover,
+  .material-card:hover,
+  .dev-card:hover,
+  .skill-block:hover,
+  .contact-box:hover,
+  .project-details:hover,
+  .creative-item:hover{transform:none !important;}
+}
