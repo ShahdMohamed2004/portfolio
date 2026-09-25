@@ -1574,3 +1574,38 @@ html:not([data-theme="light"]) .aurora{opacity:.68;}
   #mobileMenu .mobile-drawer-monogram{width:48px;height:48px;flex-basis:48px;border-radius:15px;}
   #mobileMenu .mobile-drawer-monogram b{font-size:1rem;}
 }
+
+
+/* ---------- refined SM mark: same simple style, balanced for two letters ---------- */
+@media (max-width: 767px){
+  #mobileMenu .mobile-drawer-monogram{
+    width:46px;
+    height:46px;
+    flex:0 0 46px;
+    overflow:visible;
+    gap:2px;
+    border:1px solid rgba(231,184,78,.54);
+    border-radius:15px;
+    background:linear-gradient(135deg,var(--yellow),#f4d78a 55%,#9a7dff);
+    color:var(--ink);
+    box-shadow:0 10px 26px rgba(231,184,78,.16);
+    font-size:0;
+    letter-spacing:0;
+  }
+  #mobileMenu .mobile-drawer-monogram::after{display:none;}
+  #mobileMenu .mobile-drawer-monogram b,
+  #mobileMenu .mobile-drawer-monogram b:first-child,
+  #mobileMenu .mobile-drawer-monogram b:last-child{
+    transform:none;
+    color:inherit;
+    text-shadow:none;
+    font:600 1rem/1 var(--font-display);
+    letter-spacing:-.09em;
+  }
+  #mobileMenu .mobile-drawer-monogram b:first-child{margin-inline-end:-1px;}
+  #mobileMenu.open .mobile-drawer-monogram{box-shadow:0 12px 30px rgba(231,184,78,.24);}
+}
+@media (max-width:390px){
+  #mobileMenu .mobile-drawer-monogram{width:44px;height:44px;flex-basis:44px;border-radius:14px;}
+  #mobileMenu .mobile-drawer-monogram b{font-size:.94rem;}
+}
