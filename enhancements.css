@@ -1850,3 +1850,49 @@ html[dir="rtl"] main.wrap > section.section-entering .section-head h2{animation-
   main.wrap > section.section-entering .contact-box,
   main.wrap > section.section-entering .credential-strip .cred{animation:none!important;}
 }
+
+
+/* ---------- clean close control: no overlap with the brand divider ---------- */
+@media (max-width: 860px){
+  .mobile-drawer-brand,
+  html[dir="rtl"] .mobile-drawer-brand{
+    min-height:70px;
+    margin-bottom:16px;
+    padding-bottom:18px;
+  }
+  .mobile-drawer-brand{padding-inline-end:70px;}
+  html[dir="rtl"] .mobile-drawer-brand{padding-inline:0 70px;}
+
+  .mobile-menu-close,
+  html[data-theme="light"] .mobile-menu-close{
+    top:22px;
+    width:44px;
+    min-width:44px;
+    height:44px;
+    min-height:44px;
+    border-radius:14px;
+    padding:0;
+    background:color-mix(in srgb,var(--ink-2) 88%,white 4%);
+    border:1px solid color-mix(in srgb,var(--line-strong) 92%,var(--yellow) 16%);
+    box-shadow:0 8px 18px -14px rgba(0,0,0,.82),inset 0 1px 0 rgba(255,255,255,.10);
+  }
+  .mobile-menu-close::before,
+  .mobile-menu-close::after{display:none!important;content:none!important;}
+  .mobile-menu.open .mobile-menu-close{animation:closeControlIn .42s cubic-bezier(.23,1,.32,1) .08s both;}
+  .mobile-menu-close-icon{width:20px;height:20px;stroke-width:1.9;}
+  .mobile-menu-close:hover,
+  .mobile-menu-close:focus-visible,
+  .mobile-menu-close:active{
+    transform:scale(1.04);
+    background:color-mix(in srgb,var(--yellow) 10%,var(--ink-2));
+  }
+  html[data-theme="light"] .mobile-menu-close{
+    background:rgba(255,255,255,.86);
+    border-color:rgba(37,71,58,.22);
+    box-shadow:0 8px 18px -14px rgba(37,71,58,.38),inset 0 1px 0 rgba(255,255,255,.92);
+  }
+  html[data-theme="light"] .mobile-menu-close:hover,
+  html[data-theme="light"] .mobile-menu-close:focus-visible,
+  html[data-theme="light"] .mobile-menu-close:active{background:rgba(255,251,235,.98);}
+}
+@media (prefers-reduced-motion:reduce){.mobile-menu.open .mobile-menu-close{animation:none!important;}}
