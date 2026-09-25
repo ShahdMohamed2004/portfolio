@@ -59,4 +59,31 @@
     const observer = new MutationObserver(() => skills.querySelectorAll('.skill-group li').forEach((item, index) => item.style.setProperty('--skill-delay', `${index * 35}ms`)));
     observer.observe(skills, { childList: true, subtree: true });
   }
+
+  // Section navigation motion: replay a lightweight transition whenever a
+  // user jumps to another section, including links rendered in the mobile drawer.
+  const sectionMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const sectionMotionTimers = new WeakMap();
+  const replaySectionTransition = section => {
+    if (!section || sectionMotionQuery.matches) return;
+    section.classList.remove('section-entering');
+    void section.offsetWidth;
+    section.classList.add('section-entering');
+    const previousTimer = sectionMotionTimers.get(section);
+    if (previousTimer) window.clearTimeout(previousTimer);
+    const timer = window.setTimeout(() => {
+      section.classList.remove('section-entering');
+      sectionMotionTimers.delete(section);
+    }, 980);
+    sectionMotionTimers.set(section, timer);
+  };
+  document.addEventListener('click', event => {
+    const link = event.target.closest?.('a[data-nav][href^="#"]');
+    if (!link) return;
+    const target = document.getElementById(link.getAttribute('href').slice(1));
+    if (target) window.setTimeout(() => replaySectionTransition(target), 80);
+  }, { passive: true });
+  sectionMotionQuery.addEventListener?.('change', () => {
+    if (sectionMotionQuery.matches) document.querySelectorAll('.section-entering').forEach(section => section.classList.remove('section-entering'));
+  });
 })();

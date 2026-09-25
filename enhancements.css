@@ -1738,3 +1738,115 @@ html:not([data-theme="light"]) .aurora{opacity:.68;}
   .mobile-menu.open .mobile-menu-close,.mobile-menu.open .mobile-menu-close::after{animation:none!important;}
   .mobile-menu-close,.mobile-menu-close-icon{transition:none!important;}
 }
+
+
+/* ---------- modern section-to-section transitions ---------- */
+main.wrap > section{
+  position:relative;
+}
+main.wrap > section.section-entering::before{
+  content:"";
+  position:absolute;
+  inset-inline:0;
+  top:0;
+  height:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent 4%,color-mix(in srgb,var(--yellow) 74%,transparent) 32%,color-mix(in srgb,#a58bff 54%,transparent) 66%,transparent 96%);
+  transform:scaleX(.18);
+  transform-origin:center;
+  opacity:0;
+  animation:sectionBeamIn .9s cubic-bezier(.23,1,.32,1) both;
+}
+main.wrap > section.section-entering .section-head{
+  animation:sectionHeadIn .72s cubic-bezier(.23,1,.32,1) both;
+}
+main.wrap > section.section-entering .section-head h2{
+  animation:sectionTitleIn .72s cubic-bezier(.23,1,.32,1) .05s both;
+}
+main.wrap > section.section-entering .section-head .section-tag{
+  animation:sectionTagIn .6s cubic-bezier(.23,1,.32,1) both;
+}
+main.wrap > section.section-entering .section-head::after{
+  animation:sectionRuleIn .72s cubic-bezier(.23,1,.32,1) .12s both;
+}
+main.wrap > section.section-entering > :not(.section-head){
+  animation:sectionContentIn .78s cubic-bezier(.23,1,.32,1) .12s both;
+}
+main.wrap > section.section-entering > .section-head + *{
+  animation-delay:.16s;
+}
+main.wrap > section.section-entering .about-card,
+main.wrap > section.section-entering .approach-card,
+main.wrap > section.section-entering .material-card,
+main.wrap > section.section-entering .project-details,
+main.wrap > section.section-entering .dev-card,
+main.wrap > section.section-entering .skill-block,
+main.wrap > section.section-entering .contact-box,
+main.wrap > section.section-entering .credential-strip .cred{
+  animation:sectionCardIn .72s cubic-bezier(.23,1,.32,1) both;
+}
+main.wrap > section.section-entering .about-card:nth-child(2),
+main.wrap > section.section-entering .approach-card:nth-child(2),
+main.wrap > section.section-entering .material-card:nth-child(2),
+main.wrap > section.section-entering .project-details:nth-child(2),
+main.wrap > section.section-entering .dev-card:nth-child(2),
+main.wrap > section.section-entering .skill-block:nth-child(2),
+main.wrap > section.section-entering .credential-strip .cred:nth-child(2){animation-delay:.08s;}
+main.wrap > section.section-entering .about-card:nth-child(3),
+main.wrap > section.section-entering .approach-card:nth-child(3),
+main.wrap > section.section-entering .material-card:nth-child(3),
+main.wrap > section.section-entering .project-details:nth-child(3),
+main.wrap > section.section-entering .dev-card:nth-child(3),
+main.wrap > section.section-entering .skill-block:nth-child(3),
+main.wrap > section.section-entering .credential-strip .cred:nth-child(3){animation-delay:.14s;}
+
+@keyframes sectionBeamIn{
+  0%{opacity:0;transform:scaleX(.16);}
+  28%{opacity:.85;}
+  100%{opacity:0;transform:scaleX(1);}
+}
+@keyframes sectionHeadIn{
+  0%{opacity:.55;transform:translateY(14px);filter:blur(3px);}
+  100%{opacity:1;transform:translateY(0);filter:blur(0);}
+}
+@keyframes sectionTitleIn{
+  0%{opacity:.35;transform:translateY(10px) translateX(-8px);letter-spacing:.01em;}
+  100%{opacity:1;transform:translateY(0) translateX(0);letter-spacing:normal;}
+}
+@keyframes sectionTagIn{
+  0%{opacity:0;transform:translateY(6px);letter-spacing:.18em;}
+  100%{opacity:1;transform:translateY(0);letter-spacing:inherit;}
+}
+@keyframes sectionRuleIn{
+  0%{opacity:0;transform:scaleX(.2);}
+  100%{opacity:1;transform:scaleX(1);}
+}
+@keyframes sectionContentIn{
+  0%{opacity:.72;transform:translateY(18px);}
+  100%{opacity:1;transform:translateY(0);}
+}
+@keyframes sectionCardIn{
+  0%{opacity:.72;transform:translateY(12px) scale(.985);}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+html[dir="rtl"] main.wrap > section.section-entering .section-head h2{animation-name:sectionTitleInRTL;}
+@keyframes sectionTitleInRTL{
+  0%{opacity:.35;transform:translateY(10px) translateX(8px);letter-spacing:.01em;}
+  100%{opacity:1;transform:translateY(0) translateX(0);letter-spacing:normal;}
+}
+@media (prefers-reduced-motion:reduce){
+  main.wrap > section.section-entering::before,
+  main.wrap > section.section-entering .section-head,
+  main.wrap > section.section-entering .section-head h2,
+  main.wrap > section.section-entering .section-head .section-tag,
+  main.wrap > section.section-entering .section-head::after,
+  main.wrap > section.section-entering > :not(.section-head),
+  main.wrap > section.section-entering .about-card,
+  main.wrap > section.section-entering .approach-card,
+  main.wrap > section.section-entering .material-card,
+  main.wrap > section.section-entering .project-details,
+  main.wrap > section.section-entering .dev-card,
+  main.wrap > section.section-entering .skill-block,
+  main.wrap > section.section-entering .contact-box,
+  main.wrap > section.section-entering .credential-strip .cred{animation:none!important;}
+}
