@@ -1168,3 +1168,128 @@ html[data-theme='light'] .hero .cta-row .hero-action-primary:focus-visible{
   header#siteHeader .wordmark::after{font-size:.86rem;}
 }
 @media (prefers-reduced-motion:reduce){.mobile-nav-icon{transition:none;}}
+
+/**
+ * Light Mode ambient edge-glow system v2
+ * Atmosphere only: no layout, content, typography, or component geometry changes.
+ * Derived from the existing dark green system (#152825 / #25473A).
+ */
+html[data-theme='light']{
+  --light-edge-rgb:91,145,112;
+  --light-edge-line:rgba(var(--light-edge-rgb),.22);
+}
+html[data-theme='light'] body{
+  background:linear-gradient(135deg,#f8faf7 0%,#fbfcfa 48%,#f2f7f2 100%) !important;
+}
+html[data-theme='light'] body::before{
+  content:"";
+  position:fixed;
+  inset:-8%;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 42% 38% at -4% -5%,rgba(var(--light-edge-rgb),.16),transparent 74%),
+    radial-gradient(ellipse 38% 36% at 104% 14%,rgba(var(--light-edge-rgb),.105),transparent 76%),
+    radial-gradient(ellipse 42% 42% at 104% 105%,rgba(var(--light-edge-rgb),.14),transparent 76%),
+    radial-gradient(ellipse 34% 34% at -4% 92%,rgba(var(--light-edge-rgb),.08),transparent 76%),
+    linear-gradient(135deg,#f8faf7 0%,#fbfcfa 48%,#f2f7f2 100%);
+  filter:blur(8px);
+  transform:none !important;
+  animation:none !important;
+}
+/* Keep the light canvas calm; no cursor halo in Light Mode. */
+html[data-theme='light'] body::after{opacity:0 !important;display:none;}
+/* Hero boundary glow stays behind the badge and reading column. */
+html[data-theme='light'] .hero.shahd-badge-hero::before{
+  display:block !important;
+  inset:-9% -8% -12% 44%;
+  z-index:-1;
+  opacity:.58 !important;
+  background:
+    radial-gradient(ellipse 74% 68% at 92% 46%,rgba(var(--light-edge-rgb),.11),transparent 72%),
+    linear-gradient(90deg,transparent 48%,rgba(var(--light-edge-rgb),.045) 100%);
+  filter:blur(18px);
+  transform:none !important;
+  animation:none !important;
+}
+/* Section transitions use one soft green seam, not mixed-color halos. */
+html[data-theme='light'] main.wrap>section:not(#home)::before{
+  inset:18px -18px;
+  background:radial-gradient(ellipse 38% 40% at 2% 18%,rgba(var(--light-edge-rgb),.095),transparent 76%) !important;
+  opacity:.72 !important;
+  filter:blur(10px);
+}
+html[data-theme='light'] main.wrap>section:nth-of-type(even):not(#home)::before{
+  background:radial-gradient(ellipse 38% 40% at 98% 22%,rgba(var(--light-edge-rgb),.085),transparent 76%) !important;
+}
+html[data-theme='light'] main.wrap>section:not(#home)::after{
+  background:linear-gradient(180deg,transparent,rgba(var(--light-edge-rgb),.10),transparent) !important;
+  box-shadow:none !important;
+}
+/* Selected focal cards receive edge depth while their centers remain clear. */
+html[data-theme='light'] .featured-case,
+html[data-theme='light'] .hero .credential-strip .cred,
+html[data-theme='light'] .materials-note,
+html[data-theme='light'] .contact-box{
+  border-color:var(--light-edge-line) !important;
+  box-shadow:0 14px 32px -26px rgba(37,71,58,.28),0 0 26px -22px rgba(var(--light-edge-rgb),.48),inset 0 1px 0 rgba(255,255,255,.82) !important;
+}
+html[data-theme='light'] .featured-case::before,
+html[data-theme='light'] .hero .credential-strip .cred::after,
+html[data-theme='light'] .contact-box::after{
+  opacity:.42 !important;
+  background:radial-gradient(ellipse 72% 90% at 8% 50%,rgba(var(--light-edge-rgb),.11),transparent 72%) !important;
+  filter:blur(8px);
+}
+/* Card interaction glow: one soft green edge, never a wash over content. */
+@media (min-width:768px) and (hover:hover) and (pointer:fine){
+  html[data-theme='light'] .accordion-card:hover,
+  html[data-theme='light'] .material-card:hover,
+  html[data-theme='light'] .availability-item:hover,
+  html[data-theme='light'] .dev-card:hover,
+  html[data-theme='light'] .skill-block:hover,
+  html[data-theme='light'] .project-details:hover{
+    border-color:rgba(var(--light-edge-rgb),.32) !important;
+    box-shadow:0 16px 30px -24px rgba(37,71,58,.24),0 0 24px -22px rgba(var(--light-edge-rgb),.45),inset 0 1px 0 rgba(255,255,255,.86) !important;
+  }
+  html[data-theme='light'] .accordion-card:hover::after,
+  html[data-theme='light'] .material-card:hover::after,
+  html[data-theme='light'] .availability-item:hover::before,
+  html[data-theme='light'] .dev-card:hover::after,
+  html[data-theme='light'] .skill-block:hover::after,
+  html[data-theme='light'] .project-details:hover::after{
+    opacity:.36 !important;
+    background:radial-gradient(ellipse 88% 72% at 8% 50%,rgba(var(--light-edge-rgb),.10),transparent 74%) !important;
+  }
+}
+/* Remove previous cyan, violet, and animated mixed-color atmosphere in Light Mode. */
+html[data-theme='light'] .hero-action:hover,
+html[data-theme='light'] .hero-action:focus-visible{
+  border-color:rgba(var(--light-edge-rgb),.30) !important;
+  background:rgba(var(--light-edge-rgb),.055) !important;
+  color:#25473a !important;
+  box-shadow:0 8px 20px -18px rgba(var(--light-edge-rgb),.45) !important;
+}
+html[data-theme='light'] .nav-links a::before,
+html[data-theme='light'] .mobile-menu a[data-nav]::before,
+html[data-theme='light'] header#siteHeader .nav-links::before{
+  background:radial-gradient(ellipse at center,rgba(var(--light-edge-rgb),.10),transparent 74%) !important;
+}
+html[data-theme='light'] .nav-links a::after,
+html[data-theme='light'] .mobile-menu a[data-nav]::after{box-shadow:0 0 7px rgba(var(--light-edge-rgb),.28) !important;}
+html[data-theme='light'] .scroll-progress{box-shadow:0 0 7px rgba(var(--light-edge-rgb),.32) !important;}
+@media (max-width:767px){
+  html[data-theme='light'] .hero.shahd-badge-hero::before{opacity:.36 !important;filter:blur(14px);}
+  html[data-theme='light'] main.wrap>section:not(#home)::before{inset:18px 0;}
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme='light'] body::before,
+  html[data-theme='light'] .hero.shahd-badge-hero::before{animation:none !important;transform:none !important;}
+}
+/* The badge has its own light-mode variables; keep them in the same green family. */
+html[data-theme='light'] shahd-lanyard{
+  --badge-glow-a:rgba(var(--light-edge-rgb),.13);
+  --badge-glow-b:rgba(var(--light-edge-rgb),.075);
+  --badge-glass-fill:linear-gradient(135deg,rgba(255,255,255,.58),rgba(238,247,240,.30) 52%,rgba(224,239,227,.28));
+  --badge-glass-shadow:0 16px 32px -24px rgba(37,71,58,.28),inset 0 1px 0 rgba(255,255,255,.9);
+}
