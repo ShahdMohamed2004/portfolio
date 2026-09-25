@@ -2233,3 +2233,104 @@ html[data-theme="light"] .ambient-micro-reflection{opacity:.16;mix-blend-mode:mu
 @media (prefers-reduced-motion:reduce){
   .ambient-glow::before,.ambient-light-path,.ambient-specular-ribbon,.ambient-micro-reflection{animation:none;will-change:auto;}
 }
+
+/* ---------- editorial gradient identity: deep green → living green → lemon ---------- */
+:root{
+  --luxury-green-deep:#031A12;
+  --luxury-green:#4ADE80;
+  --luxury-lemon:#FDE047;
+  --luxury-gradient:linear-gradient(112deg,var(--luxury-green-deep) 0%,#0b3b26 36%,var(--luxury-green) 70%,var(--luxury-lemon) 100%);
+  --luxury-gradient-soft:linear-gradient(112deg,rgba(3,26,18,.92) 0%,rgba(11,59,38,.72) 42%,rgba(74,222,128,.28) 76%,rgba(253,224,71,.20) 100%);
+}
+html[data-theme="light"]{
+  --luxury-gradient:linear-gradient(112deg,#173b2a 0%,#2e8f59 40%,#91c85e 72%,#b89a34 100%);
+  --luxury-gradient-soft:linear-gradient(112deg,rgba(255,255,255,.82) 0%,rgba(225,245,231,.78) 45%,rgba(247,242,190,.62) 100%);
+}
+
+/* Use the gradient as a controlled accent, never as the reading color. */
+#heroHeadline.shimmer-text::after{
+  background-image:linear-gradient(112deg,transparent 35%,rgba(74,222,128,.18) 47%,rgba(253,224,71,.62) 52%,transparent 65%);
+  opacity:.58;
+  animation-duration:12s;
+}
+.hero-note,
+.section-tag,
+.section-head .section-tag,
+.project-details .entry-flag,
+.featured-case-meta span{
+  background-image:var(--luxury-gradient);
+  background-size:160% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+.hero-note::before{color:var(--luxury-lemon);-webkit-text-fill-color:var(--luxury-lemon);}
+.section-head::after{background:var(--luxury-gradient);}
+.hero .cta-row .hero-action-primary,
+.work-filter[aria-pressed="true"]{
+  background:var(--luxury-gradient);
+  border-color:transparent;
+  color:#071a11;
+  box-shadow:0 12px 28px -18px rgba(74,222,128,.62),0 0 24px -18px rgba(253,224,71,.72),inset 0 1px 0 rgba(255,255,255,.34);
+}
+.hero .cta-row .hero-action-primary:hover,
+.hero .cta-row .hero-action-primary:focus-visible,
+.work-filter[aria-pressed="true"]:hover,
+.work-filter[aria-pressed="true"]:focus-visible{
+  background:linear-gradient(112deg,#0b4b2c 0%,#4ADE80 60%,#FDE047 100%);
+  color:#031A12;
+}
+.credential-strip .cred,
+.contact-box,
+.featured-case,
+.about-card{
+  background-image:var(--luxury-gradient-soft);
+  background-blend-mode:screen;
+}
+.credential-strip .cred::after,
+.contact-box::after,
+.about-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(118deg,transparent 18%,rgba(255,255,255,.045) 48%,rgba(253,224,71,.045) 56%,transparent 78%);
+  opacity:.46;
+  mix-blend-mode:screen;
+}
+.project-finding,
+.stat-line{border-inline-start-color:var(--luxury-green);}
+html[dir="rtl"] .project-finding,
+html[dir="rtl"] .stat-line{border-inline-start-color:var(--luxury-lemon);}
+
+/* Arabic text gets a reading-first face; headings stay Cairo/editorial. */
+html[dir="rtl"] body{font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;}
+html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] h3,
+html[dir="rtl"] .section-tag,html[dir="rtl"] .hero-note{font-family:'Cairo',sans-serif;}
+
+@media (max-width:767px){
+  #heroHeadline.shimmer-text::after{opacity:.34;animation-duration:15s;}
+  .hero-note,.section-tag,.section-head .section-tag,.project-details .entry-flag,.featured-case-meta span{background-size:220% 100%;}
+  .credential-strip .cred::after,.contact-box::after,.about-card::after{opacity:.28;}
+}
+@media (prefers-reduced-motion:reduce){
+  #heroHeadline.shimmer-text::after{animation:none;opacity:.28;}
+}
+
+/* Readability guard: small editorial labels stay solid; the gradient belongs to surfaces and actions. */
+.hero-note,
+.section-tag,
+.section-head .section-tag,
+.project-details .entry-flag,
+.featured-case-meta span{
+  background-image:none;
+  -webkit-text-fill-color:currentColor;
+  color:var(--yellow);
+}
+html[data-theme="light"] .hero-note,
+html[data-theme="light"] .section-tag,
+html[data-theme="light"] .section-head .section-tag,
+html[data-theme="light"] .project-details .entry-flag,
+html[data-theme="light"] .featured-case-meta span{color:var(--text-accent);}
