@@ -1945,3 +1945,34 @@ html[dir="rtl"] main.wrap > section.section-entering .section-head h2{animation-
   html[data-theme="light"] header#siteHeader nav,
   html[data-theme="light"] header#siteHeader.scrolled nav{height:56px;min-height:56px;}
 }
+
+
+/* ---------- keep dark drawer close control fully inside its panel ---------- */
+@media (max-width: 860px){
+  .mobile-menu,
+  html[dir="ltr"] .mobile-menu,
+  html[dir="rtl"] .mobile-menu{
+    overflow-x:hidden;
+    isolation:isolate;
+    contain:paint;
+  }
+  .mobile-menu-close,
+  html[data-theme="light"] .mobile-menu-close{
+    box-sizing:border-box;
+    inset-inline-end:16px!important;
+    inset-inline-start:auto!important;
+    top:20px!important;
+    margin:0!important;
+    transform:none!important;
+    animation:none!important;
+  }
+  html[dir="rtl"] .mobile-menu-close{
+    inset-inline-start:16px!important;
+    inset-inline-end:auto!important;
+  }
+  .mobile-menu-close::before,
+  .mobile-menu-close::after{display:none!important;}
+  .mobile-menu-close-icon{transform:none;}
+  .mobile-menu-close:hover .mobile-menu-close-icon,
+  .mobile-menu-close:focus-visible .mobile-menu-close-icon{transform:rotate(90deg);}
+}
