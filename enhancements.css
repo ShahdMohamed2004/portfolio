@@ -925,10 +925,10 @@ html[dir="rtl"] .spine>.entry::before{inset-inline-start:auto;inset-inline-end:-
 
 /* Keep work-spine nodes on the rail center at every writing direction and breakpoint. */
 @media (min-width:768px){
-  #work #workSpine.spine > .entry::before{inset-inline-start:-42.75px;inset-inline-end:auto;}
-  html[dir="rtl"] #work #workSpine.spine > .entry::before{inset-inline-start:auto;inset-inline-end:-34.75px;}
+  #work #workSpine.spine > .entry::before{inset-inline-start:-44.75px;inset-inline-end:auto;}
+  html[dir="rtl"] #work #workSpine.spine > .entry::before{inset-inline-start:auto;inset-inline-end:-35.75px;}
 }
 @media (max-width:767px){
-  #work #workSpine.spine > .entry::before{inset-inline-start:-29.3px;inset-inline-end:auto;}
-  html[dir="rtl"] #work #workSpine.spine > .entry::before{inset-inline-start:auto;inset-inline-end:-32px;}
+  #work #workSpine.spine > .entry::before{inset-inline-start:-31.5px;inset-inline-end:auto;}
+  html[dir="rtl"] #work #workSpine.spine > .entry::before{inset-inline-start:auto;inset-inline-end:-31.5px;}
 }
