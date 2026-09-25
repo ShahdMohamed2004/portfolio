@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=5.4.0">
+<link rel="stylesheet" href="enhancements.css?v=5.5.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3356,10 +3356,6 @@ const SITE_AR = {
         if(show) visible++;
       });
       document.getElementById('workCount').textContent = lang === 'ar' ? `${visible} أعمال` : `${visible} ${visible === 1 ? 'project' : 'projects'}`;
-      if(shouldScroll && filterChanged && window.matchMedia('(max-width:767px)').matches && filter !== 'all'){
-        const firstVisible = entries.find(entry => !entry.classList.contains('is-filtered'));
-        firstVisible?.scrollIntoView({ behavior:'smooth', block:'start' });
-      }
     };
     document.querySelectorAll('#workFilters .work-filter').forEach(btn => {
       const activate = () => updateProjectFilter(btn.dataset.filter);
@@ -4116,6 +4112,7 @@ const SITE_AR = {
       updateRailSpy();
       updateBackToTop();
       updateTimeline();
+      updateProjectTimelines();
       scrollTicking = false;
       return;
     }
