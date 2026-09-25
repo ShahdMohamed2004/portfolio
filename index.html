@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=5.3.0">
+<link rel="stylesheet" href="enhancements.css?v=5.4.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2533,6 +2533,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
         <path class="timeline-base" d="M10,68 H630" pathLength="1" aria-hidden="true" />
         <path class="spine-glow" d="M10,68 H630" pathLength="1" aria-hidden="true" />
         <path class="spine-path" d="M10,68 H630" pathLength="1" />
+        <circle class="timeline-travel-light" cx="10" cy="68" r="4.5" aria-hidden="true"></circle>
         <circle class="timeline-dot" data-point="0" cx="10" cy="68" r="4"></circle>
         <circle class="timeline-dot" data-point="1" cx="320" cy="68" r="4"></circle>
         <circle class="timeline-dot" data-point="2" cx="630" cy="68" r="4"></circle>
@@ -2762,6 +2763,7 @@ const SITE = {
     {
       flag: "core project",
       category: "research",
+      categories: ["research", "teaching", "design"],
       title: "Visual Timeline Grammar Framework",
       badges: ["Research paper", "PDF"],
       description: "A visual instructional design project exploring how timeline-based representations can make complex grammar concepts clearer and more accessible, informed by classroom practice and evidence.",
@@ -2777,6 +2779,7 @@ const SITE = {
     {
       flag: "core project",
       category: "edtech",
+      categories: ["edtech", "research", "teaching"],
       title: "Digital English Proficiency Test",
       badges: ["Interactive web app"],
       description: "A self-developed digital English proficiency assessment platform covering Reading, Listening, Writing, and Speaking. The work included assessment structure, test sections, digital implementation, user interaction, practical testing, troubleshooting, and AI-supported development.",
@@ -2791,6 +2794,7 @@ const SITE = {
     {
       flag: "design",
       category: "design",
+      categories: ["design", "teaching"],
       title: "Magazine Design",
       badges: ["Magazine spread", "PDF"],
       description: "An editorial layout project applying visual hierarchy and typography principles to a full magazine spread, showcasing the same design instincts that shape the instructional materials above.",
@@ -2804,6 +2808,7 @@ const SITE = {
     {
       flag: "design",
       category: "design",
+      categories: ["design", "teaching"],
       title: "Children's Book",
       badges: ["Illustrated book", "PDF"],
       description: "An original illustrated children's book, written and designed with the same clarity-first, visual approach used across the teaching materials.",
@@ -2817,6 +2822,7 @@ const SITE = {
     {
       flag: "design",
       category: "design",
+      categories: ["design", "teaching"],
       title: "Storyboard",
       badges: ["Storyboard", "PDF"],
       description: "A scene-by-scene storyboard developed to plan a visual narrative before production, reflecting the same structured, sequential thinking behind the Visual Timeline framework.",
@@ -2830,6 +2836,7 @@ const SITE = {
     {
       flag: "teaching demonstration",
       category: "teaching",
+      categories: ["teaching", "research"],
       title: "Undergraduate Classroom Instruction",
       badges: ["Teaching Demonstration", "Classroom practice"],
       description: "Live classroom demonstration showcasing interactive instructional design, student engagement, and communicative grammar delivery.",
@@ -2978,6 +2985,7 @@ const SITE_AR = {
     {
       flag: "مشروع رئيسي",
       category: "research",
+      categories: ["research", "teaching", "design"],
       title: "إطار القواعد البصري على الخط الزمني",
       badges: ["ورقة بحثية", "PDF"],
       description: "مشروع تعليمي بصري يستكشف كيف يمكن لتمثيل الأزمنة على خط زمني أن يجعل المفاهيم اللغوية المعقدة أوضح وأسهل في الوصول والفهم، بالاستناد إلى الممارسة الصفية والأدلة.",
@@ -2993,6 +3001,7 @@ const SITE_AR = {
     {
       flag: "مشروع رئيسي",
       category: "edtech",
+      categories: ["edtech", "research", "teaching"],
       title: "اختبار الكفاءة الرقمي في اللغة الإنجليزية",
       badges: ["تطبيق ويب تفاعلي"],
       description: "منصة تقييم رقمية خاصة تغطي القراءة والاستماع والكتابة والتحدث. شمل العمل هيكلة التقييم وأقسام الاختبار والتنفيذ الرقمي وتفاعل المستخدم والاختبار العملي واستكشاف الأخطاء وإصلاحها والتطوير المدعوم بالذكاء الاصطناعي.",
@@ -3007,6 +3016,7 @@ const SITE_AR = {
     {
       flag: "تصميم",
       category: "design",
+      categories: ["design", "teaching"],
       title: "تصميم مجلة",
       badges: ["تصميم صفحات مجلة", "PDF"],
       description: "مشروع تصميم تحريري يطبّق مبادئ التسلسل البصري والطباعة على صفحات مجلة كاملة، بنفس الحس التصميمي الذي يشكّل المواد التعليمية أعلاه.",
@@ -3018,6 +3028,7 @@ const SITE_AR = {
     {
       flag: "تصميم",
       category: "design",
+      categories: ["design", "teaching"],
       title: "كتاب أطفال",
       badges: ["كتاب مصوَّر", "PDF"],
       description: "كتاب أطفال مصوَّر أصلي، كُتب وصُمِّم بنفس النهج البصري الواضح المستخدَم في المواد التعليمية.",
@@ -3029,6 +3040,7 @@ const SITE_AR = {
     {
       flag: "تصميم",
       category: "design",
+      categories: ["design", "teaching"],
       title: "لوحة قصصية",
       badges: ["لوحة قصصية", "PDF"],
       description: "لوحة قصصية مشهدًا بمشهد لتخطيط سرد بصري قبل الإنتاج، تعكس نفس التفكير المنظَّم والمتسلسل وراء إطار الخط الزمني البصري.",
@@ -3040,6 +3052,7 @@ const SITE_AR = {
     {
       flag: "عرض تدريسي",
       category: "teaching",
+      categories: ["teaching", "research"],
       title: "التدريس الصفي لطلاب المرحلة الجامعية",
       badges: ["عرض تدريسي", "ممارسة صفية"],
       description: "عرض تدريسي صفي يوضح تصميمًا تعليميًا تفاعليًا، ومشاركة المتعلمين، وتقديم القواعد بطريقة تواصلية.",
@@ -3199,10 +3212,11 @@ const SITE_AR = {
   };
 
   let contentRevision = 0;
+  let activeProjectFilterState = 'all';
   function renderContent(data, lang){
     const openProjectIndexes = [...document.querySelectorAll('#workSpine .project-details')]
       .map((details, index) => details.open ? index : -1).filter(index => index >= 0).slice(-1);
-    const activeProjectFilter = document.querySelector('#workFilters .work-filter[aria-pressed="true"]')?.dataset.filter || 'all';
+    const activeProjectFilter = activeProjectFilterState;
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
     document.getElementById('heroHeadline').textContent = data.heroHeadline;
@@ -3239,12 +3253,16 @@ const SITE_AR = {
     const projectCategories = lang === 'ar'
       ? { all: 'كل الأعمال', research: 'بحث', edtech: 'EdTech', design: 'تصميم', teaching: 'تدريس' }
       : { all: 'All work', research: 'Research', edtech: 'EdTech', design: 'Design', teaching: 'Teaching' };
-    const projectCategory = p => p.category || 'design';
+    const getProjectCategories = p => {
+      const raw = Array.isArray(p.categories) ? p.categories : [p.category || 'design'];
+      const valid = raw.filter(category => ['research','edtech','design','teaching'].includes(category));
+      return [...new Set(valid.length ? valid : ['design'])];
+    };
     document.getElementById('workFilters').innerHTML = Object.entries(projectCategories).map(([key, label], index) => `<button class="work-filter" type="button" data-filter="${key}" aria-pressed="${key === 'all'}" aria-label="${escapeHtml(label)}"><span class="filter-number">${String(index + 1).padStart(2, '0')}</span><span class="filter-label">${escapeHtml(label)}</span></button>`).join('');
     document.getElementById('workSpine').innerHTML = data.projects.map((p, i) => {
-      const category = projectCategory(p);
+      const categories = getProjectCategories(p);
       return `
-      <div class="entry reveal-item" data-step="${i + 1}" data-category="${escapeHtml(category)}">
+      <div class="entry reveal-item" data-step="${i + 1}" data-categories="${escapeHtml(categories.join(' '))}">
         <details class="project-details" id="projectDetails-${i}" data-project-index="${i}" name="selected-project">
           <summary class="project-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض تفاصيل المشروع والروابط' : 'View project details & links'}">
             <div class="entry-preview">
@@ -3312,7 +3330,11 @@ const SITE_AR = {
     setupExclusiveDetails('#workSpine .project-details', '#workSpine .project-details');
     setupExclusiveDetails('#whatIDoGrid > details', '#whatIDoGrid > details');
     setupExclusiveDetails('#howITeachGrid > details', '#howITeachGrid > details');
-    const updateProjectFilter = (filter = 'all') => {
+    const updateProjectFilter = (filter = 'all', shouldScroll = true) => {
+      const allowedFilters = new Set(['all','research','edtech','design','teaching']);
+      if(!allowedFilters.has(filter)) filter = 'all';
+      const filterChanged = activeProjectFilterState !== filter;
+      activeProjectFilterState = filter;
       const filterBar = document.getElementById('workFilters');
       const filterButtons = [...filterBar.querySelectorAll('.work-filter')];
       filterButtons.forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.filter === filter)));
@@ -3325,14 +3347,16 @@ const SITE_AR = {
       const entries = [...document.querySelectorAll('#workSpine .entry')];
       let visible = 0;
       entries.forEach(entry => {
-        const show = filter === 'all' || entry.dataset.category === filter;
+        const categories = (entry.dataset.categories || '').split(/\s+/).filter(Boolean);
+        const show = filter === 'all' || categories.includes(filter);
         entry.classList.toggle('is-filtered', !show);
-        entry.hidden = !show;
+        entry.hidden = false;
         entry.setAttribute('aria-hidden', String(!show));
+        entry.setAttribute('tabindex', show ? '0' : '-1');
         if(show) visible++;
       });
       document.getElementById('workCount').textContent = lang === 'ar' ? `${visible} أعمال` : `${visible} ${visible === 1 ? 'project' : 'projects'}`;
-      if(window.matchMedia('(max-width:767px)').matches && filter !== 'all'){
+      if(shouldScroll && filterChanged && window.matchMedia('(max-width:767px)').matches && filter !== 'all'){
         const firstVisible = entries.find(entry => !entry.classList.contains('is-filtered'));
         firstVisible?.scrollIntoView({ behavior:'smooth', block:'start' });
       }
@@ -3361,7 +3385,7 @@ const SITE_AR = {
         activate();
       });
     });
-    updateProjectFilter(activeProjectFilter);
+    updateProjectFilter(activeProjectFilter, false);
 
     // Teaching materials
     document.getElementById('materialsGrid').innerHTML = data.materials.map(m => `
@@ -3651,6 +3675,7 @@ const SITE_AR = {
   let timelineNode = null;
   let timelinePath = null;
   let timelineGlow = null;
+  let timelineTravelLight = null;
   let timelinePoints = [];
   let projectSpines = [];
   let scrollNodesRevision = -1;
@@ -3665,6 +3690,7 @@ const SITE_AR = {
     timelineNode = document.getElementById('tenseDiagram');
     timelinePath = timelineNode?.querySelector('.spine-path') || null;
     timelineGlow = timelineNode?.querySelector('.spine-glow') || null;
+    timelineTravelLight = timelineNode?.querySelector('.timeline-travel-light') || null;
     timelinePoints = timelineNode ? [...timelineNode.querySelectorAll('[data-point]')] : [];
     projectSpines = [...document.querySelectorAll('.spine')].map(spine => ({
       spine,
@@ -4065,6 +4091,11 @@ const SITE_AR = {
     const dash = 1 - progress;
     if(timelinePath) timelinePath.style.strokeDashoffset = String(dash);
     if(timelineGlow) timelineGlow.style.strokeDashoffset = String(dash);
+    if(timelineTravelLight){
+      const x = 10 + (620 * progress);
+      timelineTravelLight.setAttribute('cx', x.toFixed(2));
+      timelineTravelLight.setAttribute('cy', '68');
+    }
     diagram.dataset.timelineProgress = String(progress);
     diagram.dataset.timelineVelocity = '0';
     diagram.classList.toggle('in-view', progress > 0.02);
