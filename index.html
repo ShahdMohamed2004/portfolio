@@ -2431,10 +2431,12 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=2.9.17">
+<link rel="stylesheet" href="enhancements.css?v=2.9.19">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
+
+<div class="aurora" aria-hidden="true"></div>
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -2515,7 +2517,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   <!-- HERO -->
   <section class="hero shahd-badge-hero" id="home" data-scene="hero" style="border-top:none;">
     <span class="hero-note" id="heroNote"></span>
-    <h1 id="heroHeadline" class="shimmer-text">Teaching to See, Learning to Be</h1>
+    <h1 id="heroHeadline" class="shimmer-text" data-shimmer="Teaching to See, Learning to Be">Teaching to See, Learning to Be</h1>
     <p class="lead" id="heroLead"></p>
 
     <div class="credential-strip" id="credentialStrip"></div>
@@ -3204,6 +3206,7 @@ const SITE_AR = {
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
     document.getElementById('heroHeadline').textContent = data.heroHeadline;
+    document.getElementById('heroHeadline').setAttribute('data-shimmer', data.heroHeadline);
     document.getElementById('heroLead').textContent = data.heroLead;
 
     document.getElementById('credentialStrip').innerHTML = data.credentials.map(c => `
