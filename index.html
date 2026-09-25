@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=2.9.15">
+<link rel="stylesheet" href="enhancements.css?v=2.9.16">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3321,7 +3321,13 @@ const SITE_AR = {
       }
       const entries = [...document.querySelectorAll('#workSpine .entry')];
       let visible = 0;
-      entries.forEach(entry => { const show = filter === 'all' || entry.dataset.category === filter; entry.classList.toggle('is-filtered', !show); if(show) visible++; });
+      entries.forEach(entry => {
+        const show = filter === 'all' || entry.dataset.category === filter;
+        entry.classList.toggle('is-filtered', !show);
+        entry.hidden = !show;
+        entry.setAttribute('aria-hidden', String(!show));
+        if(show) visible++;
+      });
       document.getElementById('workCount').textContent = lang === 'ar' ? `${visible} أعمال` : `${visible} ${visible === 1 ? 'project' : 'projects'}`;
       if(window.matchMedia('(max-width:767px)').matches && filter !== 'all'){
         const firstVisible = entries.find(entry => !entry.classList.contains('is-filtered'));
@@ -4011,7 +4017,10 @@ const SITE_AR = {
     const glow = diagram.querySelector('.spine-glow');
     const rect = diagram.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
-    const targetProgress = reducedMQ.matches ? 1 : Math.max(0, Math.min(1, (vh * 0.84 - rect.top) / (vh * 0.72)));
+    const pageAtBottom = window.scrollY + vh >= document.documentElement.scrollHeight - 2;
+    const targetProgress = reducedMQ.matches || pageAtBottom
+      ? 1
+      : Math.max(0, Math.min(1, (vh * 0.84 - rect.top) / (vh * 0.72)));
     const previousProgress = Number(diagram.dataset.timelineProgress);
     const currentProgress = Number.isFinite(previousProgress) ? previousProgress : 0;
     // A monotonic, critically damped interpolation keeps the scroll-linked
