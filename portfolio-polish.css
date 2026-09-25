@@ -1293,3 +1293,103 @@ html[data-theme='light'] shahd-lanyard{
   --badge-glass-fill:linear-gradient(135deg,rgba(255,255,255,.58),rgba(238,247,240,.30) 52%,rgba(224,239,227,.28));
   --badge-glass-shadow:0 16px 32px -24px rgba(37,71,58,.28),inset 0 1px 0 rgba(255,255,255,.9);
 }
+
+
+/**
+ * Light Mode edge glow — final calibration
+ * Atmosphere only: preserve layout, content, typography, and component hierarchy.
+ */
+html[data-theme='light']{
+  --light-edge-rgb:86,151,111;
+  --light-edge-line:rgba(var(--light-edge-rgb),.18);
+}
+html[data-theme='light'] body{
+  background:#f8faf8 !important;
+}
+html[data-theme='light'] body::before{
+  inset:-12%;
+  background:
+    radial-gradient(ellipse 34% 34% at -4% -4%,rgba(var(--light-edge-rgb),.115),transparent 78%),
+    radial-gradient(ellipse 30% 32% at 104% 18%,rgba(var(--light-edge-rgb),.075),transparent 80%),
+    radial-gradient(ellipse 36% 36% at 104% 104%,rgba(var(--light-edge-rgb),.10),transparent 80%),
+    radial-gradient(ellipse 28% 30% at -4% 88%,rgba(var(--light-edge-rgb),.06),transparent 80%),
+    linear-gradient(135deg,#f8faf8 0%,#fbfcfb 52%,#f3f7f4 100%);
+  filter:blur(12px);
+}
+html[data-theme='light'] body::after{display:none !important;}
+html[data-theme='light'] .hero.shahd-badge-hero::before{
+  inset:-8% -6% -10% 50%;
+  opacity:.34 !important;
+  background:radial-gradient(ellipse 70% 62% at 92% 48%,rgba(var(--light-edge-rgb),.095),transparent 74%);
+  filter:blur(22px);
+}
+html[data-theme='light'] main.wrap>section:not(#home)::before{
+  inset:20px -14px;
+  background:radial-gradient(ellipse 34% 34% at 1% 18%,rgba(var(--light-edge-rgb),.06),transparent 78%) !important;
+  opacity:.68 !important;
+  filter:blur(14px);
+}
+html[data-theme='light'] main.wrap>section:nth-of-type(even):not(#home)::before{
+  background:radial-gradient(ellipse 34% 34% at 99% 18%,rgba(var(--light-edge-rgb),.055),transparent 78%) !important;
+}
+html[data-theme='light'] main.wrap>section:not(#home)::after{
+  background:linear-gradient(180deg,transparent,rgba(var(--light-edge-rgb),.055),transparent) !important;
+}
+html[data-theme='light'] .featured-case,
+html[data-theme='light'] .hero .credential-strip .cred,
+html[data-theme='light'] .materials-note,
+html[data-theme='light'] .contact-box{
+  border-color:var(--light-edge-line) !important;
+  box-shadow:0 14px 32px -28px rgba(37,71,58,.24),0 0 24px -22px rgba(var(--light-edge-rgb),.34),inset 0 1px 0 rgba(255,255,255,.82) !important;
+}
+html[data-theme='light'] .featured-case::before,
+html[data-theme='light'] .hero .credential-strip .cred::after,
+html[data-theme='light'] .contact-box::after{
+  opacity:.28 !important;
+  background:radial-gradient(ellipse 68% 84% at 6% 50%,rgba(var(--light-edge-rgb),.07),transparent 74%) !important;
+  filter:blur(10px);
+}
+/* Keep existing interaction geometry unchanged; only soften its edge treatment. */
+@media (min-width:768px) and (hover:hover) and (pointer:fine){
+  html[data-theme='light'] .accordion-card:hover,
+  html[data-theme='light'] .material-card:hover,
+  html[data-theme='light'] .availability-item:hover,
+  html[data-theme='light'] .dev-card:hover,
+  html[data-theme='light'] .skill-block:hover,
+  html[data-theme='light'] .contact-box:hover,
+  html[data-theme='light'] .credential-strip .cred:hover,
+  html[data-theme='light'] .project-details:hover{
+    transform:none !important;
+    border-color:rgba(var(--light-edge-rgb),.24) !important;
+    box-shadow:0 14px 28px -24px rgba(37,71,58,.20),0 0 20px -22px rgba(var(--light-edge-rgb),.30),inset 0 1px 0 rgba(255,255,255,.86) !important;
+  }
+  html[data-theme='light'] .accordion-card:hover::after,
+  html[data-theme='light'] .material-card:hover::after,
+  html[data-theme='light'] .availability-item:hover::before,
+  html[data-theme='light'] .dev-card:hover::after,
+  html[data-theme='light'] .skill-block:hover::after,
+  html[data-theme='light'] .contact-box:hover::after,
+  html[data-theme='light'] .credential-strip .cred:hover::after,
+  html[data-theme='light'] .project-details:hover::after{
+    opacity:.22 !important;
+    background:radial-gradient(ellipse 82% 68% at 6% 50%,rgba(var(--light-edge-rgb),.065),transparent 76%) !important;
+  }
+}
+html[data-theme='light'] .hero-action:hover,
+html[data-theme='light'] .hero-action:focus-visible,
+html[data-theme='light'] .nav-links a:hover,
+html[data-theme='light'] .nav-links a:focus-visible,
+html[data-theme='light'] .mobile-menu a[data-nav]:hover,
+html[data-theme='light'] .mobile-menu a[data-nav]:focus-visible{
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+@media (max-width:767px){
+  html[data-theme='light'] body::before{filter:blur(10px);}
+  html[data-theme='light'] .hero.shahd-badge-hero::before{opacity:.24 !important;filter:blur(18px);}
+  html[data-theme='light'] main.wrap>section:not(#home)::before{inset:20px 0;}
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme='light'] body::before,
+  html[data-theme='light'] .hero.shahd-badge-hero::before{animation:none !important;transform:none !important;}
+}
