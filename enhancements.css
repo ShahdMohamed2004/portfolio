@@ -694,6 +694,7 @@ html[data-theme="light"] .tense-diagram{border:0;background:transparent;box-shad
   --step-count:5;
   --filter-progress:0;
   position:relative;
+  z-index:2;
   display:grid;
   grid-template-columns:repeat(5,minmax(76px,1fr));
   align-items:start;
@@ -727,7 +728,11 @@ html[data-theme="light"] .tense-diagram{border:0;background:transparent;box-shad
 }
 html[dir="rtl"] #work .work-filters::after{left:calc(10px + (100% - 20px) / 10);right:calc(10px + (100% - 20px) / 10);transform-origin:right center;}
 #work .work-filter{
-  z-index:1;
+  position:relative;
+  z-index:2;
+  pointer-events:auto;
+  touch-action:manipulation;
+  cursor:pointer;
   display:flex;
   flex-direction:column;
   align-items:center;

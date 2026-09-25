@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=2.9.14">
+<link rel="stylesheet" href="enhancements.css?v=2.9.15">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3323,12 +3323,35 @@ const SITE_AR = {
       let visible = 0;
       entries.forEach(entry => { const show = filter === 'all' || entry.dataset.category === filter; entry.classList.toggle('is-filtered', !show); if(show) visible++; });
       document.getElementById('workCount').textContent = lang === 'ar' ? `${visible} أعمال` : `${visible} ${visible === 1 ? 'project' : 'projects'}`;
-      if(mobileMQ.matches && filter !== 'all'){
+      if(window.matchMedia('(max-width:767px)').matches && filter !== 'all'){
         const firstVisible = entries.find(entry => !entry.classList.contains('is-filtered'));
         firstVisible?.scrollIntoView({ behavior:'smooth', block:'start' });
       }
     };
-    document.querySelectorAll('#workFilters .work-filter').forEach(btn => btn.addEventListener('click', () => updateProjectFilter(btn.dataset.filter)));
+    document.querySelectorAll('#workFilters .work-filter').forEach(btn => {
+      const activate = () => updateProjectFilter(btn.dataset.filter);
+      btn.addEventListener('pointerdown', event => {
+        if(event.pointerType === 'touch' || event.pointerType === 'pen'){
+          btn.setPointerCapture?.(event.pointerId);
+          btn.dataset.pointerPending = 'true';
+        }
+      }, {passive:true});
+      btn.addEventListener('pointerup', event => {
+        if(event.pointerType === 'touch' || event.pointerType === 'pen'){
+          event.preventDefault();
+          btn.dataset.pointerHandled = 'true';
+          delete btn.dataset.pointerPending;
+          activate();
+        }
+      });
+      btn.addEventListener('click', event => {
+        if(btn.dataset.pointerHandled === 'true'){
+          delete btn.dataset.pointerHandled;
+          return;
+        }
+        activate();
+      });
+    });
     updateProjectFilter(activeProjectFilter);
 
     // Teaching materials
