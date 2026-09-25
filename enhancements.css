@@ -2621,3 +2621,30 @@ html[data-theme="light"] .ambient-glow::after{
   background:radial-gradient(ellipse 46% 38% at 100% 100%,rgba(190,153,65,.09),transparent 78%);
   opacity:.52;
 }
+
+
+/* ---------- subtle mobile edge light ----------
+   Keeps long mobile scrolls from feeling flat or overly dark without adding
+   animated layers or intercepting touch input. */
+@media (max-width:767px){
+  body::before{
+    background:
+      radial-gradient(52% 38% at -8% 46%, rgba(231,184,78,.105), transparent 72%),
+      radial-gradient(48% 34% at 108% 68%, rgba(91,190,211,.075), transparent 74%),
+      radial-gradient(72% 48% at 50% 0%, rgba(16,38,31,.82), transparent 82%),
+      linear-gradient(180deg,#0d211b 0%,#0a1915 52%,#081410 100%);
+  }
+
+  html[data-theme='light'] body::before{
+    background:
+      radial-gradient(52% 38% at -8% 46%, rgba(231,184,78,.13), transparent 72%),
+      radial-gradient(48% 34% at 108% 68%, rgba(91,190,211,.11), transparent 74%),
+      linear-gradient(180deg,#faf8f5 0%,#f5f5ef 52%,#eef3ef 100%);
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  /* The edge light is static by design; this keeps the override explicit for
+     users who disable motion if the surrounding atmosphere changes later. */
+  @media (max-width:767px){body::before{animation:none;}}
+}
