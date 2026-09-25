@@ -1,0 +1,39 @@
+# Move this file to .github/workflows/security-audit.yml after enabling the GitHub App token's workflows permission.
+name: Static security and integrity audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: |
+          node --check enhancements.js
+          node --check shahd-card.js
+      - name: Check for insecure URLs and obvious secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git grep -nE 'http://|BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{20,}' -- 'index.html' '*.js' '*.css' 'manifest.webmanifest'; then
+            echo 'Potential insecure resource or secret pattern found.' >&2
+            exit 1
+          fi
+      - name: Validate ownership and security metadata
+        run: |
+          grep -q 'https://shahdmohamed2004.github.io/portfolio/' index.html
+          grep -q 'Content-Security-Policy' index.html
+          grep -q 'footer-ownership' index.html
+          test -f manifest.webmanifest
