@@ -1976,3 +1976,26 @@ html[dir="rtl"] main.wrap > section.section-entering .section-head h2{animation-
   .mobile-menu-close:hover .mobile-menu-close-icon,
   .mobile-menu-close:focus-visible .mobile-menu-close-icon{transform:rotate(90deg);}
 }
+
+
+/* ---------- performance: defer rendering below-the-fold sections ---------- */
+main.wrap > section:not(#home){
+  content-visibility:auto;
+  contain-intrinsic-size:720px;
+}
+@media (max-width:767px){
+  main.wrap > section:not(#home){contain-intrinsic-size:620px;}
+}
+@media (prefers-reduced-motion:reduce){
+  main.wrap > section:not(#home){content-visibility:auto;}
+}
+
+
+/* Keep compositor promotion opt-in instead of reserving a layer for every card. */
+.project-details,
+.approach-card,
+.material-card,
+.dev-card,
+.skill-block,
+.contact-box,
+.credential-strip .cred{will-change:auto;}

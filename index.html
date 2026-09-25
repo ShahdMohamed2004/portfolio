@@ -2431,7 +2431,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .about-card{padding:26px 17px 24px;}
   }
 </style>
-<link rel="stylesheet" href="enhancements.css?v=4.3.0">
+<link rel="stylesheet" href="enhancements.css?v=5.0.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3637,6 +3637,7 @@ const SITE_AR = {
   const progress = document.getElementById('scrollProgress');
   const navLinks = document.querySelectorAll('.nav-links a');
   const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const sceneSections = Array.from(document.querySelectorAll('main > section'));
   const pillNav = document.querySelector('.nav-links');
   let pillNavTarget = null;
   function movePillNav(target, immediate = false){
@@ -3964,7 +3965,7 @@ const SITE_AR = {
   function updateSectionScenes(){
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const focusY = vh * 0.52;
-    document.querySelectorAll('main > section').forEach(section => {
+    sceneSections.forEach(section => {
       const rect = section.getBoundingClientRect();
       const active = rect.top < focusY && rect.bottom > focusY;
       section.classList.toggle('section-active', active);
@@ -4083,7 +4084,6 @@ const SITE_AR = {
       scrollTicking = true;
     }
   }
-  document.addEventListener('scroll', requestScrollUpdate, {passive:true});
   window.addEventListener('scroll', requestScrollUpdate, {passive:true});
   window.addEventListener('resize', () => {
     parallaxActive = desktopMQ.matches && !reducedMQ.matches && !!aboutPhotoImg;
