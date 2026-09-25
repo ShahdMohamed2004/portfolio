@@ -3635,6 +3635,7 @@ const SITE_AR = {
   const header = document.getElementById('siteHeader');
   const progress = document.getElementById('scrollProgress');
   const navLinks = document.querySelectorAll('.nav-links a');
+  const mobileNavLinks = document.querySelectorAll('.mobile-menu a[data-nav]');
   const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
   const sceneSections = Array.from(document.querySelectorAll('main > section'));
   const pillNav = document.querySelector('.nav-links');
@@ -3922,6 +3923,7 @@ const SITE_AR = {
     sections.forEach(sec => { if(sec.offsetTop <= y) current = sec; });
     if(current){
       navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+      mobileNavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
       const active = [...navLinks].find(a => a.classList.contains('active'));
       if(active && pillNav && !pillNav.matches(':hover')) movePillNav(active, true);
     }
@@ -4063,8 +4065,6 @@ const SITE_AR = {
       updateSpy();
       updateRailSpy();
       updateBackToTop();
-      updateTimeline();
-      updateProjectTimelines();
       scrollTicking = false;
       return;
     }
