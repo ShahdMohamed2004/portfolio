@@ -785,13 +785,13 @@ html[data-theme="light"] #work .filter-number{color:#718681;}
 html[data-theme="light"] #work .work-filter[aria-pressed="true"] .filter-number{color:#9a762b;}
 @media (max-width:768px){
   #work .work-toolbar{gap:13px;margin-bottom:26px;}
-  #work .work-filters{width:100%;max-width:none;grid-template-columns:repeat(5,minmax(88px,1fr));padding-inline:8px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none;}
+  #work .work-filters{width:100%;max-width:none;grid-template-columns:repeat(5,minmax(0,1fr));padding-inline:8px;overflow:visible;overscroll-behavior-inline:contain;scrollbar-width:none;}
   #work .work-filters::-webkit-scrollbar{display:none;}
   #work .work-filters::before,#work .work-filters::after{left:calc(8px + (100% - 16px) / 10);right:calc(8px + (100% - 16px) / 10);}
   #work .work-filters::after{left:calc(8px + (100% - 16px) / 10);right:calc(8px + (100% - 16px) / 10);width:auto;transform:scaleX(var(--filter-progress));}
   html[dir="rtl"] #work .work-filters::after{left:calc(8px + (100% - 16px) / 10);right:calc(8px + (100% - 16px) / 10);transform-origin:right center;}
-  #work .work-filter{min-height:62px;padding-inline:4px;font-size:.68rem;}
-  #work .filter-label{white-space:nowrap;}
+  #work .work-filter{min-height:62px;padding-inline:2px;font-size:.64rem;}
+  #work .filter-label{white-space:normal;text-align:center;}
   #work .work-count{font-size:.65rem;}
 }
 @media (prefers-reduced-motion:reduce){
