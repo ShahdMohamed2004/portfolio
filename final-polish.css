@@ -2163,3 +2163,10 @@ html[dir="rtl"] #credentials .timeline-detail > summary::before{
     inset-inline-end:auto !important;
   }
 }
+
+/* Remove the intrusive sharp wrapper edge; preserve its geometry and the soft card surface. */
+#credentials > .spine > .entry,
+#credentials > .spine > .entry:hover,
+#credentials > .spine > .entry:focus-within{
+  border-color:transparent !important;
+}
