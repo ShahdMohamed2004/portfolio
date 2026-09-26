@@ -7,7 +7,7 @@
   let frame = 0;
   glass.classList.add('glass');
   glass.addEventListener('pointermove', event => {
-    if (event.pointerType !== 'mouse' || reduced.matches || frame) return;
+    if (document.documentElement.dataset.theme === 'light' || event.pointerType !== 'mouse' || reduced.matches || frame) return;
     frame = requestAnimationFrame(() => {
       const rect = glass.getBoundingClientRect();
       glass.style.setProperty('--x', `${event.clientX - rect.left}px`);
@@ -20,7 +20,7 @@
     glass.style.removeProperty('--x'); glass.style.removeProperty('--y');
   }, { passive: true });
   glass.addEventListener('mouseenter', () => {
-    if (!reduced.matches) {
+    if (!reduced.matches && document.documentElement.dataset.theme !== 'light') {
       glass.classList.remove('is-sheening');
       void glass.offsetWidth;
       glass.classList.add('is-sheening');

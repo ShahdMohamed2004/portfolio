@@ -1,0 +1,77 @@
+/* Navbar direction + rendering pass.
+   Geometry is shared between themes; only palette/effects vary by theme. */
+#siteHeader.glass > nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: clamp(12px, 2vw, 28px) !important;
+  direction: ltr !important;
+  min-width: 0 !important;
+}
+#siteHeader.glass > nav > .wordmark {
+  flex: 0 0 auto !important;
+  min-width: 0 !important;
+}
+#siteHeader.glass > nav > .nav-links {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  direction: ltr !important;
+  isolation: isolate !important;
+}
+#siteHeader.glass > nav > .nav-utility {
+  flex: 0 0 auto !important;
+  min-width: max-content !important;
+  display: flex !important;
+  align-items: center !important;
+  direction: ltr !important;
+}
+
+/* Arabic mirrors the outer groups, but keeps each group internally stable. */
+html[dir="rtl"] #siteHeader.glass > nav {
+  direction: rtl !important;
+}
+html[dir="rtl"] #siteHeader.glass > nav > .nav-links,
+html[dir="rtl"] #siteHeader.glass > nav > .nav-utility {
+  direction: rtl !important;
+}
+
+/* Keep the active object independent from text direction: JS supplies its
+   physical offset, while the containing row stays centered in both modes. */
+#siteHeader.glass .nav-links::before {
+  pointer-events: none !important;
+  will-change: transform, width !important;
+  backface-visibility: hidden !important;
+}
+#siteHeader.glass .nav-links a {
+  backface-visibility: hidden !important;
+}
+
+/* Preserve the glass appearance while avoiding a second Light Mode nav layer. */
+html[data-theme="light"] #siteHeader.glass > nav,
+html[data-theme="light"] #siteHeader.glass > nav > .nav-links {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #siteHeader.glass > nav > .nav-utility {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Keep the existing gradients, but avoid a fixed page backdrop repaint on scroll. */
+html[data-theme="light"] body {
+  background-attachment: scroll !important;
+}
+
+@media (max-width: 860px) {
+  #siteHeader.glass > nav > .nav-links { display: none !important; }
+  #siteHeader.glass > nav > .nav-utility { min-width: 0 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #siteHeader.glass .nav-links::before,
+  #siteHeader.glass .nav-links a { will-change: auto !important; }
+}
