@@ -2464,6 +2464,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 <link rel="stylesheet" href="project-rtl-fix.css?v=1.0.0">
 <link rel="stylesheet" href="floating-nav-rtl-fix.css?v=1.0.0">
 <link rel="stylesheet" href="work-timeline-parity.css?v=1.0.0">
+<link rel="stylesheet" href="navbar-motion.css?v=1.0.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3784,8 +3785,16 @@ const SITE_AR = {
     pillNav.style.setProperty('--nav-pill-x', `${itemRect.left - navRect.left}px`);
     pillNav.style.setProperty('--nav-pill-width', `${itemRect.width}px`);
     pillNav.style.setProperty('--nav-pill-opacity', '1');
-    if(immediate) pillNav.classList.add('pill-nav-instant');
-    requestAnimationFrame(() => pillNav.classList.remove('pill-nav-instant'));
+    const hasPosition = pillNav.dataset.pillReady === 'true';
+    if(!hasPosition || immediate){
+      pillNav.classList.add('pill-nav-instant');
+      requestAnimationFrame(() => {
+        pillNav.classList.remove('pill-nav-instant');
+        pillNav.dataset.pillReady = 'true';
+      });
+    }else{
+      pillNav.dataset.pillReady = 'true';
+    }
   }
   if(pillNav){
     pillNav.addEventListener('pointerover', event => {
@@ -4087,7 +4096,7 @@ const SITE_AR = {
       });
       mobileNavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
       const active = [...navLinks].find(a => a.classList.contains('active'));
-      if(active && pillNav && !pillNav.matches(':hover')) movePillNav(active, true);
+      if(active && pillNav && !pillNav.matches(':hover')) movePillNav(active);
     }
   }
 
