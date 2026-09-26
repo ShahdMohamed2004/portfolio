@@ -2450,7 +2450,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 </style>
 <link rel="stylesheet" href="enhancements.css?v=5.7.0">
-<link rel="stylesheet" href="final-polish.css?v=2.9.0">
+<link rel="stylesheet" href="final-polish.css?v=2.10.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2644,7 +2644,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </section>
 
   <!-- CREDENTIALS: education + development -->
-  <section id="credentials" class="journey-section">
+  <section id="credentials" class="journey-section education-section">
     <div class="section-head reveal">
       <span class="section-tag">qualifications</span>
       <h2>Education</h2>
@@ -3420,12 +3420,19 @@ const SITE_AR = {
     `).join('');
 
     // Education
-    document.getElementById('educationSpine').innerHTML = data.education.map(ed => `
-      <div class="entry"><details class="timeline-detail"><summary class="expandable-summary"><span class="entry-flag">${escapeHtml(ed.flag)}</span><h3>${escapeHtml(ed.title)}</h3></summary>
-        ${ed.place ? `<div class="place">${escapeHtml(ed.place)}</div>` : ''}
-        ${ed.links && ed.links.length ? `<div class="proj-links">${ed.links.map(projectLink).join('')}</div>` : ''}
-      </details></div>
-    `).join('');
+    document.getElementById('educationSpine').innerHTML = data.education.map((ed, index) => {
+      const bodyId = `education-body-${index}`;
+      return `
+      <div class="entry"><details class="timeline-detail education-card" data-education-index="${index}">
+        <summary class="expandable-summary" aria-controls="${bodyId}" aria-expanded="false">
+          <span class="entry-flag">${escapeHtml(ed.flag)}</span><h3>${escapeHtml(ed.title)}</h3>
+        </summary>
+        <div class="education-card-body" id="${bodyId}">
+          ${ed.place ? `<div class="place">${escapeHtml(ed.place)}</div>` : ''}
+          ${ed.links && ed.links.length ? `<div class="proj-links">${ed.links.map(projectLink).join('')}</div>` : ''}
+        </div>
+      </details></div>`;
+    }).join('');
 
     // Professional development
     document.getElementById('developmentGrid').innerHTML = data.development.map((d, i) => `

@@ -1988,3 +1988,135 @@ html[data-theme="light"] .expandable-summary:focus-visible::after{
 @media (prefers-reduced-motion:reduce){
   .expandable-summary::before,.expandable-summary::after{transition:none !important;}
 }
+
+/* ---------- Education-only parity pass: one card target, no timeline square ---------- */
+/* Education is intentionally isolated so other journey sections keep their established design. */
+#credentials{
+  scroll-margin-top:clamp(112px, 12vw, 136px);
+}
+#credentials > .section-head{
+  position:relative;
+  margin-bottom:clamp(28px, 4vw, 46px);
+  padding-block-start:clamp(4px, 1vw, 12px);
+}
+#credentials > .section-head .section-tag{
+  display:block;
+  position:relative;
+  margin:0 0 10px;
+  line-height:1.55;
+  overflow-wrap:anywhere;
+}
+#credentials > .section-head h2{
+  position:relative;
+  display:block;
+  margin:0;
+  line-height:1.2;
+  overflow-wrap:anywhere;
+}
+#credentials > .spine{
+  padding-inline:0 !important;
+  margin:0 !important;
+}
+#credentials > .spine::before,
+#credentials > .spine::after,
+#credentials > .spine > .entry::before{
+  display:none !important;
+}
+#credentials > .spine > .entry{
+  width:100% !important;
+  min-width:0;
+  margin:0 0 16px;
+  padding:0 !important;
+  border:1px solid var(--line-strong) !important;
+  border-radius:12px;
+  background:rgba(255,255,255,.025);
+  overflow:visible;
+  transition:border-color 220ms ease, background-color 220ms ease, box-shadow 220ms ease !important;
+}
+#credentials > .spine > .entry:last-child{margin-bottom:0;}
+#credentials > .spine > .entry:hover{transform:none !important;}
+#credentials .education-card{
+  display:block;
+  width:100%;
+  min-width:0;
+  padding:0 !important;
+}
+#credentials .education-card > .expandable-summary{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  gap:7px;
+  width:100%;
+  min-height:78px;
+  margin:0;
+  padding-block:18px !important;
+  padding-inline:20px 52px !important;
+  border-radius:inherit;
+  cursor:pointer;
+}
+#credentials .education-card > .expandable-summary .entry-flag,
+#credentials .education-card > .expandable-summary h3{
+  min-width:0;
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+#credentials .education-card > .expandable-summary .entry-flag{
+  margin:0;
+}
+#credentials .education-card > .expandable-summary h3{
+  margin:0;
+  line-height:1.35;
+}
+#credentials .education-card-body{
+  display:block;
+  min-width:0;
+  padding:0 20px 20px;
+  color:var(--chalk-dim);
+}
+#credentials .education-card[open],
+#credentials > .spine > .entry:focus-within{
+  border-color:var(--yellow) !important;
+  background:rgba(231,184,78,.035);
+}
+#credentials .education-card[open] .education-card-body{
+  animation:educationBodyIn .28s ease both;
+}
+@keyframes educationBodyIn{
+  from{opacity:0;transform:translateY(-4px)}
+  to{opacity:1;transform:none}
+}
+html[dir="rtl"] #credentials > .section-head,
+html[dir="rtl"] #credentials .education-card > .expandable-summary{
+  text-align:right !important;
+}
+html[dir="rtl"] #credentials .education-card > .expandable-summary{
+  align-items:flex-end;
+  padding-inline:52px 20px !important;
+}
+html[dir="rtl"] #credentials .education-card-body{
+  text-align:right;
+}
+@media (hover:hover) and (pointer:fine){
+  #credentials > .spine > .entry:hover,
+  #credentials > .spine > .entry:focus-within{
+    border-color:color-mix(in srgb,var(--yellow) 62%,var(--line-strong)) !important;
+    background:rgba(231,184,78,.035);
+    box-shadow:0 12px 26px -22px rgba(0,0,0,.8);
+  }
+}
+@media (max-width:767px){
+  #credentials{scroll-margin-top:clamp(104px, 23vw, 124px);}
+  #credentials > .section-head{margin-bottom:28px;padding-block-start:10px;}
+  #credentials > .spine > .entry{margin-bottom:12px;border-radius:10px;}
+  #credentials .education-card > .expandable-summary{
+    min-height:74px;
+    padding-block:15px !important;
+    padding-inline:14px 48px !important;
+  }
+  #credentials .education-card-body{padding:0 14px 16px;}
+  html[dir="rtl"] #credentials .education-card > .expandable-summary{padding-inline:48px 14px !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  #credentials .education-card[open] .education-card-body{animation:none;}
+}
