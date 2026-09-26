@@ -1905,3 +1905,149 @@ html[dir="rtl"] body,html[dir="rtl"] main,html[dir="rtl"] section,html[dir="rtl"
     line-height:1.78 !important;
   }
 }
+
+/* ---------- unified timeline geometry: airy, centered, viewport-safe ---------- */
+/* One shared axis for Work, Experience, and Education/credentials. */
+.spine{
+  --timeline-gutter:40px;
+  --timeline-marker-size:10px;
+  position:relative !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  box-sizing:border-box !important;
+  margin-inline:0 !important;
+  padding-inline-start:var(--timeline-gutter) !important;
+  padding-inline-end:0 !important;
+  overflow:visible !important;
+}
+.spine::before{
+  inset-inline-start:calc((var(--timeline-marker-size) - 2px) / 2) !important;
+  inset-inline-end:auto !important;
+  top:0 !important;
+  bottom:0 !important;
+  width:2px !important;
+  min-height:100% !important;
+}
+.spine::after{
+  inset-inline-start:calc((var(--timeline-marker-size) - 2px) / 2) !important;
+  inset-inline-end:auto !important;
+  top:0 !important;
+  width:2px !important;
+}
+.spine > .entry{
+  position:relative !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  box-sizing:border-box !important;
+  margin-block:0 18px !important;
+  margin-inline:0 !important;
+  padding-inline:0 !important;
+  overflow:visible !important;
+}
+.spine > .entry:last-child{margin-block-end:0 !important;}
+.spine > .entry::before{
+  inset-inline-start:calc(-1 * var(--timeline-gutter)) !important;
+  inset-inline-end:auto !important;
+  top:24px !important;
+  width:var(--timeline-marker-size) !important;
+  height:var(--timeline-marker-size) !important;
+  box-sizing:border-box !important;
+  transform:translateZ(0) !important;
+  z-index:2 !important;
+}
+.spine > .entry > .timeline-detail,
+.spine > .entry > .project-details{
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  margin:0 !important;
+  box-sizing:border-box !important;
+  overflow:visible !important;
+}
+.spine > .entry > .timeline-detail > summary{
+  min-height:82px !important;
+  box-sizing:border-box !important;
+  padding-block:19px !important;
+  padding-inline:18px 54px !important;
+  gap:10px !important;
+  align-items:center !important;
+}
+.spine > .entry > .timeline-detail > summary h3{
+  min-width:0 !important;
+  margin:0 !important;
+  line-height:1.45 !important;
+}
+.spine > .entry > .timeline-detail > :not(summary){
+  box-sizing:border-box !important;
+  width:100% !important;
+  max-width:100% !important;
+  padding-inline:18px !important;
+}
+.spine > .entry > .timeline-detail > .place{
+  padding-block:0 19px !important;
+  line-height:1.72 !important;
+}
+.spine > .entry > .timeline-detail > .proj-links{
+  padding-block:0 18px !important;
+  margin-block-start:0 !important;
+}
+html[dir="rtl"] .spine{
+  padding-inline-start:0 !important;
+  padding-inline-end:var(--timeline-gutter) !important;
+}
+html[dir="rtl"] .spine::before,
+html[dir="rtl"] .spine::after{
+  inset-inline-start:auto !important;
+  inset-inline-end:calc((var(--timeline-marker-size) - 2px) / 2) !important;
+}
+html[dir="rtl"] .spine > .entry::before{
+  inset-inline-start:auto !important;
+  inset-inline-end:calc(-1 * var(--timeline-gutter)) !important;
+}
+html[dir="rtl"] .spine > .entry > .timeline-detail > summary{
+  padding-inline:18px 54px !important;
+}
+
+@media (max-width:767px){
+  .spine{
+    --timeline-gutter:40px;
+    --timeline-marker-size:10px;
+    width:calc(100% - 16px) !important;
+    margin-inline:8px !important;
+    padding-inline-start:var(--timeline-gutter) !important;
+    padding-inline-end:0 !important;
+  }
+  html[dir="rtl"] .spine{
+    padding-inline-start:0 !important;
+    padding-inline-end:var(--timeline-gutter) !important;
+  }
+  .spine > .entry{margin-block-end:18px !important;}
+  .spine > .entry::before{top:25px !important;}
+  .spine > .entry > .timeline-detail > summary{
+    min-height:88px !important;
+    padding-block:20px !important;
+    padding-inline:16px 54px !important;
+    border-radius:16px !important;
+  }
+  html[dir="rtl"] .spine > .entry > .timeline-detail > summary{padding-inline:16px 54px !important;}
+  .spine > .entry > .timeline-detail > summary h3{line-height:1.48 !important;}
+  .spine > .entry > .timeline-detail > :not(summary){padding-inline:16px !important;}
+  .spine > .entry > .timeline-detail > .place{padding-block:0 20px !important;line-height:1.78 !important;}
+  .spine > .entry > .timeline-detail > .proj-links{padding-block:0 18px !important;}
+}
+@media (max-width:380px){
+  .spine{
+    --timeline-gutter:36px;
+    width:calc(100% - 12px) !important;
+    margin-inline:6px !important;
+  }
+  .spine > .entry > .timeline-detail > summary{padding-inline:14px 50px !important;}
+  .spine > .entry > .timeline-detail > :not(summary){padding-inline:14px !important;}
+}
+@media (min-width:768px){
+  .spine > .entry > .timeline-detail > summary{padding-inline:20px 56px !important;}
+  .spine > .entry > .timeline-detail > :not(summary){padding-inline:20px !important;}
+}
