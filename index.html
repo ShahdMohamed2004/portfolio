@@ -2450,7 +2450,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 </style>
 <link rel="stylesheet" href="enhancements.css?v=5.7.0">
-<link rel="stylesheet" href="final-polish.css?v=2.8.0">
+<link rel="stylesheet" href="final-polish.css?v=2.9.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3341,6 +3341,13 @@ const SITE_AR = {
     setupIndependentDetails('#whatIDoGrid > details');
     setupIndependentDetails('#howITeachGrid > details');
     setupIndependentDetails('#developmentGrid > details');
+    // Keep every rendered summary's accessibility state tied to native details state.
+    document.querySelectorAll('details > summary.expandable-summary').forEach(summary => {
+      const details = summary.parentElement;
+      const sync = () => summary.setAttribute('aria-expanded', String(details.open));
+      details.addEventListener('toggle', sync);
+      sync();
+    });
     const updateProjectFilter = (filter = 'all', shouldScroll = true) => {
       const allowedFilters = new Set(['all','research','edtech','design','teaching']);
       if(!allowedFilters.has(filter)) filter = 'all';

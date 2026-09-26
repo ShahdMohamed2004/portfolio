@@ -1105,92 +1105,6 @@ html[data-theme="light"] #credentials .timeline-detail > summary::after{
 }
 
 
-/* ---------- shared expandable control: one source of truth for every card ---------- */
-/* All native details summaries opt into this class from the renderer above. */
-.expandable-summary{
-  position:relative !important;
-  box-sizing:border-box !important;
-  padding-inline-end:54px !important;
-  padding-inline-start:14px !important;
-}
-html[dir="rtl"] .expandable-summary{
-  padding-inline-start:54px !important;
-  padding-inline-end:14px !important;
-}
-.expandable-summary::after{
-  content:"+" !important;
-  position:absolute !important;
-  inset-inline-end:14px !important;
-  inset-inline-start:auto !important;
-  inset-block-start:50% !important;
-  display:grid !important;
-  place-items:center !important;
-  box-sizing:border-box !important;
-  width:30px !important;
-  height:30px !important;
-  min-width:30px !important;
-  min-height:30px !important;
-  margin:0 !important;
-  padding:0 !important;
-  border:1px solid color-mix(in srgb,var(--line-strong) 78%,transparent) !important;
-  border-radius:10px !important;
-  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.022)) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.095),0 7px 18px -14px rgba(0,0,0,.68) !important;
-  -webkit-backdrop-filter:blur(8px) !important;
-  backdrop-filter:blur(8px) !important;
-  color:var(--yellow) !important;
-  font-family:var(--font-body) !important;
-  font-size:1.08rem !important;
-  font-weight:400 !important;
-  line-height:30px !important;
-  text-align:center !important;
-  opacity:.94 !important;
-  transform:translateY(-50%) !important;
-  transform-origin:center !important;
-  transition:transform .18s cubic-bezier(.23,1,.32,1),opacity .18s ease,background-color .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease !important;
-}
-.expandable-summary[aria-expanded="true"]::after,
-details[open] > .expandable-summary::after{
-  content:"−" !important;
-  transform:translateY(-50%) !important;
-}
-@media (hover:hover) and (pointer:fine){
-  .expandable-summary:hover::after,
-  .expandable-summary:focus-visible::after{
-    opacity:1 !important;
-    border-color:color-mix(in srgb,var(--yellow) 58%,var(--line-strong)) !important;
-    background:rgba(231,184,78,.105) !important;
-    color:var(--chalk) !important;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 9px 20px -14px rgba(231,184,78,.58) !important;
-    transform:translateY(-50%) scale(1.035) !important;
-  }
-}
-@media (hover:none), (pointer:coarse){
-  .expandable-summary:active::after,
-  .expandable-summary:focus::after{
-    transform:translateY(-50%) !important;
-  }
-}
-html[data-theme="light"] .expandable-summary::after{
-  border-color:rgba(61,100,116,.25) !important;
-  background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(224,237,239,.34)) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 7px 18px -14px rgba(43,76,91,.30) !important;
-  color:#9a762b !important;
-}
-html[data-theme="light"] .expandable-summary:is(:hover,:focus-visible)::after{
-  border-color:rgba(121,90,35,.42) !important;
-  background:rgba(197,155,76,.12) !important;
-  color:#263936 !important;
-}
-@media (max-width:767px){
-  .expandable-summary{padding-inline-end:56px !important;padding-inline-start:14px !important;}
-  html[dir="rtl"] .expandable-summary{padding-inline-start:56px !important;padding-inline-end:14px !important;}
-  .expandable-summary::after{inset-inline-end:14px !important;width:30px !important;height:30px !important;min-width:30px !important;min-height:30px !important;}
-  html[dir="rtl"] .expandable-summary::after{inset-inline-start:14px !important;inset-inline-end:auto !important;}
-}
-@media (prefers-reduced-motion:reduce){.expandable-summary::after{transition:none !important;}}
-
-
 /* ---------- light-only About glass refinement ---------- */
 /* Scope is intentionally limited to #about; Dark Mode and every other card keep
    their existing surfaces, colors, borders, shadows, and interactions. */
@@ -1793,73 +1707,6 @@ html[dir="rtl"] #workSpine .featured-case-copy p{
 }
 
 
-/* ---------- minimal expand indicator + global editorial alignment ---------- */
-/* The hit area stays generous; only the glyph is visible. */
-.expandable-summary{
-  position:relative !important;
-  padding-inline-end:52px !important;
-  padding-inline-start:14px !important;
-  text-align:start !important;
-}
-html[dir="rtl"] .expandable-summary{padding-inline-start:52px !important;padding-inline-end:14px !important;}
-.expandable-summary::after{
-  content:"+" !important;
-  position:absolute !important;
-  inset-inline-end:10px !important;
-  inset-inline-start:auto !important;
-  inset-block-start:50% !important;
-  display:grid !important;
-  place-items:center !important;
-  width:34px !important;
-  height:40px !important;
-  min-width:34px !important;
-  min-height:40px !important;
-  box-sizing:border-box !important;
-  margin:0 !important;
-  padding:0 !important;
-  border:0 !important;
-  border-radius:0 !important;
-  background:transparent !important;
-  box-shadow:none !important;
-  -webkit-backdrop-filter:none !important;
-  backdrop-filter:none !important;
-  color:color-mix(in srgb,var(--yellow) 82%,var(--chalk-dim)) !important;
-  font-family:var(--font-body) !important;
-  font-size:1.18rem !important;
-  font-weight:400 !important;
-  line-height:1 !important;
-  text-align:center !important;
-  opacity:.78 !important;
-  transform:translateY(-50%) rotate(0deg) !important;
-  transform-origin:center !important;
-  transition:opacity .22s ease,color .22s ease,transform .28s cubic-bezier(.23,1,.32,1),text-shadow .22s ease !important;
-}
-html[dir="rtl"] .expandable-summary::after{inset-inline-start:10px !important;inset-inline-end:auto !important;}
-.expandable-summary[aria-expanded="true"]::after,
-details[open] > .expandable-summary::after{
-  content:"−" !important;
-  opacity:.94 !important;
-  transform:translateY(-50%) rotate(180deg) !important;
-}
-@media (hover:hover) and (pointer:fine){
-  .expandable-summary:hover::after,
-  .expandable-summary:focus-visible::after{
-    opacity:1 !important;
-    color:var(--yellow) !important;
-    text-shadow:0 0 12px rgba(231,184,78,.28) !important;
-    transform:translateY(-50%) scale(1.04) !important;
-  }
-  .expandable-summary[aria-expanded="true"]:hover::after,
-  details[open] > .expandable-summary:focus-visible::after{transform:translateY(-50%) rotate(180deg) scale(1.04) !important;}
-}
-@media (max-width:767px){
-  .expandable-summary{padding-inline-end:54px !important;padding-inline-start:14px !important;}
-  html[dir="rtl"] .expandable-summary{padding-inline-start:54px !important;padding-inline-end:14px !important;}
-  .expandable-summary::after{inset-inline-end:8px !important;width:38px !important;height:44px !important;font-size:1.14rem !important;}
-  html[dir="rtl"] .expandable-summary::after{inset-inline-start:8px !important;inset-inline-end:auto !important;}
-}
-@media (prefers-reduced-motion:reduce){.expandable-summary::after{transition:none !important;transform:translateY(-50%) !important;}.expandable-summary[aria-expanded="true"]::after,details[open] > .expandable-summary::after{transform:translateY(-50%) !important;}}
-
 /* =========================================
    GLOBAL TEXT JUSTIFICATION
    Body copy is justified; compact UI controls are reset below.
@@ -2052,119 +1899,92 @@ html[dir="rtl"] .spine > .entry > .timeline-detail > summary{
   .spine > .entry > .timeline-detail > :not(summary){padding-inline:20px !important;}
 }
 
-/* ---------- reference expand control: adaptive soft glass tile ---------- */
-/* The control keeps one shared position, while each card family gets a
-   proportionate size so the indicator never overwhelms its content. */
+/* ---------- unified expandable control: minimal, stable, accessible ---------- */
+/* Native <details> owns visibility; the marker is drawn from two aligned lines. */
+details:not([open]) > :not(summary){display:none !important;}
+
 .expandable-summary{
-  --expand-control-size:32px;
-  --expand-control-radius:11px;
   position:relative !important;
-  padding-inline-end:calc(var(--expand-control-size) + 26px) !important;
-  padding-inline-start:14px !important;
-}
-html[dir="rtl"] .expandable-summary{padding-inline-start:calc(var(--expand-control-size) + 26px) !important;padding-inline-end:14px !important;}
-.expandable-summary::after{
-  content:"+" !important;
-  position:absolute !important;
-  inset-inline-end:14px !important;
-  inset-inline-start:auto !important;
-  inset-block-start:50% !important;
-  display:grid !important;
-  place-items:center !important;
-  width:var(--expand-control-size) !important;
-  height:var(--expand-control-size) !important;
-  min-width:var(--expand-control-size) !important;
-  min-height:var(--expand-control-size) !important;
   box-sizing:border-box !important;
+  padding-inline-end:50px !important;
+  padding-inline-start:14px !important;
+  text-align:start !important;
+}
+html[dir="rtl"] .expandable-summary{
+  padding-inline-start:50px !important;
+  padding-inline-end:14px !important;
+}
+.expandable-summary::before,
+.expandable-summary::after{
+  content:"" !important;
+  position:absolute !important;
+  inset-block-start:50% !important;
+  z-index:2 !important;
+  display:block !important;
   margin:0 !important;
   padding:0 !important;
-  border:1px solid rgba(217,181,106,.24) !important;
-  border-radius:var(--expand-control-radius) !important;
-  background:linear-gradient(145deg,rgba(217,181,106,.095),rgba(255,255,255,.035)) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 8px 18px -15px rgba(0,0,0,.65) !important;
-  -webkit-backdrop-filter:blur(8px) !important;
-  backdrop-filter:blur(8px) !important;
-  color:var(--yellow) !important;
-  font-family:var(--font-body) !important;
-  font-size:clamp(.92rem,calc(var(--expand-control-size) * .43),1.12rem) !important;
-  font-weight:400 !important;
-  line-height:1 !important;
-  text-align:center !important;
-  opacity:.90 !important;
-  transform:translateY(-50%) rotate(0deg) !important;
+  border:0 !important;
+  border-radius:999px !important;
+  background:var(--text-accent, var(--yellow)) !important;
+  box-shadow:none !important;
+  pointer-events:none !important;
   transform-origin:center !important;
-  transition:opacity .22s ease,color .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease,transform .28s cubic-bezier(.23,1,.32,1) !important;
+  transition:transform 360ms cubic-bezier(.4,0,.2,1), opacity 220ms ease, background-color 220ms ease !important;
 }
-html[dir="rtl"] .expandable-summary::after{inset-inline-start:14px !important;inset-inline-end:auto !important;}
-.expandable-summary[aria-expanded="true"]::after,
-details[open] > .expandable-summary::after{
-  content:"−" !important;
-  opacity:.96 !important;
-  transform:translateY(-50%) rotate(180deg) !important;
+/* Both lines share one center point; the summary itself remains the hit area. */
+.expandable-summary::after{
+  inset-inline-end:14px !important;
+  width:18px !important;
+  height:2px !important;
+  transform:translateY(-50%) !important;
+}
+.expandable-summary::before{
+  inset-inline-end:22px !important;
+  width:2px !important;
+  height:18px !important;
+  transform:translate(50%,-50%) scaleY(1) !important;
+}
+.expandable-summary[aria-expanded="true"]::before,
+details[open] > .expandable-summary::before{
+  opacity:0 !important;
+  transform:translate(50%,-50%) scaleY(0) rotate(90deg) !important;
 }
 @media (hover:hover) and (pointer:fine){
+  .expandable-summary:hover::before,
+  .expandable-summary:hover::after,
+  .expandable-summary:focus-visible::before,
+  .expandable-summary:focus-visible::after{
+    background:var(--chalk) !important;
+  }
   .expandable-summary:hover::after,
   .expandable-summary:focus-visible::after{
-    color:var(--chalk) !important;
-    border-color:rgba(231,184,78,.50) !important;
-    background:linear-gradient(145deg,rgba(231,184,78,.16),rgba(255,255,255,.06)) !important;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 9px 20px -14px rgba(231,184,78,.42) !important;
-    transform:translateY(-50%) scale(1.035) !important;
+    transform:translateY(-50%) scaleX(1.08) !important;
   }
-  .expandable-summary[aria-expanded="true"]:hover::after,
-  details[open] > .expandable-summary:focus-visible::after{transform:translateY(-50%) rotate(180deg) scale(1.035) !important;}
+  .expandable-summary:hover::before,
+  .expandable-summary:focus-visible::before{
+    transform:translate(50%,-50%) scaleY(1.08) !important;
+  }
+  .expandable-summary[aria-expanded="true"]:hover::before,
+  details[open] > .expandable-summary:focus-visible::before{
+    transform:translate(50%,-50%) scaleY(0) rotate(90deg) !important;
+  }
 }
-/* Proportionate control sizes by card family. */
-.project-details > .expandable-summary{--expand-control-size:34px;--expand-control-radius:12px;}
-.timeline-detail > .expandable-summary{--expand-control-size:30px;--expand-control-radius:10px;}
-.accordion-card > .expandable-summary{--expand-control-size:31px;--expand-control-radius:11px;}
-#developmentGrid .accordion-card > .expandable-summary{--expand-control-size:30px;}
-@media (max-width:767px){
-  .expandable-summary{padding-inline-end:calc(var(--expand-control-size) + 24px) !important;padding-inline-start:14px !important;}
-  html[dir="rtl"] .expandable-summary{padding-inline-start:calc(var(--expand-control-size) + 24px) !important;padding-inline-end:14px !important;}
-  .expandable-summary::after{inset-inline-end:12px !important;}
-  html[dir="rtl"] .expandable-summary::after{inset-inline-start:12px !important;inset-inline-end:auto !important;}
-  .project-details > .expandable-summary{--expand-control-size:32px;}
-  .timeline-detail > .expandable-summary{--expand-control-size:30px;}
-  .accordion-card > .expandable-summary{--expand-control-size:30px;}
-}
-@media (max-width:380px){
-  .expandable-summary::after{inset-inline-end:10px !important;}
-  html[dir="rtl"] .expandable-summary::after{inset-inline-start:10px !important;inset-inline-end:auto !important;}
-  .expandable-summary{padding-inline-end:calc(var(--expand-control-size) + 20px) !important;}
-  html[dir="rtl"] .expandable-summary{padding-inline-start:calc(var(--expand-control-size) + 20px) !important;}
-}
+html[data-theme="light"] .expandable-summary::before,
 html[data-theme="light"] .expandable-summary::after{
-  border-color:rgba(121,90,35,.25) !important;
-  background:linear-gradient(145deg,rgba(197,155,76,.10),rgba(255,255,255,.62)) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.88),0 8px 18px -15px rgba(43,76,91,.28) !important;
-  color:#9a762b !important;
+  background:#805f25 !important;
 }
-
-/* Explicit family dimensions keep legacy flex rules from collapsing the tile. */
-#whatIDoGrid .expandable-summary::after,
-#howITeachGrid .expandable-summary::after{width:31px !important;height:31px !important;min-width:31px !important;min-height:31px !important;position:absolute !important;inset-inline-end:14px !important;inset-inline-start:auto !important;}
-#developmentGrid .expandable-summary::after{width:30px !important;height:30px !important;min-width:30px !important;min-height:30px !important;position:absolute !important;inset-inline-end:14px !important;inset-inline-start:auto !important;}
-#workSpine .project-details > .expandable-summary::after{width:34px !important;height:34px !important;min-width:34px !important;min-height:34px !important;position:absolute !important;inset-inline-end:14px !important;inset-inline-start:auto !important;}
-#experienceSpine .timeline-detail > .expandable-summary::after,
-#credentials .timeline-detail > .expandable-summary::after{width:30px !important;height:30px !important;min-width:30px !important;min-height:30px !important;position:absolute !important;inset-inline-end:14px !important;inset-inline-start:auto !important;}
-html[dir="rtl"] #whatIDoGrid .expandable-summary::after,
-html[dir="rtl"] #howITeachGrid .expandable-summary::after,
-html[dir="rtl"] #developmentGrid .expandable-summary::after,
-html[dir="rtl"] #workSpine .project-details > .expandable-summary::after,
-html[dir="rtl"] #experienceSpine .timeline-detail > .expandable-summary::after,
-html[dir="rtl"] #credentials .timeline-detail > .expandable-summary::after{inset-inline-start:14px !important;inset-inline-end:auto !important;}
+html[data-theme="light"] .expandable-summary:hover::before,
+html[data-theme="light"] .expandable-summary:hover::after,
+html[data-theme="light"] .expandable-summary:focus-visible::before,
+html[data-theme="light"] .expandable-summary:focus-visible::after{
+  background:#263936 !important;
+}
 @media (max-width:767px){
-  #whatIDoGrid .expandable-summary::after,
-  #howITeachGrid .expandable-summary::after{inset-inline-end:12px !important;}
-  #developmentGrid .expandable-summary::after{inset-inline-end:12px !important;}
-  #workSpine .project-details > .expandable-summary::after{width:32px !important;height:32px !important;min-width:32px !important;min-height:32px !important;inset-inline-end:12px !important;}
-  #experienceSpine .timeline-detail > .expandable-summary::after,
-  #credentials .timeline-detail > .expandable-summary::after{inset-inline-end:12px !important;}
-  html[dir="rtl"] #whatIDoGrid .expandable-summary::after,
-  html[dir="rtl"] #howITeachGrid .expandable-summary::after,
-  html[dir="rtl"] #developmentGrid .expandable-summary::after,
-  html[dir="rtl"] #workSpine .project-details > .expandable-summary::after,
-  html[dir="rtl"] #experienceSpine .timeline-detail > .expandable-summary::after,
-  html[dir="rtl"] #credentials .timeline-detail > .expandable-summary::after{inset-inline-start:12px !important;inset-inline-end:auto !important;}
+  .expandable-summary{padding-inline-end:50px !important;padding-inline-start:14px !important;}
+  html[dir="rtl"] .expandable-summary{padding-inline-start:50px !important;padding-inline-end:14px !important;}
+  .expandable-summary::after{inset-inline-end:12px !important;}
+  .expandable-summary::before{inset-inline-end:20px !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  .expandable-summary::before,.expandable-summary::after{transition:none !important;}
 }
