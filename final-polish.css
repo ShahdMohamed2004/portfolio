@@ -2418,3 +2418,66 @@ html[dir="ltr"] .mobile-menu.is-swiping{
 @media (prefers-reduced-motion:reduce){
   html[dir="rtl"] #work .work-filters::after{transition:none !important;}
 }
+
+/* ---------- Hero restoration: preserve the original complete experience ----------
+   The editorial color pass accidentally hid the functional Hero assembly. Keep
+   the atmosphere, but restore the existing note, swatches, CTAs, lanyard and
+   scroll-linked timeline instead of replacing them with a text-only surface. */
+#home.hero.shahd-badge-hero{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.2fr) minmax(320px,.9fr) !important;
+  grid-template-areas:
+    'note badge'
+    'swatches badge'
+    'headline badge'
+    'lead badge'
+    'actions badge'
+    'credentials credentials'
+    'timeline timeline' !important;
+  column-gap:clamp(24px,4vw,64px) !important;
+  row-gap:0 !important;
+  align-items:start !important;
+  justify-content:stretch !important;
+  min-height:0 !important;
+  overflow:visible !important;
+  padding-block:clamp(112px,12vh,164px) clamp(64px,8vh,108px) !important;
+}
+#home.hero .hero-note{display:block !important;grid-area:note !important;align-self:start !important;margin:0 0 18px !important;}
+#home.hero .hero-swatches{display:flex !important;grid-area:swatches !important;align-self:start !important;margin:0 0 clamp(24px,3vw,38px) !important;padding:0 !important;}
+#home.hero .hero-editorial-headline{grid-area:headline !important;align-self:start !important;margin:0 0 clamp(24px,3.4vw,40px) !important;}
+#home.hero #heroLead{display:block !important;grid-area:lead !important;align-self:start !important;margin:0 0 clamp(24px,3vw,34px) !important;}
+#home.hero .cta-row{display:flex !important;grid-area:actions !important;align-self:start !important;flex-wrap:wrap !important;gap:10px !important;margin:0 !important;}
+#home.hero .hero-action{display:inline-flex !important;}
+#home.hero .shahd-badge-mount{display:block !important;grid-area:badge !important;align-self:start !important;visibility:visible !important;opacity:1 !important;transform:none !important;width:min(100%,440px) !important;height:500px !important;margin:0 auto !important;}
+#home.hero .credential-strip{display:flex !important;grid-area:credentials !important;visibility:visible !important;opacity:1 !important;}
+#home.hero .tense-diagram{display:block !important;grid-area:timeline !important;visibility:visible !important;opacity:1 !important;}
+#home.hero::after{pointer-events:none !important;}
+#about{border-top:0 !important;box-shadow:none !important;}
+@media (max-width:899px) and (min-width:768px){
+  #home.hero.shahd-badge-hero{grid-template-columns:minmax(0,1fr) minmax(270px,.72fr) !important;column-gap:20px !important;}
+  #home.hero .shahd-badge-mount{width:min(100%,340px) !important;}
+}
+@media (max-width:767px){
+  #home.hero.shahd-badge-hero{
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-areas:'note' 'swatches' 'headline' 'lead' 'actions' 'badge' 'timeline' 'credentials' !important;
+    gap:0 !important;
+    min-height:0 !important;
+    padding-block:clamp(104px,25vw,140px) clamp(44px,10vw,72px) !important;
+    overflow:visible !important;
+  }
+  #home.hero .hero-note{margin-bottom:18px !important;}
+  #home.hero .hero-swatches{margin:0 0 28px !important;gap:9px !important;}
+  #home.hero .hero-editorial-headline{margin-bottom:24px !important;}
+  #home.hero #heroLead{margin-bottom:24px !important;}
+  #home.hero .cta-row{display:grid !important;grid-template-columns:minmax(0,1fr) !important;gap:10px !important;width:100% !important;margin:0 !important;}
+  #home.hero .cta-row #btnCV,
+  #home.hero .cta-row #btnLinkedin,
+  #home.hero .cta-row #btnWork{display:inline-flex !important;width:100% !important;min-height:50px !important;grid-column:1 !important;}
+  #home.hero .shahd-badge-mount{width:min(100%,420px) !important;height:400px !important;margin:18px auto 0 !important;}
+  #home.hero .tense-diagram{width:100% !important;margin-top:24px !important;}
+  #home.hero .credential-strip{width:100% !important;margin-top:24px !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  #home.hero .shahd-badge-mount{transform:none !important;}
+}
