@@ -258,6 +258,8 @@
         return;
       } finally { clearTimeout(decodeTimeout); }
       if (ticket !== this.run || !this.dialog.open) return;
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (ticket !== this.run || !this.dialog.open) return;
       this.documentView.style.setProperty('--cvp-image-width', `${this.picture.naturalWidth}px`);
       this.state = 'printing';
       this.stage.dataset.state = 'printing';
