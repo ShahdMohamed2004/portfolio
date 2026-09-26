@@ -3984,3 +3984,52 @@ html[data-theme="light"] :is(.mobile-menu>a[data-nav],.mobile-menu-utility>a):is
   html[data-theme="light"] #siteHeader .lang-toggle{padding-inline:2px;font-size:10px;}
   html[data-theme="light"] #siteHeader .wordmark{flex-shrink:0;font-size:12.5px;letter-spacing:-.02em;}
 }
+
+/* ---------- targeted responsive refinement: card state, mobile rhythm, and quiet glass ---------- */
+@media (max-width:767px){
+  main.wrap > section:not(#home){padding-inline:clamp(2px,1vw,8px);}
+  #whatIDoGrid,#howITeachGrid,.materials-grid,.dev-grid{width:100%;padding-inline:2px;}
+  #howITeachGrid .accordion-card summary{
+    display:flex;align-items:center;gap:clamp(7px,2.5vw,12px);
+    font-size:clamp(.91rem,3.7vw,1rem);letter-spacing:-.008em;line-height:1.35;
+    padding-inline:clamp(12px,3.8vw,16px);
+  }
+  #howITeachGrid .accordion-card summary .num{flex:0 0 2.15em;margin-inline:0;}
+  #howITeachGrid .accordion-card .accordion-body{padding-inline:clamp(14px,4vw,18px);}
+  /* Paint containment can eat the first pixels of a translated reveal on
+     narrow viewports; layout containment keeps flow stable without clipping. */
+  .accordion-card.reveal-item,.material-card.reveal-item,.entry.reveal-item{contain:layout;will-change:opacity,transform;}
+}
+@media (max-width:380px){
+  #howITeachGrid .accordion-card summary{font-size:.88rem;gap:7px;}
+  #howITeachGrid .accordion-card summary .num{flex-basis:2em;}
+}
+
+/* The About panel remains glass, but no longer reads as a bright spotlight. */
+html:not([data-theme="light"]) #about .about-card{
+  background:radial-gradient(120% 110% at 0% 0%,rgba(112,207,224,.035),transparent 56%),linear-gradient(145deg,rgba(36,86,67,.42),rgba(14,39,31,.34)) !important;
+  box-shadow:0 18px 42px -34px rgba(0,0,0,.72),inset 0 1px 0 rgba(255,255,255,.055) !important;
+}
+html[data-theme="light"] #about .about-card{
+  background:radial-gradient(120% 110% at 0% 0%,rgba(91,190,211,.055),transparent 56%),linear-gradient(145deg,rgba(255,255,255,.66),rgba(239,247,248,.54)) !important;
+  box-shadow:0 20px 46px -36px rgba(45,82,78,.38),inset 0 1px 0 rgba(255,255,255,.78) !important;
+}
+
+/* One restrained reveal hierarchy: label, heading, then supporting copy. */
+@media (prefers-reduced-motion:no-preference){
+  section.reveal .section-head .section-tag,section.reveal .section-head h2,
+  section.reveal .section-head::after,section.reveal .section-lead{
+    transition:opacity .42s ease,transform .52s cubic-bezier(.23,1,.32,1),width .52s cubic-bezier(.23,1,.32,1);
+  }
+  section.reveal:not(.in-view) .section-head .section-tag,
+  section.reveal:not(.in-view) .section-head h2,section.reveal:not(.in-view) .section-lead{opacity:0;transform:translateY(8px);}
+  section.reveal:not(.in-view) .section-head::after{width:0;opacity:.35;}
+  section.reveal.in-view .section-head h2{transition-delay:.06s;}
+  section.reveal.in-view .section-lead{transition-delay:.12s;}
+}
+@media (prefers-reduced-motion:reduce){
+  section.reveal .section-head .section-tag,section.reveal .section-head h2,
+  section.reveal .section-head::after,section.reveal .section-lead,.reveal,.reveal-item{
+    opacity:1 !important;transform:none !important;transition:none !important;animation:none !important;
+  }
+}
