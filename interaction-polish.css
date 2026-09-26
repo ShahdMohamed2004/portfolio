@@ -1,0 +1,122 @@
+/* Navbar interaction refinement: quiet green glass, no loud gold hover states. */
+
+.where-am-i {
+  top: 78px !important;
+  inset-inline-end: clamp(24px, 4vw, 58px) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px !important;
+  border: 1px solid rgba(213, 238, 224, 0.18);
+  border-radius: 999px;
+  background: rgba(16, 47, 37, 0.42);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 8px 20px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  transition: opacity 0.35s ease, background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.where-am-i strong,
+.where-am-i #whereAmILabel {
+  color: rgba(216, 239, 224, 0.82) !important;
+  font-weight: 500;
+}
+
+.where-am-i #whereAmINumber { color: rgba(240, 248, 242, 0.58); }
+
+.where-am-i.is-visible { transform: translateY(2px); }
+
+#siteHeader.glass :is(a, button):hover,
+#siteHeader.glass :is(a, button):focus-visible {
+  color: var(--glass-text) !important;
+  border-color: rgba(213, 238, 224, 0.28) !important;
+  background: rgba(181, 224, 199, 0.10) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 5px 14px rgba(15, 62, 45, 0.12) !important;
+  text-shadow: none !important;
+}
+
+#siteHeader.glass :is(a, button):focus-visible {
+  outline: 2px solid rgba(213, 238, 224, 0.62) !important;
+  outline-offset: 2px !important;
+}
+
+#siteHeader.glass .nav-links a::after,
+#siteHeader.glass .nav-utility a::after { background: rgba(213, 238, 224, 0.52) !important; }
+
+#siteHeader.glass .nav-links a.active {
+  background: rgba(181, 224, 199, 0.11) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+#siteHeader.glass :is(.icon-link, .lang-toggle, .theme-toggle, .hamburger):hover,
+#siteHeader.glass :is(.icon-link, .lang-toggle, .theme-toggle, .hamburger):focus-visible {
+  transform: none !important;
+}
+
+html[data-theme="light"] #siteHeader.glass :is(a, button):hover,
+html[data-theme="light"] #siteHeader.glass :is(a, button):focus-visible {
+  color: #205746 !important;
+  border-color: rgba(65, 126, 101, 0.30) !important;
+  background: rgba(142, 194, 165, 0.16) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48), 0 5px 14px rgba(35, 92, 68, 0.10) !important;
+}
+
+html[data-theme="light"] #siteHeader.glass :is(a, button):focus-visible {
+  outline-color: rgba(65, 126, 101, 0.56) !important;
+}
+
+html[data-theme="light"] .where-am-i {
+  color: rgba(33, 83, 65, 0.72);
+  border-color: rgba(65, 126, 101, 0.22);
+  background: rgba(236, 247, 240, 0.64);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70), 0 8px 20px rgba(35, 92, 68, 0.10);
+}
+html[data-theme="light"] .where-am-i strong,
+html[data-theme="light"] .where-am-i #whereAmILabel { color: #2d765a !important; }
+html[data-theme="light"] .where-am-i #whereAmINumber { color: rgba(45, 103, 79, 0.58); }
+
+/* Shared page controls use the navbar's muted green glass language on hover. */
+:is(.hero-action, .work-filter, .featured-case-toggle, .featured-case-toggle-icon,
+    .btn-text, .mobile-menu a, .mobile-menu-close):hover,
+:is(.hero-action, .work-filter, .featured-case-toggle, .featured-case-toggle-icon,
+    .btn-text, .mobile-menu a, .mobile-menu-close):focus-visible {
+  color: var(--chalk) !important;
+  border-color: rgba(213, 238, 224, 0.28) !important;
+  background: rgba(181, 224, 199, 0.09) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), 0 8px 20px rgba(15, 62, 45, 0.10) !important;
+  text-decoration-color: rgba(213, 238, 224, 0.44) !important;
+  transition: color 0.28s ease, background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease !important;
+}
+
+:is(.hero-action-primary, .work-filter[aria-pressed="true"]):hover,
+:is(.hero-action-primary, .work-filter[aria-pressed="true"]):focus-visible {
+  color: var(--chalk) !important;
+  background: rgba(181, 224, 199, 0.15) !important;
+  border-color: rgba(213, 238, 224, 0.34) !important;
+}
+
+html[data-theme="light"] :is(.hero-action, .work-filter, .featured-case-toggle, .featured-case-toggle-icon,
+    .btn-text, .mobile-menu a, .mobile-menu-close):hover,
+html[data-theme="light"] :is(.hero-action, .work-filter, .featured-case-toggle, .featured-case-toggle-icon,
+    .btn-text, .mobile-menu a, .mobile-menu-close):focus-visible {
+  color: #245640 !important;
+  border-color: rgba(65, 126, 101, 0.30) !important;
+  background: rgba(142, 194, 165, 0.15) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52), 0 8px 20px rgba(35, 92, 68, 0.09) !important;
+  text-decoration-color: rgba(65, 126, 101, 0.46) !important;
+}
+
+@media (max-width: 767px) {
+  .where-am-i {
+    top: 62px !important;
+    inset-inline-end: 18px !important;
+    padding: 5px 9px !important;
+    font-size: 0.56rem !important;
+    gap: 5px;
+  }
+  .where-am-i.is-visible { transform: translateY(1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .where-am-i { transition: opacity 0.2s ease; }
+}
