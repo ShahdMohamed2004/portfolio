@@ -1,225 +1,29 @@
-/* Unified performance pass: short, composited motion and stable type metrics. */
-:root {
-  --motion-fast: 180ms;
-  --motion-base: 280ms;
-  --motion-slow: 420ms;
-  --motion-ease: cubic-bezier(.22, 1, .36, 1);
-}
-
-html {
-  text-rendering: optimizeLegibility;
-  font-synthesis: none;
-  hanging-punctuation: first last;
-}
-
-body {
-  font-kerning: normal;
-  font-variant-numeric: proportional-nums;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-:is(h1, h2, h3, h4, h5, h6, p, a, button, .btn, .nav-links a) {
-  text-wrap: pretty;
-}
-
-:is(h1, h2, h3, h4, h5, h6) {
-  line-height: 1.15;
-}
-
-/* Do not let the desktop glass header resize the document on hover. */
-#siteHeader.glass,
-#siteHeader.glass:hover,
-#siteHeader.glass:focus-within {
-  width: min(1360px, calc(100% - 40px)) !important;
-  transition: background 280ms ease, border-color 280ms ease, box-shadow 280ms ease, top 280ms ease !important;
-}
-
-#siteHeader.glass .nav-links::before {
-  transition: transform 300ms var(--motion-ease), width 300ms var(--motion-ease), opacity 180ms ease !important;
-}
-
-#siteHeader.glass .nav-links a {
-  transition: color 220ms ease, transform 220ms var(--motion-ease), opacity 180ms ease !important;
-}
-
-/* Cap reveal choreography without removing the content or the hierarchy. */
-.reveal,
-.reveal-item,
-main.wrap > section.section-entering .section-head,
-main.wrap > section.section-entering .section-head h2,
-main.wrap > section.section-entering .section-tag,
-main.wrap > section.section-entering .section-head::after,
-main.wrap > section.section-entering .section-lead,
-main.wrap > section.section-entering .credential-strip .cred,
-main.wrap > section.section-entering .section-content,
-main.wrap > section.section-entering .spine > .entry {
-  animation-duration: 420ms !important;
-  animation-delay: 0ms !important;
-}
-
-.reveal,
-.reveal-item {
-  transition-duration: 420ms !important;
-  transition-timing-function: var(--motion-ease) !important;
-}
-
-section .section-head h2,
-section .section-tag,
-section .section-head::after {
-  transition-duration: 320ms !important;
-  transition-timing-function: var(--motion-ease) !important;
-}
-
-:is(.approach-card, .material-card, .dev-card, .skill-block, .contact-box,
-    .credential-strip .cred, .project-details, .timeline-detail,
-    .accordion-card, .availability-item, .creative-item, .featured-case,
-    .about-card, .btn, .proj-link, .work-filter) {
-  transition-duration: 280ms !important;
-  transition-timing-function: var(--motion-ease) !important;
-}
-
-/* Expensive decorative loops stay out of the interaction path. */
-.aurora,
-.ambient-glow,
-.ambient-light-path,
-.ambient-specular-ribbon,
-.ambient-micro-reflection,
-body::before {
-  animation: none !important;
-}
-
-#siteHeader.glass.is-sheening::after {
-  animation-duration: 650ms !important;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  #siteHeader.glass:hover {
-    transform: translateX(-50%) !important;
-  }
-}
-
-@media (max-width: 767px) {
-  /* Mobile keeps native scrolling, but anchor clicks still use the JS smooth path. */
-  html, body {
-    scroll-behavior: auto !important;
-  }
-
-  #siteHeader.glass,
-  .about-card,
-  .approach-card,
-  .material-card,
-  .dev-card,
-  .skill-block,
-  .contact-box,
-  .credential-strip .cred,
-  .project-details,
-  .timeline-detail {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  .aurora,
-  .ambient-glow,
-  .ambient-glow * ,
-  .hero::before,
-  .hero::after,
-  body::before,
-  body::after {
-    filter: none !important;
-  }
-
-  #siteHeader.glass,
-  #siteHeader.glass:hover,
-  #siteHeader.glass:focus-within {
-    width: calc(100% - 28px) !important;
-  }
-
-  .hero.hero-ready .hero-note,
-  .hero.hero-ready h1,
-  .hero.hero-ready .lead,
-  .hero.hero-ready .credential-strip,
-  .hero.hero-ready .cta-row,
-  .hero.hero-ready .tense-diagram {
-    transition-duration: 420ms !important;
-    transition-delay: 0ms !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 1ms !important;
-  }
-}
 
 
-/* Light-mode navbar stability pass: one geometry, one active object, no repaint-heavy sweep. */
-html[data-theme="light"] #siteHeader.glass {
-  box-sizing: border-box !important;
-  left: 50% !important;
-  right: auto !important;
-  inset-inline: auto !important;
-  top: 14px !important;
-  width: min(1360px, calc(100% - 40px)) !important;
-  max-width: calc(100% - 40px) !important;
-  min-height: 0 !important;
-  transform: translate3d(-50%, 0, 0) !important;
-  contain: layout paint !important;
-  isolation: isolate !important;
-  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease !important;
-  backdrop-filter: blur(16px) saturate(125%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(125%) !important;
-}
-html[data-theme="light"] #siteHeader.glass::before {
-  background: linear-gradient(120deg, rgba(255,255,255,.38), rgba(231,244,236,.16) 52%, rgba(198,224,209,.12)) !important;
-  opacity: 1 !important;
-}
-html[data-theme="light"] #siteHeader.glass nav::after,
-html[data-theme="light"] #siteHeader.glass.is-sheening::after {
-  display: none !important;
-  animation: none !important;
-}
-html[data-theme="light"] #siteHeader.glass nav { animation: none !important; transform: none !important; }
-html[data-theme="light"] #siteHeader.glass .nav-links::before {
-  height: 35px !important;
-  transform: translate3d(var(--nav-pill-x, 0px), -50%, 0) !important;
-  will-change: transform, width !important;
-  transition: transform 280ms cubic-bezier(.22,1,.36,1), width 280ms cubic-bezier(.22,1,.36,1), opacity 160ms ease !important;
-}
-html[data-theme="light"] #siteHeader.glass .nav-links a,
-html[data-theme="light"] #siteHeader.glass .nav-links a:hover,
-html[data-theme="light"] #siteHeader.glass .nav-links a:focus-visible,
-html[data-theme="light"] #siteHeader.glass .nav-links a.active {
-  transform: none !important;
+/* Final Light Mode single-surface guard: the outer header owns the glass.
+   The inner nav must never paint a second background, border, or clipping layer. */
+html[data-theme="light"] #siteHeader.glass nav {
   background: transparent !important;
+  border: 0 !important;
   box-shadow: none !important;
-  transition: color 180ms ease !important;
+  overflow: visible !important;
+  contain: layout !important;
+  transform: none !important;
 }
-html[data-theme="light"] #siteHeader.glass .nav-links a:hover,
-html[data-theme="light"] #siteHeader.glass .nav-links a:focus-visible { color: #205746 !important; }
-@media (max-width: 767px) {
-  html[data-theme="light"] #siteHeader.glass {
-    left: 14px !important;
-    right: 14px !important;
-    inset-inline: 14px !important;
-    top: 8px !important;
-    width: auto !important;
-    max-width: none !important;
-    transform: none !important;
-    contain: layout paint !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-  html[data-theme="light"] #siteHeader.glass .nav-links::before { height: 32px !important; }
+html[data-theme="light"] #siteHeader.glass nav::before,
+html[data-theme="light"] #siteHeader.glass nav::after {
+  display: none !important;
+  content: none !important;
+  animation: none !important;
 }
-@media (prefers-reduced-motion: reduce) {
-  html[data-theme="light"] #siteHeader.glass,
-  html[data-theme="light"] #siteHeader.glass .nav-links::before,
-  html[data-theme="light"] #siteHeader.glass .nav-links a {
-    transition: none !important;
-    animation: none !important;
-  }
+html[data-theme="light"] #siteHeader.glass .nav-links {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+html[data-theme="light"] #siteHeader.glass .nav-utility {
+  background: transparent !important;
+  border-color: rgba(65,126,101,.22) !important;
+  box-shadow: none !important;
 }
