@@ -1,0 +1,18 @@
+/* Physics timeline finish: responsive touch target, drag state, and soft motion trail. */
+#home .tense-diagram svg{touch-action:none;cursor:grab;outline:none;}
+#home .tense-diagram svg:focus-visible{outline:2px solid var(--yellow);outline-offset:8px;border-radius:12px;}
+#home .tense-diagram .spine-path,#home .tense-diagram .spine-glow{transition:none;}
+#home .tense-diagram .timeline-travel-light{r:5.5;fill:#f9df91;stroke:var(--yellow);stroke-width:1.5;filter:drop-shadow(0 0 6px rgba(231,184,78,.72));opacity:.98;pointer-events:none;}
+#home .tense-diagram .timeline-travel-light::after{content:"";}
+#home .tense-diagram.is-dragging svg{cursor:grabbing;}
+#home .tense-diagram.is-dragging .timeline-travel-light{r:7;filter:drop-shadow(0 0 10px rgba(231,184,78,.9));}
+#home .tense-diagram.is-dragging .spine-glow{opacity:.34;}
+#home .tense-diagram .timeline-dot{transition:opacity .25s ease,fill .25s ease,stroke .25s ease,transform .25s ease;}
+@media (max-width:767px){
+  #home .tense-diagram{padding-inline:5px;}
+  #home .tense-diagram svg{min-height:136px;}
+}
+@media (prefers-reduced-motion:reduce){
+  #home .tense-diagram .timeline-dot,#home .tense-diagram .timeline-travel-light{transition:none;}
+  #home .tense-diagram.is-dragging .spine-glow{opacity:.18;}
+}

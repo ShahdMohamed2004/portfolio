@@ -71,6 +71,7 @@
   <link rel="stylesheet" href="shahd-card.css?v=1.2.0">
   <link rel="stylesheet" href="portfolio-polish.css?v=1.7.0">
   <link rel="stylesheet" href="glass-nav.css?v=1.0.0">
+  <link rel="stylesheet" href="timeline-physics.css?v=1.0.0">
 
 <style>
   :root{
@@ -4148,6 +4149,12 @@ const SITE_AR = {
     // the subtle interpolation; JavaScript does not chase the target with a
     // second recursive animation loop.
     const progress = targetProgress;
+    if(window.timelinePhysics){
+      window.timelinePhysics.setScrollProgress(progress);
+      diagram.dataset.timelineProgress = String(progress);
+      diagram.classList.toggle('in-view', progress > 0.02);
+      return;
+    }
     // Progress is one semantic state in both locales. Arabic changes the
     // reading layout, but must not reverse Past → Present → Future or make
     // the line appear to grow from the Future when scrolling upward.
@@ -4278,6 +4285,6 @@ const SITE_AR = {
 
 <script src="shahd-card.js?v=1.3.0" defer></script>
 <script src="enhancements.js" defer></script>
-
+<script src="timeline-physics.js?v=1.0.0" defer></script>
 </body>
 </html>
