@@ -2450,7 +2450,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 </style>
 <link rel="stylesheet" href="enhancements.css?v=5.7.0">
-<link rel="stylesheet" href="final-polish.css?v=2.14.0">
+<link rel="stylesheet" href="final-polish.css?v=2.15.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2535,10 +2535,16 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   <!-- HERO -->
   <section class="hero shahd-badge-hero" id="home" data-scene="hero" style="border-top:none;">
     <span class="hero-note" id="heroNote"></span>
-    <h1 id="heroHeadline" class="shimmer-text" data-shimmer="Teaching to See, Learning to Be">Teaching to See, Learning to Be</h1>
+    <h1 id="heroHeadline" class="shimmer-text hero-editorial-headline" data-shimmer="Teaching to See, Learning to Be"><span>Teaching to <em>See</em>,</span><span>Learning to <em>Be</em></span></h1>
     <p class="lead" id="heroLead"></p>
 
     <div class="credential-strip" id="credentialStrip"></div>
+    <div class="hero-swatches" aria-label="Hero color palette">
+      <span class="hero-swatch hero-swatch-ivory"></span>
+      <span class="hero-swatch hero-swatch-champagne"></span>
+      <span class="hero-swatch hero-swatch-sage-dark"></span>
+      <span class="hero-swatch hero-swatch-sage-light"></span>
+    </div>
 
     <div class="cta-row">
       <a class="btn hero-action hero-action-primary" href="#" id="btnCV" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16.5V20h14v-3.5"/></svg><span class="button-label">Download CV</span></a>
@@ -3239,8 +3245,13 @@ const SITE_AR = {
     const activeProjectFilter = activeProjectFilterState;
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
-    document.getElementById('heroHeadline').textContent = data.heroHeadline;
-    document.getElementById('heroHeadline').setAttribute('data-shimmer', data.heroHeadline);
+    const heroHeadline = document.getElementById('heroHeadline');
+    if(lang === 'ar'){
+      heroHeadline.innerHTML = '<span>نُعلِّم <em>لنُبصر</em>،</span><span>ونتعلّم <em>لنكون</em></span>';
+    }else{
+      heroHeadline.innerHTML = '<span>Teaching to <em>See</em>,</span><span>Learning to <em>Be</em></span>';
+    }
+    heroHeadline.setAttribute('data-shimmer', data.heroHeadline);
     document.getElementById('heroLead').textContent = data.heroLead;
 
     document.getElementById('credentialStrip').innerHTML = data.credentials.map(c => `
