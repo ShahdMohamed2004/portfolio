@@ -1,0 +1,3 @@
+Contact: mailto:shahdmohamed25042004@gmail.com
+Preferred-Languages: en, ar
+Canonical: https://shahdmohamed2004.github.io/portfolio/.well-known/security.txt
