@@ -1,0 +1,83 @@
+/* Editorial personal-name treatment — header only. */
+#siteHeader.glass .wordmark {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-width: max-content !important;
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+#siteHeader.glass .wordmark-name {
+  display: inline-block;
+  font-family: "Fraunces", Georgia, serif !important;
+  font-size: clamp(1.48rem, 2.05vw, 2.12rem) !important;
+  font-weight: 600 !important;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 72, "SOFT" 28, "WONK" 1;
+  letter-spacing: -0.055em !important;
+  line-height: 0.94 !important;
+  white-space: nowrap;
+  text-rendering: geometricPrecision;
+  transform: translateY(0.02em);
+}
+
+#siteHeader.glass .wordmark-name::after {
+  content: "";
+  display: block;
+  width: 31%;
+  height: 1px;
+  margin: 0.24em 0 0 0.07em;
+  background: currentColor;
+  opacity: 0.28;
+  transform-origin: left center;
+  transform: scaleX(0.72);
+  transition: opacity 220ms ease, transform 300ms cubic-bezier(.22, 1, .36, 1);
+}
+#siteHeader.glass .wordmark:hover .wordmark-name::after,
+#siteHeader.glass .wordmark:focus-visible .wordmark-name::after {
+  opacity: 0.52;
+  transform: scaleX(1);
+}
+
+/* Light mode: a restrained paper-glass reflection in the name only. */
+html[data-theme="light"] #siteHeader.glass .wordmark-name {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  background-color: transparent !important;
+  background: linear-gradient(112deg, #173f32 0%, #245f4b 43%, #6e9d83 57%, #173f32 78%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.48);
+}
+
+/* Keep the page surface continuous beneath the mobile browser safe area. */
+html,
+body {
+  min-width: 0;
+  overscroll-behavior-x: none;
+}
+html[data-theme="light"] { background: #faf8f5 !important; }
+html:not([data-theme="light"]) { background: #081410 !important; }
+
+@media (max-width: 767px) {
+  #siteHeader.glass {
+    inset-block-start: max(8px, env(safe-area-inset-top)) !important;
+    overflow: hidden !important;
+  }
+  #siteHeader.glass .wordmark-name {
+    font-size: clamp(1.25rem, 6.3vw, 1.65rem) !important;
+    letter-spacing: -0.06em !important;
+  }
+  #siteHeader.glass .wordmark-name::after {
+    margin-top: 0.2em;
+  }
+}
+
+@media (max-width: 360px) {
+  #siteHeader.glass .wordmark-name { font-size: 1.18rem !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #siteHeader.glass .wordmark-name::after { transition: none; }
+}
