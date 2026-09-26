@@ -151,11 +151,19 @@ html[data-theme="light"] .work-filter:focus-visible{
   width:2.55em !important;
   min-width:2.55em !important;
   max-width:2.55em !important;
+  margin-inline:0 !important;
   white-space:nowrap !important;
   direction:ltr !important;
   unicode-bidi:isolate !important;
   font-variant-numeric:tabular-nums !important;
 }
+#howITeachGrid .accordion-card summary{
+  display:flex;
+  align-items:center;
+  gap:clamp(12px,1.15vw,20px);
+  min-width:0;
+}
+#howITeachGrid .accordion-card summary::after{flex:0 0 auto;}
 
 /* Reduce expensive glass work on small screens without changing hierarchy. */
 @media (max-width:767px){
