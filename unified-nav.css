@@ -1,39 +1,161 @@
-/* Unified premium navigation: one compact glass system in dark and light themes. */
-#siteHeader.glass{
-  top:16px !important;
-  width:min(1320px,calc(100% - 56px)) !important;
-  padding:5px 14px !important;
-  border-radius:32px !important;
-  background:linear-gradient(125deg,rgba(255,255,255,.12),rgba(255,255,255,.025) 48%,rgba(213,184,113,.08)) padding-box,linear-gradient(125deg,rgba(255,255,255,.55),rgba(255,255,255,.10) 45%,rgba(220,192,123,.45)) border-box !important;
-  border:1px solid transparent !important;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.34),inset 0 -1px 1px rgba(255,255,255,.06),0 16px 38px rgba(0,0,0,.24) !important;
-  backdrop-filter:blur(24px) saturate(165%) !important;
-  -webkit-backdrop-filter:blur(24px) saturate(165%) !important;
-  transition:background .35s ease,border-color .35s ease,box-shadow .35s ease,top .35s ease !important;
+/*
+ * Unified floating glass navbar
+ * The same geometry is used in both themes. Light mode changes color only.
+ */
+
+#siteHeader.glass {
+  top: 16px !important;
+  width: min(1320px, calc(100% - 56px)) !important;
+  padding: 5px 14px !important;
+  color: var(--glass-text) !important;
+  background:
+    linear-gradient(125deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.025) 48%, rgba(213, 184, 113, 0.08)) padding-box,
+    linear-gradient(125deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.10) 45%, rgba(220, 192, 123, 0.45)) border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: 32px !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.34), inset 0 -1px 1px rgba(255, 255, 255, 0.06), 0 16px 38px rgba(0, 0, 0, 0.24) !important;
+  backdrop-filter: blur(24px) saturate(165%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(165%) !important;
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, top 0.35s ease !important;
 }
-#siteHeader.glass::before{background:radial-gradient(420px 120px at var(--x,65%) var(--y,0%),rgba(255,255,255,.20),transparent 75%),rgba(13,43,32,.76) !important;}
-#siteHeader.glass nav{gap:18px !important;}
-#siteHeader.glass .wordmark{font-size:clamp(16px,1.55vw,23px) !important;}
-#siteHeader.glass .nav-links{gap:3px !important;}
-#siteHeader.glass .nav-links::before{height:34px !important;border-radius:22px !important;}
-#siteHeader.glass .nav-links a{min-height:32px !important;padding:6px 12px !important;border-radius:22px !important;font-size:14px !important;}
-#siteHeader.glass .nav-utility{padding:3px !important;border-radius:24px !important;gap:2px !important;}
-#siteHeader.glass .nav-utility .lang-toggle,#siteHeader.glass .nav-utility .theme-toggle{min-width:32px !important;height:30px !important;padding-inline:8px !important;}
-#siteHeader.glass .nav-utility .theme-toggle svg{width:17px !important;height:17px !important;}
-#siteHeader.glass .mini-control-divider{height:18px !important;}
-#siteHeader.glass :is(a,button):focus-visible{outline:2px solid #e6c878 !important;outline-offset:2px !important;}
-/* Replace the legacy light navbar rather than layering a second visual language. */
-html[data-theme="light"] #siteHeader.glass{
-  --glass-text:#173c31;--glass-muted:#47685c;
-  background:linear-gradient(125deg,rgba(255,255,255,.78),rgba(236,246,240,.58) 48%,rgba(247,235,211,.48)) padding-box,linear-gradient(125deg,rgba(255,255,255,.98),rgba(178,205,193,.86) 52%,rgba(204,173,108,.72)) border-box !important;
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.98),inset 0 -1px 1px rgba(23,60,49,.08),0 16px 38px rgba(31,75,60,.16) !important;
+
+#siteHeader.glass::before {
+  background: radial-gradient(420px 120px at var(--x, 65%) var(--y, 0%), rgba(255, 255, 255, 0.20), transparent 75%), rgba(13, 43, 32, 0.76) !important;
 }
-html[data-theme="light"] #siteHeader.glass::before{background:radial-gradient(420px 120px at var(--x,65%) var(--y,0%),rgba(255,255,255,.82),transparent 75%),rgba(237,246,241,.72) !important;}
-html[data-theme="light"] #siteHeader.glass .nav-links::before{border-color:rgba(42,111,91,.28) !important;background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(206,232,219,.46)) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 5px 15px rgba(27,77,60,.12) !important;}
-html[data-theme="light"] #siteHeader.glass .nav-links a:is(.active,:hover,:focus-visible){color:#174b40 !important;background:rgba(205,231,217,.48) !important;}
-html[data-theme="light"] #siteHeader.glass .nav-utility{border-color:rgba(63,126,106,.36) !important;background:linear-gradient(130deg,rgba(255,255,255,.72),rgba(219,239,228,.46)) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.98) !important;}
-html[data-theme="light"] #siteHeader.glass :is(.lang-toggle,.theme-toggle,.hamburger){color:#174b40 !important;}
-html[data-theme="light"] #siteHeader.glass .nav-utility .lang-toggle:hover,html[data-theme="light"] #siteHeader.glass .nav-utility .theme-toggle:hover{background:rgba(205,231,217,.62) !important;}
-@media(max-width:1100px){#siteHeader.glass,#siteHeader.glass.compact,#siteHeader.glass:focus-within{top:10px !important;padding:7px 10px !important;border-radius:26px !important;}#siteHeader.glass .nav-links a{min-height:40px !important;padding:7px 11px !important;}}
-@media(max-width:520px){#siteHeader.glass{width:calc(100% - 24px) !important;padding:6px 9px !important;}#siteHeader.glass .wordmark{font-size:16px !important;}#siteHeader.glass .hamburger{width:36px !important;height:36px !important;}}
-@media(prefers-reduced-motion:reduce){#siteHeader.glass{transition:none !important;}}
+
+#siteHeader.glass nav {
+  gap: 18px !important;
+  background: transparent !important;
+}
+
+/* Remove legacy reflection layers that created a visible inner rectangle. */
+#siteHeader.glass nav::before,
+#siteHeader.glass nav::after {
+  display: none !important;
+  content: none !important;
+}
+
+#siteHeader.glass .wordmark {
+  font-size: clamp(16px, 1.55vw, 23px) !important;
+}
+
+#siteHeader.glass .nav-links {
+  gap: 3px !important;
+}
+
+#siteHeader.glass .nav-links::before {
+  height: 34px !important;
+  border-radius: 22px !important;
+}
+
+#siteHeader.glass .nav-links a {
+  min-height: 32px !important;
+  padding: 6px 12px !important;
+  color: var(--glass-muted) !important;
+  font-size: 14px !important;
+  border-radius: 22px !important;
+}
+
+#siteHeader.glass .nav-links a:is(.active, :hover, :focus-visible) {
+  color: var(--glass-text) !important;
+}
+
+#siteHeader.glass .nav-utility {
+  gap: 2px !important;
+  padding: 3px !important;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015)) !important;
+  border-radius: 24px !important;
+}
+
+/* The old light theme targeted this inner wrapper with a solid fill. */
+#siteHeader.glass .mini-control-pill {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+#siteHeader.glass .nav-utility .lang-toggle,
+#siteHeader.glass .nav-utility .theme-toggle {
+  min-width: 32px !important;
+  height: 30px !important;
+  padding-inline: 8px !important;
+  color: var(--glass-text) !important;
+}
+
+#siteHeader.glass .nav-utility .theme-toggle svg {
+  width: 17px !important;
+  height: 17px !important;
+}
+
+#siteHeader.glass .mini-control-divider { height: 18px !important; }
+
+#siteHeader.glass :is(a, button):focus-visible {
+  outline: 2px solid #e6c878 !important;
+  outline-offset: 2px !important;
+}
+
+/* Light mode: same dark-mode container, softened with translucent ivory/green ink. */
+html[data-theme="light"] #siteHeader.glass {
+  --glass-text: #173c31;
+  --glass-muted: #47685c;
+  background:
+    linear-gradient(125deg, rgba(241, 248, 244, 0.52), rgba(235, 244, 238, 0.24) 48%, rgba(247, 235, 211, 0.18)) padding-box,
+    linear-gradient(125deg, rgba(255, 255, 255, 0.78), rgba(178, 205, 193, 0.62) 52%, rgba(204, 173, 108, 0.48)) border-box !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.78), inset 0 -1px 1px rgba(23, 60, 49, 0.06), 0 16px 38px rgba(31, 75, 60, 0.13) !important;
+}
+
+html[data-theme="light"] #siteHeader.glass::before {
+  background: radial-gradient(420px 120px at var(--x, 65%) var(--y, 0%), rgba(255, 255, 255, 0.44), transparent 75%), rgba(231, 242, 235, 0.42) !important;
+}
+
+html[data-theme="light"] #siteHeader.glass .nav-links::before {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.22), rgba(206, 232, 219, 0.28)) !important;
+  border-color: rgba(42, 111, 91, 0.24) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68), 0 5px 15px rgba(27, 77, 60, 0.10) !important;
+}
+
+html[data-theme="light"] #siteHeader.glass .nav-links a:is(.active, :hover, :focus-visible) {
+  color: #174b40 !important;
+  background: rgba(205, 231, 217, 0.28) !important;
+}
+
+html[data-theme="light"] #siteHeader.glass .nav-utility {
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.18), rgba(219, 239, 228, 0.20)) !important;
+  border-color: rgba(63, 126, 106, 0.28) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+}
+
+html[data-theme="light"] #siteHeader.glass :is(.lang-toggle, .theme-toggle, .hamburger) {
+  color: #174b40 !important;
+}
+
+html[data-theme="light"] #siteHeader.glass .nav-utility :is(.lang-toggle, .theme-toggle):hover {
+  background: rgba(205, 231, 217, 0.36) !important;
+}
+
+@media (max-width: 1100px) {
+  #siteHeader.glass,
+  #siteHeader.glass.compact,
+  #siteHeader.glass:focus-within {
+    top: 10px !important;
+    padding: 7px 10px !important;
+    border-radius: 26px !important;
+  }
+  #siteHeader.glass .nav-links a {
+    min-height: 40px !important;
+    padding: 7px 11px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  #siteHeader.glass {
+    width: calc(100% - 24px) !important;
+    padding: 6px 9px !important;
+  }
+  #siteHeader.glass .wordmark { font-size: 16px !important; }
+  #siteHeader.glass .hamburger { width: 36px !important; height: 36px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #siteHeader.glass { transition: none !important; }
+}
