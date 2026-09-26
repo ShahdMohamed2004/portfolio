@@ -2450,7 +2450,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 </style>
 <link rel="stylesheet" href="enhancements.css?v=5.7.0">
-<link rel="stylesheet" href="final-polish.css?v=1.3.0">
+<link rel="stylesheet" href="final-polish.css?v=1.4.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3341,6 +3341,7 @@ const SITE_AR = {
     setupIndependentDetails('#workSpine .project-details');
     setupIndependentDetails('#whatIDoGrid > details');
     setupIndependentDetails('#howITeachGrid > details');
+    setupIndependentDetails('#developmentGrid > details');
     const updateProjectFilter = (filter = 'all', shouldScroll = true) => {
       const allowedFilters = new Set(['all','research','edtech','design','teaching']);
       if(!allowedFilters.has(filter)) filter = 'all';
@@ -3422,7 +3423,7 @@ const SITE_AR = {
 
     // Professional development
     document.getElementById('developmentGrid').innerHTML = data.development.map((d, i) => `
-      <details class="accordion-card reveal-item"><summary>${escapeHtml(d.title)}</summary><div class="accordion-body"><div class="place">${escapeHtml(d.place)}</div>${SITE.development[i].href ? `<div>${projectLink({label: lang === 'ar' ? 'عرض الشهادة' : 'View certificate', href: SITE.development[i].href})}</div>` : ''}</div></details>
+      <details class="accordion-card reveal-item" data-accordion-id="development-${i}"><summary aria-controls="developmentBody-${i}" aria-expanded="false">${escapeHtml(d.title)}</summary><div class="accordion-body" id="developmentBody-${i}"><div class="place">${escapeHtml(d.place)}</div>${SITE.development[i].href ? `<div>${projectLink({label: lang === 'ar' ? 'عرض الشهادة' : 'View certificate', href: SITE.development[i].href})}</div>` : ''}</div></details>
     `).join('');
 
     // Skills + languages

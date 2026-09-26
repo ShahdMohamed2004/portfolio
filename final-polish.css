@@ -531,3 +531,107 @@ html[data-theme="light"] :is(.approach-card,.material-card,.dev-card,.skill-bloc
 @media (prefers-reduced-motion:reduce){
   html[data-theme="light"] :is(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.about-card,.availability-item){transition:none !important;}
 }
+
+
+/* ---------- muapi refinement: independent accordions + compact contact CTA ---------- */
+
+/* A modern glass control for education, certification and development accordions. */
+:is(.timeline-detail,.accordion-card) > summary::after{
+  inset-inline-end:14px !important;
+  inset-inline-start:auto !important;
+  top:50% !important;
+  width:28px !important;
+  height:28px !important;
+  min-width:28px !important;
+  min-height:28px !important;
+  display:grid !important;
+  place-items:center !important;
+  box-sizing:border-box !important;
+  border:1px solid color-mix(in srgb,var(--line-strong) 72%,transparent) !important;
+  border-radius:50% !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 6px 16px -12px rgba(0,0,0,.65) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  backdrop-filter:blur(8px) !important;
+  color:var(--yellow) !important;
+  font-family:var(--font-body) !important;
+  font-size:1.05rem !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+  transform:translateY(-50%) scale(1) !important;
+  transition:transform .24s cubic-bezier(.22,1,.36,1),background-color .24s ease,border-color .24s ease,box-shadow .24s ease,color .24s ease !important;
+}
+:is(.timeline-detail,.accordion-card) > summary:hover::after,
+:is(.timeline-detail,.accordion-card) > summary:focus-visible::after{
+  border-color:color-mix(in srgb,var(--yellow) 55%,var(--line-strong)) !important;
+  background:rgba(231,184,78,.10) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 18px -13px rgba(231,184,78,.62) !important;
+  transform:translateY(-50%) scale(1.04) !important;
+}
+:is(.timeline-detail,.accordion-card)[open] > summary::after{
+  background:rgba(231,184,78,.12) !important;
+  border-color:color-mix(in srgb,var(--yellow) 62%,var(--line-strong)) !important;
+  transform:translateY(-50%) rotate(180deg) scale(1) !important;
+}
+html[dir="rtl"] :is(.timeline-detail,.accordion-card) > summary::after{
+  inset-inline-start:14px !important;
+  inset-inline-end:auto !important;
+}
+html[data-theme="light"] :is(.timeline-detail,.accordion-card) > summary::after{
+  border-color:rgba(61,100,116,.24) !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(224,237,239,.34)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 16px -12px rgba(43,76,91,.32) !important;
+  color:#9a762b !important;
+}
+html[data-theme="light"] :is(.timeline-detail,.accordion-card)[open] > summary::after,
+html[data-theme="light"] :is(.timeline-detail,.accordion-card) > summary:is(:hover,:focus-visible)::after{
+  background:rgba(197,155,76,.12) !important;
+  border-color:rgba(121,90,35,.38) !important;
+}
+
+/* Contact CTA: content flow determines the height on desktop and mobile. */
+#contact .contact-box{
+  display:block !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:clamp(24px,3.2vw,34px) clamp(20px,4vw,42px) !important;
+}
+#contact .contact-box p{
+  margin:0 0 clamp(16px,2.2vw,24px) !important;
+  max-width:62ch !important;
+}
+#contact .contact-links{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:10px !important;
+  width:100% !important;
+  margin:0 !important;
+}
+#contact .contact-links .btn{
+  flex:0 1 auto !important;
+  width:auto !important;
+  min-width:0 !important;
+  min-height:44px !important;
+  height:auto !important;
+  padding:10px 16px !important;
+  border-radius:12px !important;
+  line-height:1.25 !important;
+  white-space:normal !important;
+}
+#contact #contactEmailBtn{padding-inline:20px !important;}
+html[dir="rtl"] #contact .contact-links{justify-content:flex-start !important;}
+@media (max-width:767px){
+  #contact .contact-box{padding:22px 16px !important;}
+  #contact .contact-box p{margin-bottom:16px !important;max-width:none !important;}
+  #contact .contact-links{display:grid !important;grid-template-columns:minmax(0,1fr) !important;gap:8px !important;}
+  #contact .contact-links .btn{width:100% !important;min-height:44px !important;padding-inline:14px !important;}
+}
+@media (min-width:768px) and (max-width:980px){
+  #contact .contact-links{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+  #contact .contact-links .btn{width:100% !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  :is(.timeline-detail,.accordion-card) > summary::after{transition:none !important;}
+}
