@@ -3196,7 +3196,7 @@ const SITE_AR = {
 
   function accordionCard(item, extra='', index=0){
     const bodyId = `what-i-do-body-${index}`;
-    return `<details class="accordion-card reveal-item" data-details-group="what-i-do"><summary aria-controls="${bodyId}" aria-expanded="false">${escapeHtml(item.title)}</summary><div class="accordion-body" id="${bodyId}"><p>${escapeHtml(item.desc)}</p>${extra}</div></details>`;
+    return `<details class="accordion-card reveal-item"><summary aria-controls="${bodyId}" aria-expanded="false">${escapeHtml(item.title)}</summary><div class="accordion-body" id="${bodyId}"><p>${escapeHtml(item.desc)}</p>${extra}</div></details>`;
   }
 
   function projectLink(l){
@@ -3236,7 +3236,7 @@ const SITE_AR = {
   let activeProjectFilterState = 'all';
   function renderContent(data, lang){
     const openProjectIndexes = [...document.querySelectorAll('#workSpine .project-details')]
-      .map((details, index) => details.open ? index : -1).filter(index => index >= 0).slice(-1);
+      .map((details, index) => details.open ? index : -1).filter(index => index >= 0);
     const activeProjectFilter = activeProjectFilterState;
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
@@ -3267,7 +3267,7 @@ const SITE_AR = {
 
     // How I teach
       document.getElementById('howITeachGrid').innerHTML = data.howITeach.map(item => `
-      <details class="accordion-card reveal-item" data-details-group="how-i-teach"><summary aria-controls="how-i-teach-${escapeHtml(item.num)}" aria-expanded="false"><span class="num">${escapeHtml(item.num)}</span>${escapeHtml(item.title)}</summary><div class="accordion-body" id="how-i-teach-${escapeHtml(item.num)}"><p>${escapeHtml(item.desc)}</p></div></details>
+      <details class="accordion-card reveal-item"><summary aria-controls="how-i-teach-${escapeHtml(item.num)}" aria-expanded="false"><span class="num">${escapeHtml(item.num)}</span>${escapeHtml(item.title)}</summary><div class="accordion-body" id="how-i-teach-${escapeHtml(item.num)}"><p>${escapeHtml(item.desc)}</p></div></details>
     `).join('');
 
     // Selected work — filterable on desktop, swipeable chips on mobile.
@@ -3284,7 +3284,7 @@ const SITE_AR = {
       const categories = getProjectCategories(p);
       return `
       <div class="entry reveal-item" data-step="${i + 1}" data-categories="${escapeHtml(categories.join(' '))}">
-        <details class="project-details" id="projectDetails-${i}" data-project-index="${i}" data-details-group="selected-project">
+        <details class="project-details" id="projectDetails-${i}" data-project-index="${i}">
           <summary class="project-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض تفاصيل المشروع والروابط' : 'View project details & links'}">
             <div class="entry-preview">
               <span class="entry-flag ${SITE.projects[i].flag === 'core project' ? 'core' : ''}">${escapeHtml(p.flag)}</span>
@@ -3323,31 +3323,24 @@ const SITE_AR = {
         </details>
       </div>`;
     }).join('');
-    // Keep each details collection strictly exclusive without relying on the
-    // browser-specific `details[name]` grouping behavior. State belongs to
-    // the clicked details element, so dynamic language renders cannot leak it.
-    const setupExclusiveDetails = (selector) => {
+    // Keep every expandable card independent. Native <details> owns the open
+    // state of each instance; no group-level boolean or sibling-closing logic
+    // is allowed to leak state between cards.
+    const setupIndependentDetails = (selector) => {
       const cards = [...document.querySelectorAll(selector)];
-      const groupCards = current => cards.filter(card => card.dataset.detailsGroup === current.dataset.detailsGroup);
       const syncState = details => {
         const summary = details.querySelector(':scope > summary');
         if(summary) summary.setAttribute('aria-expanded', String(details.open));
       };
       cards.forEach((details, index) => {
-        const summary = details.querySelector(':scope > summary');
-        summary?.addEventListener('click', event => {
-          event.preventDefault();
-          const nextOpen = !details.open;
-          groupCards(details).forEach(card => { card.open = card === details && nextOpen; });
-          groupCards(details).forEach(syncState);
-        });
+        details.addEventListener('toggle', () => syncState(details));
         if(selector === '#workSpine .project-details' && openProjectIndexes.includes(index)) details.open = true;
         syncState(details);
       });
     };
-    setupExclusiveDetails('#workSpine .project-details');
-    setupExclusiveDetails('#whatIDoGrid > details');
-    setupExclusiveDetails('#howITeachGrid > details');
+    setupIndependentDetails('#workSpine .project-details');
+    setupIndependentDetails('#whatIDoGrid > details');
+    setupIndependentDetails('#howITeachGrid > details');
     const updateProjectFilter = (filter = 'all', shouldScroll = true) => {
       const allowedFilters = new Set(['all','research','edtech','design','teaching']);
       if(!allowedFilters.has(filter)) filter = 'all';
