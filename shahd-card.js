@@ -115,7 +115,19 @@
       image.onerror = () => { image.onerror = null; image.src = DEFAULT_PHOTO; };
     }
     updateLanguage() {
-      // The badge is a visual identity element, not an editor control.
+      if (!this.shadowRoot) return;
+      const ar = document.documentElement.lang === 'ar';
+      const q = selector => this.shadowRoot.querySelector(selector);
+      const topLabel = q('.card-top span');
+      const portraitLabel = q('.portrait-label');
+      const role = q('.role');
+      const discipline = q('.discipline');
+      const assembly = q('.assembly');
+      if(topLabel) topLabel.textContent = ar ? 'مُعلّمة' : 'EDUCATOR';
+      if(portraitLabel) portraitLabel.textContent = ar ? 'اللغة والتعلّم' : 'LANGUAGE & LEARNING';
+      if(role) role.textContent = ar ? 'معلمة لغة إنجليزية' : 'English Language Educator';
+      if(discipline) discipline.textContent = ar ? 'TEFL  /  التعليم' : 'TEFL   /   EDUCATION';
+      if(assembly) assembly.setAttribute('aria-label', ar ? 'بطاقة الهوية التفاعلية' : 'Interactive identity badge');
     }
     disconnectedCallback() {
       this._alive = false; this.release(); this.pause(); this.abort?.abort();

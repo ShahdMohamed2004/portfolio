@@ -2450,7 +2450,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 </style>
 <link rel="stylesheet" href="enhancements.css?v=5.7.0">
-<link rel="stylesheet" href="final-polish.css?v=2.15.0">
+<link rel="stylesheet" href="final-polish.css?v=2.16.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2975,7 +2975,7 @@ const SITE = {
 const SITE_AR = {
   name: "Shahd Mohamed",
   fullName: "Shahd Mohamed",
-  title: "خريجة TEFL | معلمة لغة إنجليزية طموحة | تصميم التعليم والتقييم",
+  title: "خريجة TEFL | معلمة لغة إنجليزية طموحة | التصميم التعليمي وتصميم التقييم",
   heroNote: "أستكشف فرص التدريس وتكنولوجيا التعليم",
   heroHeadline: "نُعلِّم لنُبصر، ونتعلَّم لنكون",
   heroLead: "خريجة TEFL أصمم دروسًا بصرية للغة الإنجليزية، وتقييمات عملية، وأدوات تعلّم رقمية.",
@@ -3242,6 +3242,8 @@ const SITE_AR = {
   function renderContent(data, lang){
     const openProjectIndexes = [...document.querySelectorAll('#workSpine .project-details')]
       .map((details, index) => details.open ? index : -1).filter(index => index >= 0);
+    const openWhatIndexes = [...document.querySelectorAll('#whatIDoGrid > details')].map((details, index) => details.open ? index : -1).filter(index => index >= 0);
+    const openHowIndexes = [...document.querySelectorAll('#howITeachGrid > details')].map((details, index) => details.open ? index : -1).filter(index => index >= 0);
     const activeProjectFilter = activeProjectFilterState;
     // Hero
     document.getElementById('heroNote').textContent = data.heroNote;
@@ -3258,7 +3260,7 @@ const SITE_AR = {
       <div class="cred">
         <div class="deg">${escapeHtml(c.degree)}</div>
         <div class="school">${escapeHtml(c.school)}</div>
-        <div class="gpa">GPA ${escapeHtml(c.gpa)}</div>
+        <div class="gpa"><span class="gpa-label">${lang === 'ar' ? 'المعدل' : 'GPA'}</span> <bdi dir="ltr">${escapeHtml(c.gpa)}</bdi></div>
       </div>
     `).join('');
 
@@ -3267,7 +3269,7 @@ const SITE_AR = {
     document.getElementById('aboutRole').textContent = data.title;
     document.getElementById('aboutBio').textContent = data.about.bio;
     if(data.about.photo){
-      document.getElementById('aboutPhoto').innerHTML = `<img src="${safeAssetUrl(data.about.photo)}" alt="${escapeHtml(`Photo of Shahd Mohamed`)}" width="1087" height="1447" loading="lazy" decoding="async">`;
+      document.getElementById('aboutPhoto').innerHTML = `<img src="${safeAssetUrl(data.about.photo)}" alt="${escapeHtml(lang === 'ar' ? 'صورة شهد محمد' : 'Photo of Shahd Mohamed')}" width="1087" height="1447" loading="lazy" decoding="async">`;
     }
 
     // What I do
@@ -3279,6 +3281,8 @@ const SITE_AR = {
       document.getElementById('howITeachGrid').innerHTML = data.howITeach.map(item => `
       <details class="accordion-card reveal-item"><summary class="expandable-summary" aria-controls="how-i-teach-${escapeHtml(item.num)}" aria-expanded="false"><span class="num">${escapeHtml(item.num)}</span>${escapeHtml(item.title)}</summary><div class="accordion-body" id="how-i-teach-${escapeHtml(item.num)}"><p>${escapeHtml(item.desc)}</p></div></details>
     `).join('');
+    document.querySelectorAll('#whatIDoGrid > details').forEach((details, index) => { details.open = openWhatIndexes.includes(index); });
+    document.querySelectorAll('#howITeachGrid > details').forEach((details, index) => { details.open = openHowIndexes.includes(index); });
 
     // Selected work — filterable on desktop, swipeable chips on mobile.
     const projectCategories = lang === 'ar'
@@ -3384,7 +3388,7 @@ const SITE_AR = {
         entry.setAttribute('tabindex', show ? '0' : '-1');
         if(show) visible++;
       });
-      document.getElementById('workCount').textContent = lang === 'ar' ? `${visible} أعمال` : `${visible} ${visible === 1 ? 'project' : 'projects'}`;
+      document.getElementById('workCount').textContent = lang === 'ar' ? (visible === 0 ? 'لا توجد أعمال' : visible === 1 ? 'عمل واحد' : visible === 2 ? 'عملان' : `${visible} أعمال`) : `${visible} ${visible === 1 ? 'project' : 'projects'}`;
     };
     document.querySelectorAll('#workFilters .work-filter').forEach(btn => {
       const activate = () => updateProjectFilter(btn.dataset.filter);
@@ -3424,7 +3428,7 @@ const SITE_AR = {
     // Experience
     document.getElementById('experienceSpine').innerHTML = data.experience.map(e => `
       <div class="entry"><details class="timeline-detail"><summary class="expandable-summary"><span class="entry-flag">${escapeHtml(e.flag)}</span><h3>${escapeHtml(e.title)}</h3></summary>
-        <div class="place">${escapeHtml(e.place)} &middot; ${escapeHtml(e.dates)}</div>
+        <div class="place"><span class="place-name">${escapeHtml(e.place)}</span><span class="place-separator" aria-hidden="true"> · </span><bdi class="dates" dir="ltr">${escapeHtml(e.dates)}</bdi></div>
         <ul class="point-list">${e.points.map(pt => `<li>${escapeHtml(pt)}</li>`).join('')}</ul>
         ${e.evidence ? `<div class="proj-links">${projectLink(e.evidence)}</div>` : ''}
       </details></div>
@@ -3503,7 +3507,7 @@ const SITE_AR = {
     document.getElementById('contactIntro').textContent = data.contact.intro;
 
     const ownership = document.getElementById('footerOwnership');
-    if(ownership) ownership.textContent = '© 2026 Shahd Mohamed. All rights reserved. Original work protected.';
+    if(ownership) ownership.textContent = lang === 'ar' ? '© 2026 شهد محمد. جميع الحقوق محفوظة. العمل الأصلي محمي.' : '© 2026 Shahd Mohamed. All rights reserved. Original work protected.';
     contentRevision += 1;
     observeRevealTargets();
   }
@@ -3612,6 +3616,20 @@ const SITE_AR = {
     document.getElementById('mobileMenuCloseLabel').textContent = lang === 'ar' ? 'إغلاق القائمة' : 'Close menu';
     document.getElementById('mobileMenuClose').setAttribute('aria-label', lang === 'ar' ? 'إغلاق القائمة' : 'Close menu');
     document.getElementById('whereAmI').setAttribute('aria-label', lang === 'ar' ? 'موقعك الحالي في الصفحة' : 'Current section');
+    const aboutPhotoEl = document.getElementById('aboutPhoto');
+    if(aboutPhotoEl) aboutPhotoEl.setAttribute('aria-label', lang === 'ar' ? 'فتح صورة شهد محمد' : "Open Shahd's photo");
+    const tagsEl = document.querySelector('#about .about-tags');
+    if(tagsEl) tagsEl.setAttribute('aria-label', lang === 'ar' ? 'مجالات الاهتمام' : 'Areas of interest');
+    const lightboxClose = document.getElementById('photoLightboxClose');
+    if(lightboxClose) lightboxClose.setAttribute('aria-label', lang === 'ar' ? 'إغلاق الصورة' : 'Close photo');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(mobileMenu) mobileMenu.setAttribute('aria-label', lang === 'ar' ? 'قائمة التنقل' : 'Mobile navigation');
+    const drawerSmall = document.querySelector('.mobile-drawer-brand-copy small');
+    if(drawerSmall) drawerSmall.innerHTML = lang === 'ar' ? '<bdi dir="ltr">Portfolio · 2026</bdi>' : 'Portfolio · 2026';
+    const emailButton = document.getElementById('contactEmailBtn');
+    if(emailButton){ emailButton.setAttribute('aria-label', lang === 'ar' ? 'فتح رسالة جديدة في Gmail' : 'Open Gmail compose'); emailButton.title = lang === 'ar' ? 'فتح رسالة جديدة في Gmail' : 'Open Gmail compose'; }
+    const heroSwatches = document.querySelector('.hero-swatches');
+    if(heroSwatches) heroSwatches.setAttribute('aria-label', lang === 'ar' ? 'ألوان الواجهة' : 'Hero color palette');
   }
 
   function normalizeLocalePunctuation(lang){
@@ -3645,6 +3663,12 @@ const SITE_AR = {
     langToggle.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
     langToggleMobile.textContent = nextLabel;
     langToggleMobile.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'Switch to Arabic');
+    const themeIsLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const themeLabel = themeIsLight ? (lang === 'ar' ? 'التبديل إلى الوضع الداكن' : 'Switch to dark mode') : (lang === 'ar' ? 'التبديل إلى الوضع الفاتح' : 'Switch to light mode');
+    document.getElementById('themeToggle')?.setAttribute('aria-label', themeLabel);
+    document.getElementById('themeToggleMobile')?.setAttribute('aria-label', themeLabel);
+    const localeThemeLabel = document.querySelector('#themeToggleMobile .tt-label');
+    if(localeThemeLabel) localeThemeLabel.textContent = themeIsLight ? (lang === 'ar' ? 'الوضع الداكن' : 'Dark mode') : (lang === 'ar' ? 'الوضع الفاتح' : 'Light mode');
     normalizeLocalePunctuation(lang);
     try{ localStorage.setItem('siteLang', lang); }catch(e){}
   }
@@ -3657,7 +3681,7 @@ const SITE_AR = {
       const menu = document.getElementById('mobileMenu');
       const backdrop = document.getElementById('menuBackdrop');
       const menuButton = document.getElementById('hamburgerBtn');
-      if(menu) menu.classList.remove('open');
+      if(menu){ menu.classList.remove('open'); menu.setAttribute('aria-hidden', 'true'); menu.classList.remove('is-swiping'); menu.style.removeProperty('--swipe-x'); }
       if(backdrop) backdrop.classList.remove('open');
       document.body.classList.remove('menu-open');
       if(menuButton) {
@@ -4213,7 +4237,11 @@ const SITE_AR = {
     themeToggle.setAttribute('aria-pressed', String(isLight));
     themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
     themeToggleMobile.setAttribute('aria-pressed', String(isLight));
-    mobileLabel.textContent = isLight ? 'Dark mode' : 'Light mode';
+    const isArabic = document.documentElement.lang === 'ar';
+    const nextThemeLabel = isLight ? (isArabic ? 'التبديل إلى الوضع الداكن' : 'Switch to dark mode') : (isArabic ? 'التبديل إلى الوضع الفاتح' : 'Switch to light mode');
+    themeToggleMobile.setAttribute('aria-label', nextThemeLabel);
+    themeToggle.setAttribute('aria-label', nextThemeLabel);
+    mobileLabel.textContent = isLight ? (isArabic ? 'الوضع الداكن' : 'Dark mode') : (isArabic ? 'الوضع الفاتح' : 'Light mode');
   }
 
   function toggleTheme(){
@@ -4241,7 +4269,7 @@ const SITE_AR = {
 })();
 </script>
 
-<script src="shahd-card.js?v=1.2.0" defer></script>
+<script src="shahd-card.js?v=1.3.0" defer></script>
 <script src="enhancements.js" defer></script>
 
 </body>

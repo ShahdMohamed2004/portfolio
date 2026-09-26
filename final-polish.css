@@ -2318,3 +2318,103 @@ html[dir="rtl"] #home .hero-editorial-headline{font-family:'Cairo',var(--font-di
   #home .hero-swatches{margin-top:80px;gap:9px;}
 }
 @media (prefers-reduced-motion:reduce){#home.hero::after{animation:none;}}
+
+/* ---------- Site-wide Arabic parity: final, component-scoped RTL contract ---------- */
+html[dir="rtl"] :where(h1,h2,h3,h4,h5,h6,.section-tag,.entry-flag,.badge,.tag,.meta-label,.filter-label,.filter-number){
+  letter-spacing:0 !important;
+  word-spacing:normal !important;
+}
+html[dir="rtl"] :where(.about-bio,.about-role,.project-description,.project-details-body p,.featured-case-copy p,.creative-lead,#contact #contactIntro,.contact-box p,.entry p,.timeline-detail p,.materials-note,.section-lead){
+  text-align:start !important;
+  text-align-last:auto !important;
+  text-justify:auto !important;
+  hyphens:none !important;
+  -webkit-hyphens:none !important;
+  word-spacing:normal !important;
+}
+html[dir="rtl"] .gpa,
+html[dir="rtl"] .dates,
+html[dir="rtl"] .filter-number,
+html[dir="rtl"] .stat-line,
+html[dir="rtl"] .project-facts dd,
+html[dir="rtl"] .project-facts dt{
+  unicode-bidi:isolate !important;
+}
+html[dir="rtl"] .gpa bdi,
+html[dir="rtl"] .dates,
+html[dir="rtl"] .filter-number{direction:ltr !important;}
+html[dir="rtl"] #home .hero-swatches{direction:ltr !important;unicode-bidi:isolate;}
+html[dir="rtl"] #home .hero-swatches .hero-swatch{direction:ltr;}
+html[dir="rtl"] #work .work-filters{
+  direction:ltr !important;
+}
+html[dir="rtl"] #work .work-filter .filter-label{
+  direction:rtl !important;
+  text-align:center !important;
+}
+html[dir="rtl"] #work .work-filters::after{transform-origin:left center !important;}
+html[dir="rtl"] #work .project-details .proj-links,
+html[dir="rtl"] #workSpine .proj-links{
+  direction:rtl !important;
+  flex-direction:row !important;
+  justify-content:flex-start !important;
+}
+html[dir="rtl"] #workSpine .proj-link,
+html[dir="rtl"] #materialsGrid .material-card{
+  direction:rtl !important;
+}
+html[dir="rtl"] #workSpine .proj-link svg,
+html[dir="rtl"] #materialsGrid .material-card .arrow{
+  flex:0 0 auto;
+}
+html[dir="rtl"] .entry-flag{
+  letter-spacing:0 !important;
+  text-transform:none !important;
+}
+html[dir="rtl"] :is(.accordion-card,.timeline-detail,.project-details) > summary{
+  text-align:start !important;
+  text-justify:auto !important;
+}
+html[dir="rtl"] :is(.accordion-card,.timeline-detail,.project-details) > summary::after{
+  inset-inline-start:14px !important;
+  inset-inline-end:auto !important;
+}
+html[dir="rtl"] :is(.accordion-card,.timeline-detail,.project-details) > summary{
+  padding-inline-start:50px !important;
+  padding-inline-end:14px !important;
+}
+html[dir="rtl"] #howITeachGrid .accordion-card > summary{
+  padding-inline-start:50px !important;
+  padding-inline-end:14px !important;
+}
+html[dir="rtl"] .mobile-menu > a[data-nav],
+html[dir="rtl"] .mobile-menu-utility > a,
+html[dir="rtl"] .mobile-menu-utility > button{
+  font-family:'Cairo',var(--font-body),sans-serif !important;
+  letter-spacing:0 !important;
+  text-align:start !important;
+}
+html[dir="rtl"] .mobile-drawer-brand-copy small{letter-spacing:0 !important;}
+html[dir="rtl"] .mobile-menu.is-swiping,
+html[dir="ltr"] .mobile-menu.is-swiping{
+  transform:translate(calc(-50% + var(--swipe-x, 0px)),0) scale(.985) !important;
+}
+@media (min-width:768px) and (max-width:900px){
+  html[dir="rtl"] :where(.about-bio,.project-details-body p,.featured-case-copy p,.creative-lead,#contact #contactIntro,.contact-box p,.entry p,.timeline-detail p){
+    text-align:start !important;
+    text-align-last:auto !important;
+    text-justify:auto !important;
+  }
+}
+@media (max-width:767px){
+  html[dir="rtl"] :where(.about-bio,.about-role,.project-description,.project-details-body p,.featured-case-copy p,.creative-lead,#contact #contactIntro,.contact-box p,.entry p,.timeline-detail p,.materials-note,.section-lead){
+    text-align:start !important;
+    text-align-last:auto !important;
+    text-justify:auto !important;
+  }
+  html[dir="rtl"] #work .work-filters{direction:ltr !important;}
+  html[dir="rtl"] #work .work-filter{letter-spacing:0 !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  html[dir="rtl"] #work .work-filters::after{transition:none !important;}
+}
