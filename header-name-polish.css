@@ -9,24 +9,22 @@
 
 #siteHeader.glass .wordmark-name {
   display: inline-block;
-  font-family: "Fraunces", Georgia, serif !important;
+  font-family: "Kaushan Script", "Caveat", cursive !important;
   font-size: clamp(1.48rem, 2.05vw, 2.12rem) !important;
-  font-weight: 600 !important;
-  font-optical-sizing: auto;
-  font-variation-settings: "opsz" 72, "SOFT" 28, "WONK" 1;
-  letter-spacing: -0.055em !important;
-  line-height: 0.94 !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.05 !important;
   white-space: nowrap;
-  text-rendering: geometricPrecision;
-  transform: translateY(0.02em);
+  text-rendering: optimizeLegibility;
+  transform: translateY(0.01em);
 }
 
 #siteHeader.glass .wordmark-name::after {
   content: "";
   display: block;
-  width: 31%;
-  height: 1px;
-  margin: 0.24em 0 0 0.07em;
+  width: 34%;
+  height: 1.5px;
+  margin: 0.12em 0 0 0.08em;
   background: currentColor;
   opacity: 0.28;
   transform-origin: left center;
@@ -66,8 +64,8 @@ html:not([data-theme="light"]) { background: #081410 !important; }
     overflow: hidden !important;
   }
   #siteHeader.glass .wordmark-name {
-    font-size: clamp(1.25rem, 6.3vw, 1.65rem) !important;
-    letter-spacing: -0.06em !important;
+    font-size: clamp(1.34rem, 6.6vw, 1.72rem) !important;
+    letter-spacing: -0.03em !important;
   }
   #siteHeader.glass .wordmark-name::after {
     margin-top: 0.2em;
