@@ -1189,3 +1189,83 @@ html[data-theme="light"] .expandable-summary:is(:hover,:focus-visible)::after{
   html[dir="rtl"] .expandable-summary::after{inset-inline-start:14px !important;inset-inline-end:auto !important;}
 }
 @media (prefers-reduced-motion:reduce){.expandable-summary::after{transition:none !important;}}
+
+
+/* ---------- light-only About glass refinement ---------- */
+/* Scope is intentionally limited to #about; Dark Mode and every other card keep
+   their existing surfaces, colors, borders, shadows, and interactions. */
+html[data-theme="light"] #about .about-card{
+  position:relative !important;
+  isolation:isolate !important;
+  overflow:hidden !important;
+  border:1px solid rgba(104,92,176,.30) !important;
+  background:
+    radial-gradient(72% 88% at 0% 0%,rgba(184,157,226,.17),transparent 68%),
+    radial-gradient(70% 86% at 100% 100%,rgba(103,186,131,.14),transparent 70%),
+    radial-gradient(58% 74% at 100% 10%,rgba(86,145,198,.095),transparent 72%),
+    linear-gradient(135deg,rgba(255,255,255,.82),rgba(247,248,255,.69) 52%,rgba(242,250,246,.72)) !important;
+  background-blend-mode:normal !important;
+  box-shadow:
+    0 22px 52px -38px rgba(45,71,108,.32),
+    0 0 34px -24px rgba(117,102,204,.24),
+    inset 0 1px 0 rgba(255,255,255,.94),
+    inset 0 -1px 0 rgba(105,91,181,.08) !important;
+  -webkit-backdrop-filter:blur(16px) saturate(116%) !important;
+  backdrop-filter:blur(16px) saturate(116%) !important;
+  transition:transform .34s cubic-bezier(.23,1,.32,1),border-color .34s ease,box-shadow .34s ease,background .34s ease !important;
+}
+html[data-theme="light"] #about .about-card::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:1px !important;
+  width:auto !important;
+  height:auto !important;
+  z-index:0 !important;
+  pointer-events:none !important;
+  border:1px solid rgba(255,255,255,.50) !important;
+  border-radius:inherit !important;
+  background:
+    linear-gradient(116deg,rgba(255,255,255,.38),transparent 28%,rgba(184,157,226,.055) 52%,transparent 72%),
+    radial-gradient(50% 30% at 72% 0%,rgba(255,255,255,.48),transparent 80%) !important;
+  opacity:.82 !important;
+}
+html[data-theme="light"] #about .about-card::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-20% -10% !important;
+  z-index:0 !important;
+  pointer-events:none !important;
+  border-radius:inherit !important;
+  background:
+    radial-gradient(42% 48% at 8% 24%,rgba(184,157,226,.12),transparent 78%),
+    radial-gradient(42% 48% at 92% 76%,rgba(103,186,131,.10),transparent 78%),
+    radial-gradient(34% 35% at 75% 18%,rgba(86,145,198,.065),transparent 80%) !important;
+  filter:blur(10px) !important;
+  opacity:.88 !important;
+  mix-blend-mode:normal !important;
+  transition:opacity .34s ease,filter .34s ease !important;
+}
+html[data-theme="light"] #about .about-card > *{position:relative;z-index:1;}
+html[data-theme="light"] #about .about-card .about-name{color:#263936 !important;}
+html[data-theme="light"] #about .about-card .about-role{color:#806328 !important;}
+html[data-theme="light"] #about .about-card .about-bio{color:#405c58 !important;}
+@media (hover:hover) and (pointer:fine){
+  html[data-theme="light"] #about .about-card:hover,
+  html[data-theme="light"] #about .about-card:focus-within{
+    transform:translateY(-3px) !important;
+    border-color:rgba(104,92,176,.42) !important;
+    box-shadow:
+      0 26px 58px -40px rgba(45,71,108,.38),
+      0 0 40px -24px rgba(117,102,204,.30),
+      inset 0 1px 0 rgba(255,255,255,.98),
+      inset 0 -1px 0 rgba(105,91,181,.10) !important;
+  }
+  html[data-theme="light"] #about .about-card:hover::after,
+  html[data-theme="light"] #about .about-card:focus-within::after{opacity:1 !important;filter:blur(8px) !important;}
+}
+@media (max-width:767px){
+  html[data-theme="light"] #about .about-card{-webkit-backdrop-filter:blur(12px) saturate(112%) !important;backdrop-filter:blur(12px) saturate(112%) !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme="light"] #about .about-card,html[data-theme="light"] #about .about-card::after{transition:none !important;}
+}
