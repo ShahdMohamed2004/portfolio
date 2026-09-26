@@ -1269,3 +1269,96 @@ html[data-theme="light"] #about .about-card .about-bio{color:#405c58 !important;
 @media (prefers-reduced-motion:reduce){
   html[data-theme="light"] #about .about-card,html[data-theme="light"] #about .about-card::after{transition:none !important;}
 }
+
+
+/* ---------- availability geometry + mobile drawer glass refinement ---------- */
+/* Grid keeps the three contribution cards aligned to one shared rhythm. */
+#availability .availability-strip{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  align-items:stretch !important;
+  gap:18px !important;
+  margin-top:30px !important;
+}
+#availability .availability-item{
+  display:flex !important;
+  align-items:center !important;
+  min-width:0 !important;
+  min-height:126px !important;
+  box-sizing:border-box !important;
+  padding:22px 26px !important;
+  border-inline-start-width:3px !important;
+  border-radius:var(--radius-surface,18px) !important;
+  font-size:clamp(.98rem,1.35vw,1.16rem) !important;
+  line-height:1.58 !important;
+  overflow-wrap:anywhere !important;
+  transition:transform .28s cubic-bezier(.23,1,.32,1),border-color .28s ease,background-color .28s ease,box-shadow .28s ease !important;
+}
+@media (hover:hover) and (pointer:fine){
+  #availability .availability-item:hover{transform:translateY(-3px) !important;}
+}
+@media (max-width:980px){
+  #availability .availability-strip{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:14px !important;}
+  #availability .availability-item{min-height:112px !important;padding:20px 22px !important;}
+}
+@media (max-width:640px){
+  #availability .availability-strip{grid-template-columns:minmax(0,1fr) !important;gap:12px !important;margin-top:20px !important;}
+  #availability .availability-item{min-height:0 !important;padding:18px 18px !important;font-size:1rem !important;line-height:1.55 !important;}
+}
+
+/* A single soft-glass shell for the mobile drawer; navigation behavior is untouched. */
+@media (max-width:860px){
+  #mobileMenu,
+  html[dir="ltr"] #mobileMenu,
+  html[dir="rtl"] #mobileMenu{
+    border-radius:24px !important;
+    overflow:hidden !important;
+    -webkit-backdrop-filter:blur(30px) saturate(138%) !important;
+    backdrop-filter:blur(30px) saturate(138%) !important;
+    box-shadow:0 30px 76px -38px rgba(0,0,0,.78),inset 0 1px 0 rgba(255,255,255,.12),inset 0 0 30px rgba(255,255,255,.025) !important;
+  }
+  html:not([data-theme="light"]) #mobileMenu{
+    background:linear-gradient(145deg,rgba(17,45,34,.64),rgba(5,22,16,.57)) !important;
+    border-color:rgba(224,239,226,.20) !important;
+  }
+  html[data-theme="light"] #mobileMenu{
+    background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(235,247,241,.64)) !important;
+    border-color:rgba(79,135,133,.26) !important;
+    box-shadow:0 28px 68px -36px rgba(37,71,58,.38),inset 0 1px 0 rgba(255,255,255,.92),inset 0 0 30px rgba(120,174,133,.045) !important;
+  }
+  #mobileMenu > a[data-nav],
+  #mobileMenu .mobile-menu-utility > a,
+  #mobileMenu .mobile-menu-utility > button,
+  #mobileMenu .mobile-social-dock a{
+    border-radius:16px !important;
+    -webkit-backdrop-filter:blur(14px) saturate(128%) !important;
+    backdrop-filter:blur(14px) saturate(128%) !important;
+    transition:transform .22s cubic-bezier(.23,1,.32,1),background-color .22s ease,border-color .22s ease,box-shadow .22s ease !important;
+  }
+  html:not([data-theme="light"]) #mobileMenu > a[data-nav],
+  html:not([data-theme="light"]) #mobileMenu .mobile-menu-utility > a,
+  html:not([data-theme="light"]) #mobileMenu .mobile-menu-utility > button,
+  html:not([data-theme="light"]) #mobileMenu .mobile-social-dock a{
+    background:linear-gradient(135deg,rgba(255,255,255,.085),rgba(255,255,255,.025)) !important;
+    border-color:rgba(224,239,226,.16) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.11),0 12px 26px -22px rgba(0,0,0,.78) !important;
+  }
+  html[data-theme="light"] #mobileMenu > a[data-nav],
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility > a,
+  html[data-theme="light"] #mobileMenu .mobile-menu-utility > button,
+  html[data-theme="light"] #mobileMenu .mobile-social-dock a{
+    background:linear-gradient(135deg,rgba(255,255,255,.68),rgba(235,247,241,.32)) !important;
+    border-color:rgba(79,135,133,.18) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.90),0 12px 26px -22px rgba(37,71,58,.30) !important;
+  }
+  @media (hover:hover) and (pointer:fine){
+    #mobileMenu > a[data-nav]:hover,
+    #mobileMenu > a[data-nav]:focus-visible,
+    #mobileMenu .mobile-menu-utility > a:hover,
+    #mobileMenu .mobile-menu-utility > a:focus-visible,
+    #mobileMenu .mobile-menu-utility > button:hover,
+    #mobileMenu .mobile-menu-utility > button:focus-visible{
+      transform:translateX(2px) !important;
+    }
+  }
+}
