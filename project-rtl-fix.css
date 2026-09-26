@@ -1,0 +1,137 @@
+/* Arabic project experience: one native RTL reading flow for cards, panels, and previews. */
+
+html[dir="rtl"] #workSpine .project-details,
+html[dir="rtl"] #workSpine .project-details-body,
+html[dir="rtl"] #workSpine .project-details-body > *,
+html[dir="rtl"] #workSpine .featured-case,
+html[dir="rtl"] #workSpine .featured-case-content,
+html[dir="rtl"] #workSpine .featured-case-content-inner,
+html[dir="rtl"] #workSpine .featured-case-copy {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+html[dir="rtl"] #workSpine .project-details > summary.project-summary {
+  direction: rtl !important;
+  text-align: right !important;
+  padding-inline-start: 52px !important;
+  padding-inline-end: 18px !important;
+}
+
+html[dir="rtl"] #workSpine .project-details > summary.project-summary .entry-preview {
+  align-items: flex-end !important;
+  text-align: right !important;
+  padding-inline: 0 !important;
+  margin-inline: 0 !important;
+}
+
+html[dir="rtl"] #workSpine .project-details > summary.project-summary h3,
+html[dir="rtl"] #workSpine .project-details > summary.project-summary .entry-flag {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+html[dir="rtl"] #workSpine .project-details > summary.project-summary::after {
+  inset-inline-start: 14px !important;
+  inset-inline-end: auto !important;
+}
+
+html[dir="rtl"] #workSpine .project-details-body {
+  padding-inline: 18px 22px !important;
+}
+
+html[dir="rtl"] #workSpine .project-details-body > p,
+html[dir="rtl"] #workSpine .project-details-body > .project-description,
+html[dir="rtl"] #workSpine .project-details-body .featured-case p,
+html[dir="rtl"] #workSpine .project-details-body .featured-case-copy,
+html[dir="rtl"] #workSpine .project-details-body .project-finding,
+html[dir="rtl"] #workSpine .project-details-body .meta-row,
+html[dir="rtl"] #workSpine .project-details-body .stat-line,
+html[dir="rtl"] #workSpine .project-details-body .ownership-note {
+  direction: rtl !important;
+  text-align: right !important;
+  text-align-last: right !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: auto !important;
+}
+
+html[dir="rtl"] #workSpine .project-details-body .project-facts {
+  direction: rtl !important;
+  text-align: right !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: auto !important;
+}
+
+html[dir="rtl"] #workSpine .project-details-body .project-facts > div {
+  direction: rtl !important;
+  grid-template-columns: minmax(0, 1fr) minmax(72px, 100px) !important;
+  text-align: right !important;
+}
+
+html[dir="rtl"] #workSpine .project-details-body .project-facts dt,
+html[dir="rtl"] #workSpine .project-details-body .project-facts dd,
+html[dir="rtl"] #workSpine .project-details-body .project-finding strong,
+html[dir="rtl"] #workSpine .project-details-body .project-finding span {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: plaintext;
+}
+
+html[dir="rtl"] #workSpine .project-details-body .project-finding {
+  border-inline-start: 0 !important;
+  border-inline-end: 2px solid var(--yellow) !important;
+}
+
+html[dir="rtl"] #workSpine .project-details-body .proj-links {
+  direction: rtl !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  text-align: right !important;
+}
+
+html[dir="rtl"] #workSpine .project-details-body .proj-link {
+  direction: rtl !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  text-align: center !important;
+  unicode-bidi: plaintext;
+}
+
+html[dir="rtl"] #workSpine :is(.place, .dates, .meta-row, .project-facts dd, .project-facts dt, .url, .email) {
+  unicode-bidi: plaintext;
+}
+
+html[dir="rtl"] .project-preview {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+html[dir="rtl"] .project-preview strong,
+html[dir="rtl"] .project-preview span {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+@media (max-width: 767px) {
+  html[dir="rtl"] #workSpine .project-details > summary.project-summary {
+    padding-inline: 12px 46px !important;
+  }
+
+  html[dir="rtl"] #workSpine .project-details-body {
+    padding-inline: 14px !important;
+  }
+
+  html[dir="rtl"] #workSpine .project-details-body .project-facts > div {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html[dir="rtl"] #workSpine .project-details-body .proj-links {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  html[dir="rtl"] #workSpine .project-details-body .proj-link {
+    width: 100% !important;
+  }
+}

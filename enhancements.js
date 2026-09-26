@@ -45,13 +45,20 @@
     };
     const showPreview = (details, x, y) => {
       if (!details) return;
-      const title = details.querySelector('h3')?.textContent?.trim() || 'Project';
+      const isArabic = document.documentElement.lang === 'ar' || document.documentElement.dir === 'rtl';
+      const title = details.querySelector('h3')?.textContent?.trim() || (isArabic ? 'مشروع' : 'Project');
       const image = details.querySelector('img');
       preview.replaceChildren();
+      preview.dir = isArabic ? 'rtl' : 'ltr';
+      preview.lang = isArabic ? 'ar' : 'en';
       preview.classList.toggle('has-image', Boolean(image));
       if (image) { const clone = image.cloneNode(true); clone.alt = ''; preview.appendChild(clone); }
       const strong = document.createElement('strong'); strong.textContent = title; preview.appendChild(strong);
-      const span = document.createElement('span'); span.textContent = image ? 'Existing project visual' : 'Open the project card for details and links'; preview.appendChild(span);
+      const span = document.createElement('span');
+      span.textContent = image
+        ? (isArabic ? 'معاينة مرئية للمشروع' : 'Existing project visual')
+        : (isArabic ? 'افتح بطاقة المشروع لعرض التفاصيل والروابط' : 'Open the project card for details and links');
+      preview.appendChild(span);
       preview.classList.add('is-visible');
       previewWidth = preview.getBoundingClientRect().width;
       queuePreviewPosition(x, y);
