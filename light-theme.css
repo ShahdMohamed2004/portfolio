@@ -457,7 +457,7 @@ html[data-theme="light"] #main-content :is(button,.btn)[aria-disabled="true"] {
 
 /* Keep the desktop navigation geometry explicit after the legacy theme layers. */
 @media (min-width: 861px) {
-  html[data-theme="light"] #siteHeader nav {
+  html[data-theme="light"] #siteHeader:not(.glass) nav {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
