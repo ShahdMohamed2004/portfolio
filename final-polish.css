@@ -2675,3 +2675,104 @@ html[dir="rtl"] #home.hero #credentialStrip .cred .school,
 html[dir="rtl"] #home.hero #credentialStrip .cred .gpa{
   text-align:end !important;
 }
+
+
+/* ---------- Final Arabic UX parity + navbar glass reflection ---------- */
+/* A low-contrast light pass moves across the existing navbar surface only. */
+#siteHeader nav{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+#siteHeader nav::before{
+  content:"";
+  position:absolute;
+  inset:1px 7%;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(108deg,transparent 0%,rgba(231,245,231,.018) 34%,rgba(231,245,231,.085) 49%,rgba(231,245,231,.018) 64%,transparent 100%);
+  transform:translateX(-125%);
+  animation:navbarGlassPass 18s cubic-bezier(.45,0,.35,1) infinite;
+  opacity:.72;
+}
+#siteHeader nav::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  border:1px solid rgba(231,245,231,.035);
+  border-radius:inherit;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 26%,#000 74%,transparent 100%);
+  opacity:.55;
+}
+@keyframes navbarGlassPass{0%,18%{transform:translateX(-125%);opacity:0}28%{opacity:.55}52%{transform:translateX(125%);opacity:.32}65%,100%{transform:translateX(125%);opacity:0}}
+@media (prefers-reduced-motion:reduce){#siteHeader nav::before{animation:none;opacity:.18;transform:none}#siteHeader nav::after{opacity:.28}}
+
+/* Arabic text uses natural ragged edges; English remains governed by its source rules. */
+html[dir="rtl"] #about #aboutRole,
+html[dir="rtl"] #about .about-bio,
+html[dir="rtl"] #creative .creative-lead,
+html[dir="rtl"] #contact #contactIntro,
+html[dir="rtl"] #workSpine .project-details-body > p,
+html[dir="rtl"] #workSpine .project-description,
+html[dir="rtl"] #workSpine .project-details-body .project-facts dd,
+html[dir="rtl"] .featured-case-copy p{
+  text-align:start !important;
+  text-align-last:auto !important;
+  text-justify:auto !important;
+  hyphens:none !important;
+  letter-spacing:0 !important;
+  word-spacing:normal !important;
+}
+html[dir="rtl"] #about #aboutRole{text-transform:none !important;line-height:1.85 !important;}
+html[dir="rtl"] .mixed-content,
+html[dir="rtl"] .project-finding span,
+html[dir="rtl"] .materials-note,
+html[dir="rtl"] .project-facts dd{
+  unicode-bidi:isolate !important;
+}
+
+/* The icon belongs at the visual end of Arabic CTA labels, while English is untouched. */
+html[dir="rtl"] #home .hero-action{flex-direction:row-reverse !important;}
+
+/* Keep the physical drawer centered while a horizontal swipe is in progress. */
+@media (max-width:860px){
+  html[dir="rtl"] .mobile-drawer-brand{padding-inline-start:64px !important;padding-inline-end:0 !important;}
+  html[dir="rtl"] .mobile-menu.is-swiping,
+  html[dir="ltr"] .mobile-menu.is-swiping{
+    transform:translate(calc(-50% + var(--swipe-x, 0px)),-50%) scale(1) !important;
+  }
+}
+
+/* Two-column tablet reading rhythm for the Arabic teaching approach only. */
+@media (min-width:768px) and (max-width:900px){
+  html[dir="rtl"] #howITeachGrid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:14px !important;}
+}
+
+/* One coherent expansion marker on RTL journey summaries. Education's custom
+   marker remains excluded because it intentionally has its own indicator. */
+html[dir="rtl"] :is(#experience,#development) .timeline-detail > summary::before,
+html[dir="rtl"] :is(#experience,#development) .timeline-detail > summary::after{
+  inset-inline-start:14px !important;
+  inset-inline-end:auto !important;
+}
+html[dir="rtl"] :is(#experience,#development) .timeline-detail > summary{
+  padding-inline-start:50px !important;
+  padding-inline-end:16px !important;
+}
+html[dir="rtl"] #workSpine .project-details > summary.project-summary{
+  padding-inline-start:50px !important;
+  padding-inline-end:16px !important;
+}
+
+/* Directional hover motion follows the Arabic reading edge on pointer devices. */
+@media (min-width:768px) and (hover:hover) and (pointer:fine){
+  html[dir="rtl"] .spine > .entry:hover{transform:translateX(-5px) !important;}
+}
+
+/* Availability cards remain equal-height despite different Arabic wrapping. */
+html[dir="rtl"] #availability .availability-item{align-self:stretch !important;}
+@media (max-width:767px){
+  html[dir="rtl"] footer{padding-block-end:calc(84px + env(safe-area-inset-bottom)) !important;}
+}

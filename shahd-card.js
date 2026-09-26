@@ -27,6 +27,10 @@
     .portrait::after{content:'';position:absolute;inset:0;pointer-events:none;border:1px solid #152b2315;border-radius:inherit;background:linear-gradient(180deg,transparent 65%,#173b3112)}
     .portrait-label{position:absolute;bottom:7px;left:7px;background:#173b31eb;color:#f5efdf;border-radius:2px;padding:3px 5px;font-size:5.5px;letter-spacing:1.3px;z-index:1}
     .identity{padding:10px 12px 0}
+    :host(.rtl) .identity{direction:rtl;text-align:right}
+    :host(.rtl) .role{direction:rtl;text-align:right}
+    :host(.rtl) .portrait-label{direction:rtl;letter-spacing:0;text-align:right}
+    :host(.rtl) .discipline{direction:rtl;letter-spacing:.25px}
     .name{display:block;font-family:'Fraunces',Georgia,serif;font-size:18px;font-weight:500;line-height:1.06;letter-spacing:-.6px;white-space:nowrap}
     .role{display:block;margin-top:5px;font-size:8px;line-height:1.45;color:#52675b;font-weight:500;letter-spacing:0}
     .footer{position:absolute;left:12px;right:12px;bottom:10px;border-top:1px solid #263e3029;padding-top:8px;display:flex;align-items:center;justify-content:space-between;gap:4px}
@@ -117,6 +121,7 @@
     updateLanguage() {
       if (!this.shadowRoot) return;
       const ar = document.documentElement.lang === 'ar';
+      this.classList.toggle('rtl', ar);
       const q = selector => this.shadowRoot.querySelector(selector);
       const topLabel = q('.card-top span');
       const portraitLabel = q('.portrait-label');

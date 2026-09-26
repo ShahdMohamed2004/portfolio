@@ -8,5 +8,13 @@
   "theme_color": "#152825",
   "description": "Portfolio of Shahd Mohamed Siddiq, TEFL graduate and aspiring English language educator.",
   "lang": "en",
-  "dir": "ltr"
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "assets/sm-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
