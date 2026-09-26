@@ -1,0 +1,280 @@
+/* Selected Work timeline parity.
+   One component in every locale/theme: only direction and color tokens change. */
+
+#work .work-toolbar {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 13px !important;
+  margin-bottom: 30px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#work .work-filters,
+html[dir="ltr"] #work .work-filters,
+html[dir="rtl"] #work .work-filters {
+  --step-count: 5;
+  --filter-progress: 0;
+  position: relative !important;
+  z-index: 2 !important;
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  align-items: start !important;
+  gap: 0 !important;
+  width: min(100%, 760px) !important;
+  margin-inline: auto !important;
+  margin-block: 0 !important;
+  padding: 0 10px 4px !important;
+  direction: ltr !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+#work .work-filters::before,
+#work .work-filters::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  inset-block-start: 20px !important;
+  inset-inline-start: calc(10px + (100% - 20px) / 10) !important;
+  inset-inline-end: calc(10px + (100% - 20px) / 10) !important;
+  width: auto !important;
+  height: 1px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  pointer-events: none !important;
+  display: block !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+  transform-origin: left center !important;
+}
+
+#work .work-filters::before {
+  background: color-mix(in srgb, var(--chalk-dim) 34%, transparent) !important;
+  transform: none !important;
+}
+
+#work .work-filters::after {
+  background: linear-gradient(90deg, var(--yellow), color-mix(in srgb, var(--yellow) 62%, var(--chalk-dim))) !important;
+  transform: scaleX(var(--filter-progress)) !important;
+  transform-origin: left center !important;
+  transition: transform .42s cubic-bezier(.22, 1, .36, 1) !important;
+}
+
+html[dir="rtl"] #work .work-filters {
+  direction: rtl !important;
+}
+
+html[dir="rtl"] #work .work-filters::after {
+  transform-origin: right center !important;
+  background: linear-gradient(270deg, var(--yellow), color-mix(in srgb, var(--yellow) 62%, var(--chalk-dim))) !important;
+}
+
+#work .work-filter,
+#work .work-filter:hover,
+#work .work-filter:focus-visible,
+#work .work-filter[aria-pressed="true"] {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+  min-height: 58px !important;
+  padding: 0 5px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: var(--chalk-dim) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: .72rem !important;
+  font-weight: 500 !important;
+  line-height: 1.25 !important;
+  white-space: normal !important;
+  transform: none !important;
+  text-align: center !important;
+}
+
+#work .work-filter::before {
+  content: none !important;
+  display: none !important;
+}
+
+#work .work-filter::after {
+  content: "" !important;
+  order: -2 !important;
+  display: block !important;
+  width: 11px !important;
+  height: 11px !important;
+  margin: 0 !important;
+  border: 1px solid color-mix(in srgb, var(--chalk-dim) 72%, transparent) !important;
+  border-radius: 50% !important;
+  background: var(--ink) !important;
+  box-shadow: 0 0 0 4px transparent !important;
+  transform: none !important;
+  transition: background .28s ease, border-color .28s ease, box-shadow .32s ease, transform .32s cubic-bezier(.23, 1, .32, 1) !important;
+}
+
+#work .work-filter .filter-number {
+  order: -1 !important;
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: color-mix(in srgb, var(--chalk-dim) 72%, transparent) !important;
+  font: 500 .60rem/1 var(--font-body) !important;
+  letter-spacing: .12em !important;
+}
+
+#work .work-filter .filter-label {
+  display: block !important;
+  max-width: 100% !important;
+  color: inherit !important;
+  text-align: center !important;
+}
+
+#work .work-filter:is(:hover, :focus-visible) {
+  color: var(--yellow) !important;
+  outline: none !important;
+}
+
+#work .work-filter:is(:hover, :focus-visible)::after {
+  border-color: var(--yellow) !important;
+  box-shadow: 0 0 0 4px rgba(231, 184, 78, .10) !important;
+  transform: scale(1.05) !important;
+}
+
+#work .work-filter[aria-pressed="true"] {
+  color: var(--chalk) !important;
+  font-weight: 650 !important;
+}
+
+#work .work-filter[aria-pressed="true"]::after {
+  border-color: var(--yellow) !important;
+  background: var(--yellow) !important;
+  box-shadow: 0 0 0 4px rgba(231, 184, 78, .13), 0 0 14px rgba(231, 184, 78, .22) !important;
+  transform: scale(1.08) !important;
+}
+
+#work .work-filter[aria-pressed="true"] .filter-number {
+  color: var(--yellow) !important;
+}
+
+#work .work-count {
+  align-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: var(--muted) !important;
+  background: transparent !important;
+  font-size: .68rem !important;
+  letter-spacing: .08em !important;
+}
+
+/* Light Mode is the same component with a lighter surface-safe palette. */
+html[data-theme="light"] #work .work-filters::before {
+  background: rgba(73, 105, 101, .28) !important;
+}
+
+html[data-theme="light"] #work .work-filters::after {
+  background: linear-gradient(90deg, #c59b4c, #a9853c) !important;
+}
+
+html[data-theme="light"] #work .work-filter,
+html[data-theme="light"] #work .work-filter[aria-pressed="true"] {
+  background: transparent !important;
+  color: #49635f !important;
+}
+
+html[data-theme="light"] #work .work-filter::after {
+  background: #fbfaf5 !important;
+  border-color: rgba(73, 105, 101, .52) !important;
+}
+
+html[data-theme="light"] #work .work-filter:is(:hover, :focus-visible) {
+  color: #8f6e29 !important;
+}
+
+html[data-theme="light"] #work .work-filter:is(:hover, :focus-visible)::after {
+  border-color: #a9853c !important;
+  box-shadow: 0 0 0 4px rgba(197, 155, 76, .12) !important;
+}
+
+html[data-theme="light"] #work .work-filter[aria-pressed="true"] {
+  color: #29453d !important;
+}
+
+html[data-theme="light"] #work .work-filter[aria-pressed="true"]::after {
+  background: #c59b4c !important;
+  border-color: #a9853c !important;
+  box-shadow: 0 0 0 4px rgba(197, 155, 76, .14), 0 0 14px rgba(197, 155, 76, .18) !important;
+}
+
+html[data-theme="light"] #work .work-filter .filter-number,
+html[data-theme="light"] #work .work-filter[aria-pressed="true"] .filter-number {
+  color: #718681 !important;
+}
+
+html[data-theme="light"] #work .work-filter[aria-pressed="true"] .filter-number {
+  color: #9a762b !important;
+}
+
+@media (max-width: 768px) {
+  #work .work-toolbar {
+    gap: 13px !important;
+    margin-bottom: 26px !important;
+  }
+
+  #work .work-filters,
+  html[dir="ltr"] #work .work-filters,
+  html[dir="rtl"] #work .work-filters {
+    width: 100% !important;
+    max-width: none !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    padding-inline: 8px !important;
+    padding-block: 0 4px !important;
+    overflow: visible !important;
+  }
+
+  #work .work-filters::before,
+  #work .work-filters::after {
+    inset-block-start: 20px !important;
+    inset-inline-start: calc(8px + (100% - 16px) / 10) !important;
+    inset-inline-end: calc(8px + (100% - 16px) / 10) !important;
+  }
+
+  #work .work-filter,
+  #work .work-filter[aria-pressed="true"] {
+    min-height: 62px !important;
+    padding-inline: 2px !important;
+    font-size: .64rem !important;
+  }
+
+  #work .work-filter .filter-label {
+    white-space: normal !important;
+    text-align: center !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #work .work-filters::after,
+  #work .work-filter,
+  #work .work-filter::after {
+    transition: none !important;
+  }
+}
