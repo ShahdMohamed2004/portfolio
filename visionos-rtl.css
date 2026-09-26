@@ -1,0 +1,170 @@
+/*
+ * VisionOS-inspired chrome and Arabic Other Interests alignment.
+ * The logo is the only script element; navigation remains an academic sans.
+ */
+
+#siteHeader.glass {
+  width: min(1360px, calc(100% - 40px)) !important;
+  top: 14px !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035) 46%, rgba(98, 163, 132, 0.10)) padding-box,
+    linear-gradient(120deg, rgba(255, 255, 255, 0.50), rgba(205, 238, 218, 0.18) 52%, rgba(150, 199, 172, 0.36)) border-box !important;
+  border: 1px solid transparent !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.04), 0 18px 46px rgba(0, 0, 0, 0.20) !important;
+  backdrop-filter: blur(28px) saturate(155%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(155%) !important;
+}
+
+#siteHeader.glass nav {
+  min-height: 42px !important;
+  align-items: center !important;
+  gap: clamp(12px, 2.2vw, 28px) !important;
+  font-family: "Inter", "Manrope", "Space Grotesk", sans-serif !important;
+}
+
+#siteHeader.glass .wordmark {
+  flex: 0 0 auto !important;
+  font-family: "Allura", cursive !important;
+  font-size: clamp(1.72rem, 2.2vw, 2.25rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  line-height: 0.9 !important;
+  color: #e9f5ed !important;
+  text-shadow: 0 1px 12px rgba(213, 238, 224, 0.16) !important;
+}
+
+#siteHeader.glass .nav-links,
+#siteHeader.glass .nav-utility,
+#siteHeader.glass .nav-links a,
+#siteHeader.glass .nav-utility a,
+#siteHeader.glass button {
+  font-family: "Inter", "Manrope", "Space Grotesk", sans-serif !important;
+}
+
+#siteHeader.glass .nav-links {
+  flex: 1 1 auto !important;
+  justify-content: center !important;
+  gap: 2px !important;
+}
+
+#siteHeader.glass .nav-links::before {
+  height: 35px !important;
+  border-radius: 999px !important;
+  background: rgba(206, 238, 218, 0.055) !important;
+  border-color: rgba(213, 238, 224, 0.13) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+#siteHeader.glass .nav-links a {
+  min-height: 33px !important;
+  padding: 7px 13px !important;
+  border-radius: 999px !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.01em !important;
+  transition: color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+#siteHeader.glass .nav-links a:is(.active, :hover, :focus-visible) {
+  background: rgba(190, 231, 205, 0.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.13), 0 5px 16px rgba(15, 62, 45, 0.12) !important;
+}
+
+#siteHeader.glass .nav-utility {
+  flex: 0 0 auto !important;
+  border-radius: 999px !important;
+  padding: 3px !important;
+  background: rgba(221, 243, 229, 0.055) !important;
+  border: 1px solid rgba(213, 238, 224, 0.15) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+html[data-theme="light"] #siteHeader.glass {
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.55), rgba(240, 250, 244, 0.30) 46%, rgba(210, 235, 219, 0.24)) padding-box,
+    linear-gradient(120deg, rgba(255, 255, 255, 0.80), rgba(150, 199, 172, 0.42) 54%, rgba(182, 214, 194, 0.55)) border-box !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.80), inset 0 -1px 0 rgba(32, 85, 64, 0.06), 0 18px 46px rgba(35, 92, 68, 0.13) !important;
+}
+
+html[data-theme="light"] #siteHeader.glass .wordmark { color: #205746 !important; text-shadow: none !important; }
+html[data-theme="light"] #siteHeader.glass .nav-links::before { background: rgba(116, 174, 140, 0.08) !important; border-color: rgba(65, 126, 101, 0.20) !important; }
+html[data-theme="light"] #siteHeader.glass .nav-utility { background: rgba(255, 255, 255, 0.28) !important; border-color: rgba(65, 126, 101, 0.22) !important; }
+html[data-theme="light"] #siteHeader.glass .nav-links a:is(.active, :hover, :focus-visible) { background: rgba(142, 194, 165, 0.18) !important; }
+
+/* Arabic Other Interests: right anchored, right-reading, naturally flowing tags. */
+html[dir="rtl"] #creative {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+html[dir="rtl"] #creative .section-head,
+html[dir="rtl"] #creative .section-head h2,
+html[dir="rtl"] #creative .section-head .section-tag {
+  direction: rtl !important;
+  text-align: right !important;
+  align-items: flex-end !important;
+}
+
+html[dir="rtl"] #creative .section-head::after {
+  inset-inline-start: auto !important;
+  inset-inline-end: 0 !important;
+  transform-origin: right center !important;
+}
+
+html[dir="rtl"] #creative .creative-row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  direction: rtl !important;
+  text-align: right !important;
+  width: 100% !important;
+  margin-inline: 0 !important;
+}
+
+html[dir="rtl"] #creative .creative-item {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  direction: rtl !important;
+  text-align: right !important;
+  margin-inline: 0 !important;
+  float: none !important;
+}
+
+html[dir="rtl"] #creative .creative-icon { order: 2; margin-inline-start: 0; margin-inline-end: 2px; }
+html[dir="rtl"] #creative .creative-external { order: 0; }
+
+html[dir="rtl"] #creative .creative-lead,
+html[dir="rtl"] #creative #creativeLead {
+  display: block !important;
+  width: min(100%, 58ch) !important;
+  max-width: 58ch !important;
+  margin-inline-start: 0 !important;
+  margin-inline-end: auto !important;
+  direction: rtl !important;
+  text-align: right !important;
+  text-align-last: right !important;
+  line-height: 1.95 !important;
+}
+
+@media (max-width: 767px) {
+  #siteHeader.glass {
+    top: 8px !important;
+    width: calc(100% - 28px) !important;
+    padding: 4px 8px !important;
+  }
+  #siteHeader.glass .wordmark { font-size: 1.72rem !important; }
+  #siteHeader.glass nav { min-height: 42px !important; gap: 8px !important; }
+  html[dir="rtl"] #creative .creative-row { gap: 8px !important; }
+  html[dir="rtl"] #creative .creative-lead,
+  html[dir="rtl"] #creative #creativeLead { width: 100% !important; max-width: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #siteHeader.glass .nav-links a { transition: none !important; }
+}
