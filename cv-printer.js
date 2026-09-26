@@ -160,7 +160,7 @@
             { clipPath: "inset(0 -18px 76% -18px)", transform: "translateY(5px)", offset: 0.28 },
             { clipPath: "inset(-3px -18px -22px -18px)", transform: "translateY(0)" }
           ],
-          { duration: 3200, delay: 180, easing: "cubic-bezier(.16,.78,.24,1)", fill: "forwards" }
+          { duration: 900, delay: 60, easing: "cubic-bezier(.16,.78,.24,1)", fill: "forwards" }
         );
 
         animation.finished.catch(() => {}).then(() => {

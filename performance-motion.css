@@ -1,0 +1,132 @@
+/* Unified performance pass: short, composited motion and stable type metrics. */
+:root {
+  --motion-fast: 180ms;
+  --motion-base: 280ms;
+  --motion-slow: 420ms;
+  --motion-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+  hanging-punctuation: first last;
+}
+
+body {
+  font-kerning: normal;
+  font-variant-numeric: proportional-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:is(h1, h2, h3, h4, h5, h6, p, a, button, .btn, .nav-links a) {
+  text-wrap: pretty;
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.15;
+}
+
+/* Do not let the desktop glass header resize the document on hover. */
+#siteHeader.glass,
+#siteHeader.glass:hover,
+#siteHeader.glass:focus-within {
+  width: min(1360px, calc(100% - 40px)) !important;
+  transition: background 280ms ease, border-color 280ms ease, box-shadow 280ms ease, top 280ms ease !important;
+}
+
+#siteHeader.glass .nav-links::before {
+  transition: transform 300ms var(--motion-ease), width 300ms var(--motion-ease), opacity 180ms ease !important;
+}
+
+#siteHeader.glass .nav-links a {
+  transition: color 220ms ease, transform 220ms var(--motion-ease), opacity 180ms ease !important;
+}
+
+/* Cap reveal choreography without removing the content or the hierarchy. */
+.reveal,
+.reveal-item,
+main.wrap > section.section-entering .section-head,
+main.wrap > section.section-entering .section-head h2,
+main.wrap > section.section-entering .section-tag,
+main.wrap > section.section-entering .section-head::after,
+main.wrap > section.section-entering .section-lead,
+main.wrap > section.section-entering .credential-strip .cred,
+main.wrap > section.section-entering .section-content,
+main.wrap > section.section-entering .spine > .entry {
+  animation-duration: 420ms !important;
+  animation-delay: 0ms !important;
+}
+
+.reveal,
+.reveal-item {
+  transition-duration: 420ms !important;
+  transition-timing-function: var(--motion-ease) !important;
+}
+
+section .section-head h2,
+section .section-tag,
+section .section-head::after {
+  transition-duration: 320ms !important;
+  transition-timing-function: var(--motion-ease) !important;
+}
+
+:is(.approach-card, .material-card, .dev-card, .skill-block, .contact-box,
+    .credential-strip .cred, .project-details, .timeline-detail,
+    .accordion-card, .availability-item, .creative-item, .featured-case,
+    .about-card, .btn, .proj-link, .work-filter) {
+  transition-duration: 280ms !important;
+  transition-timing-function: var(--motion-ease) !important;
+}
+
+/* Expensive decorative loops stay out of the interaction path. */
+.aurora,
+.ambient-glow,
+.ambient-light-path,
+.ambient-specular-ribbon,
+.ambient-micro-reflection,
+body::before {
+  animation: none !important;
+}
+
+#siteHeader.glass.is-sheening::after {
+  animation-duration: 650ms !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #siteHeader.glass:hover {
+    transform: translateX(-50%) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile keeps native scrolling, but anchor clicks still use the JS smooth path. */
+  html, body {
+    scroll-behavior: auto !important;
+  }
+
+  #siteHeader.glass,
+  #siteHeader.glass:hover,
+  #siteHeader.glass:focus-within {
+    width: calc(100% - 28px) !important;
+  }
+
+  .hero.hero-ready .hero-note,
+  .hero.hero-ready h1,
+  .hero.hero-ready .lead,
+  .hero.hero-ready .credential-strip,
+  .hero.hero-ready .cta-row,
+  .hero.hero-ready .tense-diagram {
+    transition-duration: 420ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
