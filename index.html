@@ -2716,8 +2716,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </div>
 </div>
 <footer>
-  <span id="footerText"></span>
-  <span class="footer-ownership" id="footerOwnership">© 2026 Shahd Mohamed. All Rights Reserved. · Original website design, content, projects, visual assets, and creative work are the intellectual property of Shahd Mohamed unless otherwise stated. · Designed &amp; Built by Shahd Mohamed.</span>
+  <p class="footer-signature" id="footerText">Designed, built &amp; brought to life with intention by Shahd Mohamed.</p>
+  <p class="footer-ownership" id="footerOwnership">© 2026 Shahd Mohamed. All original creative work, designs, content, projects, and visual assets are protected unless otherwise stated.</p>
 </footer>
 
 
@@ -3487,11 +3487,14 @@ const SITE_AR = {
     // Contact
     document.getElementById('contactIntro').textContent = data.contact.intro;
 
-    document.getElementById('footerText').textContent = `${data.footer} · ${lang === 'ar' ? 'آخر تحديث' : 'Updated'} 2026 · © ${new Date().getFullYear()}`;
+    const footerText = document.getElementById('footerText');
+    if(footerText) footerText.textContent = lang === 'ar'
+      ? 'صُمم وبُني وأُحيي بقصد بواسطة شهد محمد.'
+      : 'Designed, built & brought to life with intention by Shahd Mohamed.';
     const ownership = document.getElementById('footerOwnership');
     if(ownership) ownership.textContent = lang === 'ar'
-      ? '© 2026 شهد محمد. جميع الحقوق محفوظة. · تصميم ومحتوى ومشروعات وأصول إبداعية أصلية بواسطة شهد محمد ما لم يُذكر خلاف ذلك. · تصميم وتنفيذ شهد محمد.'
-      : '© 2026 Shahd Mohamed. All Rights Reserved. · Original website design, content, projects, visual assets, and creative work are the intellectual property of Shahd Mohamed unless otherwise stated. · Designed & Built by Shahd Mohamed.';
+      ? '© 2026 شهد محمد. جميع الأعمال الإبداعية والتصميمات والمحتوى والمشروعات والأصول المرئية الأصلية محمية ما لم يُذكر خلاف ذلك.'
+      : '© 2026 Shahd Mohamed. All original creative work, designs, content, projects, and visual assets are protected unless otherwise stated.';
     contentRevision += 1;
     observeRevealTargets();
   }
