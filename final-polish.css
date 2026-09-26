@@ -51,6 +51,27 @@ main.wrap>section:not(#home){background:transparent !important;}
   }
 }
 
+/* Shared card hover halo: localized, quiet, and only active while interacting. */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(231,184,78,.62) !important;
+    box-shadow:
+      0 18px 36px -24px rgba(0,0,0,.42),
+      0 0 0 1px rgba(231,184,78,.16),
+      0 0 26px -11px rgba(231,184,78,.62),
+      inset 0 1px 0 rgba(255,255,255,.10) !important;
+  }
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(86,145,198,.64) !important;
+    box-shadow:
+      0 18px 36px -24px rgba(45,71,108,.34),
+      0 0 0 1px rgba(117,102,204,.16),
+      0 0 26px -11px rgba(117,102,204,.52),
+      0 0 18px -12px rgba(86,145,198,.36),
+      inset 0 1px 0 rgba(255,255,255,.96) !important;
+  }
+}
+
 /* Premium frosted glass for light mode: visible edge first, glow second. */
 html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
   border:1px solid var(--light-glass-border) !important;
@@ -151,4 +172,19 @@ html[data-theme="light"] .work-filter:focus-visible{
 }
 @media (forced-colors:active){
   html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item){backdrop-filter:none;box-shadow:none !important;}
+}
+
+/* Final cascade guard: the halo is the last interaction treatment in both themes. */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(231,184,78,.62) !important;
+    box-shadow:0 18px 36px -24px rgba(0,0,0,.42),0 0 0 1px rgba(231,184,78,.16),0 0 26px -11px rgba(231,184,78,.62),inset 0 1px 0 rgba(255,255,255,.10) !important;
+  }
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(86,145,198,.64) !important;
+    box-shadow:0 18px 36px -24px rgba(45,71,108,.34),0 0 0 1px rgba(117,102,204,.16),0 0 26px -11px rgba(117,102,204,.52),0 0 18px -12px rgba(86,145,198,.36),inset 0 1px 0 rgba(255,255,255,.96) !important;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){transition:none !important;}
 }
