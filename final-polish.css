@@ -196,3 +196,49 @@ html[data-theme="light"] .work-filter:focus-visible{
 @media (prefers-reduced-motion:reduce){
   :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){transition:none !important;}
 }
+
+/* Arabic parity layer: logical spacing and bidi-safe mixed content. */
+html[dir="rtl"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case){
+  direction:rtl;
+  text-align:right;
+}
+html[dir="rtl"] #howITeachGrid .accordion-card summary{
+  direction:rtl;
+  text-align:right;
+  gap:clamp(12px,1.15vw,20px);
+  padding-inline:20px 48px;
+}
+html[dir="rtl"] #howITeachGrid .accordion-card summary .num{
+  direction:ltr;
+  unicode-bidi:isolate;
+  margin-inline:0 !important;
+}
+html[dir="rtl"] :is(.gpa,.entry-flag,.badge,.meta-label,.stat-line,.project-facts,.filter-number){
+  unicode-bidi:isolate;
+}
+html[dir="rtl"] :is(.project-details,.timeline-detail) summary::after{
+  inset-inline-start:12px;
+  inset-inline-end:auto;
+}
+html[dir="rtl"] .project-details > summary.project-summary,
+html[dir="rtl"] .timeline-detail > summary{
+  padding-inline:42px 0;
+}
+html[dir="rtl"] .project-details .proj-links{
+  flex-direction:row-reverse;
+  justify-content:flex-start;
+}
+html[dir="rtl"] .material-card .arrow{
+  transform-origin:center;
+}
+@media (max-width:900px){
+  html[dir="rtl"] #howITeachGrid .accordion-card summary,
+  html[dir="rtl"] .accordion-card summary{
+    padding-inline:14px 42px;
+    gap:10px;
+  }
+  html[dir="rtl"] .project-details > summary.project-summary,
+  html[dir="rtl"] .timeline-detail > summary{
+    padding-inline:42px 14px;
+  }
+}
