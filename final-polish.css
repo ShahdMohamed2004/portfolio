@@ -2120,3 +2120,14 @@ html[dir="rtl"] #credentials .education-card-body{
 @media (prefers-reduced-motion:reduce){
   #credentials .education-card[open] .education-card-body{animation:none;}
 }
+
+/* Remove only the right-side Education control tile; preserve the left timeline. */
+#credentials .timeline-detail > summary::before,
+#credentials .timeline-detail > summary::after{
+  display:none !important;
+  content:none !important;
+  background:none !important;
+  border:0 !important;
+  box-shadow:none !important;
+  transform:none !important;
+}
