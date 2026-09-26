@@ -1103,3 +1103,89 @@ html[data-theme="light"] #credentials .timeline-detail > summary::after{
     border-color:rgba(231,184,78,.44) !important;
   }
 }
+
+
+/* ---------- shared expandable control: one source of truth for every card ---------- */
+/* All native details summaries opt into this class from the renderer above. */
+.expandable-summary{
+  position:relative !important;
+  box-sizing:border-box !important;
+  padding-inline-end:54px !important;
+  padding-inline-start:14px !important;
+}
+html[dir="rtl"] .expandable-summary{
+  padding-inline-start:54px !important;
+  padding-inline-end:14px !important;
+}
+.expandable-summary::after{
+  content:"+" !important;
+  position:absolute !important;
+  inset-inline-end:14px !important;
+  inset-inline-start:auto !important;
+  inset-block-start:50% !important;
+  display:grid !important;
+  place-items:center !important;
+  box-sizing:border-box !important;
+  width:30px !important;
+  height:30px !important;
+  min-width:30px !important;
+  min-height:30px !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:1px solid color-mix(in srgb,var(--line-strong) 78%,transparent) !important;
+  border-radius:10px !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.022)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.095),0 7px 18px -14px rgba(0,0,0,.68) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  backdrop-filter:blur(8px) !important;
+  color:var(--yellow) !important;
+  font-family:var(--font-body) !important;
+  font-size:1.08rem !important;
+  font-weight:400 !important;
+  line-height:30px !important;
+  text-align:center !important;
+  opacity:.94 !important;
+  transform:translateY(-50%) !important;
+  transform-origin:center !important;
+  transition:transform .18s cubic-bezier(.23,1,.32,1),opacity .18s ease,background-color .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease !important;
+}
+.expandable-summary[aria-expanded="true"]::after,
+details[open] > .expandable-summary::after{
+  content:"−" !important;
+  transform:translateY(-50%) !important;
+}
+@media (hover:hover) and (pointer:fine){
+  .expandable-summary:hover::after,
+  .expandable-summary:focus-visible::after{
+    opacity:1 !important;
+    border-color:color-mix(in srgb,var(--yellow) 58%,var(--line-strong)) !important;
+    background:rgba(231,184,78,.105) !important;
+    color:var(--chalk) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 9px 20px -14px rgba(231,184,78,.58) !important;
+    transform:translateY(-50%) scale(1.035) !important;
+  }
+}
+@media (hover:none), (pointer:coarse){
+  .expandable-summary:active::after,
+  .expandable-summary:focus::after{
+    transform:translateY(-50%) !important;
+  }
+}
+html[data-theme="light"] .expandable-summary::after{
+  border-color:rgba(61,100,116,.25) !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(224,237,239,.34)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 7px 18px -14px rgba(43,76,91,.30) !important;
+  color:#9a762b !important;
+}
+html[data-theme="light"] .expandable-summary:is(:hover,:focus-visible)::after{
+  border-color:rgba(121,90,35,.42) !important;
+  background:rgba(197,155,76,.12) !important;
+  color:#263936 !important;
+}
+@media (max-width:767px){
+  .expandable-summary{padding-inline-end:56px !important;padding-inline-start:14px !important;}
+  html[dir="rtl"] .expandable-summary{padding-inline-start:56px !important;padding-inline-end:14px !important;}
+  .expandable-summary::after{inset-inline-end:14px !important;width:30px !important;height:30px !important;min-width:30px !important;min-height:30px !important;}
+  html[dir="rtl"] .expandable-summary::after{inset-inline-start:14px !important;inset-inline-end:auto !important;}
+}
+@media (prefers-reduced-motion:reduce){.expandable-summary::after{transition:none !important;}}
