@@ -66,7 +66,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Caveat:wght@500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap&v=2.3.1" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Caveat:wght@500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Rakkas&family=Space+Grotesk:wght@400;500;600&display=swap&v=2.4.0" rel="stylesheet">
 
   <link rel="stylesheet" href="shahd-card.css?v=1.2.0">
   <link rel="stylesheet" href="portfolio-polish.css?v=1.7.0">
@@ -3797,6 +3797,25 @@ const SITE_AR = {
       if(active) movePillNav(active, true);
     }, {passive:true});
   }
+  [...navLinks, ...mobileNavLinks].forEach(link => {
+    link.addEventListener('click', event => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if(!target) return;
+      event.preventDefault();
+      const behavior = reducedMQ.matches ? 'auto' : 'smooth';
+      target.scrollIntoView({ behavior, block: 'start' });
+      const href = link.getAttribute('href');
+      navLinks.forEach(item => {
+        const selected = item.getAttribute('href') === href;
+        item.classList.toggle('active', selected);
+        item.setAttribute('aria-current', selected ? 'location' : 'false');
+      });
+      mobileNavLinks.forEach(item => item.classList.toggle('active', item.getAttribute('href') === href));
+      const desktopTarget = [...navLinks].find(item => item.getAttribute('href') === href);
+      if(desktopTarget) movePillNav(desktopTarget);
+      if(history.replaceState) history.replaceState(null, '', href);
+    });
+  });
   const backToTop = document.getElementById('backToTop');
   const aboutPhotoImg = document.querySelector('.about-photo img');
   const desktopMQ = window.matchMedia('(min-width:768px)');
@@ -4057,7 +4076,11 @@ const SITE_AR = {
     sectionOffsets.forEach(item => { if(item.top <= y) current = item.section; });
     if(current && current !== activeSection){
       activeSection = current;
-      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+      navLinks.forEach(a => {
+        const selected = a.getAttribute('href') === '#' + current.id;
+        a.classList.toggle('active', selected);
+        a.setAttribute('aria-current', selected ? 'location' : 'false');
+      });
       mobileNavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
       const active = [...navLinks].find(a => a.classList.contains('active'));
       if(active && pillNav && !pillNav.matches(':hover')) movePillNav(active, true);
