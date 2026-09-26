@@ -1,8 +1,10 @@
 /* Navbar interaction refinement: quiet green glass, no loud gold hover states. */
 
 .where-am-i {
-  top: 78px !important;
-  inset-inline-end: clamp(24px, 4vw, 58px) !important;
+  top: auto !important;
+  bottom: 18px !important;
+  inset-inline-start: clamp(18px, 4vw, 58px) !important;
+  inset-inline-end: auto !important;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -24,7 +26,12 @@
 
 .where-am-i #whereAmINumber { color: rgba(240, 248, 242, 0.58); }
 
-.where-am-i.is-visible { transform: translateY(2px); }
+.where-am-i.is-visible { transform: translateY(-2px); }
+
+html[dir="rtl"] .where-am-i {
+  inset-inline-start: auto !important;
+  inset-inline-end: clamp(18px, 4vw, 58px) !important;
+}
 
 #siteHeader.glass :is(a, button):hover,
 #siteHeader.glass :is(a, button):focus-visible {
@@ -108,13 +115,20 @@ html[data-theme="light"] :is(.hero-action, .work-filter, .featured-case-toggle, 
 
 @media (max-width: 767px) {
   .where-am-i {
-    top: 62px !important;
-    inset-inline-end: 18px !important;
+    top: auto !important;
+    bottom: 16px !important;
+    inset-inline-start: 16px !important;
+    inset-inline-end: auto !important;
     padding: 5px 9px !important;
     font-size: 0.56rem !important;
     gap: 5px;
   }
-  .where-am-i.is-visible { transform: translateY(1px); }
+  .where-am-i.is-visible { transform: translateY(-1px); }
+
+  html[dir="rtl"] .where-am-i {
+    inset-inline-start: auto !important;
+    inset-inline-end: 16px !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
