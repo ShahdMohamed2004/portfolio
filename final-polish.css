@@ -339,3 +339,72 @@ html[dir="rtl"][data-theme="light"] :is(#experience,#credentials) .spine > .entr
 @media (prefers-reduced-motion:reduce){
   .menu-backdrop,.mobile-menu,.mobile-menu>a[data-nav],.mobile-menu-utility>a{transition:none !important;}
 }
+
+
+/* ---------- typography audit: language-aware, semantic alignment ---------- */
+/* The previous layer applied justify + LTR to every long-text selector. Replace
+   that shortcut with explicit language contracts and content-type rules. */
+html[dir="ltr"] :where(.about-bio,.about-role,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){
+  direction:ltr !important;
+  text-align:start !important;
+  text-align-last:auto !important;
+  text-justify:auto !important;
+  hyphens:none !important;
+  -webkit-hyphens:none !important;
+  word-spacing:normal !important;
+}
+html[dir="rtl"] :where(.about-bio,.about-role,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){
+  direction:rtl !important;
+  text-align:end !important;
+  text-align-last:auto !important;
+  text-justify:auto !important;
+  hyphens:none !important;
+  -webkit-hyphens:none !important;
+  word-spacing:normal !important;
+}
+
+/* Justify only genuinely long explanatory copy on roomy screens. */
+@media (min-width:768px){
+  html[dir="ltr"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p){
+    text-align:justify !important;
+    text-align-last:start !important;
+    text-justify:inter-word !important;
+  }
+  html[dir="rtl"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p){
+    text-align:justify !important;
+    text-align-last:end !important;
+    text-justify:inter-word !important;
+  }
+}
+
+/* Headings, labels, metadata, controls and navigation keep natural rhythm. */
+html[dir="ltr"] :where(h1,h2,h3,h4,h5,h6,.section-tag,.entry-flag,.meta-label,.badge,.tag,.work-count,.filter-label,.filter-number,.school,.gpa,.place,.stat-line){
+  direction:ltr !important;
+  text-align:start !important;
+  text-justify:auto !important;
+}
+html[dir="rtl"] :where(h1,h2,h3,h4,h5,h6,.section-tag,.entry-flag,.meta-label,.badge,.tag,.work-count,.filter-label,.filter-number,.school,.gpa,.place,.stat-line){
+  direction:rtl !important;
+  text-align:end !important;
+  text-justify:auto !important;
+}
+html[dir="ltr"] :where(.nav-links,.nav-utility,.mobile-menu,.mobile-menu-utility,.proj-links,.point-list,.skill-group ul,.skill-group ol){direction:ltr !important;text-align:start !important;}
+html[dir="rtl"] :where(.nav-links,.nav-utility,.mobile-menu,.mobile-menu-utility,.proj-links,.point-list,.skill-group ul,.skill-group ol){direction:rtl !important;text-align:end !important;}
+:where(button,.btn,.work-filter,.badge,.tag,.creative-item,.proj-link,.nav-links a,.nav-utility a,.mobile-menu a){
+  text-justify:auto !important;
+  word-spacing:normal !important;
+  hyphens:none !important;
+  -webkit-hyphens:none !important;
+}
+:where(button,.btn,.work-filter){text-align:center !important;}
+
+/* Mixed-direction content stays readable without changing the visual hierarchy. */
+:where(.gpa,.dates,.place,.meta-row,.project-facts dd,.project-facts dt,.ownership-note,.email-link){unicode-bidi:plaintext;}
+:where(a[href^="http"],a[href^="mailto"],.url,.email,.project-facts dd){overflow-wrap:anywhere;}
+
+/* Narrow cards need natural line flow; justification resumes only when there is room. */
+@media (max-width:767px){
+  html[dir="ltr"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p,.entry p,.timeline-detail p){text-align:start !important;text-align-last:auto !important;}
+  html[dir="rtl"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p,.entry p,.timeline-detail p){text-align:end !important;text-align-last:auto !important;}
+  :where(.point-list li,.skill-group li){text-align:inherit !important;text-justify:auto !important;}
+}

@@ -4068,16 +4068,6 @@ html[data-theme="light"] #about .about-card{
   -webkit-backdrop-filter:blur(14px) saturate(108%) !important;backdrop-filter:blur(14px) saturate(108%) !important;
 }
 
-/* Only real body copy is justified; labels, headings, controls and numbers stay untouched. */
-:where(.about-bio,.about-text p,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){
-  direction:ltr;text-align:justify !important;text-align-last:start;text-justify:inter-word;word-spacing:normal;letter-spacing:normal;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word;
-}
-html[dir="rtl"] :where(.about-bio,.about-text p,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){direction:rtl;text-align:justify !important;text-align-last:start;text-justify:inter-word;hyphens:none;-webkit-hyphens:none;}
-@media (max-width:767px){
-  :where(.about-bio,.about-text p,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){line-height:1.82;max-width:100%;}
-  html[dir="rtl"] :where(.about-bio,.about-text p,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){line-height:1.95;}
-}
-
 /* Modern glass sidebar: directional, calm, and localized to the drawer itself. */
 @media (max-width:860px){
   .mobile-menu{
