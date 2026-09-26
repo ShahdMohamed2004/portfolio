@@ -57,7 +57,7 @@ html[dir="rtl"] #work .work-filters {
 }
 
 #work .work-filters::before {
-  background: color-mix(in srgb, var(--chalk-dim) 34%, transparent) !important;
+  background: linear-gradient(90deg, rgba(231, 184, 78, .24), rgba(231, 184, 78, .62) 50%, rgba(231, 184, 78, .24)) !important;
   transform: none !important;
 }
 
@@ -75,6 +75,12 @@ html[dir="rtl"] #work .work-filters {
 html[dir="rtl"] #work .work-filters::after {
   transform-origin: right center !important;
   background: linear-gradient(270deg, var(--yellow), color-mix(in srgb, var(--yellow) 62%, var(--chalk-dim))) !important;
+}
+
+html[dir="rtl"] #work .work-filters::before {
+  display: block !important;
+  opacity: 1 !important;
+  background: linear-gradient(270deg, rgba(231, 184, 78, .24), rgba(231, 184, 78, .62) 50%, rgba(231, 184, 78, .24)) !important;
 }
 
 #work .work-filter,
@@ -188,11 +194,15 @@ html[dir="rtl"] #work .work-filters::after {
 
 /* Light Mode is the same component with a lighter surface-safe palette. */
 html[data-theme="light"] #work .work-filters::before {
-  background: rgba(73, 105, 101, .28) !important;
+  background: linear-gradient(90deg, rgba(169, 126, 43, .22), rgba(197, 155, 76, .68) 50%, rgba(169, 126, 43, .22)) !important;
 }
 
 html[data-theme="light"] #work .work-filters::after {
   background: linear-gradient(90deg, #c59b4c, #a9853c) !important;
+}
+
+html[dir="rtl"][data-theme="light"] #work .work-filters::before {
+  background: linear-gradient(270deg, rgba(169, 126, 43, .22), rgba(197, 155, 76, .68) 50%, rgba(169, 126, 43, .22)) !important;
 }
 
 html[data-theme="light"] #work .work-filter,

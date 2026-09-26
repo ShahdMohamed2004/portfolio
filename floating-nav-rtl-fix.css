@@ -1,7 +1,6 @@
-/* Floating section navigation parity.
-   English is anchored to inline-start (left); Arabic mirrors the whole pair
-   to inline-end (right). The back-to-top control sits above the indicator
-   so neither control can overlap it. */
+/* Floating controls mirror as a balanced pair.
+   LTR: section indicator left, back-to-top right.
+   RTL: section indicator right, back-to-top left. */
 
 .where-am-i {
   top: auto !important;
@@ -15,11 +14,11 @@
 
 .back-to-top {
   top: auto !important;
-  bottom: 72px !important;
+  bottom: 20px !important;
   left: auto !important;
   right: auto !important;
-  inset-inline-start: clamp(18px, 4vw, 58px) !important;
-  inset-inline-end: auto !important;
+  inset-inline-start: auto !important;
+  inset-inline-end: clamp(18px, 4vw, 58px) !important;
   z-index: 192 !important;
 }
 
@@ -33,12 +32,10 @@ html[dir="rtl"] .where-am-i {
 html[dir="rtl"] .back-to-top {
   left: auto !important;
   right: auto !important;
-  inset-inline-start: auto !important;
-  inset-inline-end: clamp(18px, 4vw, 58px) !important;
+  inset-inline-start: clamp(18px, 4vw, 58px) !important;
+  inset-inline-end: auto !important;
 }
 
-/* Keep the mirrored pair visually grouped on narrow screens while preserving
-   a comfortable touch target and a clear gap between the two controls. */
 @media (max-width: 767px) {
   .where-am-i {
     bottom: 16px !important;
@@ -47,9 +44,9 @@ html[dir="rtl"] .back-to-top {
   }
 
   .back-to-top {
-    bottom: 66px !important;
-    inset-inline-start: 16px !important;
-    inset-inline-end: auto !important;
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + 20px)) !important;
+    inset-inline-start: auto !important;
+    inset-inline-end: 16px !important;
   }
 
   html[dir="rtl"] .where-am-i {
@@ -58,8 +55,8 @@ html[dir="rtl"] .back-to-top {
   }
 
   html[dir="rtl"] .back-to-top {
-    inset-inline-start: auto !important;
-    inset-inline-end: 16px !important;
+    inset-inline-start: 16px !important;
+    inset-inline-end: auto !important;
   }
 }
 
