@@ -3744,3 +3744,73 @@ footer::before{content:"";display:block;width:42px;height:2px;margin:0 auto 26px
   .ownership-note{font-size:.64rem;}
   .footer-signature{max-width:28ch;font-size:1rem;line-height:1.45;}
 }
+
+/* Targeted mobile edge-safety and quiet card illumination refinement. */
+@media (max-width:640px){
+  .project-details > summary.project-summary{
+    min-width:0;
+    padding-inline:14px 42px !important;
+  }
+  html[dir="rtl"] .project-details > summary.project-summary{
+    padding-inline:42px 14px !important;
+  }
+  .project-details-body{
+    min-width:0;
+    padding-inline:14px !important;
+  }
+  .project-details-body p,
+  .project-details-body .meta-row,
+  .project-details .proj-link{
+    min-width:0;
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+  .spine > .entry{
+    min-width:0;
+    padding-inline:14px !important;
+  }
+  html[dir="rtl"] .spine > .entry{
+    padding-inline:14px !important;
+  }
+  .spine > .entry .timeline-detail > summary{
+    min-width:0;
+    padding-inline:14px 30px !important;
+  }
+  html[dir="rtl"] .spine > .entry .timeline-detail > summary{
+    padding-inline:30px 14px !important;
+  }
+  .spine > .entry .place,
+  .spine > .entry p,
+  .timeline-detail > summary h3{
+    min-width:0;
+    max-width:100%;
+    overflow-wrap:anywhere;
+  }
+}
+
+/* Replace the legacy rectangular pseudo-overlay with a subtle inner edge glow. */
+:where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details)::after{
+  background:transparent !important;
+  box-shadow:none;
+}
+@media (hover:hover) and (pointer:fine){
+  :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):hover,
+  :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):focus-within{
+    border-color:color-mix(in srgb,var(--yellow) 24%,var(--line-strong)) !important;
+    box-shadow:
+      0 16px 34px -28px rgba(0,0,0,.62),
+      inset 0 0 0 1px color-mix(in srgb,var(--yellow) 22%,transparent),
+      inset 0 0 18px color-mix(in srgb,var(--yellow) 7%,transparent) !important;
+  }
+}
+@media (hover:none), (pointer:coarse){
+  :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details):active{
+    border-color:color-mix(in srgb,var(--yellow) 20%,var(--line-strong)) !important;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb,var(--yellow) 18%,transparent),
+      inset 0 0 14px color-mix(in srgb,var(--yellow) 6%,transparent) !important;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  :where(.accordion-card,.material-card,.availability-item,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.project-details)::after{display:none;}
+}
