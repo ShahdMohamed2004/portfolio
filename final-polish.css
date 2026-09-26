@@ -242,3 +242,100 @@ html[dir="rtl"] .material-card .arrow{
     padding-inline:42px 14px;
   }
 }
+
+
+/* ---------- precision cleanup: mobile dark drawer + open timelines ---------- */
+@media (max-width:860px){
+  /* Keep the backdrop as a separation layer, not a black replacement for the page. */
+  .menu-backdrop{
+    background:rgba(3,10,8,.48) !important;
+    -webkit-backdrop-filter:blur(7px) saturate(108%) !important;
+    backdrop-filter:blur(7px) saturate(108%) !important;
+    transition:opacity .34s var(--motion-ease),visibility .34s ease !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu{
+    background:
+      linear-gradient(145deg,rgba(18,39,31,.82),rgba(7,21,16,.78)) !important;
+    border:1px solid rgba(224,239,226,.14) !important;
+    box-shadow:
+      0 26px 64px -30px rgba(0,0,0,.88),
+      inset 0 1px 0 rgba(255,255,255,.075),
+      inset 0 -1px 0 rgba(231,184,78,.045) !important;
+    -webkit-backdrop-filter:blur(22px) saturate(124%) !important;
+    backdrop-filter:blur(22px) saturate(124%) !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu::before{
+    height:1px !important;
+    background:linear-gradient(90deg,transparent,rgba(231,184,78,.48),transparent) !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu::after{
+    opacity:.42 !important;
+    filter:blur(22px) !important;
+  }
+  .mobile-menu>a[data-nav],.mobile-menu-utility>a{
+    min-height:48px !important;
+    border-radius:13px !important;
+    transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s var(--motion-ease),box-shadow .2s ease !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu>a[data-nav].active{
+    background:rgba(231,184,78,.075) !important;
+    border-color:rgba(231,184,78,.26) !important;
+    box-shadow:inset 2px 0 0 var(--yellow),0 10px 24px -24px rgba(231,184,78,.62) !important;
+  }
+  html[dir="rtl"]:not([data-theme="light"]) .mobile-menu>a[data-nav].active{
+    box-shadow:inset -2px 0 0 var(--yellow),0 10px 24px -24px rgba(231,184,78,.62) !important;
+  }
+}
+
+/* The rail and dot communicate timeline state; the active entry must not become a slab. */
+.entry.timeline-active,
+html[dir="rtl"] .entry.timeline-active{
+  background:transparent !important;
+}
+
+/* Remove the known section-wide wash behind Education at its source. */
+#credentials::before,
+#credentials::after{
+  background:none !important;
+  opacity:0 !important;
+  box-shadow:none !important;
+  filter:none !important;
+}
+
+/* Light mode: wrappers remain for layout, while the timeline stands on its own. */
+html[data-theme="light"] #work .spine > .entry{
+  background:transparent !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail{
+  padding-inline:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+html[data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail > summary{
+  padding-inline:0 38px !important;
+}
+html[dir="rtl"][data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail > summary{
+  padding-inline:38px 0 !important;
+}
+@media (max-width:767px){
+  html[data-theme="light"] #work .spine > .entry{
+    padding-inline:0 !important;
+    padding-block:0 18px !important;
+  }
+  html[data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail > summary{
+    padding-inline:0 30px !important;
+  }
+  html[dir="rtl"][data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail > summary{
+    padding-inline:30px 0 !important;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .menu-backdrop,.mobile-menu,.mobile-menu>a[data-nav],.mobile-menu-utility>a{transition:none !important;}
+}
