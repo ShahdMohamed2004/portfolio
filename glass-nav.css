@@ -1,0 +1,79 @@
+/* Glass navigation refinement — preserves the site's content and interaction contracts. */
+#siteHeader{
+  --nav-glass:rgba(9,20,16,.62);
+  --nav-glass-strong:rgba(9,20,16,.78);
+  --nav-border:rgba(231,184,78,.26);
+  --nav-highlight:rgba(255,255,255,.11);
+}
+
+@media (min-width:861px){
+  #siteHeader{
+    top:18px;
+    width:min(calc(100% - 48px),1180px);
+    border-color:var(--nav-border);
+    background:
+      radial-gradient(520px 100px at var(--nav-light-x,72%) -20%,rgba(255,255,255,.12),transparent 70%),
+      linear-gradient(120deg,var(--nav-glass),rgba(12,34,25,.46) 52%,var(--nav-glass));
+    backdrop-filter:blur(28px) saturate(155%);
+    -webkit-backdrop-filter:blur(28px) saturate(155%);
+    box-shadow:
+      0 20px 54px -34px rgba(0,0,0,.95),
+      0 0 34px -24px rgba(231,184,78,.56),
+      inset 0 1px 0 var(--nav-highlight),
+      inset 0 -1px 0 rgba(231,184,78,.08);
+    transition:top .45s cubic-bezier(.22,1,.36,1),width .45s cubic-bezier(.22,1,.36,1),background .3s ease,border-color .3s ease,box-shadow .3s ease;
+  }
+  #siteHeader.scrolled{
+    top:10px;
+    width:min(calc(100% - 80px),1080px);
+    background:
+      radial-gradient(420px 90px at var(--nav-light-x,72%) -25%,rgba(255,255,255,.10),transparent 70%),
+      linear-gradient(120deg,var(--nav-glass-strong),rgba(12,34,25,.62) 52%,var(--nav-glass-strong));
+    border-color:rgba(231,184,78,.34);
+    box-shadow:0 16px 44px -30px rgba(0,0,0,.96),0 0 30px -24px rgba(231,184,78,.48),inset 0 1px 0 rgba(255,255,255,.1);
+  }
+  #siteHeader nav{min-height:58px;padding:6px 10px 6px 20px;gap:20px;}
+  #siteHeader.scrolled nav{min-height:52px;}
+  #siteHeader .wordmark{font-size:1.3rem;letter-spacing:-.02em;}
+  #siteHeader .nav-links{gap:3px;}
+  #siteHeader .nav-links a{min-height:42px;padding-inline:14px!important;font-size:.88rem;}
+  #siteHeader .nav-utility{gap:6px;}
+  #siteHeader .mini-control-pill{min-height:40px;padding-inline-start:9px;}
+  #siteHeader::before{
+    content:"";position:absolute;inset:1px 8%;pointer-events:none;border-radius:inherit;
+    background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,0) 34%,rgba(255,255,255,.12) 50%,rgba(255,255,255,0) 66%,transparent 100%);
+    transform:translateX(-120%);animation:glassNavSheen 16s cubic-bezier(.45,0,.35,1) infinite;opacity:.65;
+  }
+  @keyframes glassNavSheen{0%,18%{transform:translateX(-120%);opacity:0}30%{opacity:.65}52%{transform:translateX(120%);opacity:.28}65%,100%{transform:translateX(120%);opacity:0}}
+  #siteHeader nav::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.045);}
+  #siteHeader .nav-links a:active,#siteHeader .nav-utility button:active{transform:scale(.97);}
+}
+
+html[data-theme='light'] #siteHeader{
+  --nav-glass:rgba(248,251,247,.68);
+  --nav-glass-strong:rgba(248,251,247,.86);
+  --nav-border:rgba(37,71,58,.2);
+  --nav-highlight:rgba(255,255,255,.84);
+}
+html[data-theme='light'] #siteHeader.scrolled{border-color:rgba(37,71,58,.26);}
+
+@media (max-width:860px){
+  #siteHeader{
+    top:12px;left:12px;right:12px;width:auto;
+    background:linear-gradient(120deg,rgba(9,20,16,.76),rgba(12,34,25,.58) 52%,rgba(9,20,16,.76));
+    border-color:rgba(231,184,78,.3);
+    backdrop-filter:blur(22px) saturate(145%);
+    -webkit-backdrop-filter:blur(22px) saturate(145%);
+    box-shadow:0 16px 40px -28px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.1);
+    transition:top .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1),opacity .25s ease;
+  }
+  #siteHeader.mobile-compact{top:8px;transform:scale(.97);}
+  #siteHeader nav{min-height:54px;}
+  #siteHeader .hamburger{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);}
+  html[data-theme='light'] #siteHeader{background:linear-gradient(120deg,rgba(248,251,247,.84),rgba(248,251,247,.64) 52%,rgba(248,251,247,.84));border-color:rgba(37,71,58,.22);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #siteHeader,#siteHeader.scrolled,#siteHeader.mobile-compact{transition:none;}
+  #siteHeader::before{animation:none;transform:none;opacity:.18;}
+}
