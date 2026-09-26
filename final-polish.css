@@ -1,4 +1,873 @@
+/*
+ * Final polish layer
+ * A single, low-cost visual system that sits after the legacy enhancement layers.
+ * No layout or content changes; surfaces stay readable and theme identities stay distinct.
+ */
+:root{
+  --motion-ease:cubic-bezier(.23,1,.32,1);
+  --light-glass-border:rgba(104,92,176,.34);
+  --light-glass-border-strong:rgba(86,145,198,.48);
+  --light-glass-shadow:0 14px 34px -26px rgba(45,71,108,.30);
+  --light-glass-halo:rgba(117,102,204,.22);
+}
 
+/* Remove the old section-wide wash: active state belongs to the component, not the page. */
+main.wrap>section:not(#home)::before,
+main.wrap>section:not(#home)::after,
+main.wrap>section.section-entering::before{
+  background:none !important;
+  box-shadow:none !important;
+  opacity:0 !important;
+  filter:none !important;
+}
+main.wrap>section:not(#home){background:transparent !important;}
+
+/* Shared motion primitives: transform + opacity only, with viewport IO already used by the page. */
+@media (prefers-reduced-motion:no-preference){
+  .reveal,.reveal-item,.spine>.entry{
+    transition-timing-function:var(--motion-ease) !important;
+  }
+  .reveal:not(.in-view),.reveal-item:not(.in-view),.spine>.entry:not(.in-view){
+    transform:translate3d(0,16px,0) rotateX(1deg) !important;
+  }
+  .reveal.in-view,.reveal-item.in-view,.spine>.entry.in-view{
+    transform:translate3d(0,0,0) rotateX(0) !important;
+  }
+  .reveal-item{transition-duration:.56s !important;}
+  .spine>.entry{opacity:0;transition:opacity .56s var(--motion-ease),transform .56s var(--motion-ease);}
+  .spine>.entry.in-view{opacity:1;}
+}
+
+/* Keep card interactions light and stable on both touch and desktop. */
+:is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
+  transition-property:transform,border-color,box-shadow,background-color !important;
+  transition-duration:.22s !important;
+  transition-timing-function:var(--motion-ease) !important;
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item):hover,
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item):focus-within{
+    transform:translate3d(0,-3px,0) !important;
+  }
+}
+
+/* Shared card hover halo: localized, quiet, and only active while interacting. */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(231,184,78,.62) !important;
+    box-shadow:
+      0 18px 36px -24px rgba(0,0,0,.42),
+      0 0 0 1px rgba(231,184,78,.16),
+      0 0 26px -11px rgba(231,184,78,.62),
+      inset 0 1px 0 rgba(255,255,255,.10) !important;
+  }
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(86,145,198,.64) !important;
+    box-shadow:
+      0 18px 36px -24px rgba(45,71,108,.34),
+      0 0 0 1px rgba(117,102,204,.16),
+      0 0 26px -11px rgba(117,102,204,.52),
+      0 0 18px -12px rgba(86,145,198,.36),
+      inset 0 1px 0 rgba(255,255,255,.96) !important;
+  }
+}
+
+/* Premium frosted glass for light mode: visible edge first, glow second. */
+html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
+  border:1px solid var(--light-glass-border) !important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.82),rgba(247,249,255,.68) 56%,rgba(240,239,252,.64)) !important;
+  box-shadow:
+    0 14px 34px -26px rgba(45,71,108,.30),
+    0 0 22px -16px var(--light-glass-halo),
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -1px 0 rgba(105,91,181,.07) !important;
+  -webkit-backdrop-filter:blur(10px) saturate(112%);
+  backdrop-filter:blur(10px) saturate(112%);
+}
+html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):hover,
+html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item):focus-within{
+  border-color:var(--light-glass-border-strong) !important;
+  box-shadow:
+    0 18px 36px -26px rgba(45,71,108,.34),
+    0 0 24px -15px rgba(117,102,204,.30),
+    inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+/* Local, quiet focus/active illumination; never a page-wide rectangle. */
+html[data-theme="light"] :is(.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item):is(:focus-within,:active){
+  border-color:rgba(86,145,198,.56) !important;
+}
+html[data-theme="light"] :is(.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item) :is(a,button):focus-visible{
+  outline:2px solid rgba(86,145,198,.72) !important;
+  outline-offset:3px;
+}
+
+/* A restrained violet-blue edge for the header and mobile drawer too. */
+html[data-theme="light"] #siteHeader,
+html[data-theme="light"] .mobile-menu{
+  border-color:rgba(104,92,176,.30) !important;
+  box-shadow:0 16px 40px -28px rgba(45,71,108,.28),0 0 24px -18px rgba(117,102,204,.24),inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+html[data-theme="light"] .mobile-menu{
+  background:linear-gradient(145deg,rgba(250,252,255,.94),rgba(241,244,252,.90)) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(112%);
+  backdrop-filter:blur(14px) saturate(112%);
+}
+html[data-theme="light"] .hero-action,
+html[data-theme="light"] .work-filter,
+html[data-theme="light"] .mini-control-pill{
+  border-color:rgba(104,92,176,.30) !important;
+  box-shadow:0 8px 20px -18px rgba(45,71,108,.24),inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+html[data-theme="light"] .hero-action:hover,
+html[data-theme="light"] .hero-action:focus-visible,
+html[data-theme="light"] .work-filter:hover,
+html[data-theme="light"] .work-filter:focus-visible{
+  border-color:rgba(86,145,198,.58) !important;
+  background:rgba(226,235,250,.72) !important;
+}
+
+/* Laptop rhythm: give the four teaching cards enough reading width. */
+@media (min-width:901px) and (max-width:1280px){
+  #howITeachGrid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:18px !important;
+  }
+  #howITeachGrid .accordion-card summary{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+  }
+  #howITeachGrid .accordion-card summary .num{
+    flex:0 0 2.55em !important;
+  }
+}
+
+/* Keep typography readable and the stable How-I-Teach numerals intact. */
+#howITeachGrid .accordion-card summary .num{
+  flex:0 0 2.55em !important;
+  width:2.55em !important;
+  min-width:2.55em !important;
+  max-width:2.55em !important;
+  margin-inline:0 !important;
+  white-space:nowrap !important;
+  direction:ltr !important;
+  unicode-bidi:isolate !important;
+  font-variant-numeric:tabular-nums !important;
+}
+#howITeachGrid .accordion-card summary{
+  display:flex;
+  align-items:center;
+  gap:clamp(12px,1.15vw,20px);
+  min-width:0;
+}
+#howITeachGrid .accordion-card summary::after{flex:0 0 auto;}
+
+/* Reduce expensive glass work on small screens without changing hierarchy. */
+@media (max-width:767px){
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
+    -webkit-backdrop-filter:blur(6px) saturate(108%);
+    backdrop-filter:blur(6px) saturate(108%);
+    box-shadow:0 10px 24px -22px rgba(45,71,108,.28),0 0 18px -15px rgba(117,102,204,.18),inset 0 1px 0 rgba(255,255,255,.88) !important;
+  }
+  .spine>.entry{transition-duration:.46s;}
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal,.reveal-item,.spine>.entry{opacity:1 !important;transform:none !important;transition:none !important;}
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item){transition:none !important;}
+}
+@media (forced-colors:active){
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item){backdrop-filter:none;box-shadow:none !important;}
+}
+
+/* Final cascade guard: the halo is the last interaction treatment in both themes. */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(231,184,78,.62) !important;
+    box-shadow:0 18px 36px -24px rgba(0,0,0,.42),0 0 0 1px rgba(231,184,78,.16),0 0 26px -11px rgba(231,184,78,.62),inset 0 1px 0 rgba(255,255,255,.10) !important;
+  }
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(86,145,198,.64) !important;
+    box-shadow:0 18px 36px -24px rgba(45,71,108,.34),0 0 0 1px rgba(117,102,204,.16),0 0 26px -11px rgba(117,102,204,.52),0 0 18px -12px rgba(86,145,198,.36),inset 0 1px 0 rgba(255,255,255,.96) !important;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){transition:none !important;}
+}
+
+/* Arabic parity layer: logical spacing and bidi-safe mixed content. */
+html[dir="rtl"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case){
+  direction:rtl;
+  text-align:right;
+}
+html[dir="rtl"] #howITeachGrid .accordion-card summary{
+  direction:rtl;
+  text-align:right;
+  gap:clamp(12px,1.15vw,20px);
+  padding-inline:20px 48px;
+}
+html[dir="rtl"] #howITeachGrid .accordion-card summary .num{
+  direction:ltr;
+  unicode-bidi:isolate;
+  margin-inline:0 !important;
+}
+html[dir="rtl"] :is(.gpa,.entry-flag,.badge,.meta-label,.stat-line,.project-facts,.filter-number){
+  unicode-bidi:isolate;
+}
+html[dir="rtl"] :is(.project-details,.timeline-detail) summary::after{
+  inset-inline-start:12px;
+  inset-inline-end:auto;
+}
+html[dir="rtl"] .project-details > summary.project-summary,
+html[dir="rtl"] .timeline-detail > summary{
+  padding-inline:42px 0;
+}
+html[dir="rtl"] .project-details .proj-links{
+  flex-direction:row-reverse;
+  justify-content:flex-start;
+}
+html[dir="rtl"] .material-card .arrow{
+  transform-origin:center;
+}
+@media (max-width:900px){
+  html[dir="rtl"] #howITeachGrid .accordion-card summary,
+  html[dir="rtl"] .accordion-card summary{
+    padding-inline:14px 42px;
+    gap:10px;
+  }
+  html[dir="rtl"] .project-details > summary.project-summary,
+  html[dir="rtl"] .timeline-detail > summary{
+    padding-inline:42px 14px;
+  }
+}
+
+
+/* ---------- precision cleanup: mobile dark drawer + open timelines ---------- */
+@media (max-width:860px){
+  /* Keep the backdrop as a separation layer, not a black replacement for the page. */
+  .menu-backdrop{
+    background:rgba(3,10,8,.48) !important;
+    -webkit-backdrop-filter:blur(7px) saturate(108%) !important;
+    backdrop-filter:blur(7px) saturate(108%) !important;
+    transition:opacity .34s var(--motion-ease),visibility .34s ease !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu{
+    background:
+      linear-gradient(145deg,rgba(18,39,31,.82),rgba(7,21,16,.78)) !important;
+    border:1px solid rgba(224,239,226,.14) !important;
+    box-shadow:
+      0 26px 64px -30px rgba(0,0,0,.88),
+      inset 0 1px 0 rgba(255,255,255,.075),
+      inset 0 -1px 0 rgba(231,184,78,.045) !important;
+    -webkit-backdrop-filter:blur(22px) saturate(124%) !important;
+    backdrop-filter:blur(22px) saturate(124%) !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu::before{
+    height:1px !important;
+    background:linear-gradient(90deg,transparent,rgba(231,184,78,.48),transparent) !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu::after{
+    opacity:.42 !important;
+    filter:blur(22px) !important;
+  }
+  .mobile-menu>a[data-nav],.mobile-menu-utility>a{
+    min-height:48px !important;
+    border-radius:13px !important;
+    transition:color .2s ease,background-color .2s ease,border-color .2s ease,transform .2s var(--motion-ease),box-shadow .2s ease !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu>a[data-nav].active{
+    background:rgba(231,184,78,.075) !important;
+    border-color:rgba(231,184,78,.26) !important;
+    box-shadow:inset 2px 0 0 var(--yellow),0 10px 24px -24px rgba(231,184,78,.62) !important;
+  }
+  html[dir="rtl"]:not([data-theme="light"]) .mobile-menu>a[data-nav].active{
+    box-shadow:inset -2px 0 0 var(--yellow),0 10px 24px -24px rgba(231,184,78,.62) !important;
+  }
+}
+
+/* The rail and dot communicate timeline state; the active entry must not become a slab. */
+.entry.timeline-active,
+html[dir="rtl"] .entry.timeline-active{
+  background:transparent !important;
+}
+
+/* Remove the known section-wide wash behind Education at its source. */
+#credentials::before,
+#credentials::after{
+  background:none !important;
+  opacity:0 !important;
+  box-shadow:none !important;
+  filter:none !important;
+}
+
+/* Light mode: wrappers remain for layout, while the timeline stands on its own. */
+html[data-theme="light"] #work .spine > .entry{
+  background:transparent !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail{
+  padding-inline:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+html[data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail > summary{
+  padding-inline:0 38px !important;
+}
+html[dir="rtl"][data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail > summary{
+  padding-inline:38px 0 !important;
+}
+@media (max-width:767px){
+  html[data-theme="light"] #work .spine > .entry{
+    padding-inline:0 !important;
+    padding-block:0 18px !important;
+  }
+  html[data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail > summary{
+    padding-inline:0 30px !important;
+  }
+  html[dir="rtl"][data-theme="light"] :is(#experience,#credentials) .spine > .entry .timeline-detail > summary{
+    padding-inline:30px 0 !important;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .menu-backdrop,.mobile-menu,.mobile-menu>a[data-nav],.mobile-menu-utility>a{transition:none !important;}
+}
+
+
+/* ---------- typography audit: language-aware, semantic alignment ---------- */
+/* The previous layer applied justify + LTR to every long-text selector. Replace
+   that shortcut with explicit language contracts and content-type rules. */
+html[dir="ltr"] :where(.about-bio,.about-role,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){
+  direction:ltr !important;
+  text-align:start !important;
+  text-align-last:auto !important;
+  text-justify:auto !important;
+  hyphens:none !important;
+  -webkit-hyphens:none !important;
+  word-spacing:normal !important;
+}
+html[dir="rtl"] :where(.about-bio,.about-role,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){
+  direction:rtl !important;
+  text-align:end !important;
+  text-align-last:auto !important;
+  text-justify:auto !important;
+  hyphens:none !important;
+  -webkit-hyphens:none !important;
+  word-spacing:normal !important;
+}
+
+/* Justify only genuinely long explanatory copy on roomy screens. */
+@media (min-width:768px){
+  html[dir="ltr"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p){
+    text-align:justify !important;
+    text-align-last:start !important;
+    text-justify:inter-word !important;
+  }
+  html[dir="rtl"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p){
+    text-align:justify !important;
+    text-align-last:end !important;
+    text-justify:inter-word !important;
+  }
+}
+
+/* Headings, labels, metadata, controls and navigation keep natural rhythm. */
+html[dir="ltr"] :where(h1,h2,h3,h4,h5,h6,.section-tag,.entry-flag,.meta-label,.badge,.tag,.work-count,.filter-label,.filter-number,.school,.gpa,.place,.stat-line){
+  direction:ltr !important;
+  text-align:start !important;
+  text-justify:auto !important;
+}
+html[dir="rtl"] :where(h1,h2,h3,h4,h5,h6,.section-tag,.entry-flag,.meta-label,.badge,.tag,.work-count,.filter-label,.filter-number,.school,.gpa,.place,.stat-line){
+  direction:rtl !important;
+  text-align:end !important;
+  text-justify:auto !important;
+}
+html[dir="ltr"] :where(.nav-links,.nav-utility,.mobile-menu,.mobile-menu-utility,.proj-links,.point-list,.skill-group ul,.skill-group ol){direction:ltr !important;text-align:start !important;}
+html[dir="rtl"] :where(.nav-links,.nav-utility,.mobile-menu,.mobile-menu-utility,.proj-links,.point-list,.skill-group ul,.skill-group ol){direction:rtl !important;text-align:end !important;}
+:where(button,.btn,.work-filter,.badge,.tag,.creative-item,.proj-link,.nav-links a,.nav-utility a,.mobile-menu a){
+  text-justify:auto !important;
+  word-spacing:normal !important;
+  hyphens:none !important;
+  -webkit-hyphens:none !important;
+}
+:where(button,.btn,.work-filter){text-align:center !important;}
+
+/* Mixed-direction content stays readable without changing the visual hierarchy. */
+:where(.gpa,.dates,.place,.meta-row,.project-facts dd,.project-facts dt,.ownership-note,.email-link){unicode-bidi:plaintext;}
+:where(a[href^="http"],a[href^="mailto"],.url,.email,.project-facts dd){overflow-wrap:anywhere;}
+
+/* Narrow cards need natural line flow; justification resumes only when there is room. */
+@media (max-width:767px){
+  html[dir="ltr"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p,.entry p,.timeline-detail p){text-align:start !important;text-align-last:auto !important;}
+  html[dir="rtl"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p,.entry p,.timeline-detail p){text-align:end !important;text-align-last:auto !important;}
+  :where(.point-list li,.skill-group li){text-align:inherit !important;text-justify:auto !important;}
+}
+
+
+/* ---------- full refinement pass: content-driven cards + calm light surfaces ---------- */
+
+/* Let every collection size to its content instead of stretching siblings. */
+:where(.grid-4,.materials-grid,.dev-grid,.skills-grid,.credential-strip,.work-filters){
+  align-items:start !important;
+}
+:where(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.featured-case,.about-card,.availability-item){
+  height:auto !important;
+  min-height:0 !important;
+  flex-grow:0 !important;
+  align-self:start !important;
+}
+#workSpine,
+#experienceSpine,
+#educationSpine{
+  align-items:start !important;
+}
+#workSpine > .entry{
+  align-self:start !important;
+  min-height:0 !important;
+}
+#workSpine > .entry > .project-details,
+#workSpine > .entry > .project-details > .project-details-body,
+#workSpine .featured-case.embedded-case-study{
+  height:auto !important;
+  min-height:0 !important;
+  flex:none !important;
+}
+/* max-height is only an animation ceiling for filtered entries; visible cards stay auto-sized. */
+#workSpine > .entry:not(.is-filtered){
+  max-height:3000px;
+  overflow:visible;
+}
+#workSpine > .entry.is-filtered{overflow:hidden !important;}
+
+/* Secondary actions remain tactile but never become empty panels. */
+.project-details .proj-links,
+.embedded-case-study .proj-links,
+.timeline-detail .proj-links{
+  align-items:flex-start !important;
+  justify-content:flex-start !important;
+  align-content:flex-start !important;
+}
+.project-details .proj-link,
+.embedded-case-study .proj-link,
+.timeline-detail .proj-link{
+  flex:0 1 auto !important;
+  width:auto !important;
+  min-width:0 !important;
+  height:auto !important;
+  min-height:44px !important;
+  max-height:none !important;
+  padding:10px 13px !important;
+  border-radius:12px !important;
+  line-height:1.35 !important;
+  white-space:normal !important;
+}
+@media (max-width:767px){
+  #workSpine > .entry:not(.is-filtered){max-height:4000px;}
+  .project-details .proj-links,
+  .embedded-case-study .proj-links,
+  .timeline-detail .proj-links{display:flex !important;flex-direction:column !important;align-items:stretch !important;gap:8px !important;}
+  .project-details .proj-link,
+  .embedded-case-study .proj-link,
+  .timeline-detail .proj-link{width:100% !important;min-height:44px !important;}
+  #work .work-toolbar{background:transparent !important;border-color:transparent !important;box-shadow:none !important;padding-inline:0 !important;}
+}
+
+/* Light mode: neutral center, low-energy blue illumination only at the viewport edge. */
+html[data-theme="light"] body{
+  background:#f4f7f5 !important;
+  overflow-x:clip !important;
+}
+html[data-theme="light"] body::before{
+  content:"" !important;
+  position:fixed !important;
+  z-index:-1 !important;
+  inset:0 !important;
+  pointer-events:none !important;
+  background:
+    radial-gradient(ellipse 42% 34% at -4% 2%,rgba(86,166,205,.11),transparent 76%),
+    radial-gradient(ellipse 40% 34% at 104% 5%,rgba(110,145,211,.085),transparent 78%),
+    radial-gradient(ellipse 42% 34% at 104% 98%,rgba(86,166,205,.075),transparent 80%),
+    radial-gradient(ellipse 38% 32% at -4% 98%,rgba(110,145,211,.06),transparent 82%),
+    linear-gradient(145deg,#f3f6f4 0%,#f8faf8 52%,#f3f7f6 100%) !important;
+  opacity:.72 !important;
+  filter:none !important;
+}
+html[data-theme="light"] body::after{display:none !important;}
+html[data-theme="light"] main.wrap > section:not(#home)::before,
+html[data-theme="light"] main.wrap > section:not(#home)::after{
+  pointer-events:none !important;
+}
+
+/* Keep section space open; only purposeful cards receive a surface. */
+html[data-theme="light"] #work .work-toolbar{
+  background:transparent !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] #work .spine > .entry,
+html[data-theme="light"] :is(#experience,#credentials) .spine > .entry{
+  background:transparent !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+
+/* One restrained interaction language for purposeful card surfaces. */
+@media (hover:hover) and (pointer:fine){
+  html[data-theme="light"] :is(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.about-card,.availability-item):is(:hover,:focus-within){
+    transform:translateY(-2px);
+    border-color:rgba(75,126,151,.30) !important;
+    box-shadow:0 12px 28px -24px rgba(43,76,91,.36),0 0 24px -23px rgba(86,166,205,.26),inset 0 1px 0 rgba(255,255,255,.94) !important;
+  }
+}
+html[data-theme="light"] :is(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.about-card,.availability-item){
+  transition:transform .24s cubic-bezier(.22,1,.36,1),border-color .24s ease,box-shadow .24s ease,background-color .24s ease !important;
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme="light"] :is(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.about-card,.availability-item){transition:none !important;}
+}
+
+
+/* ---------- muapi refinement: independent accordions + compact contact CTA ---------- */
+
+/* A modern glass control for education, certification and development accordions. */
+:is(.timeline-detail,.accordion-card) > summary::after{
+  inset-inline-end:14px !important;
+  inset-inline-start:auto !important;
+  top:50% !important;
+  width:28px !important;
+  height:28px !important;
+  min-width:28px !important;
+  min-height:28px !important;
+  display:grid !important;
+  place-items:center !important;
+  box-sizing:border-box !important;
+  border:1px solid color-mix(in srgb,var(--line-strong) 72%,transparent) !important;
+  border-radius:50% !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 6px 16px -12px rgba(0,0,0,.65) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  backdrop-filter:blur(8px) !important;
+  color:var(--yellow) !important;
+  font-family:var(--font-body) !important;
+  font-size:1.05rem !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+  transform:translateY(-50%) scale(1) !important;
+  transition:transform .24s cubic-bezier(.22,1,.36,1),background-color .24s ease,border-color .24s ease,box-shadow .24s ease,color .24s ease !important;
+}
+:is(.timeline-detail,.accordion-card) > summary:hover::after,
+:is(.timeline-detail,.accordion-card) > summary:focus-visible::after{
+  border-color:color-mix(in srgb,var(--yellow) 55%,var(--line-strong)) !important;
+  background:rgba(231,184,78,.10) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 18px -13px rgba(231,184,78,.62) !important;
+  transform:translateY(-50%) scale(1.04) !important;
+}
+:is(.timeline-detail,.accordion-card)[open] > summary::after{
+  background:rgba(231,184,78,.12) !important;
+  border-color:color-mix(in srgb,var(--yellow) 62%,var(--line-strong)) !important;
+  transform:translateY(-50%) rotate(180deg) scale(1) !important;
+}
+html[dir="rtl"] :is(.timeline-detail,.accordion-card) > summary::after{
+  inset-inline-start:14px !important;
+  inset-inline-end:auto !important;
+}
+html[data-theme="light"] :is(.timeline-detail,.accordion-card) > summary::after{
+  border-color:rgba(61,100,116,.24) !important;
+  background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(224,237,239,.34)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 16px -12px rgba(43,76,91,.32) !important;
+  color:#9a762b !important;
+}
+html[data-theme="light"] :is(.timeline-detail,.accordion-card)[open] > summary::after,
+html[data-theme="light"] :is(.timeline-detail,.accordion-card) > summary:is(:hover,:focus-visible)::after{
+  background:rgba(197,155,76,.12) !important;
+  border-color:rgba(121,90,35,.38) !important;
+}
+
+/* Contact CTA: content flow determines the height on desktop and mobile. */
+#contact .contact-box{
+  display:block !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:clamp(24px,3.2vw,34px) clamp(20px,4vw,42px) !important;
+}
+#contact .contact-box p{
+  margin:0 0 clamp(16px,2.2vw,24px) !important;
+  max-width:62ch !important;
+}
+#contact .contact-links{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:10px !important;
+  width:100% !important;
+  margin:0 !important;
+}
+#contact .contact-links .btn{
+  flex:0 1 auto !important;
+  width:auto !important;
+  min-width:0 !important;
+  min-height:44px !important;
+  height:auto !important;
+  padding:10px 16px !important;
+  border-radius:12px !important;
+  line-height:1.25 !important;
+  white-space:normal !important;
+}
+#contact #contactEmailBtn{padding-inline:20px !important;}
+html[dir="rtl"] #contact .contact-links{justify-content:flex-start !important;}
+@media (max-width:767px){
+  #contact .contact-box{padding:22px 16px !important;}
+  #contact .contact-box p{margin-bottom:16px !important;max-width:none !important;}
+  #contact .contact-links{display:grid !important;grid-template-columns:minmax(0,1fr) !important;gap:8px !important;}
+  #contact .contact-links .btn{width:100% !important;min-height:44px !important;padding-inline:14px !important;}
+}
+@media (min-width:768px) and (max-width:980px){
+  #contact .contact-links{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;}
+  #contact .contact-links .btn{width:100% !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  :is(.timeline-detail,.accordion-card) > summary::after{transition:none !important;}
+}
+
+
+/* ---------- focused cleanup: TEFL card touch state + mobile drawer glass + copyright ---------- */
+
+/* Root-level interaction guard: the credential card keeps its surface on touch.
+   Hover elevation is reserved for real mouse/trackpad pointers only. */
+#credentialStrip .cred{
+  -webkit-tap-highlight-color:transparent;
+  background:linear-gradient(145deg,rgba(20,51,39,.76),rgba(10,27,22,.60)) !important;
+}
+#credentialStrip .cred:active{
+  transform:none !important;
+  background:linear-gradient(145deg,rgba(20,51,39,.76),rgba(10,27,22,.60)) !important;
+}
+#credentialStrip .cred:focus-within{
+  background:linear-gradient(145deg,rgba(20,51,39,.76),rgba(10,27,22,.60)) !important;
+}
+@media (hover:hover) and (pointer:fine){
+  #credentialStrip .cred:hover{
+    background:linear-gradient(145deg,rgba(28,63,47,.80),rgba(12,31,24,.64)) !important;
+    transform:translateY(-3px) !important;
+  }
+}
+@media (hover:none), (pointer:coarse){
+  #credentialStrip .cred:hover,
+  #credentialStrip .cred:focus-within{
+    transform:none !important;
+  }
+}
+html[data-theme="light"] #credentialStrip .cred,
+html[data-theme="light"] #credentialStrip .cred:active,
+html[data-theme="light"] #credentialStrip .cred:focus-within{
+  background:linear-gradient(135deg,rgba(255,255,255,.90),rgba(244,248,246,.82)) !important;
+}
+@media (hover:hover) and (pointer:fine){
+  html[data-theme="light"] #credentialStrip .cred:hover{background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(244,248,246,.88)) !important;}
+}
+
+/* Dark mobile drawer: translucent hierarchy, not opaque green panels. */
+@media (max-width:860px){
+  html:not([data-theme="light"]) .mobile-menu{
+    background:linear-gradient(155deg,rgba(15,40,30,.80),rgba(7,23,18,.74)) !important;
+    border-color:rgba(255,255,255,.10) !important;
+    box-shadow:0 26px 70px -32px rgba(0,0,0,.92),inset 1px 0 0 rgba(255,255,255,.055),inset 0 1px 0 rgba(231,184,78,.12) !important;
+    -webkit-backdrop-filter:blur(22px) saturate(125%) !important;
+    backdrop-filter:blur(22px) saturate(125%) !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu>a[data-nav],
+  html:not([data-theme="light"]) .mobile-menu-utility>a,
+  html:not([data-theme="light"]) .mobile-social-dock a,
+  html:not([data-theme="light"]) .mobile-menu>.mobile-menu-close,
+  html:not([data-theme="light"]) .mobile-menu .theme-toggle-mobile,
+  html:not([data-theme="light"]) .mobile-menu .lang-toggle-mobile{
+    background:rgba(255,255,255,.045) !important;
+    border-color:rgba(255,255,255,.09) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 26px -24px rgba(0,0,0,.8) !important;
+    -webkit-backdrop-filter:blur(12px) !important;
+    backdrop-filter:blur(12px) !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu>a[data-nav]:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-menu-utility>a:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-social-dock a:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-menu>.mobile-menu-close:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-menu .theme-toggle-mobile:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-menu .lang-toggle-mobile:is(:hover,:focus-visible){
+    background:rgba(231,184,78,.085) !important;
+    border-color:rgba(231,184,78,.30) !important;
+  }
+}
+@supports not ((backdrop-filter:blur(1px))){
+  @media (max-width:860px){
+    html:not([data-theme="light"]) .mobile-menu{background:rgba(10,29,22,.94) !important;}
+  }
+}
+
+/* One concise ownership signature: creative, quiet, and responsive. */
+footer{position:relative;display:flex;justify-content:center;padding-block:24px 28px !important;}
+#footerOwnership{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.65em;
+  max-width:100%;margin:0;padding:9px 15px !important;
+  color:var(--chalk-dim);font-size:.76rem;line-height:1.5;letter-spacing:.025em;
+  text-align:center;overflow-wrap:anywhere;
+  border:1px solid rgba(231,184,78,.16);border-radius:999px;
+  background:rgba(255,255,255,.025);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 24px -22px rgba(0,0,0,.75);
+}
+#footerOwnership::before{content:"";width:4px;height:4px;flex:0 0 4px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px rgba(231,184,78,.34);}
+html[data-theme="light"] #footerOwnership{color:var(--light-text-secondary);border-color:rgba(121,90,35,.22);background:rgba(255,255,255,.46);box-shadow:inset 0 1px 0 rgba(255,255,255,.88),0 10px 24px -22px rgba(43,76,91,.24);}
+@media (max-width:520px){
+  footer{padding-inline:16px !important;}
+  #footerOwnership{max-width:100%;padding:8px 12px !important;font-size:.70rem;line-height:1.55;}
+}
+@media (prefers-reduced-motion:reduce){#credentialStrip .cred{transition:none !important;}}
+
+
+/* ---------- project readability pass: simple plus + breathable expanded content ---------- */
+
+/* Replace the oversized glass circles with the original editorial plus/minus language.
+   The summary retains the comfortable tap area; only the visual mark is simplified. */
+.project-details > summary::after,
+.timeline-detail > summary::after,
+.accordion-card > summary::after{
+  width:auto !important;
+  height:auto !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  inset-inline-end:13px !important;
+  inset-inline-start:auto !important;
+  top:50% !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  color:var(--yellow) !important;
+  font-family:var(--font-body) !important;
+  font-size:1.36rem !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+  transform:translateY(-50%) !important;
+  transition:color .2s ease,opacity .2s ease,transform .2s ease !important;
+}
+.project-details[open] > summary::after,
+.timeline-detail[open] > summary::after,
+.accordion-card[open] > summary::after{transform:translateY(-50%) !important;}
+.project-details > summary:hover::after,
+.project-details > summary:focus-visible::after,
+.timeline-detail > summary:hover::after,
+.timeline-detail > summary:focus-visible::after,
+.accordion-card > summary:hover::after,
+.accordion-card > summary:focus-visible::after{
+  color:var(--chalk) !important;
+  opacity:.92 !important;
+  transform:translateY(-50%) scale(1.08) !important;
+}
+html[dir="rtl"] .project-details > summary::after,
+html[dir="rtl"] .timeline-detail > summary::after,
+html[dir="rtl"] .accordion-card > summary::after{
+  inset-inline-start:13px !important;
+  inset-inline-end:auto !important;
+}
+html[data-theme="light"] :is(.project-details,.timeline-detail,.accordion-card) > summary::after{color:#a37824 !important;}
+html[data-theme="light"] :is(.project-details,.timeline-detail,.accordion-card) > summary:is(:hover,:focus-visible)::after{color:#263936 !important;}
+
+/* Open project content is a readable editorial column, never a squeezed strip. */
+#workSpine .project-details-body{
+  display:block !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+  padding:22px clamp(18px,3vw,30px) 28px !important;
+  overflow:visible !important;
+  color:var(--chalk-dim);
+}
+#workSpine .project-details-body > p,
+#workSpine .project-details-body > .project-description{
+  width:100% !important;
+  max-width:72ch !important;
+  margin:0 0 18px !important;
+  line-height:1.82 !important;
+  text-align:start !important;
+}
+#workSpine .project-details-body .embedded-case-study,
+#workSpine .project-details-body .featured-case{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:visible !important;
+}
+#workSpine .embedded-case-study .featured-case-content,
+#workSpine .embedded-case-study .featured-case-content-inner,
+#workSpine .embedded-case-study .featured-case-copy{
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+#workSpine .embedded-case-study .featured-case-copy h3{
+  margin:0 0 12px !important;
+  line-height:1.35 !important;
+}
+#workSpine .embedded-case-study .featured-case-copy > .section-tag{margin-bottom:10px;}
+#workSpine .project-details-body .project-facts{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:10px !important;
+  width:100% !important;
+  margin:18px 0 !important;
+}
+#workSpine .project-details-body .project-facts > div{
+  min-width:0 !important;
+  padding:11px 13px !important;
+  line-height:1.55 !important;
+}
+#workSpine .project-details-body .project-facts dd{overflow-wrap:anywhere;}
+#workSpine .project-details-body .project-finding,
+#workSpine .project-details-body .stat-line,
+#workSpine .project-details-body .meta-row{
+  max-width:72ch !important;
+  margin-block:16px !important;
+  line-height:1.65 !important;
+}
+#workSpine .project-details-body .proj-links{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  align-items:center !important;
+  gap:10px !important;
+  width:100% !important;
+  margin:20px 0 0 !important;
+}
+#workSpine .project-details-body .proj-link{
+  flex:0 1 auto !important;
+  width:auto !important;
+  max-width:100% !important;
+  min-height:44px !important;
+  padding:10px 15px !important;
+  line-height:1.4 !important;
+  white-space:normal !important;
+}
+#workSpine .project-details-body .ownership-note{margin-top:16px !important;line-height:1.6 !important;}
+@media (max-width:767px){
+  #workSpine .project-details-body{padding:18px 16px 22px !important;}
+  #workSpine .project-details-body > p,
+  #workSpine .project-details-body > .project-description{max-width:none !important;line-height:1.78 !important;}
+  #workSpine .project-details-body .project-facts{grid-template-columns:minmax(0,1fr) !important;margin-block:14px !important;}
+  #workSpine .project-details-body .proj-links{display:grid !important;grid-template-columns:minmax(0,1fr) !important;gap:8px !important;margin-top:16px !important;}
+  #workSpine .project-details-body .proj-link{width:100% !important;box-sizing:border-box !important;justify-content:center !important;text-align:center !important;}
+}
+@media (prefers-reduced-motion:reduce){
+  .project-details > summary::after,.timeline-detail > summary::after,.accordion-card > summary::after{transition:none !important;}
+}
 
 /* Expanded project surfaces may breathe beyond rounded chrome; content itself is never clipped. */
 #workSpine .project-details,
