@@ -1,0 +1,146 @@
+/* Arabic RTL contract: one predictable right edge for every content section. */
+
+html[dir="rtl"] #main-content,
+html[dir="rtl"] #main-content section,
+html[dir="rtl"] #main-content .section-head,
+html[dir="rtl"] #main-content .section-head h2,
+html[dir="rtl"] #main-content .section-head .section-tag,
+html[dir="rtl"] #main-content .section-head .section-lead,
+html[dir="rtl"] #main-content .about-text,
+html[dir="rtl"] #main-content .about-who,
+html[dir="rtl"] #main-content .about-name,
+html[dir="rtl"] #main-content .about-role,
+html[dir="rtl"] #main-content .about-bio,
+html[dir="rtl"] #main-content .entry-preview,
+html[dir="rtl"] #main-content .entry-preview h3,
+html[dir="rtl"] #main-content .entry-preview p,
+html[dir="rtl"] #main-content .timeline-detail,
+html[dir="rtl"] #main-content .timeline-detail > summary,
+html[dir="rtl"] #main-content .timeline-detail .accordion-body,
+html[dir="rtl"] #main-content .accordion-card,
+html[dir="rtl"] #main-content .accordion-card summary,
+html[dir="rtl"] #main-content .accordion-body,
+html[dir="rtl"] #main-content .material-card,
+html[dir="rtl"] #main-content .dev-card,
+html[dir="rtl"] #main-content .skill-block,
+html[dir="rtl"] #main-content .contact-box,
+html[dir="rtl"] #main-content .contact-box p,
+html[dir="rtl"] #main-content .availability-item,
+html[dir="rtl"] #main-content .creative-row,
+html[dir="rtl"] #main-content .creative-lead,
+html[dir="rtl"] #main-content .project-details,
+html[dir="rtl"] #main-content .project-details-body,
+html[dir="rtl"] #main-content .featured-case,
+html[dir="rtl"] #main-content .featured-case-copy {
+  direction: rtl !important;
+  text-align: right !important;
+  float: none !important;
+}
+
+html[dir="rtl"] #main-content .section-head {
+  align-items: flex-end !important;
+}
+
+html[dir="rtl"] #main-content .section-head::after {
+  margin-inline-start: 0 !important;
+  margin-inline-end: auto !important;
+  transform-origin: right center !important;
+}
+
+html[dir="rtl"] #main-content .about-card {
+  direction: rtl !important;
+}
+
+html[dir="rtl"] #main-content .about-text {
+  justify-self: stretch !important;
+  align-items: flex-end !important;
+}
+
+html[dir="rtl"] #main-content .about-name,
+html[dir="rtl"] #main-content .about-role,
+html[dir="rtl"] #main-content .about-bio {
+  width: 100% !important;
+  max-width: none !important;
+  text-align: right !important;
+  text-align-last: right !important;
+}
+
+html[dir="rtl"] #main-content .about-tags {
+  justify-content: flex-start !important;
+  direction: rtl !important;
+}
+
+html[dir="rtl"] #main-content .credential-strip {
+  direction: rtl !important;
+  justify-content: flex-start !important;
+}
+
+html[dir="rtl"] #main-content .credential-strip .cred {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+html[dir="rtl"] #main-content .credential-strip .cred-copy,
+html[dir="rtl"] #main-content .credential-strip .deg,
+html[dir="rtl"] #main-content .credential-strip .school,
+html[dir="rtl"] #main-content .credential-strip .gpa {
+  text-align: right !important;
+}
+
+html[dir="rtl"] #main-content .cta-row,
+html[dir="rtl"] #main-content .contact-links,
+html[dir="rtl"] #main-content .work-toolbar,
+html[dir="rtl"] #main-content .work-filters,
+html[dir="rtl"] #main-content .about-tags,
+html[dir="rtl"] #main-content .creative-row {
+  direction: rtl !important;
+}
+
+html[dir="rtl"] #main-content .hero .cta-row .hero-action,
+html[dir="rtl"] #main-content .contact-links .btn,
+html[dir="rtl"] #main-content .work-filter,
+html[dir="rtl"] #main-content .btn-text {
+  direction: rtl !important;
+  text-align: center !important;
+}
+
+html[dir="rtl"] #main-content .entry,
+html[dir="rtl"] #main-content .project-details,
+html[dir="rtl"] #main-content .project-details-body {
+  margin-inline-start: 0 !important;
+  margin-inline-end: 0 !important;
+}
+
+@media (max-width: 767px) {
+  html[dir="rtl"] #main-content .section-head,
+  html[dir="rtl"] #main-content .section-head h2,
+  html[dir="rtl"] #main-content .section-head .section-tag,
+  html[dir="rtl"] #main-content .section-head .section-lead,
+  html[dir="rtl"] #main-content .about-text,
+  html[dir="rtl"] #main-content .about-name,
+  html[dir="rtl"] #main-content .about-role,
+  html[dir="rtl"] #main-content .about-bio,
+  html[dir="rtl"] #main-content .entry-preview,
+  html[dir="rtl"] #main-content .entry-preview h3,
+  html[dir="rtl"] #main-content .entry-preview p,
+  html[dir="rtl"] #main-content .accordion-card,
+  html[dir="rtl"] #main-content .accordion-card summary,
+  html[dir="rtl"] #main-content .accordion-body,
+  html[dir="rtl"] #main-content .material-card,
+  html[dir="rtl"] #main-content .dev-card,
+  html[dir="rtl"] #main-content .skill-block,
+  html[dir="rtl"] #main-content .contact-box,
+  html[dir="rtl"] #main-content .contact-box p,
+  html[dir="rtl"] #main-content .availability-item,
+  html[dir="rtl"] #main-content .creative-lead {
+    text-align: right !important;
+  }
+
+  html[dir="rtl"] #main-content .about-card {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html[dir="rtl"] #main-content .credential-strip .cred {
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+  }
+}
