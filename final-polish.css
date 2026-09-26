@@ -1,0 +1,137 @@
+/*
+ * Final polish layer
+ * A single, low-cost visual system that sits after the legacy enhancement layers.
+ * No layout or content changes; surfaces stay readable and theme identities stay distinct.
+ */
+:root{
+  --motion-ease:cubic-bezier(.23,1,.32,1);
+  --light-glass-border:rgba(104,92,176,.34);
+  --light-glass-border-strong:rgba(86,145,198,.48);
+  --light-glass-shadow:0 14px 34px -26px rgba(45,71,108,.30);
+  --light-glass-halo:rgba(117,102,204,.22);
+}
+
+/* Remove the old section-wide wash: active state belongs to the component, not the page. */
+main.wrap>section:not(#home)::before,
+main.wrap>section:not(#home)::after,
+main.wrap>section.section-entering::before{
+  background:none !important;
+  box-shadow:none !important;
+  opacity:0 !important;
+  filter:none !important;
+}
+main.wrap>section:not(#home){background:transparent !important;}
+
+/* Shared motion primitives: transform + opacity only, with viewport IO already used by the page. */
+@media (prefers-reduced-motion:no-preference){
+  .reveal,.reveal-item,.spine>.entry{
+    transition-timing-function:var(--motion-ease) !important;
+  }
+  .reveal:not(.in-view),.reveal-item:not(.in-view),.spine>.entry:not(.in-view){
+    transform:translate3d(0,16px,0) rotateX(1deg) !important;
+  }
+  .reveal.in-view,.reveal-item.in-view,.spine>.entry.in-view{
+    transform:translate3d(0,0,0) rotateX(0) !important;
+  }
+  .reveal-item{transition-duration:.56s !important;}
+  .spine>.entry{opacity:0;transition:opacity .56s var(--motion-ease),transform .56s var(--motion-ease);}
+  .spine>.entry.in-view{opacity:1;}
+}
+
+/* Keep card interactions light and stable on both touch and desktop. */
+:is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
+  transition-property:transform,border-color,box-shadow,background-color !important;
+  transition-duration:.22s !important;
+  transition-timing-function:var(--motion-ease) !important;
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item):hover,
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item):focus-within{
+    transform:translate3d(0,-3px,0) !important;
+  }
+}
+
+/* Premium frosted glass for light mode: visible edge first, glow second. */
+html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
+  border:1px solid var(--light-glass-border) !important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.82),rgba(247,249,255,.68) 56%,rgba(240,239,252,.64)) !important;
+  box-shadow:
+    0 14px 34px -26px rgba(45,71,108,.30),
+    0 0 22px -16px var(--light-glass-halo),
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -1px 0 rgba(105,91,181,.07) !important;
+  -webkit-backdrop-filter:blur(10px) saturate(112%);
+  backdrop-filter:blur(10px) saturate(112%);
+}
+html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):hover,
+html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item):focus-within{
+  border-color:var(--light-glass-border-strong) !important;
+  box-shadow:
+    0 18px 36px -26px rgba(45,71,108,.34),
+    0 0 24px -15px rgba(117,102,204,.30),
+    inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+/* Local, quiet focus/active illumination; never a page-wide rectangle. */
+html[data-theme="light"] :is(.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item):is(:focus-within,:active){
+  border-color:rgba(86,145,198,.56) !important;
+}
+html[data-theme="light"] :is(.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item) :is(a,button):focus-visible{
+  outline:2px solid rgba(86,145,198,.72) !important;
+  outline-offset:3px;
+}
+
+/* A restrained violet-blue edge for the header and mobile drawer too. */
+html[data-theme="light"] #siteHeader,
+html[data-theme="light"] .mobile-menu{
+  border-color:rgba(104,92,176,.30) !important;
+  box-shadow:0 16px 40px -28px rgba(45,71,108,.28),0 0 24px -18px rgba(117,102,204,.24),inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+html[data-theme="light"] .mobile-menu{
+  background:linear-gradient(145deg,rgba(250,252,255,.94),rgba(241,244,252,.90)) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(112%);
+  backdrop-filter:blur(14px) saturate(112%);
+}
+html[data-theme="light"] .hero-action,
+html[data-theme="light"] .work-filter,
+html[data-theme="light"] .mini-control-pill{
+  border-color:rgba(104,92,176,.30) !important;
+  box-shadow:0 8px 20px -18px rgba(45,71,108,.24),inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+html[data-theme="light"] .hero-action:hover,
+html[data-theme="light"] .hero-action:focus-visible,
+html[data-theme="light"] .work-filter:hover,
+html[data-theme="light"] .work-filter:focus-visible{
+  border-color:rgba(86,145,198,.58) !important;
+  background:rgba(226,235,250,.72) !important;
+}
+
+/* Keep typography readable and the stable How-I-Teach numerals intact. */
+#howITeachGrid .accordion-card summary .num{
+  flex:0 0 2.55em !important;
+  width:2.55em !important;
+  min-width:2.55em !important;
+  max-width:2.55em !important;
+  white-space:nowrap !important;
+  direction:ltr !important;
+  unicode-bidi:isolate !important;
+  font-variant-numeric:tabular-nums !important;
+}
+
+/* Reduce expensive glass work on small screens without changing hierarchy. */
+@media (max-width:767px){
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
+    -webkit-backdrop-filter:blur(6px) saturate(108%);
+    backdrop-filter:blur(6px) saturate(108%);
+    box-shadow:0 10px 24px -22px rgba(45,71,108,.28),0 0 18px -15px rgba(117,102,204,.18),inset 0 1px 0 rgba(255,255,255,.88) !important;
+  }
+  .spine>.entry{transition-duration:.46s;}
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal,.reveal-item,.spine>.entry{opacity:1 !important;transform:none !important;transition:none !important;}
+  :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item){transition:none !important;}
+}
+@media (forced-colors:active){
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,.credential-strip .cred,.creative-item){backdrop-filter:none;box-shadow:none !important;}
+}
