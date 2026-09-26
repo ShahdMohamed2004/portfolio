@@ -635,3 +635,96 @@ html[dir="rtl"] #contact .contact-links{justify-content:flex-start !important;}
 @media (prefers-reduced-motion:reduce){
   :is(.timeline-detail,.accordion-card) > summary::after{transition:none !important;}
 }
+
+
+/* ---------- focused cleanup: TEFL card touch state + mobile drawer glass + copyright ---------- */
+
+/* Root-level interaction guard: the credential card keeps its surface on touch.
+   Hover elevation is reserved for real mouse/trackpad pointers only. */
+#credentialStrip .cred{
+  -webkit-tap-highlight-color:transparent;
+  background:linear-gradient(145deg,rgba(20,51,39,.76),rgba(10,27,22,.60)) !important;
+}
+#credentialStrip .cred:active{
+  transform:none !important;
+  background:linear-gradient(145deg,rgba(20,51,39,.76),rgba(10,27,22,.60)) !important;
+}
+#credentialStrip .cred:focus-within{
+  background:linear-gradient(145deg,rgba(20,51,39,.76),rgba(10,27,22,.60)) !important;
+}
+@media (hover:hover) and (pointer:fine){
+  #credentialStrip .cred:hover{
+    background:linear-gradient(145deg,rgba(28,63,47,.80),rgba(12,31,24,.64)) !important;
+    transform:translateY(-3px) !important;
+  }
+}
+@media (hover:none), (pointer:coarse){
+  #credentialStrip .cred:hover,
+  #credentialStrip .cred:focus-within{
+    transform:none !important;
+  }
+}
+html[data-theme="light"] #credentialStrip .cred,
+html[data-theme="light"] #credentialStrip .cred:active,
+html[data-theme="light"] #credentialStrip .cred:focus-within{
+  background:linear-gradient(135deg,rgba(255,255,255,.90),rgba(244,248,246,.82)) !important;
+}
+@media (hover:hover) and (pointer:fine){
+  html[data-theme="light"] #credentialStrip .cred:hover{background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(244,248,246,.88)) !important;}
+}
+
+/* Dark mobile drawer: translucent hierarchy, not opaque green panels. */
+@media (max-width:860px){
+  html:not([data-theme="light"]) .mobile-menu{
+    background:linear-gradient(155deg,rgba(15,40,30,.80),rgba(7,23,18,.74)) !important;
+    border-color:rgba(255,255,255,.10) !important;
+    box-shadow:0 26px 70px -32px rgba(0,0,0,.92),inset 1px 0 0 rgba(255,255,255,.055),inset 0 1px 0 rgba(231,184,78,.12) !important;
+    -webkit-backdrop-filter:blur(22px) saturate(125%) !important;
+    backdrop-filter:blur(22px) saturate(125%) !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu>a[data-nav],
+  html:not([data-theme="light"]) .mobile-menu-utility>a,
+  html:not([data-theme="light"]) .mobile-social-dock a,
+  html:not([data-theme="light"]) .mobile-menu>.mobile-menu-close,
+  html:not([data-theme="light"]) .mobile-menu .theme-toggle-mobile,
+  html:not([data-theme="light"]) .mobile-menu .lang-toggle-mobile{
+    background:rgba(255,255,255,.045) !important;
+    border-color:rgba(255,255,255,.09) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 10px 26px -24px rgba(0,0,0,.8) !important;
+    -webkit-backdrop-filter:blur(12px) !important;
+    backdrop-filter:blur(12px) !important;
+  }
+  html:not([data-theme="light"]) .mobile-menu>a[data-nav]:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-menu-utility>a:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-social-dock a:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-menu>.mobile-menu-close:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-menu .theme-toggle-mobile:is(:hover,:focus-visible),
+  html:not([data-theme="light"]) .mobile-menu .lang-toggle-mobile:is(:hover,:focus-visible){
+    background:rgba(231,184,78,.085) !important;
+    border-color:rgba(231,184,78,.30) !important;
+  }
+}
+@supports not ((backdrop-filter:blur(1px))){
+  @media (max-width:860px){
+    html:not([data-theme="light"]) .mobile-menu{background:rgba(10,29,22,.94) !important;}
+  }
+}
+
+/* One concise ownership signature: creative, quiet, and responsive. */
+footer{position:relative;display:flex;justify-content:center;padding-block:24px 28px !important;}
+#footerOwnership{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.65em;
+  max-width:100%;margin:0;padding:9px 15px !important;
+  color:var(--chalk-dim);font-size:.76rem;line-height:1.5;letter-spacing:.025em;
+  text-align:center;overflow-wrap:anywhere;
+  border:1px solid rgba(231,184,78,.16);border-radius:999px;
+  background:rgba(255,255,255,.025);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 24px -22px rgba(0,0,0,.75);
+}
+#footerOwnership::before{content:"";width:4px;height:4px;flex:0 0 4px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px rgba(231,184,78,.34);}
+html[data-theme="light"] #footerOwnership{color:var(--light-text-secondary);border-color:rgba(121,90,35,.22);background:rgba(255,255,255,.46);box-shadow:inset 0 1px 0 rgba(255,255,255,.88),0 10px 24px -22px rgba(43,76,91,.24);}
+@media (max-width:520px){
+  footer{padding-inline:16px !important;}
+  #footerOwnership{max-width:100%;padding:8px 12px !important;font-size:.70rem;line-height:1.55;}
+}
+@media (prefers-reduced-motion:reduce){#credentialStrip .cred{transition:none !important;}}

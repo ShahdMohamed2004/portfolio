@@ -2450,7 +2450,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 </style>
 <link rel="stylesheet" href="enhancements.css?v=5.7.0">
-<link rel="stylesheet" href="final-polish.css?v=1.4.0">
+<link rel="stylesheet" href="final-polish.css?v=1.5.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2717,8 +2717,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   </div>
 </div>
 <footer>
-  <p class="footer-signature" id="footerText">Designed, built &amp; brought to life with intention by Shahd Mohamed.</p>
-  <p class="footer-ownership" id="footerOwnership">© 2026 Shahd Mohamed. All original creative work, designs, content, projects, and visual assets are protected unless otherwise stated.</p>
+  <p class="footer-ownership" id="footerOwnership">© 2026 Shahd Mohamed. All rights reserved. Original work protected.</p>
 </footer>
 
 
@@ -3478,14 +3477,8 @@ const SITE_AR = {
     // Contact
     document.getElementById('contactIntro').textContent = data.contact.intro;
 
-    const footerText = document.getElementById('footerText');
-    if(footerText) footerText.textContent = lang === 'ar'
-      ? 'صُمم وبُني وأُحيي بقصد بواسطة شهد محمد.'
-      : 'Designed, built & brought to life with intention by Shahd Mohamed.';
     const ownership = document.getElementById('footerOwnership');
-    if(ownership) ownership.textContent = lang === 'ar'
-      ? '© 2026 شهد محمد. جميع الأعمال الإبداعية والتصميمات والمحتوى والمشروعات والأصول المرئية الأصلية محمية ما لم يُذكر خلاف ذلك.'
-      : '© 2026 Shahd Mohamed. All original creative work, designs, content, projects, and visual assets are protected unless otherwise stated.';
+    if(ownership) ownership.textContent = '© 2026 Shahd Mohamed. All rights reserved. Original work protected.';
     contentRevision += 1;
     observeRevealTargets();
   }
