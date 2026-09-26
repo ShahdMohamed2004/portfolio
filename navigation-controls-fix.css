@@ -1,0 +1,99 @@
+/* Final navigation parity: one circular work marker and two independent float anchors. */
+
+/* Selected Work: the only marker is the circular ::after indicator. */
+#work .work-filter::before {
+  content: none !important;
+  display: none !important;
+}
+
+#work .work-filter::after {
+  content: "" !important;
+  display: block !important;
+  width: 11px !important;
+  height: 11px !important;
+  min-width: 11px !important;
+  min-height: 11px !important;
+  border-radius: 50% !important;
+  clip-path: circle(50% at 50% 50%) !important;
+  box-sizing: border-box !important;
+}
+
+#work .work-filters::before,
+#work .work-filters::after {
+  content: "" !important;
+  display: block !important;
+  height: 1px !important;
+  min-height: 1px !important;
+  border-radius: 999px !important;
+  clip-path: inset(0 round 999px) !important;
+  pointer-events: none !important;
+}
+
+#work .work-filter[aria-pressed="true"]::after {
+  border-radius: 50% !important;
+  clip-path: circle(50% at 50% 50%) !important;
+}
+
+/* Floating section indicator: LTR bottom-left, RTL bottom-right. */
+#whereAmI,
+.where-am-i {
+  position: fixed !important;
+  inset-block-start: auto !important;
+  inset-block-end: max(18px, env(safe-area-inset-bottom) + 18px) !important;
+  inset-inline-start: clamp(18px, 4vw, 58px) !important;
+  inset-inline-end: auto !important;
+  margin: 0 !important;
+  z-index: 191 !important;
+}
+
+/* Scroll-to-top: LTR bottom-right, RTL bottom-left. */
+#backToTop,
+.back-to-top {
+  position: fixed !important;
+  inset-block-start: auto !important;
+  inset-block-end: max(18px, env(safe-area-inset-bottom) + 18px) !important;
+  inset-inline-start: auto !important;
+  inset-inline-end: clamp(18px, 4vw, 58px) !important;
+  margin: 0 !important;
+  z-index: 192 !important;
+}
+
+html[dir="rtl"] #whereAmI,
+html[dir="rtl"] .where-am-i {
+  inset-inline-start: auto !important;
+  inset-inline-end: clamp(18px, 4vw, 58px) !important;
+}
+
+html[dir="rtl"] #backToTop,
+html[dir="rtl"] .back-to-top {
+  inset-inline-start: clamp(18px, 4vw, 58px) !important;
+  inset-inline-end: auto !important;
+}
+
+@media (max-width: 767px) {
+  #whereAmI,
+  .where-am-i {
+    inset-block-end: max(16px, env(safe-area-inset-bottom) + 16px) !important;
+    inset-inline-start: 16px !important;
+    inset-inline-end: auto !important;
+  }
+
+  #backToTop,
+  .back-to-top {
+    inset-block-end: max(16px, env(safe-area-inset-bottom) + 16px) !important;
+    inset-inline-start: auto !important;
+    inset-inline-end: 16px !important;
+  }
+
+  html[dir="rtl"] #whereAmI,
+  html[dir="rtl"] .where-am-i {
+    inset-inline-start: auto !important;
+    inset-inline-end: 16px !important;
+  }
+
+  html[dir="rtl"] #backToTop,
+  html[dir="rtl"] .back-to-top {
+    inset-inline-start: 16px !important;
+    inset-inline-end: auto !important;
+  }
+}
