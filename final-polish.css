@@ -1791,3 +1791,117 @@ html[dir="rtl"] #workSpine .featured-case-copy p{
   text-align:justify !important;
   text-align-last:start !important;
 }
+
+
+/* ---------- minimal expand indicator + global editorial alignment ---------- */
+/* The hit area stays generous; only the glyph is visible. */
+.expandable-summary{
+  position:relative !important;
+  padding-inline-end:52px !important;
+  padding-inline-start:14px !important;
+  text-align:start !important;
+}
+html[dir="rtl"] .expandable-summary{padding-inline-start:52px !important;padding-inline-end:14px !important;}
+.expandable-summary::after{
+  content:"+" !important;
+  position:absolute !important;
+  inset-inline-end:10px !important;
+  inset-inline-start:auto !important;
+  inset-block-start:50% !important;
+  display:grid !important;
+  place-items:center !important;
+  width:34px !important;
+  height:40px !important;
+  min-width:34px !important;
+  min-height:40px !important;
+  box-sizing:border-box !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+  color:color-mix(in srgb,var(--yellow) 82%,var(--chalk-dim)) !important;
+  font-family:var(--font-body) !important;
+  font-size:1.18rem !important;
+  font-weight:400 !important;
+  line-height:1 !important;
+  text-align:center !important;
+  opacity:.78 !important;
+  transform:translateY(-50%) rotate(0deg) !important;
+  transform-origin:center !important;
+  transition:opacity .22s ease,color .22s ease,transform .28s cubic-bezier(.23,1,.32,1),text-shadow .22s ease !important;
+}
+html[dir="rtl"] .expandable-summary::after{inset-inline-start:10px !important;inset-inline-end:auto !important;}
+.expandable-summary[aria-expanded="true"]::after,
+details[open] > .expandable-summary::after{
+  content:"−" !important;
+  opacity:.94 !important;
+  transform:translateY(-50%) rotate(180deg) !important;
+}
+@media (hover:hover) and (pointer:fine){
+  .expandable-summary:hover::after,
+  .expandable-summary:focus-visible::after{
+    opacity:1 !important;
+    color:var(--yellow) !important;
+    text-shadow:0 0 12px rgba(231,184,78,.28) !important;
+    transform:translateY(-50%) scale(1.04) !important;
+  }
+  .expandable-summary[aria-expanded="true"]:hover::after,
+  details[open] > .expandable-summary:focus-visible::after{transform:translateY(-50%) rotate(180deg) scale(1.04) !important;}
+}
+@media (max-width:767px){
+  .expandable-summary{padding-inline-end:54px !important;padding-inline-start:14px !important;}
+  html[dir="rtl"] .expandable-summary{padding-inline-start:54px !important;padding-inline-end:14px !important;}
+  .expandable-summary::after{inset-inline-end:8px !important;width:38px !important;height:44px !important;font-size:1.14rem !important;}
+  html[dir="rtl"] .expandable-summary::after{inset-inline-start:8px !important;inset-inline-end:auto !important;}
+}
+@media (prefers-reduced-motion:reduce){.expandable-summary::after{transition:none !important;transform:translateY(-50%) !important;}.expandable-summary[aria-expanded="true"]::after,details[open] > .expandable-summary::after{transform:translateY(-50%) !important;}}
+
+/* =========================================
+   GLOBAL TEXT JUSTIFICATION
+   Body copy is justified; compact UI controls are reset below.
+   ========================================= */
+body,main,section,article,aside,p,li,blockquote,figcaption,label,
+.description,.description-text,.body-text,.content-text,.card-description,
+[class*="description"],[class*="content"],[class*="text"]{
+  text-align:justify !important;
+  text-justify:inter-word !important;
+  text-align-last:start !important;
+}
+/* Prevent inherited justification from distorting purposeful UI elements. */
+h1,h2,h3,h4,h5,h6,
+button,button *,nav a,nav a *,[role="button"],[role="button"] *,
+svg,svg *,input,textarea,select,
+summary,.expandable-summary,
+.section-tag,.badge,.entry-flag,.meta-label,.gpa,.filter-number,.filter-label,
+.project-facts,.stat-line,.hero-note,.about-kicker,.footer-signature,
+.mobile-menu-utility,.mobile-social-dock,
+.btn,.project-link,.proj-link,.contact-links,.nav-utility{
+  text-align:start !important;
+  text-justify:none !important;
+  text-align-last:auto !important;
+}
+button,button *,[role="button"],[role="button"] *,input,textarea,select,.btn,.proj-link,.nav-utility .icon-link,.mobile-social-dock a{text-align:center !important;}
+summary,.expandable-summary{ text-align:start !important; }
+html[dir="rtl"] body,html[dir="rtl"] main,html[dir="rtl"] section,html[dir="rtl"] article,html[dir="rtl"] aside,html[dir="rtl"] p,html[dir="rtl"] li,html[dir="rtl"] blockquote,html[dir="rtl"] figcaption,html[dir="rtl"] label,html[dir="rtl"] [class*="description"],html[dir="rtl"] [class*="content"],html[dir="rtl"] [class*="text"]{
+  direction:rtl !important;
+  text-align:justify !important;
+  text-align-last:start !important;
+}
+/* Readable expanded surfaces share the parent card's boundaries. */
+:is(.accordion-body,.timeline-detail > div,.project-details-body,.featured-case-copy,.materials-note,.contact-box p,.about-text p,.section-lead,.entry p){
+  text-align:justify !important;
+  text-justify:inter-word !important;
+  text-align-last:start !important;
+  line-height:1.72 !important;
+}
+@media (max-width:767px){
+  :is(.accordion-body,.timeline-detail > div,.project-details-body,.featured-case-copy,.materials-note,.contact-box p,.about-text p,.section-lead,.entry p){
+    text-align:justify !important;
+    text-align-last:start !important;
+    line-height:1.78 !important;
+  }
+}
