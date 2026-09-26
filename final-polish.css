@@ -1362,3 +1362,85 @@ html[data-theme="light"] #about .about-card .about-bio{color:#405c58 !important;
     }
   }
 }
+
+
+/* ---------- sitewide reading alignment: justified body copy ---------- */
+/* Headings, navigation, labels, badges and controls keep their intentional
+   start/center alignment; readable copy uses one consistent text rhythm. */
+:where(
+  .hero p.lead,
+  .section-lead,
+  .about-role,
+  .about-bio,
+  .about-text p,
+  .approach-card p,
+  .accordion-body,
+  .accordion-body p,
+  .material-card p,
+  .dev-card p,
+  .skill-block p,
+  .entry p,
+  .entry .place,
+  .timeline-detail .place,
+  .project-details-body,
+  .project-details-body p,
+  .project-description,
+  .ownership-note,
+  .materials-note,
+  .materials-note p,
+  .featured-case p,
+  .creative-lead,
+  .contact-box p,
+  .availability-item
+){
+  text-align:justify !important;
+  text-align-last:start !important;
+  text-justify:inter-word !important;
+  hyphens:none !important;
+  -webkit-hyphens:none !important;
+  overflow-wrap:normal !important;
+  word-spacing:normal !important;
+}
+html[dir="rtl"] :where(
+  .hero p.lead,
+  .section-lead,
+  .about-role,
+  .about-bio,
+  .about-text p,
+  .approach-card p,
+  .accordion-body,
+  .accordion-body p,
+  .material-card p,
+  .dev-card p,
+  .skill-block p,
+  .entry p,
+  .entry .place,
+  .timeline-detail .place,
+  .project-details-body,
+  .project-details-body p,
+  .project-description,
+  .ownership-note,
+  .materials-note,
+  .materials-note p,
+  .featured-case p,
+  .creative-lead,
+  .contact-box p,
+  .availability-item
+){
+  direction:rtl !important;
+  text-align:justify !important;
+  text-align-last:start !important;
+  text-justify:inter-word !important;
+}
+/* Keep compact UI strings readable instead of stretching one-word labels. */
+:where(.tag,.badge,.entry-flag,.project-facts,.gpa,.about-tag,.section-tag,.hero-note){
+  text-align:start !important;
+  text-justify:auto !important;
+}
+@media (max-width:767px){
+  :where(.hero p.lead,.section-lead,.about-role,.about-bio,.about-text p,.approach-card p,.accordion-body,.accordion-body p,.material-card p,.dev-card p,.skill-block p,.entry p,.entry .place,.timeline-detail .place,.project-details-body,.project-details-body p,.project-description,.ownership-note,.materials-note,.materials-note p,.featured-case p,.creative-lead,.contact-box p,.availability-item){
+    text-align:justify !important;
+    text-align-last:start !important;
+    text-justify:inter-word !important;
+  }
+}
