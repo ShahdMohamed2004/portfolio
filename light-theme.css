@@ -1,0 +1,481 @@
+/*
+ * Shahd Portfolio — Warm Ivory / Deep Teal light theme, v1.0
+ * Load AFTER final-polish.css, outside any @layer.
+ * Uses the site's existing html[data-theme="light"] switch.
+ * !important is required where the existing enhancement files use it.
+ * All rules are light-scoped; no new JavaScript or dependencies.
+ */
+
+/* 1. Semantic palette + compatibility with the current CSS tokens. */
+html[data-theme="light"] {
+  color-scheme: light;
+  --lt-bg: #F5F3EC;
+  --lt-surface: #FFFFFF;
+  --lt-soft: #EAF3EE;
+  --lt-soft-hover: #DFEDE5;
+  --lt-text: #19382F;
+  --lt-secondary: #425F55;
+  --lt-muted: #566D63;
+  --lt-brand: #1F6657;
+  --lt-brand-deep: #174B40;
+  --lt-gold: #8A5D23;
+  --lt-gold-soft: #F5EBD7;
+  --lt-border: #B8CCC3;
+  --lt-control-border: #71998B;
+  --lt-shadow: 0 2px 4px rgba(25,56,47,.04), 0 12px 28px -14px rgba(25,56,47,.20);
+  --lt-shadow-hover: 0 4px 8px rgba(25,56,47,.05), 0 18px 36px -16px rgba(25,56,47,.26);
+  --lt-gradient: linear-gradient(135deg, #1F6657 0%, #174B40 100%);
+
+  --ink: var(--lt-bg);
+  --ink-2: var(--lt-soft);
+  --chalk: var(--lt-text);
+  --chalk-dim: var(--lt-secondary);
+  --muted: var(--lt-muted);
+  /* Legacy --yellow is used for text and icons: keep it dark enough. */
+  --yellow: var(--lt-gold);
+  --accent-deep: var(--lt-brand-deep);
+  --text-accent: var(--lt-brand);
+  --stat-color: var(--lt-gold);
+  --pink: #93475D;
+  --line: #D4DFD7;
+  --line-strong: var(--lt-border);
+  --border-color: var(--lt-border);
+  --light-text-primary: var(--lt-text);
+  --light-text-secondary: var(--lt-secondary);
+  --light-text-muted: var(--lt-muted);
+  --light-accent: var(--lt-brand);
+  --light-paper: var(--lt-surface);
+  --light-paper-soft: var(--lt-soft);
+  --paper-deep: var(--lt-soft);
+  --light-surface: var(--lt-surface);
+  --light-surface-strong: var(--lt-surface);
+  --light-shadow: var(--lt-shadow);
+  --light-glass-border: var(--lt-border);
+  --light-glass-border-strong: var(--lt-control-border);
+  --light-glass-shadow: var(--lt-shadow);
+  --light-glass-halo: transparent;
+  --card-paper: var(--lt-surface);
+  --card-border: var(--lt-border);
+  --card-shadow: var(--lt-shadow);
+  --gold-line-color: #B18543;
+  --gold-glow-soft: transparent;
+  --gold-glow-faint: transparent;
+  --luxury-gradient: var(--lt-gradient);
+  --luxury-gradient-soft: linear-gradient(135deg, #FFFFFF, #EAF3EE);
+  --focus-ring: 0 0 0 4px rgba(31,102,87,.18);
+  background: var(--lt-bg) !important;
+  scrollbar-color: var(--lt-control-border) var(--lt-bg);
+}
+
+/* 2. A stable page canvas; colour belongs behind the white surfaces. */
+html[data-theme="light"] body {
+  color: var(--lt-text);
+  background:
+    radial-gradient(ellipse 850px 650px at 100% 0, #DCEBE2 0%, transparent 75%),
+    radial-gradient(ellipse 650px 480px at 0 650px, #EFE4CC 0%, transparent 78%),
+    var(--lt-bg) !important;
+  background-attachment: scroll !important;
+}
+html[data-theme="light"] body::before,
+html[data-theme="light"] body::after,
+html[data-theme="light"] :is(.aurora,.ambient-glow) {
+  display: none !important;
+}
+html[data-theme="light"] #home.hero::before,
+html[data-theme="light"] #home.hero::after {
+  background: none !important;
+  opacity: 0 !important;
+}
+html[data-theme="light"] #main-content > section:not(#home) {
+  border-top-color: var(--line) !important;
+}
+html[data-theme="light"] ::selection {
+  background: #CBE3D7;
+  color: var(--lt-text);
+}
+
+/* 3. Navigation: white glass, visible icon buttons and selected links. */
+html[data-theme="light"] header#siteHeader,
+html[data-theme="light"] header#siteHeader.scrolled {
+  background: rgba(255,255,255,.96) !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: 0 8px 28px -12px rgba(25,56,47,.20) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+html[data-theme="light"] #siteHeader .wordmark {
+  color: var(--lt-brand-deep) !important;
+}
+html[data-theme="light"] #siteHeader .nav-links a {
+  border-radius: 9px !important;
+  color: var(--lt-secondary) !important;
+}
+html[data-theme="light"] #siteHeader .nav-links a:is(.active,:hover,:focus-visible) {
+  color: var(--lt-brand-deep) !important;
+  background: var(--lt-soft) !important;
+}
+html[data-theme="light"] #siteHeader .nav-links a::after {
+  background: var(--lt-brand) !important;
+}
+html[data-theme="light"] #siteHeader :is(.mini-control-pill,.icon-link,.hamburger) {
+  background: var(--lt-soft) !important;
+  border-color: var(--lt-control-border) !important;
+  color: var(--lt-brand-deep) !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #siteHeader :is(.lang-toggle,.theme-toggle) {
+  color: var(--lt-brand-deep) !important;
+}
+html[data-theme="light"] #siteHeader :is(.icon-link,.hamburger,.lang-toggle,.theme-toggle):hover {
+  color: var(--lt-brand-deep) !important;
+  background: var(--lt-soft-hover) !important;
+}
+html[data-theme="light"] #siteHeader .mini-control-divider {
+  background: var(--lt-control-border) !important;
+}
+
+/* 4. Hero: readable editorial title and a genuinely primary action. */
+html[data-theme="light"] #home #heroHeadline {
+  color: var(--lt-text) !important;
+  -webkit-text-fill-color: var(--lt-text) !important;
+  background: none !important;
+  text-shadow: none !important;
+}
+html[data-theme="light"] #home #heroHeadline em {
+  color: var(--lt-brand) !important;
+  -webkit-text-fill-color: var(--lt-brand) !important;
+}
+html[data-theme="light"] #home #heroLead {
+  color: var(--lt-secondary) !important;
+}
+html[data-theme="light"] #home .hero-note {
+  color: var(--lt-gold) !important;
+  background: var(--lt-gold-soft) !important;
+  border: 1px solid #D6BD92 !important;
+  border-inline-start: 3px solid var(--lt-gold) !important;
+  border-radius: 10px !important;
+}
+html[data-theme="light"] #main-content :is(.btn,.hero-action) {
+  background: var(--lt-surface) !important;
+  color: var(--lt-brand-deep) !important;
+  border: 1px solid var(--lt-control-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 3px rgba(25,56,47,.04) !important;
+  text-shadow: none !important;
+}
+html[data-theme="light"] #main-content :is(.btn,.hero-action):is(:hover,:focus-visible) {
+  background: var(--lt-soft-hover) !important;
+  color: var(--lt-brand-deep) !important;
+  border-color: var(--lt-brand) !important;
+}
+html[data-theme="light"] #home #btnCV.hero-action,
+html[data-theme="light"] #main-content .btn.btn-solid {
+  color: #FFFFFF !important;
+  background: var(--lt-gradient) !important;
+  border: 1px solid var(--lt-brand-deep) !important;
+  box-shadow: 0 8px 20px -9px rgba(23,75,64,.55) !important;
+}
+html[data-theme="light"] #home #btnCV.hero-action:is(:hover,:focus-visible,:active),
+html[data-theme="light"] #main-content .btn.btn-solid:is(:hover,:focus-visible,:active) {
+  color: #FFFFFF !important;
+  background: var(--lt-brand-deep) !important;
+  border-color: var(--lt-brand-deep) !important;
+}
+html[data-theme="light"] #main-content :is(.btn,.hero-action) :is(svg,.button-label) {
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+html[data-theme="light"] #main-content :is(.btn,.hero-action)::before,
+html[data-theme="light"] #main-content :is(.btn,.hero-action)::after {
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* 5. Solid surfaces and coloured edges make the rounded corners visible. */
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+) {
+  color: var(--lt-text) !important;
+  background: var(--lt-surface) !important;
+  border: 1px solid var(--lt-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--lt-shadow) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item
+):is(:hover,:focus-within) {
+  border-color: var(--lt-control-border) !important;
+  box-shadow: var(--lt-shadow-hover) !important;
+}
+/* More specific than the late #home.hero #credentialStrip dark overrides. */
+html[data-theme="light"] #home.hero #credentialStrip .cred {
+  background: var(--lt-soft) !important;
+  border: 1px solid var(--lt-border) !important;
+  border-inline-start: 3px solid var(--lt-brand) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+html[data-theme="light"] #home.hero #credentialStrip .cred :is(strong,b) {
+  color: var(--lt-text) !important;
+}
+html[data-theme="light"] #home.hero #credentialStrip .cred :is(span,small) {
+  color: var(--lt-secondary) !important;
+}
+html[data-theme="light"] #home.hero #credentialStrip .cred .gpa {
+  color: var(--lt-gold) !important;
+}
+html[data-theme="light"] #main-content #about .about-card {
+  background: linear-gradient(125deg, #EAF3EE, #FFFFFF 72%) !important;
+}
+html[data-theme="light"] #main-content #contact .contact-box {
+  background: linear-gradient(120deg, #E2EFE7, #F3F7F0) !important;
+  border-color: #A4BFAF !important;
+}
+html[data-theme="light"] #main-content :is(.project-details,.timeline-detail,.accordion-card)[open] {
+  border-color: var(--lt-control-border) !important;
+}
+html[data-theme="light"] #main-content :is(.project-details,.timeline-detail,.accordion-card)[open] > summary {
+  background: var(--lt-soft) !important;
+  border-radius: 17px 17px 0 0;
+}
+html[data-theme="light"] #main-content :is(.project-details,.timeline-detail,.accordion-card) > summary::after {
+  color: var(--lt-brand) !important;
+}
+html[data-theme="light"] #main-content .featured-case {
+  background: var(--lt-soft) !important;
+}
+/* Embedded case studies already have an outer project card. */
+html[data-theme="light"] #workSpine .project-details-body :is(.featured-case,.embedded-case-study) {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #main-content :is(.about-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.cred)::before,
+html[data-theme="light"] #main-content :is(.about-card,.accordion-card,.material-card,.project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,.cred)::after {
+  background: none !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #main-content :is(.project-facts > div,.case-flow span,.materials-note,.skill-group li) {
+  color: var(--lt-secondary) !important;
+  background: #F0F5F1 !important;
+  border-color: var(--lt-border) !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #main-content :is(.section-tag,.about-kicker,.entry-flag,.meta-label,.lvl) {
+  color: var(--lt-brand) !important;
+}
+html[data-theme="light"] #about :is(.about-tag,.about-kicker),
+html[data-theme="light"] #howITeachGrid .accordion-card summary .num {
+  color: var(--lt-brand-deep) !important;
+  background: var(--lt-soft) !important;
+  border-color: var(--lt-border) !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #about .about-photo {
+  border-color: var(--lt-control-border) !important;
+  box-shadow: 0 12px 28px -14px rgba(25,56,47,.25) !important;
+}
+html[data-theme="light"] #main-content .section-head h2::after {
+  background: linear-gradient(90deg, var(--lt-brand), #B18543) !important;
+  box-shadow: none !important;
+}
+
+/* 6. Filters and supporting UI: selected state has a filled treatment. */
+html[data-theme="light"] #work .work-filter {
+  border-radius: 12px !important;
+  background: var(--lt-surface) !important;
+  color: var(--lt-secondary) !important;
+  border-color: var(--lt-control-border) !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #work .work-filter:is(:hover,:focus-visible) {
+  background: var(--lt-soft) !important;
+  color: var(--lt-brand-deep) !important;
+}
+html[data-theme="light"] #work .work-filter:is(.active,[aria-pressed="true"]) {
+  color: #FFFFFF !important;
+  background: var(--lt-brand) !important;
+  border-color: var(--lt-brand) !important;
+}
+html[data-theme="light"] #work .work-filter :is(.filter-label,.filter-number) {
+  color: inherit !important;
+}
+html[data-theme="light"] #work .work-filter[aria-pressed="true"] .filter-number {
+  background: var(--lt-brand-deep) !important;
+  border-color: var(--lt-brand-deep) !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #work :is(.work-count,.work-toolbar) {
+  color: var(--lt-secondary) !important;
+  border-color: var(--lt-border) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] :is(#whereAmI,#backToTop) {
+  color: var(--lt-brand-deep) !important;
+  background: var(--lt-surface) !important;
+  border: 1px solid var(--lt-control-border) !important;
+  box-shadow: var(--lt-shadow) !important;
+}
+html[data-theme="light"] #scrollProgress {
+  background: linear-gradient(90deg, var(--lt-brand), #B18543) !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #tenseDiagram :is(.spine-path,.spine-glow) {
+  stroke: var(--lt-brand) !important;
+  filter: none !important;
+}
+html[data-theme="light"] #tenseDiagram .tick-label {
+  fill: var(--lt-text) !important;
+}
+html[data-theme="light"] #tenseDiagram .tense-label {
+  fill: var(--lt-muted) !important;
+}
+html[data-theme="light"] #tenseDiagram circle.active {
+  fill: var(--lt-brand) !important;
+  stroke: var(--lt-surface) !important;
+  filter: none !important;
+}
+
+/* 7. Mobile drawer: opaque enough to keep the contents easy to read. */
+html[data-theme="light"] #mobileMenu.mobile-menu {
+  background: #F8FAF6 !important;
+  border: 1px solid var(--lt-border) !important;
+  box-shadow: 0 24px 70px -24px rgba(25,56,47,.35) !important;
+}
+html[data-theme="light"] #mobileMenu > a[data-nav],
+html[data-theme="light"] #mobileMenu .mobile-menu-utility > :is(a,button),
+html[data-theme="light"] #mobileMenu .mobile-social-dock a,
+html[data-theme="light"] #mobileMenu .mobile-menu-close {
+  color: var(--lt-brand-deep) !important;
+  background: var(--lt-surface) !important;
+  border-color: var(--lt-control-border) !important;
+  box-shadow: none !important;
+}
+html[data-theme="light"] #mobileMenu > a[data-nav]:is(.active,:hover,:focus-visible),
+html[data-theme="light"] #mobileMenu .mobile-menu-utility > :is(a,button):is(:hover,:focus-visible) {
+  color: var(--lt-brand-deep) !important;
+  background: var(--lt-soft-hover) !important;
+  border-color: var(--lt-brand) !important;
+}
+html[data-theme="light"] #mobileMenu :is(.mobile-nav-icon,.tt-label,svg) {
+  color: inherit !important;
+}
+html[data-theme="light"] #menuBackdrop {
+  background: rgba(18,42,34,.38) !important;
+}
+
+/* 8. Public custom properties are the supported styling hooks for the badge. */
+html[data-theme="light"] shahd-lanyard {
+  --badge-glow-a: rgba(75,145,115,.16) !important;
+  --badge-glow-b: rgba(196,165,103,.12) !important;
+  --badge-glass-line: #ADC8B9 !important;
+  --badge-glass-fill: linear-gradient(135deg,rgba(231,242,235,.75),rgba(251,247,237,.60)) !important;
+  --badge-glass-shadow: 0 14px 28px -18px rgba(25,56,47,.25) !important;
+  --badge-control-bg: #FFFFFF;
+  --badge-control-border: #71998B;
+  --badge-control-active: #DFEDE5;
+  --badge-focus: #1F6657;
+  --lanyard-hint: #425F55;
+}
+
+/* Ensure Arabic body copy also resolves to the fonts already loaded by the site. */
+html[dir="rtl"][data-theme="light"] {
+  --font-body: 'IBM Plex Sans Arabic', 'Cairo', sans-serif;
+  --font-display: 'Cairo', 'IBM Plex Sans Arabic', sans-serif;
+}
+html[dir="rtl"][data-theme="light"] shahd-lanyard {
+  font-family: 'IBM Plex Sans Arabic', 'Cairo', sans-serif !important;
+}
+html[data-theme="light"] #siteHeader .lang-toggle {
+  font-family: 'IBM Plex Sans Arabic', 'Cairo', sans-serif !important;
+}
+
+/* 9. Keyboard access, disabled controls and the existing motion preference. */
+html[data-theme="light"] body :is(a,button,summary,input,select,textarea,[tabindex]):focus-visible {
+  outline: 3px solid var(--lt-brand) !important;
+  outline-offset: 4px !important;
+}
+html[data-theme="light"] #main-content :is(button,.btn):disabled,
+html[data-theme="light"] #main-content :is(button,.btn)[aria-disabled="true"] {
+  background: #E3E8E3 !important;
+  color: #53645B !important;
+  border-color: #A9B8AE !important;
+  box-shadow: none !important;
+}
+@media (max-width: 860px) {
+  /* Neutralise conflicting side-drawer / centred-dialog positions in legacy CSS. */
+  html[dir][data-theme="light"] #mobileMenu.mobile-menu {
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(400px, calc(100vw - 32px)) !important;
+    max-width: calc(100vw - 32px) !important;
+    height: auto !important;
+    max-height: calc(100vh - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    transform: translate(-50%, -50%) scale(.98) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  html[dir][data-theme="light"] #mobileMenu.mobile-menu.open {
+    transform: translate(-50%, -50%) scale(1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}
+@media (max-width: 767px) {
+  html[data-theme="light"] body {
+    background: linear-gradient(160deg, #E9F1E9 0, #F5F3EC 720px, #F5F3EC 100%) !important;
+  }
+  html[data-theme="light"] #main-content :is(.about-card,.accordion-card,.material-card,.project-details,.dev-card,.skill-block,.contact-box) {
+    border-radius: 16px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="light"] #mobileMenu,
+  html[data-theme="light"] #mobileMenu *,
+  html[data-theme="light"] #menuBackdrop {
+    transition: none !important;
+    animation: none !important;
+  }
+  html[data-theme="light"] #main-content :is(.btn,.hero-action,.accordion-card,.material-card,.project-details,.dev-card,.skill-block,.contact-box) {
+    transition: none !important;
+  }
+}
+
+/* Keep the desktop navigation geometry explicit after the legacy theme layers. */
+@media (min-width: 861px) {
+  html[data-theme="light"] #siteHeader nav {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    direction: ltr !important;
+  }
+  html[data-theme="light"] #siteHeader .wordmark,
+  html[data-theme="light"] #siteHeader .nav-links,
+  html[data-theme="light"] #siteHeader .nav-utility {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  html[data-theme="light"] #siteHeader .wordmark { display: block !important; }
+  html[data-theme="light"] #siteHeader .nav-links {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+  }
+  html[data-theme="light"] #siteHeader .nav-links a { display: inline-flex !important; }
+}
