@@ -408,3 +408,126 @@ html[dir="rtl"] :where(.nav-links,.nav-utility,.mobile-menu,.mobile-menu-utility
   html[dir="rtl"] :where(.about-bio,.project-details-body p,.featured-case p,.contact-box p,.entry p,.timeline-detail p){text-align:end !important;text-align-last:auto !important;}
   :where(.point-list li,.skill-group li){text-align:inherit !important;text-justify:auto !important;}
 }
+
+
+/* ---------- full refinement pass: content-driven cards + calm light surfaces ---------- */
+
+/* Let every collection size to its content instead of stretching siblings. */
+:where(.grid-4,.materials-grid,.dev-grid,.skills-grid,.credential-strip,.work-filters){
+  align-items:start !important;
+}
+:where(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.featured-case,.about-card,.availability-item){
+  height:auto !important;
+  min-height:0 !important;
+  flex-grow:0 !important;
+  align-self:start !important;
+}
+#workSpine,
+#experienceSpine,
+#educationSpine{
+  align-items:start !important;
+}
+#workSpine > .entry{
+  align-self:start !important;
+  min-height:0 !important;
+}
+#workSpine > .entry > .project-details,
+#workSpine > .entry > .project-details > .project-details-body,
+#workSpine .featured-case.embedded-case-study{
+  height:auto !important;
+  min-height:0 !important;
+  flex:none !important;
+}
+/* max-height is only an animation ceiling for filtered entries; visible cards stay auto-sized. */
+#workSpine > .entry:not(.is-filtered){
+  max-height:3000px;
+  overflow:visible;
+}
+#workSpine > .entry.is-filtered{overflow:hidden !important;}
+
+/* Secondary actions remain tactile but never become empty panels. */
+.project-details .proj-links,
+.embedded-case-study .proj-links,
+.timeline-detail .proj-links{
+  align-items:flex-start !important;
+  justify-content:flex-start !important;
+  align-content:flex-start !important;
+}
+.project-details .proj-link,
+.embedded-case-study .proj-link,
+.timeline-detail .proj-link{
+  flex:0 1 auto !important;
+  width:auto !important;
+  min-width:0 !important;
+  height:auto !important;
+  min-height:44px !important;
+  max-height:none !important;
+  padding:10px 13px !important;
+  border-radius:12px !important;
+  line-height:1.35 !important;
+  white-space:normal !important;
+}
+@media (max-width:767px){
+  #workSpine > .entry:not(.is-filtered){max-height:4000px;}
+  .project-details .proj-links,
+  .embedded-case-study .proj-links,
+  .timeline-detail .proj-links{display:flex !important;flex-direction:column !important;align-items:stretch !important;gap:8px !important;}
+  .project-details .proj-link,
+  .embedded-case-study .proj-link,
+  .timeline-detail .proj-link{width:100% !important;min-height:44px !important;}
+  #work .work-toolbar{background:transparent !important;border-color:transparent !important;box-shadow:none !important;padding-inline:0 !important;}
+}
+
+/* Light mode: neutral center, low-energy blue illumination only at the viewport edge. */
+html[data-theme="light"] body{
+  background:#f4f7f5 !important;
+  overflow-x:clip !important;
+}
+html[data-theme="light"] body::before{
+  content:"" !important;
+  position:fixed !important;
+  z-index:-1 !important;
+  inset:0 !important;
+  pointer-events:none !important;
+  background:
+    radial-gradient(ellipse 42% 34% at -4% 2%,rgba(86,166,205,.11),transparent 76%),
+    radial-gradient(ellipse 40% 34% at 104% 5%,rgba(110,145,211,.085),transparent 78%),
+    radial-gradient(ellipse 42% 34% at 104% 98%,rgba(86,166,205,.075),transparent 80%),
+    radial-gradient(ellipse 38% 32% at -4% 98%,rgba(110,145,211,.06),transparent 82%),
+    linear-gradient(145deg,#f3f6f4 0%,#f8faf8 52%,#f3f7f6 100%) !important;
+  opacity:.72 !important;
+  filter:none !important;
+}
+html[data-theme="light"] body::after{display:none !important;}
+html[data-theme="light"] main.wrap > section:not(#home)::before,
+html[data-theme="light"] main.wrap > section:not(#home)::after{
+  pointer-events:none !important;
+}
+
+/* Keep section space open; only purposeful cards receive a surface. */
+html[data-theme="light"] #work .work-toolbar{
+  background:transparent !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] #work .spine > .entry,
+html[data-theme="light"] :is(#experience,#credentials) .spine > .entry{
+  background:transparent !important;
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+
+/* One restrained interaction language for purposeful card surfaces. */
+@media (hover:hover) and (pointer:fine){
+  html[data-theme="light"] :is(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.about-card,.availability-item):is(:hover,:focus-within){
+    transform:translateY(-2px);
+    border-color:rgba(75,126,151,.30) !important;
+    box-shadow:0 12px 28px -24px rgba(43,76,91,.36),0 0 24px -23px rgba(86,166,205,.26),inset 0 1px 0 rgba(255,255,255,.94) !important;
+  }
+}
+html[data-theme="light"] :is(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.about-card,.availability-item){
+  transition:transform .24s cubic-bezier(.22,1,.36,1),border-color .24s ease,box-shadow .24s ease,background-color .24s ease !important;
+}
+@media (prefers-reduced-motion:reduce){
+  html[data-theme="light"] :is(.approach-card,.material-card,.dev-card,.skill-block,.contact-box,.credential-strip .cred,.accordion-card,.project-details,.about-card,.availability-item){transition:none !important;}
+}
