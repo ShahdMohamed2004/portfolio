@@ -258,7 +258,7 @@
         return;
       } finally { clearTimeout(decodeTimeout); }
       if (ticket !== this.run || !this.dialog.open) return;
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Start the paper animation immediately after the preview image is ready.
       if (ticket !== this.run || !this.dialog.open) return;
       this.documentView.style.setProperty('--cvp-image-width', `${this.picture.naturalWidth}px`);
       this.state = 'printing';
