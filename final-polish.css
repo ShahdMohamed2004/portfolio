@@ -1590,3 +1590,29 @@ html[dir="rtl"] :where(
     html:not([data-theme="light"]) #mobileMenu .mobile-menu-utility > button{transition:none !important;}
   }
 }
+
+
+/* ---------- dark drawer compliance pass: viewport-safe and touch-stable ---------- */
+@media (max-width:860px){
+  html:not([data-theme="light"]) #mobileMenu{
+    max-width:calc(100vw - 20px) !important;
+    max-height:calc(100dvh - 20px) !important;
+    padding-bottom:max(14px,env(safe-area-inset-bottom)) !important;
+    overscroll-behavior:contain !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(133,180,211,.30) transparent;
+  }
+  html:not([data-theme="light"]) #mobileMenu::-webkit-scrollbar{width:4px;}
+  html:not([data-theme="light"]) #mobileMenu::-webkit-scrollbar-track{background:transparent;}
+  html:not([data-theme="light"]) #mobileMenu::-webkit-scrollbar-thumb{background:rgba(133,180,211,.30);border-radius:999px;}
+  html:not([data-theme="light"]) #mobileMenu > a[data-nav],
+  html:not([data-theme="light"]) #mobileMenu .mobile-menu-utility > a,
+  html:not([data-theme="light"]) #mobileMenu .mobile-menu-utility > button,
+  html:not([data-theme="light"]) #mobileMenu .mobile-social-dock a,
+  html:not([data-theme="light"]) #mobileMenu .mobile-menu-close{
+    touch-action:manipulation !important;
+  }
+  html:not([data-theme="light"]) #mobileMenu .mobile-menu-close{margin-block-start:max(0px,env(safe-area-inset-top)) !important;}
+}
