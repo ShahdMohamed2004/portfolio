@@ -2131,3 +2131,35 @@ html[dir="rtl"] #credentials .education-card-body{
   box-shadow:none !important;
   transform:none !important;
 }
+
+/* Education keeps the clean single vertical affordance, without the former tile. */
+#credentials .timeline-detail > summary::before{
+  display:block !important;
+  content:"" !important;
+  position:absolute !important;
+  inset-block-start:50% !important;
+  inset-inline-end:22px !important;
+  width:2px !important;
+  height:18px !important;
+  min-width:2px !important;
+  min-height:18px !important;
+  border:0 !important;
+  border-radius:2px !important;
+  background:var(--yellow) !important;
+  box-shadow:none !important;
+  opacity:1 !important;
+  pointer-events:none !important;
+  transform:translate(50%,-50%) !important;
+}
+html[dir="rtl"] #credentials .timeline-detail > summary::before{
+  inset-inline-start:22px !important;
+  inset-inline-end:auto !important;
+  transform:translate(-50%,-50%) !important;
+}
+@media (max-width:767px){
+  #credentials .timeline-detail > summary::before{inset-inline-end:20px !important;}
+  html[dir="rtl"] #credentials .timeline-detail > summary::before{
+    inset-inline-start:20px !important;
+    inset-inline-end:auto !important;
+  }
+}
