@@ -107,6 +107,23 @@ html[data-theme="light"] .work-filter:focus-visible{
   background:rgba(226,235,250,.72) !important;
 }
 
+/* Laptop rhythm: give the four teaching cards enough reading width. */
+@media (min-width:901px) and (max-width:1280px){
+  #howITeachGrid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:18px !important;
+  }
+  #howITeachGrid .accordion-card summary{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+  }
+  #howITeachGrid .accordion-card summary .num{
+    flex:0 0 2.55em !important;
+  }
+}
+
 /* Keep typography readable and the stable How-I-Teach numerals intact. */
 #howITeachGrid .accordion-card summary .num{
   flex:0 0 2.55em !important;
