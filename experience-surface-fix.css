@@ -1,0 +1,50 @@
+/* Teaching Experience parity: the timeline entry is a transparent layout wrapper.
+   Only the nested timeline-detail owns the visible glass card surface. */
+
+#experience::before {
+  background: none !important;
+  border-color: transparent !important;
+  opacity: 0 !important;
+}
+
+#experience #experienceSpine > .entry {
+  background: transparent !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+#experience #experienceSpine > .entry::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* Preserve the timeline marker and its rail; the wrapper itself adds no slab. */
+#experience #experienceSpine > .entry::before {
+  z-index: 2 !important;
+}
+
+#experience #experienceSpine > .entry > .timeline-detail {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+html[dir="rtl"] #experience #experienceSpine > .entry,
+html[dir="rtl"] #experience #experienceSpine > .entry.timeline-active {
+  background: transparent !important;
+  border-inline-start-color: transparent !important;
+  border-inline-end-color: transparent !important;
+}
+
+@media (max-width: 767px) {
+  #experience #experienceSpine > .entry {
+    padding-block: 0 16px !important;
+    padding-inline: 0 !important;
+    margin-block-end: 16px !important;
+  }
+}
