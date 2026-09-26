@@ -4033,3 +4033,88 @@ html[data-theme="light"] #about .about-card{
     opacity:1 !important;transform:none !important;transition:none !important;animation:none !important;
   }
 }
+
+
+/* ---------- final spec pass: stable numerals, smoked About glass, localized states ---------- */
+#howITeachGrid .accordion-card summary .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  flex:0 0 2.55em;width:2.55em;min-width:2.55em;max-width:2.55em;
+  box-sizing:border-box;white-space:nowrap;overflow:visible;direction:ltr;unicode-bidi:isolate;
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;margin-inline:0;
+}
+@media (max-width:380px){#howITeachGrid .accordion-card summary .num{flex-basis:2.55em;width:2.55em;min-width:2.55em;max-width:2.55em;}}
+
+/* Remove the wide section slab; keep only a localized ambient atmosphere. */
+main.wrap>section:not(#home){background:transparent !important;}
+main.wrap>section:not(#home)::before{
+  inset:14px 0 !important;border:0 !important;border-radius:24px !important;
+  background:radial-gradient(ellipse 46% 38% at 8% 12%,rgba(72,121,92,.075),transparent 76%) !important;
+  opacity:.42 !important;filter:none !important;box-shadow:none !important;
+}
+main.wrap>section:nth-of-type(even):not(#home)::before{background:radial-gradient(ellipse 42% 36% at 92% 14%,rgba(231,184,78,.038),transparent 78%) !important;}
+section.section-active .section-head h2,html[dir="rtl"] section.section-active .section-head h2{transform:none;}
+
+/* Premium smoked-glass About surface: green depth first, gold only as an edge accent. */
+#about .about-card{
+  background:radial-gradient(120% 100% at 0% 0%,rgba(112,160,119,.075),transparent 58%),linear-gradient(145deg,rgba(31,70,52,.74),rgba(10,30,23,.58)) !important;
+  border:1px solid rgba(231,184,78,.20) !important;
+  box-shadow:0 22px 48px -34px rgba(0,0,0,.80),inset 0 1px 0 rgba(255,255,255,.065),inset 0 -1px 0 rgba(231,184,78,.035) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(112%) !important;backdrop-filter:blur(18px) saturate(112%) !important;
+}
+#about .about-card::before{inset:1px !important;border:1px solid rgba(255,255,255,.035) !important;border-radius:inherit !important;z-index:-1 !important;}
+html[data-theme="light"] #about .about-card{
+  background:radial-gradient(120% 100% at 0% 0%,rgba(104,155,126,.065),transparent 58%),linear-gradient(145deg,rgba(255,255,255,.82),rgba(235,244,239,.72)) !important;
+  border-color:rgba(71,111,83,.22) !important;box-shadow:0 20px 44px -34px rgba(37,71,58,.34),inset 0 1px 0 rgba(255,255,255,.84) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(108%) !important;backdrop-filter:blur(14px) saturate(108%) !important;
+}
+
+/* Only real body copy is justified; labels, headings, controls and numbers stay untouched. */
+:where(.about-bio,.about-text p,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){
+  direction:ltr;text-align:justify !important;text-align-last:start;text-justify:inter-word;word-spacing:normal;letter-spacing:normal;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word;
+}
+html[dir="rtl"] :where(.about-bio,.about-text p,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){direction:rtl;text-align:justify !important;text-align-last:start;text-justify:inter-word;hyphens:none;-webkit-hyphens:none;}
+@media (max-width:767px){
+  :where(.about-bio,.about-text p,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){line-height:1.82;max-width:100%;}
+  html[dir="rtl"] :where(.about-bio,.about-text p,.hero p.lead,.section-lead,.approach-card p,.accordion-body p,.entry p,.project-details-body p,.materials-note,.contact-box p,.creative-lead,.featured-case p,.timeline-detail p,.dev-card p,.skill-block p){line-height:1.95;}
+}
+
+/* Modern glass sidebar: directional, calm, and localized to the drawer itself. */
+@media (max-width:860px){
+  .mobile-menu{
+    isolation:isolate;overflow-x:hidden;
+    background:radial-gradient(120% 42% at 0% 0%,rgba(83,137,97,.13),transparent 68%),linear-gradient(155deg,rgba(13,36,27,.94),rgba(7,22,17,.90)) !important;
+    border-color:rgba(231,184,78,.24) !important;
+    box-shadow:0 26px 70px -32px rgba(0,0,0,.95),inset 1px 0 0 rgba(255,255,255,.045),inset 0 1px 0 rgba(231,184,78,.11) !important;
+    -webkit-backdrop-filter:blur(26px) saturate(130%) !important;backdrop-filter:blur(26px) saturate(130%) !important;
+  }
+  .mobile-menu::before{content:"";position:absolute;inset:0 0 auto;height:2px;z-index:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(231,184,78,.72) 42%,rgba(120,171,132,.48) 68%,transparent);}
+  .mobile-menu::after{content:"";position:absolute;inset:auto -28% 8%;height:34%;z-index:0;pointer-events:none;background:radial-gradient(ellipse,rgba(68,124,83,.11),transparent 70%);filter:blur(16px);}
+  .mobile-menu>*{position:relative;z-index:1;}
+  .mobile-menu>.mobile-menu-close{position:absolute !important;z-index:3;background:rgba(255,255,255,.045) !important;border-color:rgba(231,184,78,.24) !important;box-shadow:0 8px 24px -18px rgba(231,184,78,.8) !important;}
+  .mobile-menu>a[data-nav],.mobile-menu-utility>a{
+    min-height:50px;border:1px solid rgba(255,255,255,.075) !important;border-radius:15px !important;background:rgba(255,255,255,.032) !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035) !important;text-decoration:none !important;
+    transition:color .2s ease,background .2s ease,border-color .2s ease,transform .2s cubic-bezier(.23,1,.32,1),box-shadow .2s ease;
+  }
+  .mobile-menu>a[data-nav]:is(:hover,:focus-visible),.mobile-menu-utility>a:is(:hover,:focus-visible){color:var(--yellow) !important;background:rgba(231,184,78,.075) !important;border-color:rgba(231,184,78,.36) !important;box-shadow:inset 2px 0 0 var(--yellow),0 10px 24px -20px rgba(231,184,78,.76) !important;transform:translateX(3px);}
+  html[dir="rtl"] .mobile-menu>a[data-nav]:is(:hover,:focus-visible),html[dir="rtl"] .mobile-menu-utility>a:is(:hover,:focus-visible){transform:translateX(-3px);box-shadow:inset -2px 0 0 var(--yellow),0 10px 24px -20px rgba(231,184,78,.76) !important;}
+  .mobile-menu>a[data-nav].active{color:var(--yellow) !important;background:rgba(231,184,78,.065) !important;border-color:rgba(231,184,78,.30) !important;box-shadow:inset 2px 0 0 var(--yellow),0 10px 24px -22px rgba(231,184,78,.68) !important;}
+  html[dir="rtl"] .mobile-menu>a[data-nav].active{box-shadow:inset -2px 0 0 var(--yellow),0 10px 24px -22px rgba(231,184,78,.68) !important;}
+  .mobile-menu>a[data-nav]::before{display:none !important;}
+  .mobile-menu .mobile-nav-icon{background:rgba(231,184,78,.065);border-color:rgba(231,184,78,.22);}
+  .mobile-menu .mm-divider,.mobile-menu-utility{border-color:rgba(255,255,255,.10) !important;}
+  html[data-theme="light"] .mobile-menu{background:radial-gradient(120% 42% at 0% 0%,rgba(93,152,113,.10),transparent 68%),linear-gradient(155deg,rgba(250,252,249,.96),rgba(238,247,241,.93)) !important;border-color:rgba(71,111,83,.24) !important;box-shadow:0 24px 64px -34px rgba(37,71,58,.45),inset 1px 0 0 rgba(255,255,255,.9),inset 0 1px 0 rgba(121,90,35,.10) !important;}
+  html[data-theme="light"] .mobile-menu>a[data-nav],html[data-theme="light"] .mobile-menu-utility>a{background:rgba(255,255,255,.48) !important;border-color:rgba(71,111,83,.14) !important;color:var(--light-text-secondary) !important;}
+  html[data-theme="light"] .mobile-menu>a[data-nav]:is(:hover,:focus-visible),html[data-theme="light"] .mobile-menu-utility>a:is(:hover,:focus-visible){background:rgba(197,155,76,.10) !important;border-color:rgba(121,90,35,.32) !important;color:var(--light-accent) !important;}
+}
+@media (prefers-reduced-motion:reduce){.mobile-menu>a[data-nav],.mobile-menu-utility>a{transition:none !important;}}
+
+/* Final specificity guard: older theme layers must not restore a wide section slab. */
+html[data-theme="light"] main.wrap>section:not(#home)::before,
+html:not([data-theme="light"]) main.wrap>section:not(#home)::before{
+  inset:14px 0 !important;
+  border:0 !important;
+  opacity:.42 !important;
+  filter:none !important;
+  box-shadow:none !important;
+}
