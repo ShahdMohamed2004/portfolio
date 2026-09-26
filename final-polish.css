@@ -2170,3 +2170,25 @@ html[dir="rtl"] #credentials .timeline-detail > summary::before{
 #credentials > .spine > .entry:focus-within{
   border-color:transparent !important;
 }
+
+/* Match the site-wide expand/collapse motion on Education's single-line affordance. */
+#credentials .timeline-detail > summary::before{
+  transform:translate(50%,-50%) scaleY(1) !important;
+  transition:transform 360ms cubic-bezier(.4,0,.2,1), opacity 220ms ease, background-color 220ms ease !important;
+  transform-origin:center !important;
+}
+#credentials .timeline-detail > summary[aria-expanded="true"]::before,
+#credentials .timeline-detail[open] > summary::before{
+  opacity:0 !important;
+  transform:translate(50%,-50%) scaleY(0) rotate(90deg) !important;
+}
+html[dir="rtl"] #credentials .timeline-detail > summary::before{
+  transform:translate(-50%,-50%) scaleY(1) !important;
+}
+html[dir="rtl"] #credentials .timeline-detail > summary[aria-expanded="true"]::before,
+html[dir="rtl"] #credentials .timeline-detail[open] > summary::before{
+  transform:translate(-50%,-50%) scaleY(0) rotate(90deg) !important;
+}
+@media (prefers-reduced-motion:reduce){
+  #credentials .timeline-detail > summary::before{transition:none !important;}
+}
