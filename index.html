@@ -2450,7 +2450,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   }
 </style>
 <link rel="stylesheet" href="enhancements.css?v=5.7.0">
-<link rel="stylesheet" href="final-polish.css?v=2.20.0">
+<link rel="stylesheet" href="final-polish.css?v=2.22.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2539,13 +2539,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     <p class="lead" id="heroLead"></p>
 
     <div class="credential-strip" id="credentialStrip"></div>
-    <div class="hero-swatches" aria-label="Hero color palette">
-      <span class="hero-swatch hero-swatch-ivory"></span>
-      <span class="hero-swatch hero-swatch-champagne"></span>
-      <span class="hero-swatch hero-swatch-sage-dark"></span>
-      <span class="hero-swatch hero-swatch-sage-light"></span>
-    </div>
-
     <div class="cta-row">
       <a class="btn hero-action hero-action-primary" href="#" id="btnCV" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16.5V20h14v-3.5"/></svg><span class="button-label">Download CV</span></a>
       <a class="btn hero-action" href="#" id="btnLinkedin" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 10.5v5.5M8 8.5v.1M11.5 16v-3.1a2.15 2.15 0 0 1 4.3 0V16M11.5 10.5V16"/></svg><span class="button-label">LinkedIn</span></a>
@@ -3628,8 +3621,6 @@ const SITE_AR = {
     if(drawerSmall) drawerSmall.innerHTML = lang === 'ar' ? '<bdi dir="ltr">Portfolio · 2026</bdi>' : 'Portfolio · 2026';
     const emailButton = document.getElementById('contactEmailBtn');
     if(emailButton){ emailButton.setAttribute('aria-label', lang === 'ar' ? 'فتح رسالة جديدة في Gmail' : 'Open Gmail compose'); emailButton.title = lang === 'ar' ? 'فتح رسالة جديدة في Gmail' : 'Open Gmail compose'; }
-    const heroSwatches = document.querySelector('.hero-swatches');
-    if(heroSwatches) heroSwatches.setAttribute('aria-label', lang === 'ar' ? 'ألوان الواجهة' : 'Hero color palette');
   }
 
   function normalizeLocalePunctuation(lang){
