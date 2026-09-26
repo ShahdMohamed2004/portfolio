@@ -106,6 +106,30 @@ body::before {
   }
 
   #siteHeader.glass,
+  .about-card,
+  .approach-card,
+  .material-card,
+  .dev-card,
+  .skill-block,
+  .contact-box,
+  .credential-strip .cred,
+  .project-details,
+  .timeline-detail {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .aurora,
+  .ambient-glow,
+  .ambient-glow * ,
+  .hero::before,
+  .hero::after,
+  body::before,
+  body::after {
+    filter: none !important;
+  }
+
+  #siteHeader.glass,
   #siteHeader.glass:hover,
   #siteHeader.glass:focus-within {
     width: calc(100% - 28px) !important;

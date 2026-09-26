@@ -4074,6 +4074,9 @@ const SITE_AR = {
 
   // ---- all continuous scroll-position work batched into one rAF tick ----
   let parallaxActive = desktopMQ.matches && !reducedMQ.matches && !!aboutPhotoImg;
+  let lastMobileProjectTimelineScrollY = -1;
+  let lastMobileHeroTimelineScrollY = -1;
+  let mobileVisualScrollTimer = 0;
 
   function updateHeaderAndProgress(){
     const doc = document.documentElement;
@@ -4148,7 +4151,12 @@ const SITE_AR = {
     });
   }
 
-  function updateProjectTimelines(){
+  function updateProjectTimelines(force = false){
+    if(mobileMQ.matches && !force){
+      const scrollY = window.scrollY || 0;
+      if(lastMobileProjectTimelineScrollY >= 0 && Math.abs(scrollY - lastMobileProjectTimelineScrollY) < 10) return;
+      lastMobileProjectTimelineScrollY = scrollY;
+    }
     if(scrollNodesDirty || scrollNodesRevision !== contentRevision) refreshScrollNodes();
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const focusY = vh * 0.52;
@@ -4180,7 +4188,12 @@ const SITE_AR = {
     });
   }
 
-  function updateTimeline(){
+  function updateTimeline(force = false){
+    if(mobileMQ.matches && !force){
+      const scrollY = window.scrollY || 0;
+      if(lastMobileHeroTimelineScrollY >= 0 && Math.abs(scrollY - lastMobileHeroTimelineScrollY) < 24) return;
+      lastMobileHeroTimelineScrollY = scrollY;
+    }
     if(scrollNodesDirty || scrollNodesRevision !== contentRevision) refreshScrollNodes();
     const diagram = timelineNode;
     if(!diagram) return;
@@ -4221,6 +4234,17 @@ const SITE_AR = {
     });
   }
 
+  function scheduleMobileVisualUpdates(){
+    if(!mobileMQ.matches) return;
+    clearTimeout(mobileVisualScrollTimer);
+    mobileVisualScrollTimer = setTimeout(() => {
+      updateSpy();
+      updateRailSpy();
+      updateTimeline(true);
+      updateProjectTimelines(true);
+    }, 110);
+  }
+
   let scrollTicking = false;
   function onScrollFrame(){
     updateHeaderAndProgress();
@@ -4228,11 +4252,8 @@ const SITE_AR = {
     // as it is a visible scroll-linked component, while heavier scene/parallax
     // work remains desktop-only for a calmer touch experience.
     if(mobileMQ.matches){
-      updateSpy();
-      updateRailSpy();
       updateBackToTop();
-      updateTimeline();
-      updateProjectTimelines();
+      scheduleMobileVisualUpdates();
       scrollTicking = false;
       return;
     }
