@@ -1,0 +1,227 @@
+/* Editorial archive-folder transition — scoped to Teaching Materials only. */
+#materials .materials-folder-overlay {
+  --folder-accent: #d7b45b;
+  --folder-surface: rgba(17, 47, 36, .96);
+  --folder-surface-2: rgba(11, 30, 24, .98);
+  --folder-line: rgba(229, 216, 170, .38);
+  --folder-paper: #f7f0e4;
+  position: fixed;
+  z-index: 260;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 48px);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity .22s ease, visibility 0s linear .22s;
+}
+#materials .materials-folder-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+#materials .materials-folder-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 14, 11, .70);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+#materials .materials-folder-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 660px);
+  min-height: 430px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+  border: 1px solid var(--folder-line);
+  border-radius: 26px;
+  background: linear-gradient(145deg, rgba(255,255,255,.07), transparent 42%), var(--folder-surface-2);
+  box-shadow: 0 32px 90px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.12);
+  transform: translateY(18px) scale(.965);
+  transition: transform .65s cubic-bezier(.22,1,.36,1);
+}
+#materials .materials-folder-overlay.is-open .materials-folder-dialog { transform: translateY(0) scale(1); }
+#materials .materials-folder-close {
+  position: absolute;
+  z-index: 8;
+  inset-block-start: 18px;
+  inset-inline-end: 18px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 50%;
+  background: rgba(7, 20, 15, .46);
+  color: var(--chalk);
+  cursor: pointer;
+  font: 22px/1 var(--font-body, sans-serif);
+}
+#materials .materials-folder-close:hover { border-color: var(--folder-accent); color: var(--folder-accent); }
+#materials .materials-folder-stage {
+  position: relative;
+  min-height: 310px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  perspective: 900px;
+  background: radial-gradient(ellipse at 50% 46%, rgba(91, 128, 102, .24), transparent 63%);
+}
+#materials .materials-folder-stage::after {
+  content: "";
+  position: absolute;
+  inset: 8% 18%;
+  pointer-events: none;
+  background: linear-gradient(112deg, transparent 28%, rgba(255,255,255,.16) 47%, rgba(215,180,91,.10) 53%, transparent 70%);
+  transform: translateX(-120%) skewX(-18deg);
+  opacity: 0;
+}
+#materials .materials-folder-overlay.is-open .materials-folder-stage::after {
+  animation: materialsFolderSheen 950ms cubic-bezier(.22,1,.36,1) 80ms both;
+}
+@keyframes materialsFolderSheen { 48% { opacity: .8; } 100% { opacity: 0; transform: translateX(120%) skewX(-18deg); } }
+#materials .materials-folder {
+  position: relative;
+  width: min(72vw, 390px);
+  aspect-ratio: 1.38;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 25px 20px rgba(0,0,0,.26));
+  animation: materialsFolderSettle 950ms cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes materialsFolderSettle {
+  0% { opacity: .2; transform: translateY(30px) rotateX(8deg) scale(.84); }
+  25% { opacity: 1; transform: translateY(7px) rotateX(5deg) scale(.95); }
+  66% { transform: translateY(0) rotateX(1deg) scale(1.01); }
+  100% { transform: translateY(0) rotateX(0) scale(1); }
+}
+#materials .materials-folder-tab,
+#materials .materials-folder-rear,
+#materials .materials-folder-front,
+#materials .materials-folder-page {
+  position: absolute;
+  display: block;
+  border: 1px solid var(--folder-line);
+}
+#materials .materials-folder-tab {
+  z-index: 1;
+  inset-inline-start: 8%;
+  inset-block-start: 5%;
+  width: 31%;
+  height: 18%;
+  border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  background: linear-gradient(145deg, rgba(115, 159, 123, .78), rgba(27, 73, 53, .96));
+}
+#materials .materials-folder-rear {
+  z-index: 2;
+  inset: 13% 3% 7%;
+  border-radius: 18px 18px 15px 15px;
+  background: linear-gradient(145deg, rgba(48, 103, 72, .96), rgba(13, 43, 31, .99));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 0 0 1px rgba(215,180,91,.08);
+}
+#materials .materials-folder-page {
+  z-index: 3;
+  inset: 20% 18% 14%;
+  border-color: rgba(107, 74, 43, .30);
+  border-radius: 10px 10px 7px 7px;
+  background: linear-gradient(115deg, rgba(255,255,255,.80), transparent 33%), var(--folder-paper);
+  box-shadow: 0 12px 22px rgba(0,0,0,.28);
+  transform: translateY(18%) translateZ(15px) rotate(-2deg);
+  animation: materialsFolderPage 950ms cubic-bezier(.22,1,.36,1) 110ms both;
+}
+@keyframes materialsFolderPage { 0%,35% { transform: translateY(23%) translateZ(0) rotate(-2deg); opacity: .35; } 100% { transform: translateY(-5%) translateZ(20px) rotate(-2deg); opacity: 1; } }
+#materials .materials-folder-page::before,
+#materials .materials-folder-page::after {
+  content: "";
+  position: absolute;
+  inset-inline: 14%;
+  height: 1px;
+  background: rgba(122, 38, 58, .20);
+}
+#materials .materials-folder-page::before { inset-block-start: 34%; }
+#materials .materials-folder-page::after { inset-block-start: 43%; width: 52%; }
+#materials .materials-folder-front {
+  z-index: 4;
+  inset: 42% 3% 7%;
+  border-radius: 17px 17px 15px 15px;
+  background: linear-gradient(115deg, rgba(255,255,255,.13), transparent 26%), linear-gradient(160deg, rgba(57, 118, 80, .96), rgba(15, 48, 34, .98));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.20), inset 0 -1px 0 rgba(0,0,0,.24), 0 12px 18px rgba(0,0,0,.20);
+  transform-origin: 50% 0;
+  animation: materialsFolderFront 950ms cubic-bezier(.22,1,.36,1) 90ms both;
+}
+@keyframes materialsFolderFront { 0%,28% { transform: rotateX(0deg); } 62% { transform: rotateX(-8deg); } 100% { transform: rotateX(0deg); } }
+#materials .materials-folder-copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 3px;
+  padding: 24px 28px 22px;
+  border-top: 1px solid rgba(255,255,255,.10);
+  background: rgba(7, 20, 15, .34);
+}
+#materials .materials-folder-kicker { color: var(--folder-accent); font: 10px/1.4 ui-monospace, monospace; letter-spacing: .15em; text-transform: uppercase; }
+#materials .materials-folder-title { color: var(--chalk); font: 500 clamp(20px, 3vw, 28px)/1.25 var(--font-display, Georgia, serif); }
+#materials .materials-folder-status { color: var(--chalk-dim); font-size: 13px; }
+#materials .materials-folder-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+#materials .materials-folder-open {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border: 1px solid var(--folder-accent);
+  border-radius: 999px;
+  color: var(--folder-accent);
+  background: rgba(215,180,91,.08);
+  text-decoration: none;
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity .25s ease .75s, transform .35s ease .75s, background .2s ease;
+}
+#materials .materials-folder-overlay.is-open .materials-folder-open { opacity: 1; transform: translateY(0); }
+#materials .materials-folder-open:hover { background: rgba(215,180,91,.16); }
+#materials .materials-folder-cancel { border: 0; background: transparent; color: var(--chalk-dim); cursor: pointer; font: inherit; }
+html[data-theme="light"] #materials .materials-folder-overlay {
+  --folder-accent: #7a263a;
+  --folder-surface: rgba(255, 248, 239, .96);
+  --folder-surface-2: rgba(250, 244, 237, .98);
+  --folder-line: rgba(122, 38, 58, .28);
+  --folder-paper: #fffaf2;
+}
+html[data-theme="light"] #materials .materials-folder-backdrop { background: rgba(69, 30, 39, .26); }
+html[data-theme="light"] #materials .materials-folder-dialog { box-shadow: 0 32px 90px rgba(75,23,40,.22), inset 0 1px 0 rgba(255,255,255,.96); }
+html[data-theme="light"] #materials .materials-folder-stage { background: radial-gradient(ellipse at 50% 46%, rgba(150,63,80,.16), transparent 63%); }
+html[data-theme="light"] #materials .materials-folder-tab { background: linear-gradient(145deg, rgba(225,174,178,.74), rgba(122,38,58,.92)); }
+html[data-theme="light"] #materials .materials-folder-rear { background: linear-gradient(145deg, rgba(150,63,80,.94), rgba(75,23,40,.98)); }
+html[data-theme="light"] #materials .materials-folder-front { background: linear-gradient(115deg, rgba(255,255,255,.24), transparent 26%), linear-gradient(160deg, rgba(150,63,80,.96), rgba(75,23,40,.98)); }
+html[data-theme="light"] #materials .materials-folder-copy { background: rgba(255,248,239,.72); }
+html[data-theme="light"] #materials .materials-folder-title { color: #4b1728; }
+html[data-theme="light"] #materials .materials-folder-status,
+html[data-theme="light"] #materials .materials-folder-cancel { color: #6f4651; }
+html[data-theme="light"] #materials .materials-folder-close { background: rgba(255,248,239,.66); color: #4b1728; border-color: rgba(122,38,58,.22); }
+@media (max-width: 600px) {
+  #materials .materials-folder-dialog { min-height: 390px; border-radius: 20px; }
+  #materials .materials-folder-stage { min-height: 255px; }
+  #materials .materials-folder { width: min(82vw, 350px); }
+  #materials .materials-folder-copy { padding: 18px 20px 17px; }
+  #materials .materials-folder-actions { align-items: stretch; flex-direction: column; gap: 8px; }
+  #materials .materials-folder-open { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #materials .materials-folder-overlay,
+  #materials .materials-folder-dialog,
+  #materials .materials-folder-open { transition-duration: .01ms !important; }
+  #materials .materials-folder,
+  #materials .materials-folder-page,
+  #materials .materials-folder-front,
+  #materials .materials-folder-overlay.is-open .materials-folder-stage::after { animation: none !important; }
+  #materials .materials-folder { transform: none; }
+  #materials .materials-folder-page { transform: translateY(-2%) translateZ(1px) rotate(-2deg); opacity: 1; }
+  #materials .materials-folder-front { transform: none; }
+}
