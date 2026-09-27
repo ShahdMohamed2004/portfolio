@@ -130,7 +130,8 @@ async function checkLinks(page) {
     await noSuccess(page, 'Reverse before release fails');
     await drag(page, 300, 0); await success(page, 'Full pass reveals original files once');
     await checkLinks(page);
-    check(await page.locator('[data-materials-reader]').isVisible(), 'Reader remains visible');
+    await page.waitForFunction(() => document.querySelector('[data-materials-reader]').hidden);
+    check(!(await page.locator('[data-materials-reader]').isVisible()), 'Reader hides after successful swipe');
     await page.locator('#langToggle').click(); await settle(page);
     check((await snap(page)).opened && (await snap(page)).count === 1, 'Language switch retains open state');
     check((await page.locator('[data-materials-copy="title"]').textContent()).includes('مرّري'), 'Arabic reader labels');

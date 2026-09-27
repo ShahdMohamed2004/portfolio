@@ -10,7 +10,7 @@
 #materials .materials-reader[hidden], #materials .materials-files[hidden] { display: none !important; }
 #materials .materials-reader *, #materials .materials-reader *::before, #materials .materials-reader *::after { box-sizing: border-box; }
 #materials .materials-reader .materials-reader-title {
-  margin: 0 0 8px; color: var(--text-accent); font: 500 clamp(22px, 3vw, 30px)/1.5 var(--font-display); text-align: center;
+  display: block; width: 100%; margin: 0 auto 8px; color: var(--text-accent); font: 500 clamp(22px, 3vw, 30px)/1.5 var(--font-display); text-align: center;
 }
 #materials .materials-reader .materials-reader-intro,
 #materials .materials-reader .materials-reader-status { text-align: center !important; text-wrap: pretty; letter-spacing: normal; }
@@ -64,16 +64,12 @@
 #materials .materials-reader [data-reader-progress] { display: block; height: 100%; width: 100%; transform-origin: left; transform: scaleX(0); background: var(--signal); }
 #materials .materials-reader .device-led { position: absolute; bottom: 37%; right: 9%; width: 2%; aspect-ratio: 1; border-radius: 50%; background: #738274; box-shadow: 0 0 0 2px #0b1c14, 0 0 0 3px #ffffff20; }
 #materials .materials-reader .device-serial { position: absolute; right: 7%; bottom: 9%; font: clamp(4px, 1cqw, 6px) ui-monospace, monospace; letter-spacing: .18em; color: #a8b5a77a; }
-#materials .materials-reader .reader-end { position: absolute; top: 86%; z-index: 1; display: grid; place-items: center; width: 5%; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--line-strong); color: var(--text-accent); font: 20px/1 var(--font-display); }
-#materials .materials-reader .reader-end-left { left: .7%; }
-#materials .materials-reader .reader-end-right { right: .7%; }
 #materials .materials-reader [data-reader-state="HELD"] { --signal: #d9e3dc; }
 #materials .materials-reader [data-reader-state="INSERTED"] { --signal: #f0d691; }
 #materials .materials-reader [data-reader-state="ARMED"], #materials .materials-reader [data-reader-state="SCANNING"] { --signal: var(--scanning); }
 #materials .materials-reader [data-reader-state="INCOMPLETE"] { --signal: var(--incomplete); }
 #materials .materials-reader [data-reader-state="READY"] { --signal: var(--ready); }
 #materials .materials-reader [data-reader-docked="true"] .reader-slot { box-shadow: inset 0 2px 3px #000b, 0 -1px 7px #bce4e869; }
-#materials .materials-reader [data-reader-armed="true"] .reader-end-right { border-color: #86bca0; color: #86bca0; }
 #materials .materials-reader [data-reader-docked="true"] .device-led { background: var(--signal); box-shadow: 0 0 0 2px #0b1c14, 0 0 9px 2px var(--signal); }
 #materials .materials-reader [data-reader-state="SCANNING"] .device-led { animation: materialsScanningPulse 1s ease-in-out infinite; }
 @keyframes materialsScanningPulse { 50% { opacity: .5; } }

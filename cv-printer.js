@@ -34,7 +34,7 @@
       error:'The preview could not load. You can still download the original PDF below.',
       alt:'Shahd Mohamed Siddiq — original CV, page 1 of 1',
       fileTitle:'Shahd Mohamed · CV', info:'PDF · 1 page · 46 KB', page:'Page 1 of 1', fit:'Fit width', full:'100%',
-      trigger:'Print my CV', short:'Preview CV', hint:'A little paper magic. Tap to print.'
+      trigger:'Print my CV', short:'Preview CV'
     },
     ar: {
       eyebrow:'شهد محمد / النسخة الورقية', title:'نسخة جديدة، من أجلك.',
@@ -45,7 +45,7 @@
       error:'تعذّر تحميل المعاينة. يمكنك تحميل ملف PDF الأصلي من الزر بالأسفل.',
       alt:'السيرة الذاتية الأصلية لشهد محمد صديق — صفحة ١ من ١',
       fileTitle:'شهد محمد · السيرة الذاتية', info:'PDF · صفحة واحدة · 46 KB', page:'صفحة ١ من ١', fit:'ملاءمة العرض', full:'100%',
-      trigger:'اطبع سيرتي الذاتية', short:'معاينة السيرة الذاتية', hint:'اضغط وشاهد سيرتي تخرج من الطابعة.'
+      trigger:'اطبع سيرتي الذاتية', short:'معاينة السيرة الذاتية'
     }
   };
 
@@ -314,12 +314,6 @@
   function start() {
     const printer = document.createElement('shahd-cv-printer');
     document.body.append(printer);
-    const cueStyle = document.createElement('style');
-    cueStyle.textContent = '.cvp-trigger-hint{display:inline-flex!important;align-items:center;gap:6px;font:500 11px/1.6 "IBM Plex Sans Arabic","Space Grotesk",sans-serif;color:var(--chalk-dim,#425f55);padding:3px 2px;white-space:normal}.cvp-trigger-hint svg{width:15px;height:15px;flex:0 0 15px}html[data-theme="light"] .cvp-trigger-hint{color:#425f55}@media(max-width:767px){.cvp-trigger-hint{justify-content:center;grid-column:1/-1}}';
-    document.head.append(cueStyle);
-    const cue = document.createElement('span'); cue.className = 'cvp-trigger-hint'; cue.id = 'cv-printer-hint';
-    cue.innerHTML = icons.pointer + '<span></span>';
-    document.querySelector('#home .cta-row')?.append(cue);
     function syncTriggers() {
       printer.sync();
       const t = printer.copy;
@@ -330,10 +324,8 @@
           const icon = el.querySelector('svg');
           if (icon && !el.dataset.printerIcon) { icon.outerHTML = icons.printer; el.dataset.printerIcon = 'true'; }
           const label = el.querySelector('.button-label'); if (label) label.textContent = t.trigger;
-          el.setAttribute('aria-describedby',cue.id);
         }
       });
-      cue.querySelector('span').textContent = t.hint;
     }
     syncTriggers();
     new MutationObserver(syncTriggers).observe(document.documentElement,{attributes:true,attributeFilter:['lang','data-theme']});

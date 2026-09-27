@@ -361,7 +361,7 @@ function createCardReader(root, { onState = () => {}, onComplete = () => {}, get
 const COPY = {
   en: {
     title: 'Swipe into my teaching portfolio',
-    intro: 'Insert the card, move it all the way left, then swipe to the far right and release.',
+    intro: 'Pick up the card and lower its bottom edge into the reader.',
     direct: 'View files directly', visible: 'Files are open below', reset: 'Reset card',
     label: 'Move Shahd’s card with the mouse, touch, or four arrow keys. Insert it, then swipe from left to right.',
     alt: 'Shahd Mohamed’s original university ID card', region: 'Teaching portfolio files',
@@ -456,6 +456,18 @@ function initMaterialsReader() {
     // Focus makes the revealed links the next keyboard stops without a page jump.
     files.focus({ preventScroll: true });
     section.dispatchEvent(new CustomEvent('materials:revealed', { bubbles: true, detail: { source: reason } }));
+    if (reason === 'swipe') {
+      const hideReader = () => {
+        if (!disposed) wrapper.hidden = true;
+      };
+      if (!reduced.matches && wrapper.animate) {
+        const exit = wrapper.animate(
+          [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-8px)' }],
+          { duration: 280, easing: 'cubic-bezier(.2,.75,.25,1)' },
+        );
+        exit.finished.then(hideReader).catch(hideReader);
+      } else hideReader();
+    }
   }
 
   function dispose() {
