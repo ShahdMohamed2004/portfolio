@@ -19,7 +19,15 @@
   margin: 24px auto 0; user-select: none; -webkit-user-select: none; direction: ltr;
   container-type: inline-size;
 }
-#materials .materials-reader .reader-label { position: absolute; right: 4%; top: 0; font: 8px ui-monospace, monospace; letter-spacing: .12em; color: var(--muted); }
+#materials .materials-reader .reader-label {
+  position: absolute; left: 50%; top: -18px; right: auto; transform: translateX(-50%);
+  font: 8px ui-monospace, monospace; letter-spacing: .14em; color: var(--muted);
+  white-space: nowrap; text-align: center;
+}
+#materials .materials-reader .reader-label::after {
+  content: ""; display: block; width: 58px; height: 1px; margin: 7px auto 0;
+  background: linear-gradient(90deg, transparent, currentColor, transparent); opacity: .38;
+}
 #materials .materials-reader .reader-shadow { position: absolute; left: 15%; top: 77%; width: 72%; height: 16%; border-radius: 50%; background: radial-gradient(ellipse, #0007, transparent 68%); opacity: .35; pointer-events: none; }
 #materials .materials-reader .reader-back { position: absolute; left: 18%; top: 60.2%; z-index: 5; width: 64%; height: 13%; border: 1px solid #4c6355; border-radius: 18px 18px 0 0; background: linear-gradient(180deg, #52685a, #182e24); box-shadow: inset 0 1px 1px #ffffff38; }
 #materials .materials-reader .id-card {
@@ -74,14 +82,29 @@
 @keyframes materialsScanningPulse { 50% { opacity: .5; } }
 #materials .materials-reader .materials-reader-status { min-height: 3.6em; max-width: 56ch; margin: -8px auto 8px; color: var(--chalk-dim); font-size: 14px; line-height: 1.8; }
 #materials .materials-reader .materials-reader-status[data-state="READY"] { color: #86efac; }
-#materials .materials-files { scroll-margin-top: 100px; }
+#materials .materials-files {
+  position: relative; scroll-margin-top: 100px; padding: 8px 0 4px;
+}
+#materials .materials-files:focus { outline: none; }
+#materials .materials-files.materials-reveal-flash::before {
+  content: ""; position: absolute; z-index: 0; pointer-events: none;
+  inset: -10px -12px; border: 1px solid rgba(231,184,78,.65); border-radius: 24px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 0 28px rgba(231,184,78,.22), inset 0 0 24px rgba(255,255,255,.08);
+  animation: materialsRevealFlash 1000ms cubic-bezier(.2,.7,.25,1) both;
+}
+#materials .materials-files > * { position: relative; z-index: 1; }
+@keyframes materialsRevealFlash {
+  0% { opacity: 0; transform: scale(.985); }
+  18% { opacity: .78; }
+  100% { opacity: 0; transform: scale(1.012); }
+}
 /* These files must be usable even without the site's scroll-reveal JavaScript. */
 #materials .materials-files .reveal, #materials .materials-files .reveal-item { opacity: 1 !important; transform: none !important; visibility: visible !important; }
 html[data-theme="light"] #materials .materials-reader .materials-reader-status[data-state="READY"] { color: #266341; }
 html[dir="rtl"] #materials .materials-reader .materials-reader-title { font-family: inherit; }
 @media (max-width: 480px) {
   #materials .materials-reader .reader-scene { margin-top: 24px; }
-  #materials .materials-reader .reader-label { font-size: 6px; }
+  #materials .materials-reader .reader-label { top: -15px; font-size: 6px; }
   #materials .materials-reader .materials-reader-title { font-size: 22px; }
   #materials .materials-reader .materials-reader-status { font-size: 13px; margin-top: 0; }
 }
@@ -91,4 +114,5 @@ html[dir="rtl"] #materials .materials-reader .materials-reader-title { font-fami
 @media (prefers-reduced-motion: reduce) {
   #materials .materials-reader .id-card::before, #materials .materials-reader .device::after { animation: none; opacity: 0; }
   #materials .materials-reader [data-reader-state="SCANNING"] .device-led { animation: none; }
+  #materials .materials-files.materials-reveal-flash::before { display: none; }
 }
