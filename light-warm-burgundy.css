@@ -1,0 +1,151 @@
+/* Final Light Mode color correction: warm dusty burgundy / wine only. */
+html[data-theme="light"] {
+  --warm-wine: #7a263a;
+  --warm-wine-deep: #5d1f2e;
+  --warm-wine-ink: #42242c;
+  --warm-wine-rose: #a45f6c;
+  --warm-wine-line: #c18b96;
+  --warm-wine-soft: #f0dfdc;
+  --warm-ivory: #faf7f3;
+  --paper-deep: #f2e8e3 !important;
+  --card-border: rgba(122,38,58,.23) !important;
+  --card-shadow: 0 14px 32px -20px rgba(93,31,46,.25) !important;
+  --lt-brand: var(--warm-wine) !important;
+  --lt-brand-deep: var(--warm-wine-deep) !important;
+  --lt-gold: var(--warm-wine) !important;
+  --lt-border: #d8bec1 !important;
+  --lt-control-border: #b9808c !important;
+  --lt-muted: #765b62 !important;
+  --yellow: var(--warm-wine) !important;
+  --text-accent: var(--warm-wine) !important;
+  --line: #e2ced0 !important;
+  --line-strong: #c9a1a8 !important;
+  --light-glass-border: rgba(122,38,58,.25) !important;
+  --light-glass-border-strong: rgba(122,38,58,.52) !important;
+  --light-glass-halo: rgba(164,95,108,.18) !important;
+}
+
+/* Keep the page and the top bar ivory; only the accent language changes to wine. */
+html[data-theme="light"] body {
+  color: var(--warm-wine-ink) !important;
+  background: var(--warm-ivory) !important;
+}
+html[data-theme="light"] body::before {
+  background: linear-gradient(180deg, #fbf8f4 0%, #f7efeb 58%, #f2e8e3 100%) !important;
+}
+html[data-theme="light"] body::after {
+  background: radial-gradient(420px circle at var(--cursor-x,50%) var(--cursor-y,20%), rgba(122,38,58,.065), transparent 72%) !important;
+}
+html[data-theme="light"] #siteHeader.glass,
+html[data-theme="light"] #siteHeader.glass.scrolled {
+  --glass-text: var(--warm-wine-ink) !important;
+  --glass-muted: #765b62 !important;
+  background:
+    linear-gradient(120deg, rgba(255,253,249,.91), rgba(250,243,239,.78) 52%, rgba(244,231,228,.72)) padding-box,
+    linear-gradient(120deg, rgba(255,255,255,.94), rgba(193,139,150,.46) 56%, rgba(122,38,58,.30)) border-box !important;
+  border-color: transparent !important;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.92), inset 0 -1px 1px rgba(122,38,58,.06), 0 16px 38px rgba(93,31,46,.13) !important;
+}
+html[data-theme="light"] #siteHeader.glass::before {
+  background: radial-gradient(420px 120px at var(--x,65%) var(--y,0%), rgba(255,255,255,.56), transparent 75%), rgba(240,223,220,.36) !important;
+}
+html[data-theme="light"] #siteHeader.glass .wordmark,
+html[data-theme="light"] #siteHeader.glass .wordmark-name,
+html[data-theme="light"] #siteHeader.glass .nav-links a,
+html[data-theme="light"] #siteHeader.glass :is(.lang-toggle,.theme-toggle,.hamburger) {
+  color: var(--warm-wine-deep) !important;
+}
+html[data-theme="light"] #siteHeader.glass .nav-links::before {
+  background: linear-gradient(145deg, rgba(255,255,255,.42), rgba(240,223,220,.44)) !important;
+  border-color: rgba(122,38,58,.22) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 5px 15px rgba(93,31,46,.10) !important;
+}
+html[data-theme="light"] #siteHeader.glass .nav-links a:is(.active,:hover,:focus-visible) {
+  color: var(--warm-wine) !important;
+  background: rgba(164,95,108,.13) !important;
+}
+html[data-theme="light"] #siteHeader.glass .nav-utility {
+  background: linear-gradient(130deg, rgba(255,255,255,.38), rgba(240,223,220,.34)) !important;
+  border-color: rgba(122,38,58,.25) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.78) !important;
+}
+html[data-theme="light"] #siteHeader.glass .nav-utility :is(.lang-toggle,.theme-toggle):hover,
+html[data-theme="light"] #siteHeader.glass :is(.lang-toggle,.theme-toggle,.hamburger):focus-visible {
+  color: var(--warm-wine) !important;
+  background: rgba(164,95,108,.16) !important;
+  border-color: rgba(122,38,58,.42) !important;
+}
+html[data-theme="light"] #siteHeader.glass .nav-utility,
+html[data-theme="light"] #siteHeader.glass :is(.lang-toggle,.theme-toggle,.hamburger) {
+  border-color: rgba(122,38,58,.27) !important;
+}
+
+/* All purposeful light surfaces: warm translucent ivory with a wine edge, never green. */
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+) {
+  border-color: rgba(122,38,58,.25) !important;
+  background:
+    radial-gradient(180px 120px at 100% 0%, rgba(164,95,108,.13), transparent 72%),
+    radial-gradient(220px 150px at 0% 100%, rgba(193,139,150,.10), transparent 74%),
+    linear-gradient(135deg, rgba(255,255,255,.90), rgba(253,247,244,.70) 52%, rgba(245,233,230,.72)) !important;
+  box-shadow: 0 20px 42px -28px rgba(93,31,46,.30), 0 0 25px -20px rgba(164,95,108,.32), inset 0 1px 0 rgba(255,255,255,.98), inset 0 -1px 0 rgba(122,38,58,.08) !important;
+}
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+)::before {
+  background: linear-gradient(116deg, rgba(255,255,255,.76), rgba(255,255,255,.14) 18%, transparent 40%), linear-gradient(300deg, transparent 64%, rgba(255,238,235,.26) 88%, rgba(255,255,255,.48) 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.92), inset 1px 0 0 rgba(255,255,255,.34) !important;
+}
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+)::after {
+  background: radial-gradient(circle, rgba(164,95,108,.18), rgba(164,95,108,0) 70%) !important;
+}
+html[data-theme="light"] #main-content :is(h1,h2,h3,h4,h5,h6,.section-tag,.entry-flag,.meta-label,.badge,.tag,.work-count,.filter-label,.filter-number),
+html[data-theme="light"] #main-content :is(.deg,strong) {
+  color: var(--warm-wine-deep) !important;
+}
+html[data-theme="light"] #main-content :is(p,.school,.mname,.mtext,.materials-note,.section-lead,.muted) { color: #765b62 !important; }
+html[data-theme="light"] #main-content :is(.arrow,svg,.gpa,.lvl,.case-visual strong,.project-visual) { color: var(--warm-wine) !important; }
+html[data-theme="light"] #main-content .credential-strip .cred,
+html[data-theme="light"] #main-content .availability-item { border-inline-start-color: var(--warm-wine) !important; }
+html[dir="rtl"][data-theme="light"] #main-content .credential-strip .cred,
+html[dir="rtl"][data-theme="light"] #main-content .availability-item { border-inline-start-color: rgba(122,38,58,.25) !important; border-inline-end-color: var(--warm-wine) !important; }
+
+/* Labels, dividers, decorative rules, and active states share the same wine family. */
+html[data-theme="light"] #main-content .section-head h2::after,
+html[data-theme="light"] .section-head::after,
+html[data-theme="light"] .hero-scroll-cue-line,
+html[data-theme="light"] .nav-links a::after {
+  background: linear-gradient(90deg, var(--warm-wine), var(--warm-wine-rose), transparent) !important;
+  box-shadow: 0 0 14px rgba(122,38,58,.20) !important;
+}
+html[data-theme="light"] .section-tag,
+html[data-theme="light"] .hero-note,
+html[data-theme="light"] .about-kicker,
+html[data-theme="light"] .about-tag:first-child {
+  color: var(--warm-wine) !important;
+  border-color: rgba(122,38,58,.30) !important;
+}
+html[data-theme="light"] .hero-note,
+html[data-theme="light"] .about-tag:first-child { background: var(--warm-wine-soft) !important; }
+html[data-theme="light"] :is(.btn,.hero-action,.work-filter,.btn-text):is(:hover,:focus-visible),
+html[data-theme="light"] .work-filter[aria-pressed="true"] {
+  color: var(--warm-wine) !important;
+  border-color: rgba(122,38,58,.52) !important;
+  box-shadow: 0 0 0 3px rgba(164,95,108,.12), 0 10px 24px -20px rgba(93,31,46,.34) !important;
+}
+html[data-theme="light"] .work-filter[aria-pressed="true"]::after { background: var(--warm-wine) !important; border-color: var(--warm-wine) !important; }
+html[data-theme="light"] #scrollProgress { background: linear-gradient(90deg, var(--warm-wine-deep), var(--warm-wine-rose)) !important; }
+html[data-theme="light"] .mobile-menu { background: rgba(250,247,243,.96) !important; border-color: rgba(122,38,58,.26) !important; box-shadow: 0 24px 70px -24px rgba(93,31,46,.30) !important; }
+
+/* Keep the requested gold timeline, while removing teal from every other light accent. */
+html[data-theme="light"] #home .tense-diagram .spine-path { stroke: #c59b4c !important; }
+html[data-theme="light"] #home .tense-diagram .spine-glow { stroke: #d8ad59 !important; }
