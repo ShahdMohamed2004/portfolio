@@ -22,6 +22,45 @@
   visibility: visible;
   transition-delay: 0s;
 }
+#materials .materials-folder-overlay .materials-folder-dialog {
+  width: min(92vw, 520px);
+  min-height: 0;
+  display: block;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: translateY(22px) scale(.92);
+}
+#materials .materials-folder-overlay.is-open .materials-folder-dialog {
+  transform: translateY(0) scale(1);
+}
+#materials .materials-folder-overlay .materials-folder-stage {
+  min-height: 0;
+  aspect-ratio: 1.38;
+  overflow: visible;
+  background: transparent;
+}
+#materials .materials-folder-overlay .materials-folder-copy {
+  display: none;
+}
+#materials .materials-folder-overlay .materials-folder-close {
+  inset-block-start: -42px;
+  inset-inline-end: -10px;
+  background: rgba(7, 20, 15, .46);
+}
+#materials .materials-folder-overlay .materials-folder {
+  width: 100%;
+  filter: drop-shadow(0 30px 28px rgba(0,0,0,.34));
+}
+#materials .materials-folder-overlay .materials-folder-backdrop {
+  background: rgba(4, 13, 10, .58);
+  backdrop-filter: blur(18px) saturate(112%);
+  -webkit-backdrop-filter: blur(18px) saturate(112%);
+}
+/* The scanner already provides its own reveal. Do not add a burgundy frame afterward. */
+#materials .materials-files.materials-reveal-flash::before { display: none !important; }
 #materials .materials-folder-backdrop {
   position: absolute;
   inset: 0;
@@ -206,12 +245,10 @@ html[data-theme="light"] #materials .materials-folder-status,
 html[data-theme="light"] #materials .materials-folder-cancel { color: #6f4651; }
 html[data-theme="light"] #materials .materials-folder-close { background: rgba(255,248,239,.66); color: #4b1728; border-color: rgba(122,38,58,.22); }
 @media (max-width: 600px) {
-  #materials .materials-folder-dialog { min-height: 390px; border-radius: 20px; }
-  #materials .materials-folder-stage { min-height: 255px; }
+  #materials .materials-folder-dialog { width: min(88vw, 390px); }
+  #materials .materials-folder-stage { min-height: 0; }
   #materials .materials-folder { width: min(82vw, 350px); }
-  #materials .materials-folder-copy { padding: 18px 20px 17px; }
-  #materials .materials-folder-actions { align-items: stretch; flex-direction: column; gap: 8px; }
-  #materials .materials-folder-open { width: 100%; }
+  #materials .materials-folder-close { inset-block-start: -38px; inset-inline-end: -4px; }
 }
 @media (prefers-reduced-motion: reduce) {
   #materials .materials-folder-overlay,

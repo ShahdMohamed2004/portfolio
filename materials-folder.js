@@ -10,7 +10,6 @@
     let overlay = null;
     let activeCard = null;
     let activeUrl = '';
-    let popup = null;
     let closeTimer = 0;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -47,14 +46,6 @@
         </div>`;
       section.appendChild(overlay);
       overlay.querySelectorAll('.materials-folder-backdrop, .materials-folder-close, .materials-folder-cancel').forEach(node => node.addEventListener('click', close));
-      overlay.querySelector('.materials-folder-open').addEventListener('click', event => {
-        if (!activeUrl) return;
-        if (!popup || popup.closed) {
-          event.preventDefault();
-          window.open(activeUrl, '_blank', 'noopener,noreferrer');
-        }
-        close();
-      });
       overlay.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
       return overlay;
     };
@@ -72,15 +63,6 @@
       overlay.querySelector('.materials-folder-dialog').setAttribute('aria-label', text.dialog);
     };
 
-    function finishOpen() {
-      if (!activeUrl) return;
-      if (popup && !popup.closed) {
-        try { popup.location.href = activeUrl; } catch (error) { /* The fallback link remains available. */ }
-      }
-      const status = overlay?.querySelector('.materials-folder-status');
-      if (status && (!popup || popup.closed)) status.textContent = document.documentElement.lang === 'ar' ? 'اضغط على فتح المادة للمتابعة.' : 'Select Open material to continue.';
-    }
-
     function open(card) {
       const href = card.getAttribute('href');
       if (!href || href === '#') return;
@@ -94,11 +76,11 @@
       overlay.classList.add('is-open');
       activeCard.setAttribute('aria-expanded', 'true');
       document.body.classList.add('materials-folder-open');
-      // Open synchronously to preserve the user's intended new-tab behavior, then navigate it after the reveal.
-      popup = window.open('about:blank', '_blank');
-      if (popup) { try { popup.opener = null; } catch (error) {} }
       window.clearTimeout(closeTimer);
-      closeTimer = window.setTimeout(finishOpen, reducedMotion.matches ? 80 : 980);
+      // The folder is the transition: let it rise and settle before entering Drive.
+      closeTimer = window.setTimeout(() => {
+        if (activeUrl && overlay.classList.contains('is-open')) window.location.assign(activeUrl);
+      }, reducedMotion.matches ? 120 : 1050);
       window.setTimeout(() => overlay?.querySelector('.materials-folder-close')?.focus({ preventScroll: true }), reducedMotion.matches ? 20 : 420);
     }
 
@@ -114,7 +96,6 @@
       }
       activeCard = null;
       activeUrl = '';
-      popup = null;
     }
 
     grid.addEventListener('click', event => {
