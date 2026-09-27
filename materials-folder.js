@@ -70,6 +70,15 @@
       activeUrl = href;
       const title = card.querySelector('.mname')?.textContent.trim() || '';
       ensureOverlay();
+      const cardRect = card.getBoundingClientRect();
+      const viewportCenterX = window.innerWidth / 2;
+      const viewportCenterY = window.innerHeight / 2;
+      const folderWidth = Math.min(window.innerWidth * (window.innerWidth <= 600 ? .82 : .72), window.innerWidth <= 600 ? 350 : 390);
+      const folderHeight = folderWidth / 1.38;
+      overlay.style.setProperty('--folder-origin-x', `${cardRect.left + cardRect.width / 2 - viewportCenterX}px`);
+      overlay.style.setProperty('--folder-origin-y', `${cardRect.top + cardRect.height / 2 - viewportCenterY}px`);
+      overlay.style.setProperty('--folder-origin-scale', `${Math.max(.42, Math.min(1, Math.min(cardRect.width / folderWidth, cardRect.height / folderHeight)))}`);
+      overlay.dataset.folderOrigin = card.dataset.materialName || title;
       updateCopy(title);
       overlay.querySelector('.materials-folder-open').href = href;
       overlay.setAttribute('aria-hidden', 'false');

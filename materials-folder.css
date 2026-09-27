@@ -427,3 +427,85 @@ html:not([data-theme="light"]) #materials .materials-reader .reader-scene[data-r
   opacity: 0 !important;
   transform: scale(.98) !important;
 }
+
+/* Shared-element / FLIP motion: each card owns its own origin and return path. */
+#materials .materials-folder-overlay .materials-folder-dialog {
+  transform: translate3d(var(--folder-origin-x, 0px), var(--folder-origin-y, 0px), 0) scale(var(--folder-origin-scale, .72));
+  transform-origin: center center;
+  transition: transform 680ms cubic-bezier(.22,1,.36,1), opacity 260ms ease;
+  opacity: .72;
+}
+#materials .materials-folder-overlay.is-open .materials-folder-dialog {
+  transform: translate3d(0, 0, 0) scale(1);
+  opacity: 1;
+}
+#materials .materials-folder-overlay:not(.is-open) .materials-folder-dialog {
+  transition-duration: 520ms;
+  opacity: 0;
+}
+/* Animations begin only after the selected card has opened the overlay. */
+#materials .materials-folder-overlay .materials-folder,
+#materials .materials-folder-overlay .materials-folder-page,
+#materials .materials-folder-overlay .materials-folder-front,
+#materials .materials-folder-overlay .materials-folder::after {
+  animation: none;
+}
+#materials .materials-folder-overlay.is-open .materials-folder {
+  animation: materialsFolderSettle 950ms cubic-bezier(.22,1,.36,1) both;
+}
+#materials .materials-folder-overlay.is-open .materials-folder-page {
+  animation: materialsFolderPaperPull 1050ms cubic-bezier(.22,1,.36,1) 70ms both;
+}
+#materials .materials-folder-overlay.is-open .materials-folder-front {
+  animation: materialsFolderFront 950ms cubic-bezier(.22,1,.36,1) 90ms both;
+}
+#materials .materials-folder-overlay.is-open .materials-folder::after {
+  animation: materialsFolderGlassSweep 950ms cubic-bezier(.22,1,.36,1) 120ms both;
+}
+
+/* Remove generic burgundy focus styling from the dark scanner state. */
+html:not([data-theme="light"]) #materials .materials-reader .id-card:focus-visible,
+html:not([data-theme="light"]) #materials .materials-reader [data-reader-docked="true"] .id-card {
+  outline: 1px solid rgba(215,180,91,.55) !important;
+  outline-offset: 4px !important;
+}
+html:not([data-theme="light"]) #materials .materials-reader [data-reader-busy="true"] .id-card,
+html:not([data-theme="light"]) #materials .materials-reader [data-reader-busy="true"] .id-card:focus-visible {
+  outline: none !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.66) !important;
+}
+
+/* Keep all dark-mode section decoration in the original green family. */
+html:not([data-theme="light"]) #materials,
+html:not([data-theme="light"]) #materials::before,
+html:not([data-theme="light"]) #materials::after {
+  border-color: rgba(157,184,165,.22) !important;
+}
+@media (max-width: 600px) {
+  #materials .materials-folder-overlay { padding-inline: 24px; }
+  #materials .materials-folder-overlay .materials-folder-dialog {
+    width: min(82vw, 350px);
+  }
+  #materials .materials-folder-overlay .materials-folder-close {
+    inset-block-start: -54px;
+    inset-inline-end: 2px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #materials .materials-folder-overlay .materials-folder-dialog,
+  #materials .materials-folder-overlay:not(.is-open) .materials-folder-dialog {
+    transition: opacity .01ms linear;
+    transform: translate3d(0,0,0) scale(1);
+  }
+  #materials .materials-folder-overlay.is-open .materials-folder,
+  #materials .materials-folder-overlay.is-open .materials-folder-page,
+  #materials .materials-folder-overlay.is-open .materials-folder-front,
+  #materials .materials-folder-overlay.is-open .materials-folder::after {
+    animation: none !important;
+  }
+}
+
+html:not([data-theme="light"]) #materials .material-card:focus-visible {
+  outline: 1px solid rgba(215,180,91,.55) !important;
+  outline-offset: 3px !important;
+}
