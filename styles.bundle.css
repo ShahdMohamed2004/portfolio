@@ -6349,6 +6349,11 @@ html[data-theme="light"] #footerOwnership{color:var(--light-text-secondary);bord
   footer{padding-inline:16px !important;}
   #footerOwnership{max-width:100%;padding:8px 12px !important;font-size:.70rem;line-height:1.55;}
 }
+@media (max-width:767px){
+  /* Reserve the fixed back-to-top control's footprint below the ownership card. */
+  footer{padding-block-end:calc(96px + env(safe-area-inset-bottom, 0px)) !important;}
+  #footerOwnership{width:100%;max-width:100%;margin-inline:auto;box-sizing:border-box;}
+}
 @media (prefers-reduced-motion:reduce){#credentialStrip .cred{transition:none !important;}}
 
 
