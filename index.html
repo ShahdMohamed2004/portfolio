@@ -35,7 +35,6 @@
 <link rel="icon" type="image/svg+xml" href="assets/sm-mark.svg" />
 <link rel="apple-touch-icon" href="assets/sm-mark.svg" />
 <link rel="manifest" href="manifest.webmanifest" />
-<link rel="preload" as="image" href="assets/about.webp" type="image/webp" />
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -2480,6 +2479,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 <link rel="stylesheet" href="interaction-warm-burgundy.css?v=1.0.0">
 <link rel="stylesheet" href="luxury-burgundy-final.css?v=1.0.0">
 <link rel="stylesheet" href="materials-folder.css?v=1.0.0">
+<link rel="stylesheet" href="performance-optimizations.css?v=1.0.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2664,7 +2664,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
         <div class="reader-shadow" data-reader-shadow aria-hidden="true"></div>
         <div class="reader-back" aria-hidden="true"></div>
         <button type="button" class="id-card" data-reader-card role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-orientation="horizontal" aria-label="Move Shahd’s card into the reader, then swipe from left to right">
-          <img src="assets/materials-id-card.jpg" width="1512" height="953" alt="Shahd Mohamed’s original university ID card" draggable="false" decoding="async">
+          <img src="assets/materials-id-card.jpg" width="1512" height="953" alt="Shahd Mohamed’s original university ID card" loading="lazy" decoding="async" draggable="false">
         </button>
         <div class="reader-slot" data-reader-slot aria-hidden="true"></div>
         <div class="reader-device" aria-hidden="true">
@@ -3912,14 +3912,19 @@ const SITE_AR = {
   photoLightbox.querySelectorAll('[data-photo-close]').forEach(el => el.addEventListener('click', closePhotoLightbox));
   document.addEventListener('keydown', (event) => { if(event.key === 'Escape') closePhotoLightbox(); });
   if(aboutPhoto && desktopMQ.matches && !reducedMQ.matches){
+    let aboutPhotoRect = null;
+    const measureAboutPhoto = () => { aboutPhotoRect = aboutPhoto.getBoundingClientRect(); };
     aboutPhoto.addEventListener('pointermove', (event) => {
-      const rect = aboutPhoto.getBoundingClientRect();
+      if(!aboutPhotoRect) measureAboutPhoto();
+      const rect = aboutPhotoRect;
       const x = (event.clientX - rect.left) / rect.width - .5;
       const y = (event.clientY - rect.top) / rect.height - .5;
       aboutPhoto.style.setProperty('--photo-tilt-x', `${(-y * 3).toFixed(2)}deg`);
       aboutPhoto.style.setProperty('--photo-tilt-y', `${(x * 4).toFixed(2)}deg`);
-    }, {passive:true});
+    });
+    aboutPhoto.addEventListener('pointerenter', measureAboutPhoto, {passive:true});
     aboutPhoto.addEventListener('pointerleave', () => { aboutPhoto.style.removeProperty('--photo-tilt-x'); aboutPhoto.style.removeProperty('--photo-tilt-y'); });
+    window.addEventListener('resize', () => { aboutPhotoRect = null; }, {passive:true});
   }
   // mobile menu
 
@@ -4369,5 +4374,6 @@ const SITE_AR = {
 <script src="cv-printer.js?v=2.0.1" defer></script>
 <script src="materials-reader.js?v=1.0.2" defer></script>
 <script src="materials-folder.js?v=1.0.0" defer></script>
+<script src="performance-optimizations.js?v=1.0.0" defer></script>
 </body>
 </html>
