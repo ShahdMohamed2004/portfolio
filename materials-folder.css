@@ -262,3 +262,78 @@ html[data-theme="light"] #materials .materials-folder-close { background: rgba(2
   #materials .materials-folder-page { transform: translateY(-2%) translateZ(1px) rotate(-2deg); opacity: 1; }
   #materials .materials-folder-front { transform: none; }
 }
+
+/* Final interaction tuning: the folder is the hero; the reader stays fast and quiet. */
+#materials .materials-folder::after {
+  content: "";
+  position: absolute;
+  z-index: 9;
+  inset: 7% 3% 8%;
+  border-radius: 18px;
+  pointer-events: none;
+  background: linear-gradient(112deg, transparent 28%, rgba(255,255,255,.13) 47%, rgba(255,255,255,.05) 54%, transparent 72%);
+  transform: translateX(-125%) skewX(-18deg);
+  animation: materialsFolderGlassSweep 950ms cubic-bezier(.22,1,.36,1) 120ms both;
+  opacity: 0;
+}
+@keyframes materialsFolderGlassSweep {
+  42% { opacity: .72; }
+  100% { opacity: 0; transform: translateX(125%) skewX(-18deg); }
+}
+
+/* Dark mode selection belongs to the original green/gold system. */
+html:not([data-theme="light"]) #materials .materials-reader {
+  --ready: #d7b45b;
+  --incomplete: #b8a56b;
+  --scanning: #d7b45b;
+}
+html:not([data-theme="light"]) #materials .materials-reader .id-card:focus-visible {
+  outline-color: #d7b45b;
+  box-shadow: 0 0 var(--lift-shadow, 25px) 12px rgba(215,180,91,.16), inset 0 1px 0 rgba(255,255,255,.66);
+}
+html:not([data-theme="light"]) #materials .materials-reader [data-reader-docked="true"] .id-card {
+  outline: 1px solid rgba(215,180,91,.72);
+  outline-offset: 4px;
+  box-shadow: 0 8px 20px -12px rgba(215,180,91,.34), inset 0 1px 0 rgba(255,255,255,.66);
+}
+
+/* Keep scanner motion limited to the pointer-driven card spring. */
+#materials .materials-reader .reader-scene::before {
+  filter: none !important;
+  opacity: .55;
+}
+#materials .materials-reader .reader-device {
+  filter: none !important;
+}
+#materials .materials-reader .id-card::before,
+#materials .materials-reader .device::after,
+#materials .materials-reader [data-reader-state="SCANNING"] .device-led {
+  animation: none !important;
+}
+#materials .materials-reader .id-card::before { opacity: 0; }
+#materials .materials-reader .device::after { display: none; }
+#materials .materials-reader .device-readout { text-shadow: none !important; }
+#materials .materials-reader .device-progress { box-shadow: none !important; }
+#materials .materials-reader .device-led,
+#materials .materials-reader [data-reader-docked="true"] .device-led {
+  box-shadow: 0 0 0 2px #091710 !important;
+}
+#materials .materials-reader [data-reader-docked="true"] .reader-slot {
+  box-shadow: inset 0 2px 3px #000b, 0 -1px 0 rgba(215,180,91,.40) !important;
+}
+#materials .materials-reader [data-reader-state="SCANNING"] .device-readout,
+#materials .materials-reader [data-reader-state="READY"] .device-readout {
+  color: #d7b45b !important;
+}
+html[data-theme="light"] #materials .materials-reader {
+  --ready: #9b7430;
+  --incomplete: #9b7430;
+  --scanning: #9b7430;
+}
+html[data-theme="light"] #materials .materials-reader .device-progress,
+html[data-theme="light"] #materials .materials-reader [data-reader-progress] {
+  box-shadow: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #materials .materials-folder::after { animation: none !important; display: none; }
+}

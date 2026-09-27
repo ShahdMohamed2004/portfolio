@@ -440,12 +440,6 @@ function initMaterialsReader() {
     opened = true;
     files.hidden = false;
     files.inert = false;
-    if (!reduced.matches) {
-      files.classList.remove('materials-reveal-flash');
-      void files.offsetWidth;
-      files.classList.add('materials-reveal-flash');
-      window.setTimeout(() => files.classList.remove('materials-reveal-flash'), 1050);
-    }
     section.dataset.materialsOpen = 'true';
     section.dataset.materialsOpenSource = reason;
     updateLanguage();
