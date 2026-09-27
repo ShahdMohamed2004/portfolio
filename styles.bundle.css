@@ -12381,21 +12381,9 @@ html, body, a, button, input, textarea, select, summary, [role="button"], [tabin
   --lux-rose-line: rgba(150, 63, 80, .46);
 }
 
-/* Consistent selection and browser tap feedback across desktop and mobile. */
-::selection { background: rgba(122, 38, 58, .42); color: #fff8ef; text-shadow: none; }
-::-moz-selection { background: rgba(122, 38, 58, .42); color: #fff8ef; text-shadow: none; }
+/* Browser-generated tap/selection decoration is intentionally neutral. */
 html, body, a, button, input, textarea, select, summary, [role="button"], [tabindex] {
-  -webkit-tap-highlight-color: rgba(122, 38, 58, .20);
-}
-:where(a, button, input, textarea, select, summary, [role="button"], [tabindex]):focus-visible {
-  outline: 2px solid rgba(150, 63, 80, .78) !important;
-  outline-offset: 3px;
-}
-:where(.nav-links a, .mobile-menu a, .work-filter, [aria-selected="true"], [aria-pressed="true"]):is(.active, [aria-selected="true"], [aria-pressed="true"]) {
-  color: var(--lux-burgundy) !important;
-}
-html[data-theme="light"] :where(.nav-links a, .mobile-menu a, .work-filter, [aria-selected="true"], [aria-pressed="true"]):is(.active, [aria-selected="true"], [aria-pressed="true"]) {
-  background: rgba(150, 63, 80, .13) !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Warm glass sheen for the light-mode top bar only. */
