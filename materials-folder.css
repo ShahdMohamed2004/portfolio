@@ -587,3 +587,20 @@ html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:focus-v
 html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary svg {
   color: #e5d5b8 !important;
 }
+
+
+/* Dark interaction correction: keep Hero focus gold; remove inherited wine feedback from Teaching Materials. */
+html:not([data-theme="light"]) #home :is(.hero-action, .credential-strip .cred):focus-visible {
+  outline: 2px solid rgba(215, 180, 91, .72) !important;
+  outline-offset: 3px !important;
+  border-color: rgba(215, 180, 91, .42) !important;
+  box-shadow: 0 0 0 3px rgba(215, 180, 91, .12) !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+html:not([data-theme="light"]) #materials .material-card:is(:focus, :focus-visible, :active) {
+  outline: none !important;
+  outline-color: transparent !important;
+  border-color: rgba(157, 184, 165, .30) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .13), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
