@@ -80,7 +80,7 @@
       overlay.style.setProperty('--folder-origin-scale', `${Math.max(.42, Math.min(1, Math.min(cardRect.width / folderWidth, cardRect.height / folderHeight)))}`);
       overlay.dataset.folderOrigin = card.dataset.materialName || title;
       updateCopy(title);
-      overlay.querySelector('.materials-folder-open').href = href;
+      overlay.querySelector('.materials-folder-open').setAttribute('href', href);
       overlay.setAttribute('aria-hidden', 'false');
       overlay.classList.add('is-open');
       activeCard.setAttribute('aria-expanded', 'true');
