@@ -2811,3 +2811,26 @@ html[dir="rtl"] #work #workSpine > .entry.timeline-completed::before{
 html[dir="rtl"] #work .work-filters{direction:rtl !important;}
 html[dir="rtl"] #work .work-filters .work-filter{direction:rtl !important;}
 html[dir="rtl"] #work .work-filters .filter-number{direction:ltr !important;unicode-bidi:isolate !important;}
+
+/* Artifact-only fix: keep the section indicator geometry, remove its gold halo. */
+#whereAmI,
+#whereAmI.is-visible {
+  box-shadow: none !important;
+  border-color: rgba(225,239,231,.16) !important;
+}
+#whereAmI strong,
+#whereAmI #whereAmILabel {
+  text-shadow: none !important;
+}
+html[data-theme="light"] #whereAmI,
+html[data-theme="light"] #whereAmI.is-visible {
+  border-color: rgba(65,126,101,.22) !important;
+  box-shadow: none !important;
+}
+/* Artifact-only fix: remove the 1px section-entry beam itself, not its layout. */
+main.wrap > section.section-entering::before {
+  display: none !important;
+  animation: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}

@@ -1802,6 +1802,7 @@ main.wrap > section.section-entering::before{
   inset-inline:0;
   top:0;
   height:1px;
+  display:none;
   pointer-events:none;
   background:linear-gradient(90deg,transparent 4%,color-mix(in srgb,var(--yellow) 74%,transparent) 32%,color-mix(in srgb,#a58bff 54%,transparent) 66%,transparent 96%);
   transform:scaleX(.18);
