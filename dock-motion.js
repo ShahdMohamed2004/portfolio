@@ -47,6 +47,7 @@
       item.style.removeProperty('--dock-lift');
       item.style.removeProperty('--dock-shift');
       item.style.removeProperty('--dock-depth');
+      item.style.removeProperty('will-change');
     });
     dock.classList.remove('motion-dock-active');
   }
@@ -64,7 +65,12 @@
 
     docks.forEach(dock => {
       const items = itemElements(dock);
-      if (!items.length || !dock.isConnected) return;
+      const dockRect = dock.getBoundingClientRect();
+      if (!items.length || !dock.isConnected || !dockRect.width || !dockRect.height ||
+          dockRect.bottom < -240 || dockRect.top > window.innerHeight + 240) {
+        clearDock(dock);
+        return;
+      }
       let closest = Infinity;
       items.forEach(item => {
         const rect = item.getBoundingClientRect();
@@ -81,6 +87,8 @@
         item.style.setProperty('--dock-lift', `${lift.toFixed(2)}px`);
         item.style.setProperty('--dock-shift', `${shift.toFixed(2)}px`);
         item.style.setProperty('--dock-depth', proximity.toFixed(3));
+        if (proximity > .02) item.style.setProperty('will-change', 'transform');
+        else item.style.removeProperty('will-change');
       });
       dock.classList.toggle('motion-dock-active', closest < 220);
     });

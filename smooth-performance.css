@@ -1,0 +1,87 @@
+/* Final smoothness pass: keep identity text intact and promote only active motion. */
+
+#siteHeader.glass > nav > .wordmark,
+#siteHeader.glass > nav > .wordmark .wordmark-name {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: max-content;
+  max-width: none !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap;
+}
+
+#siteHeader.glass .wordmark-name {
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+#siteHeader.glass > nav > .wordmark {
+  padding-inline-end: .2em;
+  letter-spacing: -.025em;
+}
+
+/* Avoid reserving GPU layers for every card when nothing is moving. */
+:is(.approach-card, .material-card, .dev-card, .skill-block, .contact-box,
+    .credential-strip .cred, .project-details, .timeline-detail,
+    .accordion-card, .availability-item, .creative-item, .featured-case,
+    .about-card, .btn, .proj-link, .work-filter) {
+  will-change: auto !important;
+  backface-visibility: hidden;
+}
+
+:is(.approach-card, .material-card, .dev-card, .skill-block, .contact-box,
+    .credential-strip .cred, .project-details, .timeline-detail,
+    .accordion-card, .availability-item, .creative-item, .featured-case,
+    .about-card, .btn, .proj-link, .work-filter):is(:hover, :focus-visible, :active) {
+  will-change: transform !important;
+}
+
+.ambient-glow-blob,
+.ambient-light-path,
+.ambient-specular-ribbon,
+.ambient-micro-reflection {
+  will-change: auto !important;
+}
+
+/* Keep the fixed header stable while the document scrolls underneath it. */
+#siteHeader.glass {
+  contain: layout paint style;
+  backface-visibility: hidden;
+}
+
+@media (max-width: 860px) {
+  #siteHeader.glass > nav > .wordmark {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: none !important;
+    font-size: clamp(.78rem, 4vw, 1.02rem) !important;
+    line-height: 1.1;
+  }
+  #siteHeader.glass > nav > .wordmark .wordmark-name {
+    min-width: max-content;
+  }
+}
+
+@media (max-width: 360px) {
+  #siteHeader.glass > nav > .wordmark {
+    font-size: .79rem !important;
+    letter-spacing: -.035em;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Native touch scrolling stays in charge; avoid scroll-linked visual filters. */
+  #siteHeader.glass,
+  .mobile-menu,
+  .menu-backdrop {
+    backface-visibility: hidden;
+  }
+  #siteHeader.glass { overflow: visible !important; }
+  .ambient-glow-blob { filter: blur(88px) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #siteHeader.glass > nav > .wordmark { transition: none !important; }
+}
