@@ -505,7 +505,20 @@ html:not([data-theme="light"]) #materials::after {
   }
 }
 
-html:not([data-theme="light"]) #materials .material-card:focus-visible {
-  outline: 1px solid rgba(215,180,91,.55) !important;
-  outline-offset: 3px !important;
+/* Dark Teaching Materials cards use the same unstyled focus baseline as the site's other cards. */
+html:not([data-theme="light"]) #materials .material-card {
+  -webkit-tap-highlight-color: transparent !important;
+}
+html:not([data-theme="light"]) #materials .material-card:focus,
+html:not([data-theme="light"]) #materials .material-card:focus-visible,
+html:not([data-theme="light"]) #materials .material-card:active {
+  outline: none !important;
+  outline-offset: 0 !important;
+  border-color: rgba(239,234,216,.16) !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.13), inset 0 1px 0 rgba(255,255,255,.025) !important;
+}
+
+/* Scanner remains independent: suppress browser wine tap feedback without touching its temporary cue. */
+html:not([data-theme="light"]) #materials .materials-reader .id-card {
+  -webkit-tap-highlight-color: transparent !important;
 }
