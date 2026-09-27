@@ -604,3 +604,31 @@ html:not([data-theme="light"]) #materials .material-card:is(:focus, :focus-visib
   box-shadow: 0 8px 22px rgba(0, 0, 0, .13), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
   -webkit-tap-highlight-color: transparent !important;
 }
+
+
+/* Subtle Gold Neon CV accent: luminous but restrained, Dark Mode only. */
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary,
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:active {
+  background: rgba(231, 184, 78, .12) !important;
+  border-color: rgba(231, 184, 78, .46) !important;
+  border-top-color: rgba(246, 211, 119, .68) !important;
+  color: #f0d78c !important;
+  box-shadow:
+    0 5px 18px -16px rgba(231, 184, 78, .58),
+    0 0 18px -14px rgba(231, 184, 78, .52),
+    inset 0 1px 0 rgba(255, 245, 205, .16) !important;
+}
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:hover,
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:focus-visible {
+  background: rgba(231, 184, 78, .17) !important;
+  border-color: rgba(231, 184, 78, .58) !important;
+  border-top-color: rgba(250, 220, 137, .78) !important;
+  color: #f5df9c !important;
+  box-shadow:
+    0 7px 20px -16px rgba(231, 184, 78, .70),
+    0 0 22px -14px rgba(231, 184, 78, .64),
+    inset 0 1px 0 rgba(255, 248, 220, .20) !important;
+}
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary svg {
+  color: currentColor !important;
+}
