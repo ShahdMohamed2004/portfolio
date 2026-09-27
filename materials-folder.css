@@ -305,13 +305,17 @@ html:not([data-theme="light"]) #materials .materials-reader [data-reader-docked=
 #materials .materials-reader .reader-device {
   filter: none !important;
 }
-#materials .materials-reader .id-card::before,
-#materials .materials-reader .device::after,
 #materials .materials-reader [data-reader-state="SCANNING"] .device-led {
   animation: none !important;
 }
-#materials .materials-reader .id-card::before { opacity: 0; }
-#materials .materials-reader .device::after { display: none; }
+#materials .materials-reader .id-card::before {
+  opacity: 1 !important;
+  animation: materialsCardShine 5.5s ease-in-out infinite !important;
+}
+#materials .materials-reader .device::after {
+  display: block !important;
+  animation: materialsRealisticGleam 8s cubic-bezier(.2,.7,.25,1) infinite !important;
+}
 #materials .materials-reader .device-readout { text-shadow: none !important; }
 #materials .materials-reader .device-progress { box-shadow: none !important; }
 #materials .materials-reader .device-led,
@@ -520,5 +524,15 @@ html:not([data-theme="light"]) #materials .material-card:active {
 
 /* Scanner remains independent: suppress browser wine tap feedback without touching its temporary cue. */
 html:not([data-theme="light"]) #materials .materials-reader .id-card {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Scanner-only glass highlight: the normal Teaching Materials cards stay free of gold selection glow. */
+#materials .materials-reader .id-card::before {
+  background: linear-gradient(115deg, transparent 25%, rgba(215,180,91,.16) 45%, rgba(255,236,168,.62) 50%, rgba(215,180,91,.14) 55%, transparent 75%) !important;
+}
+
+/* Normal material cards never receive browser-colored tap feedback; scanner shine stays separate. */
+#materials .material-card {
   -webkit-tap-highlight-color: transparent !important;
 }
