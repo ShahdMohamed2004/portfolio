@@ -632,3 +632,22 @@ html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:focus-v
 html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary svg {
   color: currentColor !important;
 }
+
+
+/* Hero-only Dark Mode focus correction: gold is the sole interaction halo; wine is removed. */
+html:not([data-theme="light"]) #home :where(.hero-action, a, button, [role="button"], [tabindex]):is(:focus, :focus-visible, :active) {
+  outline: 2px solid rgba(215, 180, 91, .74) !important;
+  outline-offset: 3px !important;
+  border-color: rgba(215, 180, 91, .48) !important;
+  box-shadow: 0 0 0 3px rgba(215, 180, 91, .13), 0 7px 20px -16px rgba(215, 180, 91, .48) !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+html:not([data-theme="light"]) #home :where(.hero-action, a, button, [role="button"], [tabindex]):focus {
+  -webkit-tap-highlight-color: transparent !important;
+}
+/* Keep the primary CV's own restrained Gold Neon surface while its focus halo is gold. */
+html:not([data-theme="light"]) #home #btnCV.hero-action-primary:is(:focus, :focus-visible, :active) {
+  background: rgba(231, 184, 78, .12) !important;
+  color: #f0d78c !important;
+  border-top-color: rgba(246, 211, 119, .78) !important;
+}
