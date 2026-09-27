@@ -82,7 +82,9 @@ function createCardReader(root, { onState = () => {}, onComplete = () => {}, get
   function tryArm() {
     // Merely placing the card in the middle/right of the slot never arms it.
     // Both the pointer's destination AND the visible card must reach the left.
-    if (!armed && docked && target.x === -geometry.bound && position.x <= -geometry.bound + .08) {
+    if (docked && target.x === -geometry.bound && position.x <= -geometry.bound + .08) {
+      // Each pointer pass must visit the visible left edge without releasing.
+      if (gesture?.active) gesture.startedAtLeft = true;
       armed = true;
       interrupted = false;
       refreshState();
@@ -220,6 +222,7 @@ function createCardReader(root, { onState = () => {}, onComplete = () => {}, get
       start: { ...target }, previousRawY: target.y,
       gripX: clamp((event.clientX - rect.x) / rect.width * 2 - 1, -1, 1),
       pressure: 0, active: false, direction: 0, forwardMoved: false,
+      startedAtLeft: docked && armed && position.x <= -geometry.bound + .08,
     };
     card.setPointerCapture(event.pointerId);
     root.dataset.readerDragging = 'true';
@@ -248,6 +251,7 @@ function createCardReader(root, { onState = () => {}, onComplete = () => {}, get
       g.previousRawY = target.y;
       g.pressure = 0;
       g.forwardMoved = false;
+      g.startedAtLeft = false;
     }
     if (docked && armed && target.x > previousX) g.forwardMoved = true;
     follow();
@@ -262,7 +266,7 @@ function createCardReader(root, { onState = () => {}, onComplete = () => {}, get
     event.preventDefault();
     updateGesture(event);
     const g = gesture;
-    pending = !!(g.active && g.forwardMoved && g.direction === 1 && docked && armed && target.x === geometry.bound);
+    pending = !!(g.active && g.startedAtLeft && g.forwardMoved && g.direction === 1 && docked && armed && target.x === geometry.bound);
     releaseGesture();
     follow();
   }
@@ -361,39 +365,35 @@ function createCardReader(root, { onState = () => {}, onComplete = () => {}, get
 const COPY = {
   en: {
     title: 'Swipe into my teaching portfolio',
-    intro: 'Pick up the card and lower its bottom edge into the reader.',
-    direct: 'View files directly', visible: 'Files are open below', reset: 'Reset card',
     label: 'Move Shahd’s card with the mouse, touch, or four arrow keys. Insert it, then swipe from left to right.',
     alt: 'Shahd Mohamed’s original university ID card', region: 'Teaching portfolio files',
     verified: 'Access granted', outside: 'Card outside the reader. Move down to insert.',
     inserted: 'Card inserted. Move all the way left to start.',
     progress: value => `${value} percent. Swipe all the way right and release.`,
     states: {
-      IDLE: 'Pick up the card and lower its bottom edge into the reader.',
+      IDLE: 'Insert the card, move it all the way left, then swipe to the far right and release.',
       HELD: 'Move freely. Lower the bottom edge into the slot.',
       INSERTED: 'Card inserted. Move all the way left to start reading.',
       ARMED: 'Ready. Swipe through the slot from left to the far right.',
       SCANNING: 'Scanning — continue to the far right, then release.',
-      INCOMPLETE: 'Pass incomplete. Continue inside the slot; if removed, reinsert and start from the left.',
+      INCOMPLETE: 'Pass incomplete. Move all the way left, then swipe continuously to the far right and release.',
       READY: 'Access granted. Your teaching portfolio files are open below.',
     },
   },
   ar: {
     title: 'مرّري البطاقة لاستكشاف ملفّي التعليمي',
-    intro: 'دخّلي البطاقة في الشق، اسحبيها لأقصى اليسار، ثم مرّريها لآخر اليمين وسيبيها.',
-    direct: 'عرض الملفات مباشرة', visible: 'الملفات مفتوحة بالأسفل', reset: 'إرجاع البطاقة للبداية',
     label: 'حرّكي بطاقة شهد بالماوس أو اللمس أو الأسهم الأربعة. أدخليها في الشق ثم اسحبي من اليسار لآخر اليمين.',
     alt: 'بطاقة شهد محمد الجامعية الأصلية', region: 'ملفات البورتفوليو التعليمي',
     verified: 'تم التحقق وفتح الملفات', outside: 'البطاقة خارج القارئ. حرّكيها لأسفل لإدخالها.',
     inserted: 'البطاقة داخل القارئ. حرّكيها إلى أقصى اليسار أولًا.',
     progress: value => `${value} بالمئة. اسحبي إلى آخر اليمين ثم اتركي البطاقة.`,
     states: {
-      IDLE: 'امسكي البطاقة من النص، وانزلي بحافتها السفلية جوّه شق المكنة.',
+      IDLE: 'دخّلي البطاقة في الشق، اسحبيها لأقصى اليسار، ثم مرّريها لآخر اليمين وسيبيها.',
       HELD: 'حرّكي البطاقة بحرية، وانزلي بحافتها السفلية داخل الشق.',
       INSERTED: 'البطاقة دخلت. اسحبيها لأقصى اليسار عشان تبدأ القراءة.',
       ARMED: 'جاهزة للسحب. مرّريها داخل الشق من اليسار لآخر اليمين.',
       SCANNING: 'جارٍ الفحص — كمّلي داخل الشق لآخر اليمين، وبعدها سيبي البطاقة.',
-      INCOMPLETE: 'المرور مش كامل. كمّلي داخل الشق، ولو خرجت دخّليها وابدئي من اليسار.',
+      INCOMPLETE: 'المرور مش كامل. ارجعي لأقصى اليسار، وبعدها اسحبي لآخر اليمين من غير ما تسيبي البطاقة إلا في الآخر.',
       READY: 'تم التحقق. ملفات البورتفوليو التعليمي مفتوحة بالأسفل.',
     },
   },
@@ -411,13 +411,11 @@ function initMaterialsReader() {
   const root = wrapper.querySelector('[data-reader-scene]');
   const card = wrapper.querySelector('[data-reader-card]');
   const image = card.querySelector('img');
-  const direct = wrapper.querySelector('[data-materials-direct]');
-  const reset = wrapper.querySelector('[data-materials-reset]');
   const live = wrapper.querySelector('[data-materials-status]');
   const events = new AbortController();
   const listen = { signal: events.signal };
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let api = null, opened = false, source = null, animation = null;
+  let api = null, opened = false, animation = null;
   let localeObserver, removalObserver, visibilityObserver;
   let disposed = false;
   const getCopy = () => COPY[document.documentElement.lang === 'ar' ? 'ar' : 'en'];
@@ -427,13 +425,11 @@ function initMaterialsReader() {
     wrapper.querySelectorAll('[data-materials-copy]').forEach(node => {
       node.textContent = copy[node.dataset.materialsCopy];
     });
-    direct.textContent = opened ? copy.visible : copy.direct;
-    reset.textContent = copy.reset;
     card.setAttribute('aria-label', copy.label);
     image.alt = copy.alt;
     files.setAttribute('aria-label', copy.region);
     if (api) {
-      const message = opened && source === 'direct' && api.state !== 'READY' ? copy.visible : copy.states[api.state];
+      const message = copy.states[api.state];
       if (live.textContent !== message) live.textContent = message;
       api.refreshText();
     }
@@ -442,10 +438,8 @@ function initMaterialsReader() {
   function revealMaterials({ source: reason }) {
     if (opened || disposed) return;
     opened = true;
-    source = reason;
     files.hidden = false;
     files.inert = false;
-    direct.setAttribute('aria-expanded', 'true');
     section.dataset.materialsOpen = 'true';
     section.dataset.materialsOpenSource = reason;
     updateLanguage();
@@ -496,17 +490,11 @@ function initMaterialsReader() {
         getCopy,
         onState(state) {
           live.dataset.state = state;
-          const message = opened && source === 'direct' && state !== 'READY' ? getCopy().visible : getCopy().states[state];
+          const message = getCopy().states[state];
           if (live.textContent !== message) live.textContent = message;
-          reset.disabled = state === 'READY';
         },
         onComplete: () => revealMaterials({ source: 'swipe' }),
       });
-      direct.addEventListener('click', () => {
-        if (opened) files.focus({ preventScroll: true });
-        else { api.pause(); revealMaterials({ source: 'direct' }); }
-      }, listen);
-      reset.addEventListener('click', () => api.reset(), listen);
       // The site's synchronous locale renderer replaces grid children, not this wrapper.
       localeObserver = new MutationObserver(updateLanguage);
       localeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
@@ -528,7 +516,6 @@ function initMaterialsReader() {
       reduced.addEventListener('change', () => { if (reduced.matches) animation?.cancel(); }, listen);
       files.hidden = true;
       files.inert = true;
-      direct.setAttribute('aria-expanded', 'false');
       section.dataset.materialsReaderInit = 'ready';
       section.dataset.materialsOpen = 'false';
     } catch (error) {

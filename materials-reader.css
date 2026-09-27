@@ -10,11 +10,10 @@
 #materials .materials-reader[hidden], #materials .materials-files[hidden] { display: none !important; }
 #materials .materials-reader *, #materials .materials-reader *::before, #materials .materials-reader *::after { box-sizing: border-box; }
 #materials .materials-reader .materials-reader-title {
-  display: block; width: 100%; margin: 0 auto 8px; color: var(--text-accent); font: 500 clamp(22px, 3vw, 30px)/1.5 var(--font-display); text-align: center;
+  display: block; width: 100%; margin: 0 auto 8px; color: var(--text-accent); font: 500 clamp(22px, 3vw, 30px)/1.5 var(--font-display);
+  text-align: center !important; text-align-last: center !important; text-wrap: balance;
 }
-#materials .materials-reader .materials-reader-intro,
-#materials .materials-reader .materials-reader-status { text-align: center !important; text-wrap: pretty; letter-spacing: normal; }
-#materials .materials-reader .materials-reader-intro { max-width: 54ch; margin: 0 auto; color: var(--chalk-dim); font-size: 14px; line-height: 1.85; }
+#materials .materials-reader .materials-reader-status { text-align: center !important; text-align-last: center !important; text-wrap: pretty; letter-spacing: normal; }
 #materials .materials-reader .reader-scene {
   position: relative; isolation: isolate; width: min(100%, 560px); aspect-ratio: 560 / 420;
   margin: 24px auto 0; user-select: none; -webkit-user-select: none; direction: ltr;
@@ -75,12 +74,6 @@
 @keyframes materialsScanningPulse { 50% { opacity: .5; } }
 #materials .materials-reader .materials-reader-status { min-height: 3.6em; max-width: 56ch; margin: -8px auto 8px; color: var(--chalk-dim); font-size: 14px; line-height: 1.8; }
 #materials .materials-reader .materials-reader-status[data-state="READY"] { color: #86efac; }
-#materials .materials-reader .materials-reader-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; }
-#materials .materials-reader .materials-reader-actions button { appearance: none; min-height: 44px; border: 1px solid var(--line-strong); border-radius: 100px; padding: 8px 18px; background: transparent; color: var(--chalk); font: inherit; font-size: 13px; line-height: 1.5; cursor: pointer; }
-#materials .materials-reader .materials-reader-actions .materials-reader-direct { color: var(--text-accent); border-color: var(--text-accent); }
-#materials .materials-reader .materials-reader-actions button:hover { background: #e7b84e12; }
-#materials .materials-reader .materials-reader-actions button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
-#materials .materials-reader .materials-reader-actions button:disabled { opacity: .5; cursor: default; }
 #materials .materials-files { scroll-margin-top: 100px; }
 /* These files must be usable even without the site's scroll-reveal JavaScript. */
 #materials .materials-files .reveal, #materials .materials-files .reveal-item { opacity: 1 !important; transform: none !important; visibility: visible !important; }
@@ -91,7 +84,6 @@ html[dir="rtl"] #materials .materials-reader .materials-reader-title { font-fami
   #materials .materials-reader .reader-label { font-size: 6px; }
   #materials .materials-reader .materials-reader-title { font-size: 22px; }
   #materials .materials-reader .materials-reader-status { font-size: 13px; margin-top: 0; }
-  #materials .materials-reader .materials-reader-intro { font-size: 13px; }
 }
 #materials .materials-reader[data-visible="false"] .id-card::before,
 #materials .materials-reader[data-visible="false"] .device::after,

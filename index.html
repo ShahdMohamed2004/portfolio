@@ -2471,7 +2471,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 <link rel="stylesheet" href="navigation-controls-fix.css?v=1.0.0">
 <link rel="stylesheet" href="hero-credentials.css?v=1.0.0">
 <link rel="stylesheet" href="header-name-polish.css?v=1.0.0">
-<link rel="stylesheet" href="materials-reader.css?v=1.0.0">
+<link rel="stylesheet" href="materials-reader.css?v=1.0.1">
 <link rel="stylesheet" href="smooth-performance.css?v=1.0.0">
 </head>
 <body id="artifacts-component-root-html">
@@ -2652,7 +2652,6 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     </div>
     <div class="materials-reader" data-materials-reader hidden>
       <p class="materials-reader-title" data-materials-copy="title">Swipe into my teaching portfolio</p>
-      <p class="materials-reader-intro" data-materials-copy="intro">Pick up the card and lower its bottom edge into the reader.</p>
       <div class="reader-scene" data-reader-scene data-reader-state="IDLE" dir="ltr">
         <span class="reader-label" aria-hidden="true">TEACHING / PORTFOLIO ACCESS</span>
         <div class="reader-shadow" data-reader-shadow aria-hidden="true"></div>
@@ -2673,11 +2672,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
           <div class="reader-lip"><span></span><span></span></div>
         </div>
       </div>
-      <p class="materials-reader-status" data-materials-status role="status" aria-live="polite" aria-atomic="true"></p>
-      <div class="materials-reader-actions">
-        <button type="button" class="materials-reader-direct" data-materials-direct aria-controls="materials-files" aria-expanded="true">View files directly</button>
-        <button type="button" class="materials-reader-reset" data-materials-reset>Reset card</button>
-      </div>
+      <p class="materials-reader-status" data-materials-status role="status" aria-live="polite" aria-atomic="true">Insert the card, move it all the way left, then swipe to the far right and release.</p>
     </div>
     <div id="materials-files" class="materials-files" role="region" aria-label="Teaching portfolio files" tabindex="-1">
       <div class="materials-grid reveal in-view" id="materialsGrid">
@@ -4399,6 +4394,6 @@ const SITE_AR = {
 <script src="dock-motion.js?v=1.0.0" defer></script>
 <script src="timeline-physics.js?v=1.0.0" defer></script>
 <script src="cv-printer.js?v=2.0.0" defer></script>
-<script src="materials-reader.js?v=1.0.0" defer></script>
+<script src="materials-reader.js?v=1.0.1" defer></script>
 </body>
 </html>

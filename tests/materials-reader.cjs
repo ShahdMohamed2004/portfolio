@@ -47,7 +47,6 @@ async function success(page, label) {
   check(s.state === 'READY' && s.percent === 100 && !s.filesHidden && s.source === 'swipe' && s.count === 1, label);
   check(await page.locator('[data-reader-display]').textContent() === 'ACCESS GRANTED', 'Successful display');
 }
-async function reset(page) { await page.locator('[data-materials-reset]').click(); return settle(page); }
 async function grab(page) {
   const s = await snap(page);
   await page.mouse.move(s.cx, s.cy); await page.mouse.down(); return s;
@@ -66,6 +65,20 @@ async function drag(page, dx, dy, release = true) {
 async function arm(page) {
   const s = await snap(page); await drag(page, -s.bound - s.x - 8, s.dockY - s.y);
   check((await snap(page)).armed, 'Reader arms at visible left endpoint inside slot');
+}
+async function checkReaderLayout(page) {
+  check(await page.locator('[data-materials-status]').count() === 1, 'One instruction below the reader');
+  check(await page.locator('.materials-reader-intro, [data-materials-direct], [data-materials-reset]').count() === 0, 'Duplicate instruction and both buttons removed');
+  const layout = await page.locator('.materials-reader-title').evaluate(title => {
+    const style = getComputedStyle(title);
+    const range = document.createRange(); range.selectNodeContents(title);
+    const text = range.getBoundingClientRect();
+    const section = document.querySelector('#materials').getBoundingClientRect();
+    return { align: style.textAlign, last: style.textAlignLast,
+      center: text.x + text.width / 2, sectionCenter: section.x + section.width / 2 };
+  });
+  check(layout.align === 'center' && layout.last === 'center', 'Title and wrapped last line are centered');
+  near(layout.center, layout.sectionCenter, 'Title visually centered within section', 2);
 }
 async function checkLinks(page) {
   assert.deepEqual(await page.locator('#materialsGrid a').evaluateAll(nodes => nodes.map(a => a.getAttribute('href'))), expectedLinks);
@@ -94,10 +107,13 @@ async function checkLinks(page) {
     });
     await page.waitForTimeout(150);
   }
+  async function reset(page) { await load(page); return settle(page); }
   try {
     const page = await browser.newPage({ viewport:{width:1280,height:1000} });
     page.on('pageerror', e => errors.push(e.message));
     await load(page);
+    await checkReaderLayout(page);
+    check(await page.locator('[data-materials-status]').textContent() === 'Insert the card, move it all the way left, then swipe to the far right and release.', 'Exact replacement instruction');
     let s = await snap(page);
     near(s.x, 0, 'Starts centered'); near(s.y, 0, 'Starts above reader');
     check(!s.docked && !s.armed, 'Starts outside slot'); await checkLinks(page);
@@ -128,10 +144,13 @@ async function checkLinks(page) {
     await noSuccess(page, 'Endpoint waits for release');
     await page.mouse.move(g.cx + g.bound * g.scale, g.cy); await page.mouse.up(); await settle(page);
     await noSuccess(page, 'Reverse before release fails');
-    await drag(page, 300, 0); await success(page, 'Full pass reveals original files once');
+    await drag(page, 300, 0); await noSuccess(page, 'Re-grabbing in the middle cannot finish an interrupted pass');
+    await arm(page); await drag(page, 300, 0); await success(page, 'Full continuous pass reveals original files once');
     await checkLinks(page);
     await page.waitForFunction(() => document.querySelector('[data-materials-reader]').hidden);
     check(!(await page.locator('[data-materials-reader]').isVisible()), 'Reader hides after successful swipe');
+    await page.keyboard.press('Tab');
+    check(await page.locator('#materialsGrid a').first().evaluate(n => n === document.activeElement), 'Revealed links are next keyboard stops');
     await page.locator('#langToggle').click(); await settle(page);
     check((await snap(page)).opened && (await snap(page)).count === 1, 'Language switch retains open state');
     check((await page.locator('[data-materials-copy="title"]').textContent()).includes('مرّري'), 'Arabic reader labels');
@@ -141,16 +160,9 @@ async function checkLinks(page) {
     await page.setViewportSize({width:430,height:900}); await settle(page);
     check((await snap(page)).opened && (await snap(page)).count === 1, 'Resize keeps revealed files');
 
-    await page.setViewportSize({width:1280,height:1000}); await load(page);
-    await page.locator('[data-materials-direct]').click();
-    s = await snap(page);
-    check(s.opened && !s.filesHidden && s.source === 'direct' && s.state !== 'READY' && s.percent === 0, 'Direct reveal does not fake verification');
-    await page.locator('[data-materials-direct]').click();
-    check((await snap(page)).count === 1, 'Direct reveal is idempotent');
-    await page.keyboard.press('Tab');
-    check(await page.locator('#materialsGrid a').first().evaluate(n => n === document.activeElement), 'Revealed links are next keyboard stops');
-
-    await load(page); await arm(page); await drag(page, 120, 0, false); await settle(page);
+    await page.setViewportSize({width:1280,height:1000});
+    await load(page); await checkReaderLayout(page);
+    await arm(page); await drag(page, 120, 0, false); await settle(page);
     const before = await snap(page);
     await page.evaluate(() => window.dispatchEvent(new Event('blur'))); await page.mouse.up();
     s = await settle(page); near(s.x, before.x, 'Blur keeps visible card position');
@@ -172,7 +184,7 @@ async function checkLinks(page) {
     await noSuccess(page, 'Keyboard partial fails');
     await page.keyboard.press('ArrowRight'); await success(page, 'Keyboard full pass');
 
-    console.log('Desktop physics, locale, theme, direct access and keyboard checks passed.');
+    console.log('Desktop physics, copy, layout, locale, theme and keyboard checks passed.');
     const mobile = await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2});
     const touchPage = await mobile.newPage(); touchPage.on('pageerror',e=>errors.push(e.message));
     const cdp = await mobile.newCDPSession(touchPage);
@@ -198,16 +210,19 @@ async function checkLinks(page) {
     await swipe(300,0,false);await settle(touchPage);await touch('touchCancel');await settle(touchPage);
     await noSuccess(touchPage,'Cancel at endpoint fails');
     s=await snap(touchPage);await touch('touchStart',s.cx,s.cy);await touch('touchEnd');await noSuccess(touchPage,'Tap cancelled endpoint fails');
-    await swipe(-35,0);await swipe(65,0);await success(touchPage,'Mobile full pass');
+    await swipe(-35,0);await swipe(65,0);await noSuccess(touchPage,'Mobile continuation after cancellation fails');
+    await touchArm();await swipe(300,0);await success(touchPage,'Mobile continuous full pass');
 
     for(const width of [320,360,430,768]) {
       await touchPage.setViewportSize({width,height:900});await load(touchPage);
       check(!(await snap(touchPage)).overflow,`No horizontal overflow at ${width}`);
+      await checkReaderLayout(touchPage);
       await touchArm();await swipe(300,0);await success(touchPage,`Touch pass at ${width}`);
     }
     await touchPage.emulateMedia({reducedMotion:'reduce'});await load(touchPage);
     await touchArm();await swipe(80,0);await noSuccess(touchPage,'Reduced motion partial fails');
-    await swipe(300,0);await success(touchPage,'Reduced motion full pass');
+    await swipe(300,0);await noSuccess(touchPage,'Reduced motion continuation after release fails');
+    await touchArm();await swipe(300,0);await success(touchPage,'Reduced motion continuous full pass');
 
     console.log('Mobile swipe and responsive checks passed.');
     const noJs = await browser.newPage({javaScriptEnabled:false}); await noJs.goto(url);
