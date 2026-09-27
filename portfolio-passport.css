@@ -1,0 +1,32 @@
+/* Scoped archival layer over the portfolio's existing links. */
+#materials-files { --passport-ready:1; }
+#materials .portfolio-passport { margin:0 0 28px; padding:24px; border:1px solid var(--line-strong); border-radius:18px; background:var(--ink-2); }
+#materials .portfolio-passport h3 { font-family:var(--font-display); color:var(--chalk); font-weight:500; margin:0 0 8px; }
+#materials .portfolio-passport p { color:var(--chalk-dim); margin:0 0 20px; }
+#materials .passport-stamps { display:flex; flex-wrap:wrap; justify-content:flex-start; gap:12px; padding:0; margin:0; }
+#materials .passport-stamp { display:inline-flex; align-items:center; min-height:48px; padding:10px 16px; border:1px solid currentColor; outline:1px dashed color-mix(in srgb,currentColor 30%,transparent); outline-offset:-5px; border-radius:6px 9px 5px 8px; color:var(--yellow); text-decoration:none; font:600 .76rem/1.5 var(--font-body); letter-spacing:.08em; text-transform:uppercase; background:transparent; transition:background-color 160ms ease,color 160ms ease; }
+#materials .passport-stamp:hover { background:color-mix(in srgb,var(--yellow) 9%,transparent); }
+#materials .passport-stamp:focus-visible { outline:2px solid var(--yellow); outline-offset:3px; }
+html[dir="rtl"] #materials .passport-stamp { letter-spacing:normal; }
+#materials .verified-id { width:min(53.6%,300px); margin:0 auto 32px; perspective:900px; touch-action:pan-y; }
+#materials .verified-id[hidden] { display:none; }
+#materials .verified-id-surface { position:relative; border-radius:10px; background:#eae5dc; line-height:0; box-shadow:0 16px 24px -12px #0006,inset 0 1px 0 #ffffffa6; }
+#materials .verified-id img { display:block; width:100%; height:auto; border:1px solid #ffffffe6; border-radius:inherit; pointer-events:none; user-select:none; -webkit-user-drag:none; }
+#materials .verified-id-surface::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:var(--tilt-light,0); background:radial-gradient(ellipse at var(--tilt-x,50%) var(--tilt-y,50%),#fff,transparent 65%); }
+#materials #materialsGrid .paper-file { position:relative; overflow:visible; isolation:isolate; }
+#materials .paper-file .mname, #materials .paper-file .arrow { position:relative; z-index:2; }
+#materials .file-window { position:absolute; inset:-18px 12px 0; overflow:hidden; pointer-events:none; z-index:0; border-radius:8px; }
+#materials .file-paper { position:absolute; inset:4px 4px 0; padding:10px 12px; border:1px solid #DBD0BB55; border-radius:4px; background:#E9E1CF; color:#39332C; transform:translateY(88%); opacity:.9; font:500 .72rem/1.5 var(--font-body); box-shadow:0 3px 12px #0002; }
+#materials .file-paper::after { content:""; display:block; margin-top:7px; height:18px; border-block:1px solid #39332C1F; }
+#materials .paper-file::before { content:""; position:absolute; inset-block-start:-7px; inset-inline-start:16px; width:30%; height:9px; background:var(--ink-2); border:1px solid var(--line-strong); border-bottom:0; border-radius:5px 7px 0 0; }
+#materials #materialsGrid .paper-file.is-opening { animation:fileLift var(--file-duration,360ms) ease-out both; }
+#materials .paper-file.is-opening .file-paper { animation:paperReveal var(--file-duration,360ms) cubic-bezier(.2,.75,.25,1) both; }
+@keyframes fileLift { 0%{translate:0 0} 45%{translate:0 -4px} 100%{translate:0 -2px} }
+@keyframes paperReveal { 0%{transform:translateY(88%);opacity:.65} 65%{transform:translateY(0);opacity:1} 100%{transform:translateY(3%);opacity:1} }
+html[data-theme="light"] #materials .portfolio-passport { background:#EDE4DB; border-color:#7A263A28; box-shadow:0 10px 24px -18px #5D1F2E30; }
+html[data-theme="light"] #materials .passport-stamp { color:#7A263A; }
+html[data-theme="light"] #materials .file-paper { background:#F7F2EC; color:#5D1F2E; border-color:#D8C4C4; box-shadow:0 3px 12px #5D1F2E15; }
+html[data-theme="light"] #main-content #materials .paper-file::before { background:#EDE4DB !important; border-color:#D8C4C4; }
+html[data-theme="light"] #materials .verified-id-surface { box-shadow:0 14px 24px -12px #5D1F2E38,inset 0 1px 0 #ffffffa6; }
+@media(max-width:480px) { #materials .portfolio-passport { padding:18px; } #materials .passport-stamps { gap:10px; } #materials .passport-stamp { flex:1 1 42%; justify-content:center; text-align:center; letter-spacing:.03em; } }
+@media(prefers-reduced-motion:reduce) { #materials .verified-id-surface { transform:none !important; } #materials .verified-id-surface::after { display:none; } #materials .paper-file.is-opening,#materials .paper-file.is-opening .file-paper { animation:none; } }

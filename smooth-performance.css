@@ -86,18 +86,4 @@
   #siteHeader.glass > nav > .wordmark { transition: none !important; }
 }
 
-/* Light Mode keeps the same tactile dock transform; legacy nav polish only
-   disables the old hover lift, not this proximity-driven motion. */
-@media (hover: hover) and (pointer: fine) {
-  html[data-theme="light"] #siteHeader.glass .nav-links.motion-dock > .dock-item,
-  html[data-theme="light"] #siteHeader.glass .nav-utility.motion-dock > .dock-item,
-  html[data-theme="light"] :where(.motion-dock) > .dock-item {
-    transform: translate3d(var(--dock-shift), var(--dock-lift), 0) scale(var(--dock-scale)) !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html[data-theme="light"] :where(.motion-dock) > .dock-item {
-    transform: none !important;
-  }
-}
+/* Motion belongs to dock-motion.js; no alternate Light Mode transform. */

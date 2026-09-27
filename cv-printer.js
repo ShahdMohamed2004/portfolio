@@ -11,7 +11,7 @@
   const asset = (key, fallback) => new URL(config[key] || script?.dataset[key] || fallback, base).href;
   const PDF = asset('pdf', 'assets/shahd-cv.pdf');
   const IMAGE = asset('image', 'assets/shahd-cv-preview.webp');
-  const CSS = asset('css', 'cv-printer.css?v=2.0.0');
+  const CSS = asset('css', 'cv-printer.css?v=2.0.1');
   const FILENAME = 'Shahd-Mohamed-CV.pdf';
   const triggers = '#btnCV, #contactCvBtn, #cvLinkDesktop, #cvLinkMobile, [data-cv-print]';
   const svg = path => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;

@@ -150,7 +150,7 @@ async function checkLinks(page) {
     await page.waitForFunction(() => document.querySelector('[data-materials-reader]').hidden);
     check(!(await page.locator('[data-materials-reader]').isVisible()), 'Reader hides after successful swipe');
     await page.keyboard.press('Tab');
-    check(await page.locator('#materialsGrid a').first().evaluate(n => n === document.activeElement), 'Revealed links are next keyboard stops');
+    check(await page.locator('#materials-files a').first().evaluate(n => n === document.activeElement), 'Passport evidence links are next keyboard stops');
     await page.locator('#langToggle').click(); await settle(page);
     check((await snap(page)).opened && (await snap(page)).count === 1, 'Language switch retains open state');
     check((await page.locator('[data-materials-copy="title"]').textContent()).includes('مرّري'), 'Arabic reader labels');
@@ -225,7 +225,7 @@ async function checkLinks(page) {
     await touchArm();await swipe(300,0);await success(touchPage,'Reduced motion continuous full pass');
 
     console.log('Mobile swipe and responsive checks passed.');
-    const noJs = await browser.newPage({javaScriptEnabled:false}); await noJs.goto(url);
+    const noJs = await browser.newPage({javaScriptEnabled:false}); await noJs.goto(url, {waitUntil:'domcontentloaded'});
     await checkLinks(noJs);
     check(await noJs.locator('#materialsGrid a').first().isVisible(),'Files available without JavaScript');
     check(!(await noJs.locator('[data-materials-reader]').isVisible()),'No nonworking reader without JS');

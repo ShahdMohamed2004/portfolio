@@ -444,7 +444,7 @@ function initMaterialsReader() {
     section.dataset.materialsOpenSource = reason;
     updateLanguage();
     if (!reduced.matches && files.animate) {
-      animation = files.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'translateY(0)' }],
+      animation = files.animate([{ opacity: 0 }, { opacity: 1 }],
         { duration: 280, easing: 'cubic-bezier(.2,.75,.25,1)' });
     }
     // Focus makes the revealed links the next keyboard stops without a page jump.
