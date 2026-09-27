@@ -337,3 +337,93 @@ html[data-theme="light"] #materials .materials-reader [data-reader-progress] {
 @media (prefers-reduced-motion: reduce) {
   #materials .materials-folder::after { animation: none !important; display: none; }
 }
+
+/* Mobile bug-fix pass: one light sweep, a real paper pull-out, and no dark-mode wine. */
+#materials .materials-folder-stage::after { display: none !important; }
+#materials .materials-folder-page {
+  transform: translateY(48%) translateZ(0) rotate(-2deg) scale(.96);
+  opacity: 0;
+  animation: materialsFolderPaperPull 1050ms cubic-bezier(.22,1,.36,1) 70ms both;
+}
+@keyframes materialsFolderPaperPull {
+  0% { opacity: 0; transform: translateY(48%) translateZ(0) rotate(-2deg) scale(.96); }
+  32% { opacity: .18; transform: translateY(40%) translateZ(2px) rotate(-2deg) scale(.97); }
+  68% { opacity: .88; transform: translateY(2%) translateZ(16px) rotate(-2deg) scale(1); }
+  100% { opacity: 1; transform: translateY(-5%) translateZ(20px) rotate(-2deg) scale(1); }
+}
+#materials .materials-folder-overlay .materials-folder-close {
+  inset-block-start: -56px;
+  inset-inline-end: 4px;
+}
+#materials .materials-folder-overlay .materials-folder-backdrop {
+  backdrop-filter: blur(12px) saturate(108%);
+  -webkit-backdrop-filter: blur(12px) saturate(108%);
+}
+
+/* The section shell must remain green/gold in dark mode, including its decorative line. */
+html:not([data-theme="light"]) #materials {
+  border-top-color: rgba(157,184,165,.22) !important;
+  background: transparent !important;
+}
+html:not([data-theme="light"]) #materials::before {
+  background: radial-gradient(ellipse at 12% 18%, rgba(91,128,102,.10), transparent 48%) !important;
+}
+html:not([data-theme="light"]) #materials .materials-folder-page::before,
+html:not([data-theme="light"]) #materials .materials-folder-page::after {
+  background: rgba(215,180,91,.22) !important;
+}
+
+/* Temporary, oval gold scanner cue; it vanishes as soon as READY opens the content. */
+#materials .materials-reader .reader-scene::after {
+  content: "";
+  position: absolute;
+  z-index: 9;
+  left: 16%;
+  top: 53%;
+  width: 68%;
+  height: 25%;
+  border: 1px solid rgba(215,180,91,.52);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(.96);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(.22,1,.36,1);
+}
+html:not([data-theme="light"]) #materials .materials-reader .reader-scene[data-reader-docked="true"]::after {
+  opacity: .48;
+  transform: scale(1);
+}
+#materials .materials-reader .reader-scene[data-reader-busy="true"]::after {
+  opacity: 0 !important;
+  transform: scale(.98);
+}
+@media (max-width: 600px) {
+  #materials .materials-folder-overlay .materials-folder-close {
+    inset-block-start: -52px;
+    inset-inline-end: 4px;
+  }
+  #materials .materials-folder-overlay .materials-folder-backdrop {
+    backdrop-filter: blur(10px) saturate(106%);
+    -webkit-backdrop-filter: blur(10px) saturate(106%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #materials .materials-folder-page {
+    animation: none !important;
+    opacity: 1;
+    transform: translateY(-2%) translateZ(1px) rotate(-2deg) scale(1);
+  }
+  #materials .materials-reader .reader-scene::after {
+    transition: none;
+  }
+}
+
+/* Explicit state selectors keep the oval visible only while the reader is docked. */
+#materials .materials-reader .reader-scene[data-reader-docked="true"]::after {
+  opacity: .48 !important;
+  transform: scale(1) !important;
+}
+#materials .materials-reader .reader-scene[data-reader-busy="true"]::after {
+  opacity: 0 !important;
+  transform: scale(.98) !important;
+}
