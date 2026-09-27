@@ -2840,3 +2840,44 @@ main.wrap > section:not(#home)::before {
   display: none !important;
   content: none !important;
 }
+
+/* Mobile About tags: three balanced columns, never a vertical stack. */
+@media (max-width: 767px) {
+  #about .about-tags {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    gap: 8px !important;
+    width: 100% !important;
+    direction: ltr !important;
+  }
+  #about .about-tag {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    min-height: 38px !important;
+    padding: 7px 4px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: center !important;
+    font-size: clamp(.56rem, 2.55vw, .70rem) !important;
+    line-height: 1.2 !important;
+  }
+  html:not([data-theme="light"]) #about .about-tag {
+    border-color: rgba(116, 236, 157, .34) !important;
+    background: rgba(74, 222, 128, .045) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 18px -13px rgba(74,222,128,.85) !important;
+  }
+  html[data-theme="light"] #about .about-tag {
+    border-color: rgba(65, 126, 101, .28) !important;
+    background: rgba(142, 194, 165, .10) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 0 16px -13px rgba(65,126,101,.42) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  html[dir="rtl"] #about .about-tags { direction: rtl !important; }
+}

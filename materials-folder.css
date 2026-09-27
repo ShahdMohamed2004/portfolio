@@ -543,3 +543,23 @@ html:not([data-theme="light"]) #materials .materials-reader .id-card {
   opacity: 0 !important;
   content: none !important;
 }
+
+/* Final mobile cascade: override the old 2+1 About tag layout at every phone width. */
+@media (max-width: 767px) {
+  #about .about-tags {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    gap: 8px !important;
+    justify-content: stretch !important;
+    justify-items: stretch !important;
+    transform: none !important;
+  }
+  #about .about-tags .about-tag,
+  #about .about-tags .about-tag:last-child {
+    grid-column: auto !important;
+    justify-self: stretch !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
