@@ -1,0 +1,59 @@
+/* Interaction-only color correction: warm burgundy selection and focus, no layout or surface changes. */
+
+::selection {
+  background: rgba(122, 38, 58, .38);
+  color: #fff8ef;
+  text-shadow: none;
+}
+::-moz-selection {
+  background: rgba(122, 38, 58, .38);
+  color: #fff8ef;
+  text-shadow: none;
+}
+
+/* Mobile tap feedback should use the same wine family instead of browser blue. */
+html, body, a, button, input, textarea, select, summary, [role="button"], [tabindex] {
+  -webkit-tap-highlight-color: rgba(122, 38, 58, .18);
+}
+
+/* Keyboard focus: warm, soft, and visible in both themes. */
+:where(a, button, input, textarea, select, summary, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid rgba(122, 38, 58, .72) !important;
+  outline-offset: 3px;
+}
+
+/* Replace unrelated blue/purple focus rings on the site's interactive controls. */
+:where(
+  .btn, .hero-action, .work-filter, .material-card, .project-details,
+  .accordion-card, .timeline-detail, .creative-item, .availability-item,
+  .lang-toggle, .theme-toggle, .hamburger, .nav-links a, .mobile-menu a,
+  .about-photo, .featured-case-toggle, .contact-links a
+):is(:focus-visible, :active) {
+  outline-color: rgba(122, 38, 58, .72) !important;
+  border-color: rgba(122, 38, 58, .54) !important;
+  -webkit-tap-highlight-color: rgba(122, 38, 58, .18);
+}
+
+:where(
+  .btn, .hero-action, .work-filter, .material-card, .project-details,
+  .accordion-card, .timeline-detail, .creative-item, .availability-item,
+  .lang-toggle, .theme-toggle, .hamburger, .nav-links a, .mobile-menu a,
+  .featured-case-toggle, .contact-links a
+):focus-visible {
+  box-shadow: 0 0 0 3px rgba(164, 95, 108, .18) !important;
+}
+
+/* Selected/active navigation and filter states stay within the wine identity. */
+:where(.nav-links a, .mobile-menu a, .work-filter, [aria-selected="true"], [aria-pressed="true"]):is(.active, [aria-selected="true"], [aria-pressed="true"]) {
+  color: #7a263a !important;
+}
+
+html[data-theme="light"] :where(.nav-links a, .mobile-menu a, .work-filter, [aria-selected="true"], [aria-pressed="true"]):is(.active, [aria-selected="true"], [aria-pressed="true"]) {
+  background-color: rgba(164, 95, 108, .12) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(a, button, input, textarea, select, summary, [role="button"], [tabindex]) {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
