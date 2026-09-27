@@ -22,3 +22,17 @@
   isolation: isolate;
 }
 
+/* The reader card keeps its slider semantics without a browser focus halo. */
+#materials .id-card:focus,
+#materials .id-card:focus-visible,
+#materials .materials-files:focus,
+#materials .materials-files:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Opening the reader should reveal the links without a temporary selection frame. */
+#materials .materials-files.materials-reveal-flash::before {
+  display: none !important;
+  animation: none !important;
+}
