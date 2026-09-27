@@ -1,0 +1,108 @@
+/* Original card-reader artwork, scoped to Teaching materials only. */
+#materials .materials-reader {
+  --materials-reader-ready: 1;
+  --device-dark: #0c1b16; --device-green: #273f36;
+  --device-border: #ffffff1f; --signal: #bac9be;
+  --ready: #86efac; --incomplete: #ff9a8f; --scanning: #bce4e8;
+  width: min(100%, 680px); margin: 0 auto 36px;
+  text-align: center; color: var(--chalk); font-family: inherit;
+}
+#materials .materials-reader[hidden], #materials .materials-files[hidden] { display: none !important; }
+#materials .materials-reader *, #materials .materials-reader *::before, #materials .materials-reader *::after { box-sizing: border-box; }
+#materials .materials-reader .materials-reader-title {
+  margin: 0 0 8px; color: var(--text-accent); font: 500 clamp(22px, 3vw, 30px)/1.5 var(--font-display); text-align: center;
+}
+#materials .materials-reader .materials-reader-intro,
+#materials .materials-reader .materials-reader-help,
+#materials .materials-reader .materials-reader-status { text-align: center !important; text-wrap: pretty; letter-spacing: normal; }
+#materials .materials-reader .materials-reader-intro { max-width: 54ch; margin: 0 auto; color: var(--chalk-dim); font-size: 14px; line-height: 1.85; }
+#materials .materials-reader .reader-scene {
+  position: relative; isolation: isolate; width: min(100%, 560px); aspect-ratio: 560 / 420;
+  margin: 24px auto 0; user-select: none; -webkit-user-select: none; direction: ltr;
+  container-type: inline-size;
+}
+#materials .materials-reader .reader-label { position: absolute; right: 4%; top: 0; font: 8px ui-monospace, monospace; letter-spacing: .12em; color: var(--muted); }
+#materials .materials-reader .reader-shadow { position: absolute; left: 15%; top: 77%; width: 72%; height: 16%; border-radius: 50%; background: radial-gradient(ellipse, #0007, transparent 68%); opacity: .35; pointer-events: none; }
+#materials .materials-reader .reader-back { position: absolute; left: 18%; top: 60.2%; z-index: 5; width: 64%; height: 13%; border: 1px solid #4c6355; border-radius: 18px 18px 0 0; background: linear-gradient(180deg, #52685a, #182e24); box-shadow: inset 0 1px 1px #ffffff38; }
+#materials .materials-reader .id-card {
+  position: absolute; left: 23.2%; top: 5.5%; width: 53.6%; height: auto; min-height: 0; z-index: 10;
+  display: block; overflow: hidden; appearance: none; border: 0; border-radius: 10px; margin: 0; padding: 0;
+  background: #eae5dc; box-shadow: 0 var(--lift-shadow, 25px) 24px -12px #0006, inset 0 1px 0 #ffffffa6;
+  cursor: grab; touch-action: none; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;
+  transform-origin: 50% 70%; transition: none; font: inherit; line-height: 0;
+}
+#materials .materials-reader .id-card:focus-visible { outline: 2px solid var(--yellow); outline-offset: 5px; }
+#materials .materials-reader .id-card img { display: block; width: 100%; height: auto; max-width: none; border: 1px solid #ffffffe6; border-radius: inherit; pointer-events: none; -webkit-user-drag: none; }
+#materials .materials-reader [data-reader-dragging="true"] .id-card { cursor: grabbing; }
+#materials .materials-reader [data-reader-busy="true"] .id-card { cursor: default; }
+#materials .materials-reader .id-card::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 25%, #ffffff40 45%, #ffffff8c 50%, #ffffff38 55%, transparent 75%);
+  transform: translateX(-130%) skewX(-18deg); animation: materialsCardShine 5.5s ease-in-out infinite;
+  pointer-events: none; z-index: 10;
+}
+#materials .materials-reader .id-card::after {
+  content: ""; position: absolute; inset: 0; border: 1px solid #ffffff9c; border-radius: inherit;
+  background: radial-gradient(ellipse at var(--glass-x, 50%) 0%, #ffffff52, transparent 62%), linear-gradient(145deg, #ffffff1a, transparent 45%, #adcbd21c);
+  box-shadow: inset 0 1px 0 #ffffffb3, inset 0 -1px 2px #ffffff40; pointer-events: none; z-index: 11;
+}
+#materials .materials-reader [data-reader-dragging="true"] .id-card::before { animation-duration: 2.2s; }
+@keyframes materialsCardShine { 0%, 58% { transform: translateX(-130%) skewX(-18deg); } 84%, 100% { transform: translateX(125%) skewX(-18deg); } }
+#materials .materials-reader .reader-slot { position: absolute; left: 20%; top: 61.5%; width: 60%; height: 2%; z-index: 8; border-radius: 99px; background: #07130e; box-shadow: inset 0 2px 3px #000b, 0 1px 0 #ffffff42; pointer-events: none; }
+#materials .materials-reader .reader-device { position: absolute; left: 18%; top: 64.2%; width: 64%; height: 19.8%; z-index: 20; pointer-events: none; }
+#materials .materials-reader .device { position: relative; overflow: hidden; width: 100%; height: 100%; border-radius: 15px; background: linear-gradient(145deg, var(--device-green), var(--device-dark)); border: 1px solid var(--device-border); box-shadow: 0 24px 54px #0005, inset 0 1px 0 #ffffff1a, inset 0 -1px 0 #0007; }
+#materials .materials-reader .device::after { content: ""; position: absolute; top: 0; left: 0; width: 45%; height: 100%; background: linear-gradient(110deg, transparent, #ffffff06, #ffffff0f, #ffffff06, transparent); transform: translateX(-270%) skewX(-18deg); animation: materialsDeviceShine 6s ease-in-out infinite; pointer-events: none; z-index: 20; }
+@keyframes materialsDeviceShine { 0%, 60% { transform: translateX(-270%) skewX(-18deg); } 85%, 100% { transform: translateX(320%) skewX(-18deg); } }
+#materials .materials-reader .reader-lip { position: absolute; top: -18%; left: 1%; width: 98%; height: 33%; display: flex; justify-content: space-between; padding: 2% 4%; border-radius: 15px 15px 5px 5px; border: 1px solid #6d83734d; background: linear-gradient(180deg, #48604f, #253e30 80%, #5b716155); box-shadow: inset 0 1px 0 #ffffff33, 0 2px 4px #0004; }
+#materials .materials-reader .reader-lip span { width: 18%; height: 45%; border-radius: 99px; background: repeating-linear-gradient(100deg, #091c1480 0px, #091c1480 1px, #73887855 1px, #73887855 4px); }
+#materials .materials-reader .device-seam { position: absolute; left: 3%; right: 3%; top: 18%; height: 1px; background: #ffffff1a; }
+#materials .materials-reader .device-monogram { position: absolute; left: 7%; top: 30%; font: italic clamp(15px, 4cqw, 23px) var(--font-display); color: #c1c6ac; }
+#materials .materials-reader .device-screen { position: absolute; bottom: 20%; left: 25%; width: 52%; height: 43%; overflow: hidden; border-radius: 7px; border: 1px solid #71847455; background: linear-gradient(165deg, #101e18, #07120d 65%); box-shadow: 0 1px 0 #ffffff24, inset 0 1px 4px #0008; }
+#materials .materials-reader .device-screen::before { content: ''; position: absolute; inset: 0 0 50%; background: linear-gradient(180deg, #ffffff0d, transparent); }
+#materials .materials-reader .device-readout { position: absolute; inset: 0 6%; display: flex; justify-content: space-between; align-items: center; gap: 3px; font: clamp(5px, 1.65cqw, 9px) ui-monospace, monospace; letter-spacing: .015em; color: var(--signal); white-space: nowrap; }
+#materials .materials-reader [data-reader-percent] { font-size: .85em; letter-spacing: 0; opacity: .85; }
+#materials .materials-reader .device-progress { position: absolute; left: 6%; right: 6%; bottom: 12%; height: 2px; overflow: hidden; background: #a1ac951c; border-radius: 2px; }
+#materials .materials-reader [data-reader-progress] { display: block; height: 100%; width: 100%; transform-origin: left; transform: scaleX(0); background: var(--signal); }
+#materials .materials-reader .device-led { position: absolute; bottom: 37%; right: 9%; width: 2%; aspect-ratio: 1; border-radius: 50%; background: #738274; box-shadow: 0 0 0 2px #0b1c14, 0 0 0 3px #ffffff20; }
+#materials .materials-reader .device-serial { position: absolute; right: 7%; bottom: 9%; font: clamp(4px, 1cqw, 6px) ui-monospace, monospace; letter-spacing: .18em; color: #a8b5a77a; }
+#materials .materials-reader .reader-end { position: absolute; top: 86%; z-index: 1; display: grid; place-items: center; width: 5%; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--line-strong); color: var(--text-accent); font: 20px/1 var(--font-display); }
+#materials .materials-reader .reader-end-left { left: .7%; }
+#materials .materials-reader .reader-end-right { right: .7%; }
+#materials .materials-reader [data-reader-state="HELD"] { --signal: #d9e3dc; }
+#materials .materials-reader [data-reader-state="INSERTED"] { --signal: #f0d691; }
+#materials .materials-reader [data-reader-state="ARMED"], #materials .materials-reader [data-reader-state="SCANNING"] { --signal: var(--scanning); }
+#materials .materials-reader [data-reader-state="INCOMPLETE"] { --signal: var(--incomplete); }
+#materials .materials-reader [data-reader-state="READY"] { --signal: var(--ready); }
+#materials .materials-reader [data-reader-docked="true"] .reader-slot { box-shadow: inset 0 2px 3px #000b, 0 -1px 7px #bce4e869; }
+#materials .materials-reader [data-reader-armed="true"] .reader-end-right { border-color: #86bca0; color: #86bca0; }
+#materials .materials-reader [data-reader-docked="true"] .device-led { background: var(--signal); box-shadow: 0 0 0 2px #0b1c14, 0 0 9px 2px var(--signal); }
+#materials .materials-reader [data-reader-state="SCANNING"] .device-led { animation: materialsScanningPulse 1s ease-in-out infinite; }
+@keyframes materialsScanningPulse { 50% { opacity: .5; } }
+#materials .materials-reader .materials-reader-status { min-height: 3.6em; max-width: 56ch; margin: -8px auto 8px; color: var(--chalk-dim); font-size: 14px; line-height: 1.8; }
+#materials .materials-reader .materials-reader-status[data-state="READY"] { color: #86efac; }
+#materials .materials-reader .materials-reader-help { margin: 0 auto 12px; max-width: 64ch; font-size: 12px; line-height: 1.8; color: var(--muted); }
+#materials .materials-reader .materials-reader-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; }
+#materials .materials-reader .materials-reader-actions button { appearance: none; min-height: 44px; border: 1px solid var(--line-strong); border-radius: 100px; padding: 8px 18px; background: transparent; color: var(--chalk); font: inherit; font-size: 13px; line-height: 1.5; cursor: pointer; }
+#materials .materials-reader .materials-reader-actions .materials-reader-direct { color: var(--text-accent); border-color: var(--text-accent); }
+#materials .materials-reader .materials-reader-actions button:hover { background: #e7b84e12; }
+#materials .materials-reader .materials-reader-actions button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
+#materials .materials-reader .materials-reader-actions button:disabled { opacity: .5; cursor: default; }
+#materials .materials-files { scroll-margin-top: 100px; }
+/* These files must be usable even without the site's scroll-reveal JavaScript. */
+#materials .materials-files .reveal, #materials .materials-files .reveal-item { opacity: 1 !important; transform: none !important; visibility: visible !important; }
+html[data-theme="light"] #materials .materials-reader .materials-reader-status[data-state="READY"] { color: #266341; }
+html[dir="rtl"] #materials .materials-reader .materials-reader-title { font-family: inherit; }
+@media (max-width: 480px) {
+  #materials .materials-reader .reader-scene { margin-top: 24px; }
+  #materials .materials-reader .reader-label { font-size: 6px; }
+  #materials .materials-reader .materials-reader-title { font-size: 22px; }
+  #materials .materials-reader .materials-reader-status { font-size: 13px; margin-top: 0; }
+  #materials .materials-reader .materials-reader-intro { font-size: 13px; }
+}
+#materials .materials-reader[data-visible="false"] .id-card::before,
+#materials .materials-reader[data-visible="false"] .device::after,
+#materials .materials-reader[data-visible="false"] .device-led { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  #materials .materials-reader .id-card::before, #materials .materials-reader .device::after { animation: none; opacity: 0; }
+  #materials .materials-reader [data-reader-state="SCANNING"] .device-led { animation: none; }
+}
