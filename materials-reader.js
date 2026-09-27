@@ -450,18 +450,8 @@ function initMaterialsReader() {
     // Focus makes the revealed links the next keyboard stops without a page jump.
     files.focus({ preventScroll: true });
     section.dispatchEvent(new CustomEvent('materials:revealed', { bubbles: true, detail: { source: reason } }));
-    if (reason === 'swipe') {
-      const hideReader = () => {
-        if (!disposed) wrapper.hidden = true;
-      };
-      if (!reduced.matches && wrapper.animate) {
-        const exit = wrapper.animate(
-          [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-8px)' }],
-          { duration: 280, easing: 'cubic-bezier(.2,.75,.25,1)' },
-        );
-        exit.finished.then(hideReader).catch(hideReader);
-      } else hideReader();
-    }
+    // Keep the reader visible after access is granted so the interaction
+    // remains part of the materials section instead of disappearing.
   }
 
   function dispose() {

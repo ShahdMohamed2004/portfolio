@@ -37,7 +37,8 @@
   cursor: grab; touch-action: none; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;
   transform-origin: 50% 70%; transition: none; font: inherit; line-height: 0;
 }
-#materials .materials-reader .id-card:focus-visible { outline: 2px solid var(--yellow); outline-offset: 5px; }
+#materials .materials-reader .id-card:focus,
+#materials .materials-reader .id-card:focus-visible { outline: none !important; box-shadow: none !important; }
 #materials .materials-reader .id-card img { display: block; width: 100%; height: auto; max-width: none; border: 1px solid #ffffffe6; border-radius: inherit; pointer-events: none; -webkit-user-drag: none; }
 #materials .materials-reader [data-reader-dragging="true"] .id-card { cursor: grabbing; }
 #materials .materials-reader [data-reader-busy="true"] .id-card { cursor: default; }
@@ -98,6 +99,7 @@
   18% { opacity: .78; }
   100% { opacity: 0; transform: scale(1.012); }
 }
+#materials .materials-files.materials-reveal-flash::before { display: none !important; animation: none !important; }
 /* These files must be usable even without the site's scroll-reveal JavaScript. */
 #materials .materials-files .reveal, #materials .materials-files .reveal-item { opacity: 1 !important; transform: none !important; visibility: visible !important; }
 html[data-theme="light"] #materials .materials-reader .materials-reader-status[data-state="READY"] { color: #266341; }
