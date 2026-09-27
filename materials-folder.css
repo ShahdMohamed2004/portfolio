@@ -536,3 +536,10 @@ html:not([data-theme="light"]) #materials .materials-reader .id-card {
 #materials .material-card {
   -webkit-tap-highlight-color: transparent !important;
 }
+
+/* Remove only the scanner's rear oval; keep the gold outline around the ID card. */
+#materials .materials-reader .reader-scene::after {
+  display: none !important;
+  opacity: 0 !important;
+  content: none !important;
+}

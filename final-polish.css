@@ -2819,3 +2819,24 @@ main.wrap > section.section-entering::before {
   background: none !important;
   box-shadow: none !important;
 }
+
+/* Dark hero CV action: a quiet emerald accent shared with the hero, distinct from gold. */
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary,
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:hover,
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:focus-visible,
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:active {
+  background: linear-gradient(135deg, #4ade80, #2f9e63) !important;
+  color: #071a11 !important;
+  border-color: rgba(126, 244, 164, .58) !important;
+  box-shadow: 0 12px 28px -18px rgba(74, 222, 128, .78), inset 0 1px 0 rgba(255,255,255,.48) !important;
+}
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:hover,
+html:not([data-theme="light"]) #home .cta-row #btnCV.hero-action-primary:focus-visible {
+  background: linear-gradient(135deg, #62e994, #3bb875) !important;
+  box-shadow: 0 14px 30px -17px rgba(74, 222, 128, .92), inset 0 1px 0 rgba(255,255,255,.56) !important;
+}
+/* Remove the section pseudo-element itself so no horizontal line can flash on mobile. */
+main.wrap > section:not(#home)::before {
+  display: none !important;
+  content: none !important;
+}
