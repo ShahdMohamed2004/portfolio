@@ -65,8 +65,8 @@ html[data-theme="light"] #scrollProgress { background:linear-gradient(90deg,#7A2
 html[data-theme="light"] #mobileMenu.mobile-menu { background:#F7F2ECF5 !important; box-shadow:0 24px 70px -24px #5D1F2E40 !important; }
 html[data-theme="light"] #menuBackdrop { background:#211C1D55 !important; }
 html[data-theme="light"] #about .about-photo { box-shadow:0 12px 28px -14px #5D1F2E40 !important; }
-/* Green remains a small identity detail and a success signal. */
-html[data-theme="light"] #about .about-tag:first-child { color:#37604C !important; border-color:#37604C35 !important; background:#E4EBE2 !important; }
+/* Keep the first About tag inside the warm burgundy/blush palette. */
+html[data-theme="light"] #about .about-tag:first-child { color:#7A263A !important; border-color:#7A263A35 !important; background:#EEE0DC !important; }
 html[data-theme="light"] shahd-lanyard {
   --badge-glow-a:#7A263A0B !important; --badge-glow-b:#AF8C6520 !important;
   --badge-glass-line:#7A263A20 !important;

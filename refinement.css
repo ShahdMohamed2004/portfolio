@@ -1,0 +1,186 @@
+/* Focused visual refinement: preserve the existing component tree and identity. */
+
+/* The light edition uses the established ivory, cream, blush and burgundy palette. */
+html[data-theme="light"] #main-content #about .about-tag:first-child,
+html[data-theme="light"] #main-content #about #aboutTagOne {
+  color: #7A263A !important;
+  border-color: #7A263A35 !important;
+  background: #EEE0DC !important;
+}
+html[data-theme="light"] #main-content #about .about-card,
+html[data-theme="light"] #main-content #contact .contact-box {
+  background: linear-gradient(125deg, #EDE4DB 0%, #F7F2EC 76%) !important;
+  border-color: #D8C4C4 !important;
+}
+
+/* A soft ambient halo sits behind the lanyard host; the ID-card artwork itself is untouched. */
+html[data-theme="light"] #home.hero.shahd-badge-hero > shahd-lanyard {
+  isolation: isolate;
+}
+html[data-theme="light"] #home.hero.shahd-badge-hero > shahd-lanyard::before {
+  content: "";
+  position: absolute;
+  inset: -7% -9% -5%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 62% 54% at 50% 53%,
+      rgba(255, 249, 242, .78) 0%,
+      rgba(240, 199, 201, .38) 48%,
+      rgba(201, 143, 154, .17) 70%,
+      rgba(143, 64, 85, .045) 86%,
+      transparent 100%),
+    radial-gradient(ellipse 47% 39% at 50% 53%,
+      rgba(247, 242, 236, .82) 0%,
+      rgba(255, 249, 242, .34) 66%,
+      transparent 100%);
+  filter: blur(15px);
+  opacity: .94;
+}
+
+/* Text measures and logical alignment stay predictable in English and Arabic. */
+#about .section-head,
+#about .about-card,
+#about .about-text,
+#about .about-who,
+#about .about-role,
+#about .about-bio,
+#about .about-tags,
+#contact .contact-box,
+#contact .contact-box p,
+#contact .contact-links {
+  min-width: 0;
+  max-width: 100%;
+}
+#about .section-head .section-tag {
+  position: static;
+  transform: none;
+  max-width: 100%;
+  margin-bottom: 6px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+#about .section-head h2 {
+  max-width: 100%;
+  line-height: 1.18;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+#about .about-role {
+  max-width: 72ch;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+#about .about-bio {
+  max-width: min(72ch, 100%);
+  line-height: 1.88;
+  letter-spacing: normal;
+  text-align: start !important;
+  text-align-last: start !important;
+  text-justify: auto;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+html[dir="rtl"] #about .about-bio {
+  direction: rtl;
+  text-align: right !important;
+  text-align-last: right !important;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+#contact .contact-box {
+  width: 100%;
+}
+#contact .contact-box p {
+  max-width: 56ch;
+  overflow-wrap: anywhere;
+}
+#contact .contact-links > * {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Correct the late desktop spacing rule that otherwise over-pads the smallest cards. */
+@media (max-width: 767px) {
+  html[dir="rtl"] #main-content #about .about-tags {
+    justify-content: center !important;
+  }
+  #about .section-head {
+    margin-bottom: clamp(18px, 5vw, 22px) !important;
+  }
+  #about .about-card {
+    padding: clamp(20px, 6vw, 28px) clamp(14px, 4.5vw, 18px) !important;
+    gap: clamp(18px, 5vw, 22px) !important;
+  }
+  #about .about-text {
+    width: 100%;
+    padding-inline: 0;
+  }
+  #about .about-bio {
+    margin-block-start: clamp(14px, 4vw, 17px);
+    line-height: 1.82;
+  }
+  #contact .contact-box {
+    padding: clamp(18px, 5vw, 26px) !important;
+  }
+  #contact .contact-box p {
+    margin-block-end: clamp(16px, 4vw, 22px);
+  }
+  #contact .contact-links {
+    gap: clamp(10px, 3vw, 16px);
+  }
+  .back-to-top {
+    inset-block-end: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* At narrow widths, keep pill groups clear of both fixed corner controls. */
+@media (max-width: 390px) {
+  #about .about-tags {
+    display: grid !important;
+    grid-template-columns: repeat(2, max-content);
+    justify-content: center !important;
+    justify-items: center;
+    gap: 8px;
+    margin-block-start: 16px !important;
+  }
+  #about .about-tags .about-tag {
+    padding: 5px 8px !important;
+  }
+  #about .about-tags .about-tag:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 360px) {
+  #about .about-tags {
+    grid-template-columns: max-content;
+    justify-content: center !important;
+    justify-items: center;
+  }
+  #about .about-tags .about-tag:last-child {
+    grid-column: auto;
+  }
+  .where-am-i {
+    font-size: .5rem;
+    letter-spacing: .05em;
+  }
+}
+
+@media (min-width: 391px) and (max-width: 767px) {
+  #about .about-tags {
+    justify-content: center !important;
+    transform: translateX(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  html[data-theme="light"] #home.hero.shahd-badge-hero > shahd-lanyard::before {
+    filter: none;
+  }
+}
