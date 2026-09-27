@@ -16,12 +16,18 @@
     '#mobileMenu',
     '#mobileMenu .mobile-menu-utility',
     '#work .work-filters',
+    '.cta-row',
+    '.contact-links',
+    '.about-tags',
+    '.materials-reader-actions',
+    '.mobile-social-dock',
+    '.creative-row',
   ];
 
   function itemElements(dock) {
     return [...dock.children].filter(item => {
       if (item.matches('.mm-divider, .mobile-menu-close')) return false;
-      return item.matches('a, button, .work-filter, .lang-toggle, .theme-toggle, [role="button"]');
+      return item.matches('a, button, .work-filter, .lang-toggle, .theme-toggle, .about-tag, .creative-item, [role="button"]');
     });
   }
 
@@ -47,6 +53,7 @@
       item.style.removeProperty('--dock-lift');
       item.style.removeProperty('--dock-shift');
       item.style.removeProperty('--dock-depth');
+      item.style.removeProperty('transform');
       item.style.removeProperty('will-change');
     });
     dock.classList.remove('motion-dock-active');
@@ -87,6 +94,7 @@
         item.style.setProperty('--dock-lift', `${lift.toFixed(2)}px`);
         item.style.setProperty('--dock-shift', `${shift.toFixed(2)}px`);
         item.style.setProperty('--dock-depth', proximity.toFixed(3));
+        item.style.setProperty('transform', 'translate3d(var(--dock-shift), var(--dock-lift), 0) scale(var(--dock-scale))', 'important');
         if (proximity > .02) item.style.setProperty('will-change', 'transform');
         else item.style.removeProperty('will-change');
       });

@@ -3,7 +3,9 @@
 :where(.motion-dock) {
   --dock-gap: 0px;
   --dock-radius: 999px;
+  --dock-glow: rgba(231,184,78,.17);
   isolation: isolate;
+  overflow: visible;
 }
 
 :where(.motion-dock) > .dock-item {
@@ -25,7 +27,7 @@
   z-index: -1;
   border-radius: var(--dock-radius);
   opacity: clamp(0, calc((var(--dock-scale) - 1) * 5), .55);
-  background: radial-gradient(circle, rgba(231,184,78,.17), transparent 72%);
+  background: radial-gradient(circle, var(--dock-glow), transparent 72%);
   filter: blur(7px);
   pointer-events: none;
   transition: opacity 180ms ease;
@@ -43,14 +45,33 @@
   align-items: flex-end;
 }
 
+:is(.cta-row, .contact-links, .about-tags, .materials-reader-actions,
+    .mobile-social-dock, .creative-row).motion-dock {
+  align-items: center;
+  overflow: visible;
+}
+
+:is(.cta-row, .contact-links, .about-tags, .materials-reader-actions,
+    .mobile-social-dock, .creative-row).motion-dock > .dock-item {
+  transform-origin: center bottom;
+}
+
 #work .work-filters.motion-dock > .dock-item {
   transform-origin: center bottom;
 }
 
 #siteHeader.glass .nav-links.motion-dock > .dock-item:hover,
 #siteHeader.glass .nav-utility.motion-dock > .dock-item:hover,
-#work .work-filters.motion-dock > .dock-item:hover {
+#work .work-filters.motion-dock > .dock-item:hover,
+:is(.cta-row, .contact-links, .about-tags, .materials-reader-actions,
+    .mobile-social-dock, .creative-row).motion-dock > .dock-item:hover {
   z-index: 8;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :where(.motion-dock) > .dock-item {
+    transform: translate3d(var(--dock-shift), var(--dock-lift), 0) scale(var(--dock-scale)) !important;
+  }
 }
 
 /* Mobile drawer: the same wave runs vertically and nudges the focused item inward. */
@@ -79,4 +100,13 @@
     will-change: auto;
   }
   :where(.motion-dock) > .dock-item::after { display: none; }
+}
+
+/* The dock keeps its geometry in Light Mode; only the glow and elevation ink change. */
+html[data-theme="light"] :where(.motion-dock) {
+  --dock-glow: rgba(165,122,35,.18);
+}
+
+html[data-theme="light"] :where(.motion-dock) > .dock-item::after {
+  background: radial-gradient(circle, var(--dock-glow), transparent 72%);
 }
