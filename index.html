@@ -2470,6 +2470,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 <link rel="stylesheet" href="navigation-controls-fix.css?v=1.0.0">
 <link rel="stylesheet" href="hero-credentials.css?v=1.0.0">
 <link rel="stylesheet" href="header-name-polish.css?v=1.0.0">
+<link rel="stylesheet" href="materials-reader.css?v=1.0.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -2647,9 +2648,50 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <h2>Teaching materials</h2>
       <p class="section-lead">Certificates, feedback, CV, research, videos, and project files, organised in Drive folders.</p>
     </div>
-    <div class="materials-grid reveal" id="materialsGrid"></div>
-    <p class="materials-note" id="materialsNote"></p>
-    <a class="btn btn-text" id="materialsPortfolioLink" href="#" target="_blank" rel="noopener noreferrer">View full portfolio</a>
+    <div class="materials-reader" data-materials-reader hidden>
+      <p class="materials-reader-title" data-materials-copy="title">Swipe into my teaching portfolio</p>
+      <p class="materials-reader-intro" data-materials-copy="intro">Insert the card, move it all the way left, then swipe to the far right and release.</p>
+      <div class="reader-scene" data-reader-scene data-reader-state="IDLE" dir="ltr">
+        <span class="reader-label" aria-hidden="true">TEACHING / PORTFOLIO ACCESS</span>
+        <span class="reader-end reader-end-left" aria-hidden="true">→</span>
+        <span class="reader-end reader-end-right" aria-hidden="true">›</span>
+        <div class="reader-shadow" data-reader-shadow aria-hidden="true"></div>
+        <div class="reader-back" aria-hidden="true"></div>
+        <button type="button" class="id-card" data-reader-card role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-orientation="horizontal" aria-label="Move Shahd’s card into the reader, then swipe from left to right" aria-describedby="materials-reader-help">
+          <img src="assets/materials-id-card.jpg" width="1512" height="953" alt="Shahd Mohamed’s original university ID card" draggable="false" decoding="async">
+        </button>
+        <div class="reader-slot" data-reader-slot aria-hidden="true"></div>
+        <div class="reader-device" aria-hidden="true">
+          <div class="device">
+            <div class="device-seam"></div><span class="device-monogram">sh.</span>
+            <div class="device-screen">
+              <div class="device-readout"><span data-reader-display>WAITING</span><span data-reader-percent>0%</span></div>
+              <span class="device-progress"><span data-reader-progress></span></span>
+            </div>
+            <span class="device-led"></span><span class="device-serial">SC — 01</span>
+          </div>
+          <div class="reader-lip"><span></span><span></span></div>
+        </div>
+      </div>
+      <p class="materials-reader-status" data-materials-status role="status" aria-live="polite" aria-atomic="true"></p>
+      <p class="materials-reader-help" id="materials-reader-help" data-materials-copy="help">Drag with a mouse or touch. Use the four arrow keys on a keyboard. Pull up to remove the card.</p>
+      <div class="materials-reader-actions">
+        <button type="button" class="materials-reader-direct" data-materials-direct aria-controls="materials-files" aria-expanded="true">View files directly</button>
+        <button type="button" class="materials-reader-reset" data-materials-reset>Reset card</button>
+      </div>
+    </div>
+    <div id="materials-files" class="materials-files" role="region" aria-label="Teaching portfolio files" tabindex="-1">
+      <div class="materials-grid reveal in-view" id="materialsGrid">
+        <a class="material-card reveal-item in-view" href="https://drive.google.com/drive/folders/1IlVHD_heQUisdcgzNAmCAjcgaJ_GM0nq" target="_blank" rel="noopener noreferrer"><span class="mname">Certificates</span></a>
+        <a class="material-card reveal-item in-view" href="https://drive.google.com/drive/folders/1_SgYq2bi8oCfyzkCNLl3ZWqLtBG197CM" target="_blank" rel="noopener noreferrer"><span class="mname">Feedback</span></a>
+        <a class="material-card reveal-item in-view" href="https://drive.google.com/file/d/16cr1k7iVTIZNDKl5tGr97EFSB0j0kQf6/view?usp=drivesdk" target="_blank" rel="noopener noreferrer"><span class="mname">Resume (CV)</span></a>
+        <a class="material-card reveal-item in-view" href="https://drive.google.com/drive/folders/1zHdqDdbPUsbgA7wvTLmoMu3spNnbPXPA" target="_blank" rel="noopener noreferrer"><span class="mname">Research papers</span></a>
+        <a class="material-card reveal-item in-view" href="https://drive.google.com/drive/folders/1g0XnzDUJwKrmgcFmbgFSgwUHkl_kAXGK" target="_blank" rel="noopener noreferrer"><span class="mname">Practical Work Videos</span></a>
+        <a class="material-card reveal-item in-view" href="https://drive.google.com/drive/folders/1d2hgaLe5ASKrY-Op27gsmu6wMyygF70A" target="_blank" rel="noopener noreferrer"><span class="mname">Projects</span></a>
+      </div>
+      <p class="materials-note" id="materialsNote">Each category above links to its own Drive folder.</p>
+      <a class="btn btn-text" id="materialsPortfolioLink" href="https://drive.google.com/drive/folders/1_SgYq2bi8oCfyzkCNLl3ZWqLtBG197CM" target="_blank" rel="noopener noreferrer">View full portfolio</a>
+    </div>
   </section>
 
   <!-- EXPERIENCE -->
@@ -4357,5 +4399,6 @@ const SITE_AR = {
 <script src="glass-nav.js?v=2.0.0" defer></script>
 <script src="timeline-physics.js?v=1.0.0" defer></script>
 <script src="cv-printer.js?v=2.0.0" defer></script>
+<script src="materials-reader.js?v=1.0.0" defer></script>
 </body>
 </html>
