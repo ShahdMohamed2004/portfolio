@@ -1,0 +1,151 @@
+/* Luxury burgundy finish — final visual layer, no layout or content changes. */
+:root {
+  --lux-burgundy-deep: #4b1728;
+  --lux-burgundy: #7a263a;
+  --lux-burgundy-warm: #963f50;
+  --lux-wine: #32101b;
+  --lux-ivory: #fff8ef;
+  --lux-rose-line: rgba(150, 63, 80, .46);
+}
+
+/* Consistent selection and browser tap feedback across desktop and mobile. */
+::selection { background: rgba(122, 38, 58, .42); color: #fff8ef; text-shadow: none; }
+::-moz-selection { background: rgba(122, 38, 58, .42); color: #fff8ef; text-shadow: none; }
+html, body, a, button, input, textarea, select, summary, [role="button"], [tabindex] {
+  -webkit-tap-highlight-color: rgba(122, 38, 58, .20);
+}
+:where(a, button, input, textarea, select, summary, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid rgba(150, 63, 80, .78) !important;
+  outline-offset: 3px;
+}
+:where(.nav-links a, .mobile-menu a, .work-filter, [aria-selected="true"], [aria-pressed="true"]):is(.active, [aria-selected="true"], [aria-pressed="true"]) {
+  color: var(--lux-burgundy) !important;
+}
+html[data-theme="light"] :where(.nav-links a, .mobile-menu a, .work-filter, [aria-selected="true"], [aria-pressed="true"]):is(.active, [aria-selected="true"], [aria-pressed="true"]) {
+  background: rgba(150, 63, 80, .13) !important;
+}
+
+/* Warm glass sheen for the light-mode top bar. */
+html[data-theme="light"] #siteHeader.glass {
+  --glass-text: #4b1728;
+  --glass-muted: #6f4651;
+  --glass-surface: rgba(255, 248, 239, .74);
+  border-color: rgba(150, 63, 80, .28);
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.84), rgba(255,248,239,.56) 43%, rgba(238,210,211,.46)) padding-box,
+    linear-gradient(120deg, rgba(255,255,255,.95), rgba(150,63,80,.34) 58%, rgba(210,169,143,.55)) border-box;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.98), inset 0 -1px 1px rgba(122,38,58,.08), 0 18px 45px rgba(74,23,40,.14);
+}
+html[data-theme="light"] #siteHeader.glass::before {
+  background: radial-gradient(440px 130px at var(--x,65%) var(--y,0%), rgba(255,255,255,.52), transparent 75%), var(--glass-surface);
+}
+html[data-theme="light"] #siteHeader.glass::after {
+  opacity: .38;
+  width: 24%;
+  background: linear-gradient(105deg, transparent 0%, rgba(255,248,239,.08) 30%, rgba(255,255,255,.78) 50%, rgba(225,174,178,.20) 62%, transparent 100%);
+  transform: translateX(-145%) skewX(-24deg);
+}
+html[data-theme="light"] #siteHeader.glass:hover::after,
+html[data-theme="light"] #siteHeader.glass:focus-within::after,
+html[data-theme="light"] #siteHeader.glass.is-sheening::after {
+  animation: luxuryHeaderSheen 1.5s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes luxuryHeaderSheen { to { transform: translateX(620%) skewX(-24deg); } }
+html[data-theme="light"] #siteHeader.glass .nav-links::before,
+html[data-theme="light"] #siteHeader.glass .nav-utility {
+  border-color: rgba(150, 63, 80, .24);
+  background: linear-gradient(135deg, rgba(255,255,255,.48), rgba(238,210,211,.22));
+}
+html[data-theme="light"] #siteHeader.glass .nav-links a:hover,
+html[data-theme="light"] #siteHeader.glass .nav-links a:focus-visible {
+  color: var(--lux-burgundy-deep) !important;
+  background: rgba(150, 63, 80, .10);
+}
+html[data-theme="light"] #siteHeader.glass :is(.lang-toggle,.theme-toggle,.hamburger) { color: var(--lux-burgundy-deep); }
+
+/* CV is the premium primary action only in dark mode. */
+html:not([data-theme="light"]) #btnCV {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(150,63,80,.96), rgba(75,23,40,.98)) !important;
+  border-color: rgba(226,176,177,.42) !important;
+  box-shadow: inset 0 1px 0 rgba(255,248,239,.34), inset 0 -1px 0 rgba(30,5,13,.48), 0 10px 26px rgba(75,23,40,.32), 0 0 22px rgba(150,63,80,.18) !important;
+}
+html:not([data-theme="light"]) #btnCV::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -80% -28%;
+  background: linear-gradient(112deg, transparent 34%, rgba(255,248,239,.08) 43%, rgba(255,224,221,.52) 50%, rgba(255,248,239,.10) 57%, transparent 67%);
+  transform: translateX(-72%) rotate(-8deg);
+  transition: transform .9s cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+html:not([data-theme="light"]) #btnCV:hover,
+html:not([data-theme="light"]) #btnCV:focus-visible {
+  border-color: rgba(255,224,221,.66) !important;
+  box-shadow: inset 0 1px 0 rgba(255,248,239,.46), 0 14px 30px rgba(75,23,40,.40), 0 0 28px rgba(150,63,80,.30) !important;
+}
+html:not([data-theme="light"]) #btnCV:hover::before,
+html:not([data-theme="light"]) #btnCV:focus-visible::before { transform: translateX(72%) rotate(-8deg); }
+html[data-theme="light"] #btnCV { box-shadow: inset 0 1px 0 rgba(255,255,255,.48), 0 6px 16px rgba(75,23,40,.16) !important; }
+
+/* Education and certificate surfaces: shared idea, naturally adapted per theme. */
+html[data-theme="light"] #home .credential-strip .cred,
+html[data-theme="light"] #educationSpine .education-card,
+html[data-theme="light"] #developmentGrid .accordion-card {
+  border-color: rgba(150,63,80,.28) !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.84), rgba(255,248,239,.70) 52%, rgba(238,210,211,.36)) !important;
+  box-shadow: 0 20px 40px -28px rgba(75,23,40,.28), 0 0 28px -20px rgba(150,63,80,.30), inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+html[data-theme="light"] #home .credential-strip .cred::after,
+html[data-theme="light"] #educationSpine .education-card::after,
+html[data-theme="light"] #developmentGrid .accordion-card::after { background: radial-gradient(circle, rgba(150,63,80,.18), transparent 72%); }
+html:not([data-theme="light"]) #home .credential-strip,
+html:not([data-theme="light"]) #educationSpine,
+html:not([data-theme="light"]) #developmentGrid { isolation: isolate; }
+html:not([data-theme="light"]) #home .credential-strip::before,
+html:not([data-theme="light"]) #educationSpine::before,
+html:not([data-theme="light"]) #developmentGrid::before {
+  content: ""; position: absolute; z-index: -1; inset: -34px -42px -28px; border-radius: 42px; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 48%, rgba(150,63,80,.22), rgba(75,23,40,.12) 42%, transparent 76%); filter: blur(18px);
+}
+html:not([data-theme="light"]) #main-content #home .credential-strip .cred,
+html:not([data-theme="light"]) #main-content #educationSpine .education-card,
+html:not([data-theme="light"]) #main-content #developmentGrid .accordion-card {
+  border-color: rgba(183,103,113,.32) !important;
+  background: linear-gradient(145deg, rgba(75,23,40,.78), rgba(50,16,27,.88)) !important;
+  box-shadow: 0 20px 38px -24px rgba(0,0,0,.76), 0 0 28px -17px rgba(150,63,80,.48), inset 0 1px 0 rgba(255,224,221,.13) !important;
+}
+html:not([data-theme="light"]) #home .credential-strip > .cred {
+  background-image: linear-gradient(145deg, rgba(75,23,40,.78), rgba(50,16,27,.88)) !important;
+  background-color: #32101b !important;
+}
+html:not([data-theme="light"]) body#artifacts-component-root-html #main-content #home .credential-strip > .cred {
+  background: linear-gradient(145deg, rgba(75,23,40,.78), rgba(50,16,27,.88)) !important;
+}
+html:not([data-theme="light"]) #home .credential-strip .cred:hover,
+html:not([data-theme="light"]) #educationSpine .education-card:hover,
+html:not([data-theme="light"]) #developmentGrid .accordion-card:hover { border-color: rgba(226,176,177,.56) !important; }
+
+/* Card-scanning machine: warm deep wine, preserving all geometry and reflections. */
+#materials .materials-reader {
+  --device-dark: #210b14;
+  --device-green: #5a1d31;
+  --device-border: rgba(183,103,113,.52);
+  --signal: #ead5c7;
+  --scanning: #d39aa0;
+  --ready: #e7c6b7;
+}
+#materials .materials-reader .reader-scene::before { background: radial-gradient(ellipse at 50% 65%, rgba(150,63,80,.24), rgba(75,23,40,.10) 38%, transparent 73%) !important; }
+#materials .materials-reader .reader-back { background: linear-gradient(115deg, rgba(255,248,239,.13), transparent 25%, transparent 78%, rgba(226,176,177,.06)), linear-gradient(180deg, #6b293d, #35121f 60%, #1a0810) !important; }
+#materials .materials-reader .device { background: linear-gradient(112deg, rgba(255,248,239,.13), transparent 24%, transparent 72%, rgba(226,176,177,.06)), linear-gradient(145deg, #6b263b 0%, #4a1729 46%, #210b14 100%) !important; box-shadow: 0 30px 62px -25px rgba(0,0,0,.80), 0 0 32px -16px rgba(150,63,80,.48), inset 0 1px 0 rgba(255,248,239,.22), inset 0 -3px 0 rgba(19,5,10,.44) !important; }
+#materials .materials-reader .reader-lip { background: linear-gradient(180deg, rgba(255,248,239,.13), transparent 25%), linear-gradient(180deg, #713246, #4a1a2b 72%, #2a0e19) !important; }
+#materials .materials-reader .device-screen { background: linear-gradient(165deg, #32101b, #0e0408 70%) !important; box-shadow: 0 1px 0 rgba(255,242,237,.14), inset 0 1px 5px #000, 0 0 16px rgba(150,63,80,.22) !important; }
+#materials .materials-reader .device-led { background: #d9ad91 !important; box-shadow: 0 0 0 2px #1b0d13, 0 0 10px 2px rgba(217,173,145,.34) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="light"] #siteHeader.glass::after { animation: none !important; }
+  html:not([data-theme="light"]) #btnCV::before { transition: none !important; }
+}
