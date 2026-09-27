@@ -1,0 +1,82 @@
+/* Motion Dock — proximity magnification inspired by tactile desktop docks. */
+
+:where(.motion-dock) {
+  --dock-gap: 0px;
+  --dock-radius: 999px;
+  isolation: isolate;
+}
+
+:where(.motion-dock) > .dock-item {
+  --dock-scale: 1;
+  --dock-lift: 0px;
+  --dock-shift: 0px;
+  position: relative;
+  z-index: calc(1 + var(--dock-depth, 0));
+  transform: translate3d(var(--dock-shift), var(--dock-lift), 0) scale(var(--dock-scale));
+  transform-origin: center bottom;
+  will-change: transform;
+  transition: transform 150ms cubic-bezier(.2,.8,.2,1), color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+:where(.motion-dock) > .dock-item::after {
+  content: "";
+  position: absolute;
+  inset: 10% 8%;
+  z-index: -1;
+  border-radius: var(--dock-radius);
+  opacity: clamp(0, calc((var(--dock-scale) - 1) * 5), .55);
+  background: radial-gradient(circle, rgba(231,184,78,.17), transparent 72%);
+  filter: blur(7px);
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+#siteHeader.glass .nav-links.motion-dock > .dock-item {
+  transform-origin: center bottom;
+}
+
+#siteHeader.glass .nav-utility.motion-dock > .dock-item {
+  transform-origin: center center;
+}
+
+#work .work-filters.motion-dock {
+  align-items: flex-end;
+}
+
+#work .work-filters.motion-dock > .dock-item {
+  transform-origin: center bottom;
+}
+
+#siteHeader.glass .nav-links.motion-dock > .dock-item:hover,
+#siteHeader.glass .nav-utility.motion-dock > .dock-item:hover,
+#work .work-filters.motion-dock > .dock-item:hover {
+  z-index: 8;
+}
+
+/* Mobile drawer: the same wave runs vertically and nudges the focused item inward. */
+#mobileMenu.motion-dock > .dock-item,
+#mobileMenu .mobile-menu-utility.motion-dock > .dock-item {
+  transform-origin: center center;
+}
+
+#mobileMenu.motion-dock > .dock-item {
+  --dock-lift: 0px;
+  --dock-shift: var(--dock-mobile-shift, 0px);
+}
+
+@media (hover: none), (pointer: coarse) {
+  :where(.motion-dock) > .dock-item {
+    transform: none;
+    transition: color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+  }
+  :where(.motion-dock) > .dock-item::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.motion-dock) > .dock-item {
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+  :where(.motion-dock) > .dock-item::after { display: none; }
+}
