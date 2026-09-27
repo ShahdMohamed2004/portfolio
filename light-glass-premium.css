@@ -1,0 +1,132 @@
+/* Premium light-mode glass system — loaded last so it stays consistent with the dark experience. */
+html[data-theme="light"] #main-content {
+  --glass-ink: #17382f;
+  --glass-muted: #4c665b;
+  --glass-border: rgba(82, 125, 111, .30);
+  --glass-border-hover: rgba(31, 102, 87, .58);
+  --glass-fill: linear-gradient(135deg, rgba(255,255,255,.78), rgba(246,250,247,.58) 52%, rgba(231,241,235,.52));
+  --glass-shadow: 0 18px 42px -28px rgba(26, 67, 55, .34), 0 6px 16px -12px rgba(75, 105, 96, .20);
+  --glass-shadow-hover: 0 24px 48px -26px rgba(27, 82, 68, .34), 0 8px 18px -12px rgba(142, 104, 46, .18);
+}
+
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+) {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--glass-ink) !important;
+  background: var(--glass-fill) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(18px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(125%) !important;
+  transition: transform 220ms cubic-bezier(.23,1,.32,1), border-color 220ms ease, box-shadow 220ms ease, background 220ms ease !important;
+}
+
+/* A quiet top reflection and a diffused brand halo, kept behind content. */
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255,255,255,.62), transparent 34%, transparent 72%, rgba(191,220,207,.18));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.86), inset 1px 0 0 rgba(255,255,255,.28);
+}
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+)::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 180px;
+  height: 120px;
+  inset-block-start: -62px;
+  inset-inline-end: -52px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(126,181,157,.24), rgba(126,181,157,0) 70%);
+  filter: blur(8px);
+  opacity: .72;
+}
+html[data-theme="light"] #main-content :is(
+  .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+  .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+  .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+) > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+  html[data-theme="light"] #main-content :is(
+    .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+    .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+    .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+  ):is(:hover,:focus-within) {
+    transform: translateY(-4px);
+    border-color: var(--glass-border-hover) !important;
+    background: linear-gradient(135deg, rgba(255,255,255,.90), rgba(242,249,245,.72) 55%, rgba(231,242,235,.68)) !important;
+    box-shadow: var(--glass-shadow-hover) !important;
+  }
+}
+
+html[data-theme="light"] #main-content :is(.material-card,.availability-item,.credential-strip .cred) {
+  min-width: 0;
+}
+html[data-theme="light"] #main-content :is(.material-card,.availability-item) :is(.mname,.mtext,p,span) {
+  color: var(--glass-muted) !important;
+}
+html[data-theme="light"] #main-content :is(.material-card,.availability-item) :is(.arrow,svg) {
+  color: #8a6426 !important;
+}
+html[data-theme="light"] #main-content :is(.section-lead,.about-text p,.approach-card p,.dev-card p,.materials-note,.contact-box p) {
+  color: var(--glass-muted) !important;
+}
+
+/* More breathing room keeps the pale surfaces from reading as one crowded sheet. */
+html[data-theme="light"] #main-content :is(.about-grid,.materials-grid,.grid-4,#howITeachGrid,.dev-grid,.skills-grid,.creative-row) {
+  gap: clamp(16px, 2.2vw, 28px) !important;
+}
+html[data-theme="light"] #main-content .section-head {
+  margin-bottom: clamp(28px, 4vw, 48px) !important;
+}
+html[data-theme="light"] #main-content .section-head h2 {
+  color: var(--glass-ink) !important;
+  letter-spacing: -.025em;
+}
+html[data-theme="light"] #main-content .section-head h2::after {
+  background: linear-gradient(90deg, #1f6657, #b18543, transparent) !important;
+  box-shadow: 0 0 16px rgba(31,102,87,.22) !important;
+}
+
+@media (max-width: 767px) {
+  html[data-theme="light"] #main-content :is(
+    .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+    .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+    .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+  ) {
+    border-radius: 16px !important;
+    backdrop-filter: blur(12px) saturate(115%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(115%) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="light"] #main-content :is(
+    .about-card,.approach-card,.accordion-card,.material-card,.project-details,
+    .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+    .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual
+  ) { transition: none !important; }
+}
