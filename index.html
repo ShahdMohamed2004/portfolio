@@ -2471,8 +2471,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 <link rel="stylesheet" href="smooth-performance.css?v=2.0.0">
 <link rel="stylesheet" href="light-editorial.css?v=1.1.0">
 <link rel="stylesheet" href="dock-motion.css?v=2.0.0">
-<link rel="stylesheet" href="portfolio-passport.css?v=1.0.0">
-<link rel="stylesheet" href="refinement.css?v=1.0.0">
+<link rel="stylesheet" href="refinement.css?v=1.1.0">
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3354,18 +3353,17 @@ const SITE_AR = {
           <summary class="project-summary expandable-summary" aria-controls="projectDetailsBody-${i}" aria-expanded="false" aria-label="${lang === 'ar' ? 'عرض تفاصيل المشروع والروابط' : 'View project details & links'}">
             <div class="entry-preview">
               <span class="entry-flag ${SITE.projects[i].flag === 'core project' ? 'core' : ''}">${escapeHtml(p.flag)}</span>
-              <h3>${escapeHtml(p.title)}</h3>
+              <h3 id="projectTitle-${i}">${escapeHtml(p.title)}</h3>
               <div class="badges">${p.badges.map(b => `<span class="badge">${escapeHtml(b)}</span>`).join('')}</div>
             </div>
           </summary>
           <div class="project-details-body" id="projectDetailsBody-${i}">
             ${i === 0 ? `
-            <div class="featured-case embedded-case-study is-open" aria-labelledby="graduationCaseTitle">
+            <div class="featured-case embedded-case-study is-open" aria-labelledby="projectTitle-${i}">
               <div class="featured-case-content">
                 <div class="featured-case-content-inner">
                   <div class="featured-case-copy">
                     <span class="section-tag">${lang === 'ar' ? 'مشروع التخرج' : 'Graduation project'}</span>
-                    <h3 id="graduationCaseTitle">${escapeHtml(p.title)}</h3>
                     <p class="project-description">${escapeHtml(p.description)}</p>
                     <dl class="project-facts">
                       <div><dt>${lang === 'ar' ? 'الدور' : 'Role'}</dt><dd>${escapeHtml(p.role)}</dd></div>
@@ -4361,6 +4359,5 @@ const SITE_AR = {
 <script src="timeline-physics.js?v=1.0.0" defer></script>
 <script src="cv-printer.js?v=2.0.1" defer></script>
 <script src="materials-reader.js?v=1.0.2" defer></script>
-<script src="portfolio-passport.js?v=1.0.0" defer></script>
 </body>
 </html>

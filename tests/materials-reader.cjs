@@ -150,7 +150,7 @@ async function checkLinks(page) {
     await page.waitForFunction(() => document.querySelector('[data-materials-reader]').hidden);
     check(!(await page.locator('[data-materials-reader]').isVisible()), 'Reader hides after successful swipe');
     await page.keyboard.press('Tab');
-    check(await page.locator('#materials-files a').first().evaluate(n => n === document.activeElement), 'Passport evidence links are next keyboard stops');
+    check(await page.locator('#materials-files a').first().evaluate(n => n === document.activeElement), 'Original materials links are next keyboard stops');
     await page.locator('#langToggle').click(); await settle(page);
     check((await snap(page)).opened && (await snap(page)).count === 1, 'Language switch retains open state');
     check((await page.locator('[data-materials-copy="title"]').textContent()).includes('مرّري'), 'Arabic reader labels');
