@@ -13,7 +13,6 @@
   margin: 0 0 8px; color: var(--text-accent); font: 500 clamp(22px, 3vw, 30px)/1.5 var(--font-display); text-align: center;
 }
 #materials .materials-reader .materials-reader-intro,
-#materials .materials-reader .materials-reader-help,
 #materials .materials-reader .materials-reader-status { text-align: center !important; text-wrap: pretty; letter-spacing: normal; }
 #materials .materials-reader .materials-reader-intro { max-width: 54ch; margin: 0 auto; color: var(--chalk-dim); font-size: 14px; line-height: 1.85; }
 #materials .materials-reader .reader-scene {
@@ -80,7 +79,6 @@
 @keyframes materialsScanningPulse { 50% { opacity: .5; } }
 #materials .materials-reader .materials-reader-status { min-height: 3.6em; max-width: 56ch; margin: -8px auto 8px; color: var(--chalk-dim); font-size: 14px; line-height: 1.8; }
 #materials .materials-reader .materials-reader-status[data-state="READY"] { color: #86efac; }
-#materials .materials-reader .materials-reader-help { margin: 0 auto 12px; max-width: 64ch; font-size: 12px; line-height: 1.8; color: var(--muted); }
 #materials .materials-reader .materials-reader-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; }
 #materials .materials-reader .materials-reader-actions button { appearance: none; min-height: 44px; border: 1px solid var(--line-strong); border-radius: 100px; padding: 8px 18px; background: transparent; color: var(--chalk); font: inherit; font-size: 13px; line-height: 1.5; cursor: pointer; }
 #materials .materials-reader .materials-reader-actions .materials-reader-direct { color: var(--text-accent); border-color: var(--text-accent); }

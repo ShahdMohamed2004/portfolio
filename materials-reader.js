@@ -362,7 +362,6 @@ const COPY = {
   en: {
     title: 'Swipe into my teaching portfolio',
     intro: 'Insert the card, move it all the way left, then swipe to the far right and release.',
-    help: 'Drag with a mouse or touch. Use the four arrow keys on a keyboard. Pull up to remove the card.',
     direct: 'View files directly', visible: 'Files are open below', reset: 'Reset card',
     label: 'Move Shahd’s card with the mouse, touch, or four arrow keys. Insert it, then swipe from left to right.',
     alt: 'Shahd Mohamed’s original university ID card', region: 'Teaching portfolio files',
@@ -382,7 +381,6 @@ const COPY = {
   ar: {
     title: 'مرّري البطاقة لاستكشاف ملفّي التعليمي',
     intro: 'دخّلي البطاقة في الشق، اسحبيها لأقصى اليسار، ثم مرّريها لآخر اليمين وسيبيها.',
-    help: 'اسحبي بالماوس أو اللمس، أو استخدمي الأسهم الأربعة. شدّي البطاقة لفوق لإخراجها.',
     direct: 'عرض الملفات مباشرة', visible: 'الملفات مفتوحة بالأسفل', reset: 'إرجاع البطاقة للبداية',
     label: 'حرّكي بطاقة شهد بالماوس أو اللمس أو الأسهم الأربعة. أدخليها في الشق ثم اسحبي من اليسار لآخر اليمين.',
     alt: 'بطاقة شهد محمد الجامعية الأصلية', region: 'ملفات البورتفوليو التعليمي',
