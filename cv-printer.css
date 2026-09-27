@@ -11,9 +11,9 @@
   letter-spacing:normal; word-spacing:normal; font-size:14px;
 }
 :host([theme="light"]) {
-  --bg:#f8f7f1; --surface:#fff; --text:#19392f; --muted:#4c685c;
-  --line:#c9d8cd; --accent:#225e4e; --on-accent:#fff;
-  --well:#eef2e9; --halo:rgba(92,139,100,.13); --soft:#e5eee5;
+  --bg:#F7F2EC; --surface:#F7F2EC; --text:#211C1D; --muted:#655459;
+  --line:#D6BEC2; --accent:#7A263A; --on-accent:#F7F2EC;
+  --well:#EDE4DB; --halo:rgba(122,38,58,.07); --soft:#EDE4DB;
   color-scheme:light;
 }
 :host([lang="ar"]) {font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;}

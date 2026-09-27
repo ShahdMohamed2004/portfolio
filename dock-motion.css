@@ -1,112 +1,28 @@
-/* Motion Dock — proximity magnification inspired by tactile desktop docks. */
-
-:where(.motion-dock) {
-  --dock-gap: 0px;
-  --dock-radius: 999px;
-  --dock-glow: rgba(231,184,78,.17);
-  isolation: isolate;
-  overflow: visible;
+/* The header owns its fixed geometry; only individual controls have local motion. */
+html body #siteHeader.glass,
+html body #siteHeader.glass:is(.compact, :hover, :focus-within) {
+  top: 16px !important;
+  transform: translateX(-50%) !important;
+  transition-property: background-color, border-color, box-shadow !important;
 }
-
-:where(.motion-dock) > .dock-item {
-  --dock-scale: 1;
-  --dock-lift: 0px;
-  --dock-shift: 0px;
-  position: relative;
-  z-index: calc(1 + var(--dock-depth, 0));
-  transform: translate3d(var(--dock-shift), var(--dock-lift), 0) scale(var(--dock-scale));
-  transform-origin: center bottom;
-  will-change: transform;
-  transition: transform 150ms cubic-bezier(.2,.8,.2,1), color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+html body #siteHeader.glass .dock-control,
+html body #siteHeader.glass .dock-control:is(:hover, :focus-visible, :active) {
+  transform: none !important;
+  transform-origin: center;
+  transition-property: color, background-color, border-color, box-shadow !important;
+  will-change: auto;
 }
-
-:where(.motion-dock) > .dock-item::after {
-  content: "";
-  position: absolute;
-  inset: 10% 8%;
-  z-index: -1;
-  border-radius: var(--dock-radius);
-  opacity: clamp(0, calc((var(--dock-scale) - 1) * 5), .55);
-  background: radial-gradient(circle, var(--dock-glow), transparent 72%);
-  filter: blur(7px);
-  pointer-events: none;
-  transition: opacity 180ms ease;
-}
-
-#siteHeader.glass .nav-links.motion-dock > .dock-item {
-  transform-origin: center bottom;
-}
-
-#siteHeader.glass .nav-utility.motion-dock > .dock-item {
-  transform-origin: center center;
-}
-
-#work .work-filters.motion-dock {
-  align-items: flex-end;
-}
-
-:is(.cta-row, .contact-links, .about-tags, .materials-reader-actions,
-    .mobile-social-dock, .creative-row).motion-dock {
-  align-items: center;
-  overflow: visible;
-}
-
-:is(.cta-row, .contact-links, .about-tags, .materials-reader-actions,
-    .mobile-social-dock, .creative-row).motion-dock > .dock-item {
-  transform-origin: center bottom;
-}
-
-#work .work-filters.motion-dock > .dock-item {
-  transform-origin: center bottom;
-}
-
-#siteHeader.glass .nav-links.motion-dock > .dock-item:hover,
-#siteHeader.glass .nav-utility.motion-dock > .dock-item:hover,
-#work .work-filters.motion-dock > .dock-item:hover,
-:is(.cta-row, .contact-links, .about-tags, .materials-reader-actions,
-    .mobile-social-dock, .creative-row).motion-dock > .dock-item:hover {
-  z-index: 8;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  :where(.motion-dock) > .dock-item {
-    transform: translate3d(var(--dock-shift), var(--dock-lift), 0) scale(var(--dock-scale)) !important;
-  }
-}
-
-/* Mobile drawer: the same wave runs vertically and nudges the focused item inward. */
-#mobileMenu.motion-dock > .dock-item,
-#mobileMenu .mobile-menu-utility.motion-dock > .dock-item {
-  transform-origin: center center;
-}
-
-#mobileMenu.motion-dock > .dock-item {
-  --dock-lift: 0px;
-  --dock-shift: var(--dock-mobile-shift, 0px);
-}
-
-@media (hover: none), (pointer: coarse) {
-  :where(.motion-dock) > .dock-item {
-    transform: none;
-    transition: color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
-  }
-  :where(.motion-dock) > .dock-item::after { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :where(.motion-dock) > .dock-item {
+html body #siteHeader.glass .dock-control:hover { z-index: 2; }
+@media (max-width: 767px) {
+  html body #siteHeader.glass,
+  html body #siteHeader.glass:is(.compact, :hover, :focus-within) {
+    top: max(12px, env(safe-area-inset-top)) !important;
+    left: 14px !important;
+    right: 14px !important;
+    width: auto !important;
     transform: none !important;
-    transition: none !important;
-    will-change: auto;
   }
-  :where(.motion-dock) > .dock-item::after { display: none; }
 }
-
-/* The dock keeps its geometry in Light Mode; only the glow and elevation ink change. */
-html[data-theme="light"] :where(.motion-dock) {
-  --dock-glow: rgba(165,122,35,.18);
-}
-
-html[data-theme="light"] :where(.motion-dock) > .dock-item::after {
-  background: radial-gradient(circle, var(--dock-glow), transparent 72%);
+@media (prefers-reduced-motion: reduce) {
+  #siteHeader.glass .dock-control { translate: none !important; scale: none !important; }
 }

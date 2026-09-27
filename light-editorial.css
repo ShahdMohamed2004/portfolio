@@ -1,0 +1,82 @@
+/* Light Edition: palette and surface treatment only. No geometry or type changes. */
+html[data-theme="light"] {
+  --lt-bg:#F7F2EC; --lt-surface:#F7F2EC; --lt-soft:#EDE4DB; --lt-soft-hover:#E6D8CE;
+  --lt-text:#211C1D; --lt-secondary:#57474C; --lt-muted:#6C5B60;
+  --lt-brand:#7A263A; --lt-brand-deep:#5D1F2E; --lt-gold:#7A263A; --lt-gold-soft:#EEE0DC;
+  --lt-border:#D8C4C4; --lt-control-border:#AD7A85;
+  --lt-shadow:0 2px 4px #5D1F2E05,0 12px 28px -14px #5D1F2E23;
+  --lt-shadow-hover:0 4px 8px #5D1F2E08,0 18px 36px -16px #5D1F2E30;
+  --lt-gradient:linear-gradient(135deg,#7A263A,#5D1F2E);
+  --line:#DED0CB; --light-border:#D8C4C4; --light-border-strong:#AD7A85;
+  --gold-line-color:#9B5967; --luxury-gradient-soft:linear-gradient(135deg,#F7F2EC,#EDE4DB);
+  --focus-ring:0 0 0 4px #7A263A22;
+  background:#F7F2EC !important;
+}
+html[data-theme="light"] body #siteHeader.glass .nav-links a { color:#57474C !important; }
+html[data-theme="light"] #siteHeader.glass .wordmark-name {
+  background:linear-gradient(112deg,#5D1F2E 0%,#7A263A 43%,#AC7480 57%,#5D1F2E 78%) !important;
+  -webkit-background-clip:text !important; background-clip:text !important;
+}
+html[data-theme="light"] #main-content #home.hero #credentialStrip {
+  --hc-bg:linear-gradient(135deg,#F7F2EC,#EDE4DB); --hc-edge:#D8C4C4;
+  --hc-heading:#211C1D; --hc-secondary:#57474C; --hc-gpa:#7A263A;
+  --hc-badge:#EEE0DC; --hc-badge-edge:#D8C4C4;
+}
+html[data-theme="light"] body #siteHeader.glass .nav-links a:is(.active,:hover,:focus-visible) { color:#7A263A !important; }
+html[data-theme="light"] body { background:var(--lt-bg) !important; }
+html[data-theme="light"] body #main-content .section-head h2 { color:#211C1D !important; -webkit-text-fill-color:#211C1D !important; }
+html[data-theme="light"] #main-content #materials .mname { color:#211C1D !important; }
+html[data-theme="light"] #main-content #materials .arrow { color:#7A263A !important; }
+html[data-theme="light"] ::selection { background:#DFC4CA; color:#211C1D; }
+html[data-theme="light"] header#siteHeader.glass,
+html[data-theme="light"] header#siteHeader.glass.scrolled {
+  --glass-text:#211C1D; --glass-muted:#57474C; --glass-surface:#F7F2ECCC;
+  background:rgba(247,242,236,.83) !important;
+  border-color:#7A263A2B !important;
+  box-shadow:inset 0 1px 0 #FFF9F280,0 8px 28px -12px #5D1F2E30 !important;
+}
+html[data-theme="light"] #siteHeader.glass::before {
+  background:linear-gradient(120deg,#FFF9F24A,#7A263A05 52%,#EDE4DB26) !important;
+}
+html[data-theme="light"] #siteHeader.glass .nav-links::before {
+  background:linear-gradient(145deg,#7A263A13,#EDE4DB90) !important;
+  border-color:#7A263A28 !important; box-shadow:inset 0 1px 0 #FFF9F288 !important;
+}
+html[data-theme="light"] #siteHeader.glass .nav-utility { border-color:#7A263A2D !important; }
+html[data-theme="light"] #siteHeader.glass .nav-links a:is(.active,:hover,:focus-visible),
+html[data-theme="light"] #siteHeader.glass :is(.lang-toggle,.theme-toggle,.hamburger) { color:var(--lt-brand) !important; }
+html[data-theme="light"] #siteHeader.glass.is-sheening::after { background:linear-gradient(90deg,transparent,#7A263A0A,transparent); }
+html[data-theme="light"] #home .hero-note { border-color:#7A263A30 !important; }
+html[data-theme="light"] #main-content :is(.about-card,.contact-box) {
+  background:linear-gradient(125deg,#EDE4DB,#F7F2EC 75%) !important;
+  border-color:var(--lt-border) !important;
+}
+html[data-theme="light"] #main-content :is(.project-details,.timeline-detail,.accordion-card,.skill-block,.material-card,.dev-card,.availability-item,.creative-item) {
+  background:var(--lt-soft) !important; border-color:var(--lt-border) !important; box-shadow:var(--lt-shadow) !important;
+}
+html[data-theme="light"] #main-content :is(.project-facts > div,.case-flow span,.materials-note,.skill-group li) {
+  background:#F3EBE4 !important; border-color:var(--lt-border) !important;
+}
+html[data-theme="light"] #main-content :is(.btn,.hero-action) { box-shadow:0 2px 3px #5D1F2E0A !important; }
+html[data-theme="light"] #home #btnCV.hero-action,
+html[data-theme="light"] #main-content .btn.btn-solid { box-shadow:0 8px 20px -9px #5D1F2E66 !important; }
+html[data-theme="light"] #main-content .section-head h2::after,
+html[data-theme="light"] #scrollProgress { background:linear-gradient(90deg,#7A263A,#AC7480) !important; }
+html[data-theme="light"] #mobileMenu.mobile-menu { background:#F7F2ECF5 !important; box-shadow:0 24px 70px -24px #5D1F2E40 !important; }
+html[data-theme="light"] #menuBackdrop { background:#211C1D55 !important; }
+html[data-theme="light"] #about .about-photo { box-shadow:0 12px 28px -14px #5D1F2E40 !important; }
+/* Green remains a small identity detail and a success signal. */
+html[data-theme="light"] #about .about-tag:first-child { color:#37604C !important; border-color:#37604C35 !important; background:#E4EBE2 !important; }
+html[data-theme="light"] shahd-lanyard {
+  --badge-glow-a:#7A263A0B !important; --badge-glow-b:#AF8C6520 !important;
+  --badge-glass-line:#7A263A20 !important;
+  --badge-glass-fill:linear-gradient(135deg,#EDE4DB99,#F7F2EC88) !important;
+  --badge-glass-shadow:0 14px 28px -18px #5D1F2E33 !important;
+  --badge-control-bg:#F7F2EC; --badge-control-border:#AD7A85; --badge-control-active:#EDE4DB; --badge-focus:#7A263A; --lanyard-hint:#655459;
+}
+html[data-theme="light"] #materials .materials-reader {
+  --device-dark:#4A3435; --device-green:#785D5A; --device-border:#7A263A30;
+}
+html[data-theme="light"] #materials .reader-back { background:linear-gradient(180deg,#B7A199,#755955); border-color:#977773; }
+html[data-theme="light"] #materials .reader-lip { background:linear-gradient(180deg,#B8A299,#82635E); border-color:#7A263A30; }
+html[data-theme="light"] #materials .device { box-shadow:0 18px 38px -15px #5D1F2E42,inset 0 1px 0 #FFF9F240; }
