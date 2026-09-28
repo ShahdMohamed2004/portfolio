@@ -381,21 +381,29 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     box-shadow:0 14px 30px -26px rgba(36,74,59,.34),
       inset 0 1px 0 rgba(255,255,255,.92) !important;
   }
-  /* Mobile Light Mode: separate education/material cards from the paper. */
+  /* Mobile Light Mode: warm burgundy/cream surfaces instead of green. */
   @media (max-width:720px){
     html[data-theme="light"] #main-content :is(.credential-strip .cred,.material-card,
       .approach-card,.dev-card,.skill-block,.contact-box,.accordion-card){
-      background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(229,239,232,.78)) !important;
-      border:1px solid rgba(47,88,73,.32) !important;
+      background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(247,239,232,.84)) !important;
+      border:1px solid rgba(91,20,37,.24) !important;
       border-radius:18px !important;
-      box-shadow:0 12px 26px -20px rgba(36,74,59,.42),
+      box-shadow:0 12px 26px -20px rgba(91,20,37,.28),
         inset 0 1px 0 rgba(255,255,255,.94) !important;
+    }
+    html[data-theme="light"] #credentials #educationSpine > .entry,
+    html[data-theme="light"] #credentials #educationSpine .timeline-detail{
+      background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(247,239,232,.86)) !important;
+      border-color:rgba(91,20,37,.26) !important;
+      border-radius:18px !important;
+      box-shadow:0 14px 30px -22px rgba(91,20,37,.30),
+        inset 0 1px 0 rgba(255,255,255,.96) !important;
     }
     html[data-theme="light"] #main-content .credential-strip .cred{
       border-inline-start:3px solid var(--yellow) !important;
     }
     html[dir="rtl"][data-theme="light"] #main-content .credential-strip .cred{
-      border-inline-start:1px solid rgba(47,88,73,.32) !important;
+      border-inline-start:1px solid rgba(91,20,37,.24) !important;
       border-inline-end:3px solid var(--yellow) !important;
     }
     header{
@@ -406,8 +414,8 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html[data-theme="light"] header,
     html[data-theme="light"] header.scrolled{
       background:rgba(250,248,245,.94) !important;
-      border-bottom-color:rgba(47,88,73,.18) !important;
-      box-shadow:0 6px 16px -14px rgba(36,74,59,.36) !important;
+      border-bottom-color:rgba(91,20,37,.16) !important;
+      box-shadow:0 6px 16px -14px rgba(91,20,37,.28) !important;
     }
   }
   html[data-theme="light"] #main-content :is(.about-card,.approach-card,.accordion-card,.material-card,
