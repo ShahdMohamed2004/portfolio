@@ -420,6 +420,51 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       inset 0 1px 0 rgba(255,255,255,.96) !important;
   }
 
+  /* Hero credential cards: preserve their colors and add only a glass reflection. */
+  #main-content #home.hero #credentialStrip .cred{
+    position:relative !important;
+    isolation:isolate !important;
+    overflow:hidden !important;
+  }
+  #main-content #home.hero #credentialStrip .cred::before{
+    content:"" !important;
+    position:absolute !important;
+    inset:0 !important;
+    z-index:0 !important;
+    pointer-events:none !important;
+    border-radius:inherit !important;
+    opacity:.62 !important;
+    background:linear-gradient(112deg,
+      transparent 0%,transparent 28%,
+      rgba(255,255,255,.18) 43%,
+      rgba(255,255,255,.055) 50%,
+      transparent 64%,transparent 100%) !important;
+  }
+  #main-content #home.hero #credentialStrip .cred > *{
+    position:relative !important;
+    z-index:1 !important;
+  }
+  html[data-theme="light"] #main-content #home.hero #credentialStrip .cred::before{
+    opacity:.74 !important;
+    background:linear-gradient(112deg,
+      transparent 0%,transparent 27%,
+      rgba(255,255,255,.72) 43%,
+      rgba(255,255,255,.22) 50%,
+      transparent 65%,transparent 100%) !important;
+  }
+  @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+    #main-content #home.hero #credentialStrip .cred:hover::before{
+      animation:credentialGlassSweep 1.05s var(--motion-ease) both;
+    }
+  }
+  @keyframes credentialGlassSweep{
+    from{transform:translateX(-34%);}
+    to{transform:translateX(34%);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #main-content #home.hero #credentialStrip .cred::before{animation:none !important;}
+  }
+
   .theme-toggle-mobile{
     width:auto;height:auto;border-radius:4px;border:1px solid var(--line-strong);
     padding:10px 14px;gap:10px;justify-content:flex-start;
