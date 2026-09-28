@@ -316,6 +316,67 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     html{scroll-snap-type:none;}
   }
 
+  /* Final visual polish: clearer light surfaces and one restrained motion system. */
+  :root{
+    --motion-ease:cubic-bezier(.23,1,.32,1);
+    --motion-duration:220ms;
+  }
+  @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+    :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
+      .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+      .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
+      transition:transform var(--motion-duration) var(--motion-ease),
+        border-color var(--motion-duration) ease,
+        box-shadow var(--motion-duration) ease,
+        background-color var(--motion-duration) ease !important;
+    }
+  }
+  @media (hover:none){
+    :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
+      .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+      .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):hover{
+      transform:none !important;
+    }
+  }
+  @media (prefers-reduced-motion:reduce){
+    :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
+      .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
+      .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
+      transition:none !important;
+    }
+  }
+
+  /* Light Mode: strengthen readable ink and separate cards from the paper surface. */
+  html[data-theme="light"] .section-lead,
+  html[data-theme="light"] .about-text p,
+  html[data-theme="light"] .materials-note,
+  html[data-theme="light"] .contact-box p,
+  html[data-theme="light"] .availability-item,
+  html[data-theme="light"] .school,
+  html[data-theme="light"] .entry p{
+    color:#40534b !important;
+  }
+  html[data-theme="light"] main.wrap > section:nth-of-type(even):not(#home){
+    background:linear-gradient(180deg,rgba(225,235,229,.22),rgba(255,255,255,0) 78%) !important;
+  }
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,
+    .project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,
+    .availability-item,.credential-strip .cred,.creative-item,.featured-case,
+    .case-visual,.project-visual){
+    border-color:rgba(47,88,73,.34) !important;
+    box-shadow:0 14px 30px -26px rgba(36,74,59,.34),
+      inset 0 1px 0 rgba(255,255,255,.92) !important;
+  }
+  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,
+    .project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,
+    .availability-item,.credential-strip .cred,.creative-item,.featured-case,
+    .case-visual,.project-visual):is(:hover,:focus-within){
+    border-color:rgba(47,107,87,.58) !important;
+    box-shadow:0 18px 36px -26px rgba(36,74,59,.38),
+      0 0 0 1px rgba(197,155,76,.14),
+      inset 0 1px 0 rgba(255,255,255,.96) !important;
+  }
+
   .theme-toggle-mobile{
     width:auto;height:auto;border-radius:4px;border:1px solid var(--line-strong);
     padding:10px 14px;gap:10px;justify-content:flex-start;
