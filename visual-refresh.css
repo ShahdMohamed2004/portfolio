@@ -321,3 +321,32 @@ html[dir="rtl"] #main-content :is(
     mix-blend-mode: screen;
   }
 }
+
+/* Reliable desktop fallback: width-based so touch-enabled laptops receive the same halo. */
+@media (min-width: 861px) {
+  html:not([data-theme="light"]) body::before {
+    background:
+      radial-gradient(ellipse 32% 62% at -3% 46%, rgba(74, 222, 128, .20), transparent 77%),
+      radial-gradient(ellipse 28% 58% at 103% 54%, rgba(74, 204, 120, .16), transparent 79%),
+      radial-gradient(ellipse 36% 30% at 50% 42%, rgba(231, 184, 78, .060), transparent 80%),
+      linear-gradient(180deg, #0b1c15 0%, #081711 48%, #07140f 100%) !important;
+  }
+  html:not([data-theme="light"]) .ambient-glow::before {
+    background:
+      radial-gradient(ellipse 32% 80% at 0% 48%, rgba(74, 222, 128, .28), transparent 77%),
+      radial-gradient(ellipse 25% 66% at 100% 55%, rgba(74, 204, 120, .21), transparent 79%),
+      linear-gradient(180deg, rgba(13, 48, 31, .14), transparent 28%, transparent 72%, rgba(15, 42, 27, .16));
+    filter: blur(36px);
+    opacity: .98;
+    mix-blend-mode: screen;
+  }
+  html:not([data-theme="light"]) .ambient-glow::after {
+    background:
+      radial-gradient(ellipse 19% 40% at 0% 12%, rgba(231, 184, 78, .17), transparent 80%),
+      radial-gradient(ellipse 21% 44% at 100% 88%, rgba(231, 184, 78, .13), transparent 82%),
+      radial-gradient(ellipse 28% 26% at 50% 44%, rgba(231, 184, 78, .045), transparent 82%);
+    filter: blur(26px);
+    opacity: .88;
+    mix-blend-mode: screen;
+  }
+}
