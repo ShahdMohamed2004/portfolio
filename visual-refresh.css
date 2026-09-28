@@ -173,3 +173,17 @@ html[dir="rtl"] #main-content :is(
   hyphens: none;
   -webkit-hyphens: none;
 }
+
+/* Bring the mobile ambient edge-light feeling to desktop without changing the dark canvas. */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  html:not([data-theme="light"]) .ambient-glow::before { opacity: .62; filter: blur(34px); }
+  html:not([data-theme="light"]) .ambient-glow::after { opacity: .56; filter: blur(18px); }
+  html:not([data-theme="light"]) .ambient-light-path { opacity: .62; filter: blur(34px); }
+  html:not([data-theme="light"]) .ambient-specular-ribbon { opacity: .46; filter: blur(9px); }
+}
+
+/* The horizontal timeline is a stable scroll indicator, not a draggable physics toy. */
+#home .tense-diagram svg { touch-action: auto; cursor: default; }
+#home .tense-diagram .timeline-travel-light { display: none !important; }
+#home .tense-diagram .spine-path,
+#home .tense-diagram .spine-glow { transition: none !important; }
