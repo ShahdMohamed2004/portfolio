@@ -13518,3 +13518,22 @@ html[data-theme="light"] #main-content :is(.education-card, .featured-case, .cas
   box-shadow: none !important;
   opacity: 0 !important;
 }
+
+/* ---------- light-mode card parity for project timelines ---------- */
+html[data-theme="light"] #work #workSpine .project-details,
+html[data-theme="light"] #experience #experienceSpine > .entry > .timeline-detail {
+  background: linear-gradient(145deg, rgba(250, 251, 247, .98), rgba(231, 240, 233, .94)) !important;
+  border: 1px solid rgba(73, 105, 101, .26) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 12px 26px -22px rgba(45, 82, 78, .34), inset 0 1px 0 rgba(255, 255, 255, .88) !important;
+}
+html[data-theme="light"] #work #workSpine .project-details::before,
+html[data-theme="light"] #work #workSpine .project-details::after,
+html[data-theme="light"] #experience #experienceSpine > .entry > .timeline-detail::before,
+html[data-theme="light"] #experience #experienceSpine > .entry > .timeline-detail::after {
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+}
+/* ---------- end light-mode card parity ---------- */
