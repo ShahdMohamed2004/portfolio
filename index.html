@@ -2445,6 +2445,84 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .hero .credential-strip .cred{padding:18px 16px;}
     .about-card{padding:26px 17px 24px;}
   }
+
+  /* Selected work: one calm card surface on phones, with comfortable copy and compact actions. */
+  @media (max-width:767px){
+    #work #workSpine .project-details-body{padding:18px clamp(14px,4vw,18px) 22px !important;}
+
+    /* The featured graduation project lives inside its project card; remove its duplicate frame. */
+    #work #workSpine .project-details-body > .embedded-case-study,
+    html[data-theme="light"] #work #workSpine .project-details-body > .embedded-case-study{
+      margin:0 !important;
+      padding:0 !important;
+      border:0 !important;
+      border-radius:0 !important;
+      outline:0 !important;
+      background:transparent !important;
+      box-shadow:none !important;
+    }
+    #work #workSpine .project-details-body > .embedded-case-study::before,
+    #work #workSpine .project-details-body > .embedded-case-study::after{
+      content:none !important;
+      display:none !important;
+    }
+    #work #workSpine .embedded-case-study .featured-case-content,
+    #work #workSpine .embedded-case-study .featured-case-content-inner,
+    #work #workSpine .embedded-case-study .featured-case-copy{
+      width:100% !important;
+      max-width:100% !important;
+      margin:0 !important;
+      padding:0 !important;
+    }
+
+    /* Keep the requested justification, but give the text a more readable phone rhythm. */
+    #work #workSpine .project-details-body p,
+    #work #workSpine .featured-case-copy p{
+      font-size:clamp(.95rem,3.9vw,1rem) !important;
+      line-height:1.85 !important;
+      letter-spacing:normal !important;
+      text-align:justify !important;
+      text-align-last:start !important;
+      text-justify:inter-word !important;
+      word-spacing:normal !important;
+      overflow-wrap:break-word !important;
+      word-break:normal !important;
+    }
+    html[dir="rtl"] #work #workSpine .project-details-body p,
+    html[dir="rtl"] #work #workSpine .featured-case-copy p{
+      direction:rtl !important;
+      text-align:justify !important;
+      text-align-last:start !important;
+      hyphens:none !important;
+      -webkit-hyphens:none !important;
+    }
+
+    /* Project actions follow the copy edge instead of stretching into wide panels. */
+    #work #workSpine .project-details-body .proj-links{
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:flex-start !important;
+      gap:9px !important;
+      margin-top:16px !important;
+    }
+    #work #workSpine .project-details-body .proj-link{
+      flex:0 1 auto !important;
+      width:fit-content !important;
+      max-width:min(100%,15rem) !important;
+      height:auto !important;
+      min-height:46px !important;
+      box-sizing:border-box !important;
+      justify-content:flex-start !important;
+      padding:11px 14px !important;
+      text-align:start !important;
+      line-height:1.45 !important;
+    }
+    html[dir="rtl"] #work #workSpine .project-details-body .proj-links{align-items:flex-end !important;}
+    html[dir="rtl"] #work #workSpine .project-details-body .proj-link{
+      direction:rtl !important;
+      flex-direction:row-reverse !important;
+    }
+  }
 </style>
 
 
