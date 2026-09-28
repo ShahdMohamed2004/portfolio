@@ -322,24 +322,23 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     --motion-duration:220ms;
   }
   @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
-    :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
+    #main-content :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
       .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
       .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
-      transition:transform var(--motion-duration) var(--motion-ease),
-        border-color var(--motion-duration) ease,
-        box-shadow var(--motion-duration) ease,
-        background-color var(--motion-duration) ease !important;
+      transition-duration:var(--motion-duration) !important;
+      transition-timing-function:var(--motion-ease) !important;
+      transition-property:transform,border-color,box-shadow,background-color !important;
     }
   }
   @media (hover:none){
-    :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
+    #main-content :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
       .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
       .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual):hover{
       transform:none !important;
     }
   }
   @media (prefers-reduced-motion:reduce){
-    :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
+    #main-content :is(.about-card,.approach-card,.accordion-card,.material-card,.project-details,
       .timeline-detail,.dev-card,.skill-block,.contact-box,.availability-item,
       .credential-strip .cred,.creative-item,.featured-case,.case-visual,.project-visual){
       transition:none !important;
@@ -359,7 +358,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
   html[data-theme="light"] main.wrap > section:nth-of-type(even):not(#home){
     background:linear-gradient(180deg,rgba(225,235,229,.22),rgba(255,255,255,0) 78%) !important;
   }
-  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,
+  html[data-theme="light"] #main-content :is(.about-card,.approach-card,.accordion-card,.material-card,
     .project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,
     .availability-item,.credential-strip .cred,.creative-item,.featured-case,
     .case-visual,.project-visual){
@@ -367,7 +366,7 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     box-shadow:0 14px 30px -26px rgba(36,74,59,.34),
       inset 0 1px 0 rgba(255,255,255,.92) !important;
   }
-  html[data-theme="light"] :is(.about-card,.approach-card,.accordion-card,.material-card,
+  html[data-theme="light"] #main-content :is(.about-card,.approach-card,.accordion-card,.material-card,
     .project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,
     .availability-item,.credential-strip .cred,.creative-item,.featured-case,
     .case-visual,.project-visual):is(:hover,:focus-within){
