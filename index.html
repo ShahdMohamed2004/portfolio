@@ -481,6 +481,29 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     #main-content #home.hero #credentialStrip .cred::before{animation:none !important;}
   }
 
+  /* Smooth UI transitions for theme, language, and the mobile drawer. */
+  .mobile-menu{
+    will-change:transform;
+    transition:transform .36s var(--motion-ease),opacity .28s ease,box-shadow .36s ease !important;
+  }
+  .menu-backdrop{
+    transition:opacity .32s var(--motion-ease) !important;
+  }
+  #main-content.language-switching{
+    opacity:.82;
+    transition:opacity .24s var(--motion-ease) !important;
+  }
+  @supports (view-transition-name:root){
+    ::view-transition-old(portfolio-content),
+    ::view-transition-new(portfolio-content){
+      animation-duration:.3s;
+      animation-timing-function:var(--motion-ease);
+    }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .mobile-menu,.menu-backdrop,#main-content.language-switching{transition:none !important;}
+  }
+
   .theme-toggle-mobile{
     width:auto;height:auto;border-radius:4px;border:1px solid var(--line-strong);
     padding:10px 14px;gap:10px;justify-content:flex-start;
@@ -4084,7 +4107,11 @@ const SITE_AR = {
     // Keep the locale update synchronous: delaying it inside View Transition
     // made the whole page feel heavy, especially on mobile browsers.
     content.classList.add('language-switching');
-    finish();
+    if(document.startViewTransition && !reducedMQ.matches){
+      document.startViewTransition(finish);
+    } else {
+      finish();
+    }
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         content.classList.remove('language-switching');
