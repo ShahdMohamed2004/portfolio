@@ -2523,6 +2523,42 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       flex-direction:row-reverse !important;
     }
   }
+
+  /* Desktop browsers get the same soft edge atmosphere as phones, plus a low center fill. */
+  @media (min-width:768px){
+    html:not([data-theme="light"]) body::after{
+      display:block !important;
+      z-index:0 !important;
+      opacity:.82 !important;
+      background:
+        radial-gradient(32% 42% at -3% 44%,rgba(217,181,106,.22),transparent 72%),
+        radial-gradient(30% 40% at 103% 62%,rgba(62,132,89,.24),transparent 72%),
+        radial-gradient(18% 28% at 0% 88%,rgba(62,132,89,.14),transparent 74%),
+        radial-gradient(18% 25% at 100% 16%,rgba(217,181,106,.12),transparent 74%),
+        radial-gradient(34% 32% at 50% 48%,rgba(62,132,89,.07),transparent 84%),
+        radial-gradient(28% 28% at 50% 58%,rgba(231,184,78,.055),transparent 82%) !important;
+      filter:blur(10px) !important;
+      mix-blend-mode:screen !important;
+      pointer-events:none !important;
+      transition:none !important;
+    }
+    html[data-theme="light"] body::after{
+      display:block !important;
+      z-index:0 !important;
+      opacity:.68 !important;
+      background:
+        radial-gradient(32% 42% at -3% 44%,rgba(190,153,65,.13),transparent 72%),
+        radial-gradient(30% 40% at 103% 62%,rgba(73,139,101,.12),transparent 72%),
+        radial-gradient(18% 28% at 0% 88%,rgba(73,139,101,.08),transparent 74%),
+        radial-gradient(18% 25% at 100% 16%,rgba(190,153,65,.06),transparent 74%),
+        radial-gradient(34% 32% at 50% 48%,rgba(73,139,101,.045),transparent 84%),
+        radial-gradient(28% 28% at 50% 58%,rgba(190,153,65,.035),transparent 82%) !important;
+      filter:blur(12px) !important;
+      mix-blend-mode:multiply !important;
+      pointer-events:none !important;
+      transition:none !important;
+    }
+  }
 </style>
 
 
