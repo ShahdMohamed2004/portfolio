@@ -344,6 +344,14 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       transition:none !important;
     }
   }
+  @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+    #main-content #work #workSpine .project-details,
+    #main-content #experience #experienceSpine > .entry > .timeline-detail{
+      transition-duration:var(--motion-duration) !important;
+      transition-timing-function:var(--motion-ease) !important;
+      transition-property:transform,border-color,box-shadow,background-color !important;
+    }
+  }
 
   /* Light Mode: strengthen readable ink and separate cards from the paper surface. */
   html[data-theme="light"] .section-lead,
@@ -362,6 +370,13 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     .project-details,.timeline-detail,.dev-card,.skill-block,.contact-box,
     .availability-item,.credential-strip .cred,.creative-item,.featured-case,
     .case-visual,.project-visual){
+    border-color:rgba(47,88,73,.34) !important;
+    box-shadow:0 14px 30px -26px rgba(36,74,59,.34),
+      inset 0 1px 0 rgba(255,255,255,.92) !important;
+  }
+  html[data-theme="light"] #main-content #work #workSpine .project-details,
+  html[data-theme="light"] #main-content #experience #experienceSpine > .entry > .timeline-detail{
+    background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(235,244,239,.58)) !important;
     border-color:rgba(47,88,73,.34) !important;
     box-shadow:0 14px 30px -26px rgba(36,74,59,.34),
       inset 0 1px 0 rgba(255,255,255,.92) !important;
