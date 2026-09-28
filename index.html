@@ -289,6 +289,18 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     }
   }
 
+  /* Desktop reading rhythm: give each section a full-screen beat without
+     changing the compact, naturally flowing mobile layout. */
+  @media (min-width:861px){
+    main.wrap > section:not(#home){
+      min-height:calc(100svh - 84px);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    main.wrap > section#home{min-height:100svh;}
+  }
+
   .theme-toggle-mobile{
     width:auto;height:auto;border-radius:4px;border:1px solid var(--line-strong);
     padding:10px 14px;gap:10px;justify-content:flex-start;
