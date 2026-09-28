@@ -301,6 +301,21 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     main.wrap > section#home{min-height:100svh;}
   }
 
+  /* Desktop-only section snapping: mobile keeps native free scrolling. */
+  @media (min-width:861px){
+    html{
+      scroll-snap-type:y proximity;
+      scroll-padding-top:84px;
+    }
+    main.wrap > section{
+      scroll-snap-align:start;
+      scroll-snap-stop:normal;
+    }
+  }
+  @media (min-width:861px) and (prefers-reduced-motion:reduce){
+    html{scroll-snap-type:none;}
+  }
+
   .theme-toggle-mobile{
     width:auto;height:auto;border-radius:4px;border:1px solid var(--line-strong);
     padding:10px 14px;gap:10px;justify-content:flex-start;
