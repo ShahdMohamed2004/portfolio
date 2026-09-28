@@ -13537,3 +13537,79 @@ html[data-theme="light"] #experience #experienceSpine > .entry > .timeline-detai
   opacity: 0 !important;
 }
 /* ---------- end light-mode card parity ---------- */
+
+/* ---------- translucent site cards, About intentionally excluded ----------
+   Let the page atmosphere show through the cards while retaining a readable
+   glass surface and the existing responsive geometry. */
+html:not([data-theme="light"]) #main-content :is(
+  .approach-card,
+  .accordion-card,
+  .material-card,
+  .project-details,
+  .timeline-detail,
+  .dev-card,
+  .skill-block,
+  .contact-box,
+  .credential-strip .cred,
+  .availability-item,
+  .creative-item,
+  .education-card,
+  .featured-case,
+  .case-visual,
+  .project-visual
+) {
+  background: rgba(16, 40, 30, .28) !important;
+  border-color: rgba(157, 184, 165, .28) !important;
+  box-shadow: 0 12px 26px -22px rgba(0, 0, 0, .72), inset 0 1px 0 rgba(255, 255, 255, .045) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(118%) !important;
+  backdrop-filter: blur(10px) saturate(118%) !important;
+}
+html[data-theme="light"] #main-content :is(
+  .approach-card,
+  .accordion-card,
+  .material-card,
+  .project-details,
+  .timeline-detail,
+  .dev-card,
+  .skill-block,
+  .contact-box,
+  .credential-strip .cred,
+  .availability-item,
+  .creative-item,
+  .education-card,
+  .featured-case,
+  .case-visual,
+  .project-visual
+) {
+  background: rgba(255, 255, 255, .34) !important;
+  border-color: rgba(73, 105, 101, .26) !important;
+  box-shadow: 0 12px 26px -22px rgba(45, 82, 78, .24), inset 0 1px 0 rgba(255, 255, 255, .72) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(112%) !important;
+  backdrop-filter: blur(10px) saturate(112%) !important;
+}
+/* Higher-specificity timeline rules must also become translucent. */
+html:not([data-theme="light"]) #work #workSpine .project-details,
+html:not([data-theme="light"]) #experience #experienceSpine > .entry > .timeline-detail,
+html[data-theme="light"] #work #workSpine .project-details,
+html[data-theme="light"] #experience #experienceSpine > .entry > .timeline-detail {
+  background: rgba(255, 255, 255, .18) !important;
+  border-color: rgba(157, 184, 165, .28) !important;
+  box-shadow: 0 12px 26px -22px rgba(45, 82, 78, .24), inset 0 1px 0 rgba(255, 255, 255, .55) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(112%) !important;
+  backdrop-filter: blur(10px) saturate(112%) !important;
+}
+html:not([data-theme="light"]) #work #workSpine .project-details,
+html:not([data-theme="light"]) #experience #experienceSpine > .entry > .timeline-detail {
+  background: rgba(16, 40, 30, .28) !important;
+}
+/* ---------- end translucent site cards ---------- */
+
+/* Final Light Mode priority: timeline cards use the same pale glass as every other card. */
+html[data-theme="light"] #work #workSpine .project-details,
+html[data-theme="light"] #experience #experienceSpine > .entry > .timeline-detail {
+  background: rgba(255, 255, 255, .34) !important;
+  border-color: rgba(73, 105, 101, .26) !important;
+  box-shadow: 0 12px 26px -22px rgba(45, 82, 78, .24), inset 0 1px 0 rgba(255, 255, 255, .72) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(112%) !important;
+  backdrop-filter: blur(10px) saturate(112%) !important;
+}
