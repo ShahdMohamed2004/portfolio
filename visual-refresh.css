@@ -154,3 +154,52 @@ html:not([data-theme="light"]) #home .credential-strip .cred {
     transition: none !important;
   }
 }
+
+/* Long-form copy alignment: justify paragraphs, but keep headings, labels, metadata, and controls natural. */
+#main-content :is(
+  p,
+  .section-lead,
+  .about-bio,
+  .creative-lead,
+  .materials-note,
+  .project-description
+) {
+  text-align: justify !important;
+  text-align-last: start !important;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+html[dir="rtl"] #main-content :is(
+  p,
+  .section-lead,
+  .about-bio,
+  .creative-lead,
+  .materials-note,
+  .project-description
+) {
+  text-align: justify !important;
+  text-align-last: start !important;
+  text-justify: inter-character;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+/* One-line and UI copy should never be stretched by the paragraph rule. */
+#main-content :is(
+  .hero-note,
+  .section-tag,
+  .about-kicker,
+  .about-role,
+  .mname,
+  .entry-flag,
+  .badge,
+  .meta-label,
+  .ownership-note,
+  .work-count,
+  .materials-reader-status
+) {
+  text-align: start !important;
+  text-align-last: auto !important;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
