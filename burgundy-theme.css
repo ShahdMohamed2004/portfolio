@@ -110,3 +110,86 @@ html[data-theme="light"] #contactIntro{color:#000 !important;}
   html[data-theme="light"] header#siteHeader #langToggle{height:38px !important;min-width:64px !important;padding-inline:8px !important;font-size:.74rem !important;}
   html[data-theme="light"] header#siteHeader .hamburger{width:44px !important;height:44px !important;min-width:44px !important;padding:8px !important;}
 }
+
+/* Final light-mode cleanup: compact mobile header and no green remnants. */
+html[data-theme="light"] .section-tag,
+html[data-theme="light"] .section-head .section-tag,
+html[data-theme="light"] .hero-note,
+html[data-theme="light"] .entry-flag,
+html[data-theme="light"] .featured-case-meta span{
+  background-image:none !important;
+  -webkit-text-fill-color:#8c3047 !important;
+  color:#8c3047 !important;
+  text-shadow:none !important;
+}
+html[data-theme="light"] .section-head::after{background:linear-gradient(90deg,#8c3047,transparent) !important;}
+html[data-theme="light"] #about .about-who{border-inline-start-color:rgba(140,48,71,.48) !important;}
+html[data-theme="light"] #about .about-name{color:#4a202d !important;}
+
+html[data-theme="light"] #work #workSpine .project-details,
+html[data-theme="light"] #work #workSpine .project-details[open],
+html[data-theme="light"] #experience #experienceSpine .timeline-detail,
+html[data-theme="light"] #experience #experienceSpine .timeline-detail[open],
+html[data-theme="light"] #development #developmentGrid .accordion-card,
+html[data-theme="light"] #development #developmentGrid .accordion-card[open],
+html[data-theme="light"] #skills #skillsGrid .skill-block,
+html[data-theme="light"] #materials .material-card,
+html[data-theme="light"] #whatIDoGrid .approach-card,
+html[data-theme="light"] #howITeachGrid .accordion-card{
+  background:linear-gradient(145deg,#fff7f7,#f1dfe3) !important;
+  background-image:linear-gradient(145deg,rgba(255,255,255,.90),rgba(238,207,215,.72)) !important;
+  border-color:rgba(140,48,71,.26) !important;
+  box-shadow:0 16px 34px -29px rgba(111,32,53,.28),inset 0 1px 0 rgba(255,255,255,.94) !important;
+}
+html[data-theme="light"] #work #workSpine .project-details:hover,
+html[data-theme="light"] #experience #experienceSpine .timeline-detail:hover,
+html[data-theme="light"] #experience #experienceSpine .timeline-detail:focus-within,
+html[data-theme="light"] #development #developmentGrid .accordion-card:hover,
+html[data-theme="light"] #development #developmentGrid .accordion-card[open],
+html[data-theme="light"] #skills #skillsGrid .skill-block:hover,
+html[data-theme="light"] #materials .material-card:hover,
+html[data-theme="light"] #whatIDoGrid .approach-card:hover,
+html[data-theme="light"] #howITeachGrid .accordion-card:hover,
+html[data-theme="light"] #howITeachGrid .accordion-card[open]{
+  background-image:linear-gradient(145deg,rgba(255,255,255,.96),rgba(231,186,198,.78)) !important;
+  border-color:rgba(140,48,71,.50) !important;
+}
+html[data-theme="light"] #work #workSpine .project-details :is(summary,h3),
+html[data-theme="light"] #experience #experienceSpine .timeline-detail :is(summary,h3),
+html[data-theme="light"] #development #developmentGrid .accordion-card summary,
+html[data-theme="light"] #skills #skillsGrid .skill-block h3,
+html[data-theme="light"] #materials .material-card .mname,
+html[data-theme="light"] #whatIDoGrid .approach-card h3,
+html[data-theme="light"] #howITeachGrid .accordion-card summary{color:#4a202d !important;}
+html[data-theme="light"] #work #workSpine .project-details-body,
+html[data-theme="light"] #experience #experienceSpine .timeline-detail > :not(summary),
+html[data-theme="light"] #development #developmentGrid .accordion-body,
+html[data-theme="light"] #skills #skillsGrid .skill-block p,
+html[data-theme="light"] #skills #skillsGrid .skill-group li,
+html[data-theme="light"] #materials .material-card,
+html[data-theme="light"] #whatIDoGrid .approach-card p,
+html[data-theme="light"] #howITeachGrid .accordion-body{color:#765d66 !important;}
+html[data-theme="light"] #skills #skillsGrid .skill-group li{border-color:rgba(140,48,71,.22) !important;background:rgba(255,255,255,.44) !important;}
+html[data-theme="light"] #skills #skillsGrid .skill-group li:hover{border-color:rgba(140,48,71,.44) !important;background:rgba(235,192,202,.34) !important;}
+
+/* Revert only the light mobile header to the compact proportions. */
+@media (max-width:860px){
+  html[data-theme="light"] header#siteHeader,
+  html[data-theme="light"] header#siteHeader.scrolled{min-height:58px !important;border-radius:16px !important;}
+  html[data-theme="light"] header#siteHeader nav,
+  html[data-theme="light"] header#siteHeader.scrolled nav{height:58px !important;min-height:58px !important;padding-inline:12px !important;gap:10px !important;}
+  html[data-theme="light"] header#siteHeader .wordmark{font-size:clamp(.78rem,4vw,1rem) !important;max-width:44vw !important;}
+  html[data-theme="light"] header#siteHeader .nav-utility{gap:8px !important;}
+  html[data-theme="light"] header#siteHeader #langToggle{height:34px !important;min-width:70px !important;padding-inline:9px !important;font-size:.76rem !important;}
+  html[data-theme="light"] header#siteHeader .hamburger{width:42px !important;height:42px !important;min-width:42px !important;padding:8px !important;}
+  html[data-theme="light"] header#siteHeader .hamburger svg{width:24px !important;height:24px !important;}
+}
+@media (max-width:420px){
+  html[data-theme="light"] header#siteHeader,
+  html[data-theme="light"] header#siteHeader.scrolled{min-height:56px !important;border-radius:15px !important;}
+  html[data-theme="light"] header#siteHeader nav,
+  html[data-theme="light"] header#siteHeader.scrolled nav{height:56px !important;min-height:56px !important;padding-inline:10px !important;gap:6px !important;}
+  html[data-theme="light"] header#siteHeader .wordmark{font-size:.86rem !important;max-width:43vw !important;}
+  html[data-theme="light"] header#siteHeader #langToggle{height:34px !important;min-width:64px !important;padding-inline:7px !important;font-size:.72rem !important;}
+  html[data-theme="light"] header#siteHeader .hamburger{width:40px !important;height:40px !important;min-width:40px !important;padding:7px !important;}
+}
