@@ -253,3 +253,34 @@ html[data-theme="light"] #about .about-tags .about-tag{
 }
 @keyframes burgundy-glass-shimmer{0%,100%{background-position:100% 50%;}50%{background-position:0% 50%;}}
 @media (prefers-reduced-motion:reduce){html[data-theme="light"] #about .about-name{animation:none !important;background-position:50% 50% !important;}}
+
+/* Mobile header alignment: keep the compact white pill balanced and fully oval. */
+@media (max-width:860px){
+  html[data-theme="light"] header#siteHeader nav,
+  html[data-theme="light"] header#siteHeader.scrolled nav{
+    display:flex !important;align-items:center !important;justify-content:space-between !important;
+    overflow:visible !important;box-sizing:border-box !important;
+  }
+  html[data-theme="light"] header#siteHeader .wordmark{
+    flex:1 1 auto !important;min-width:0 !important;display:flex !important;align-items:center !important;
+    overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important;line-height:1 !important;
+  }
+  html[data-theme="light"] header#siteHeader .nav-utility{
+    flex:0 0 auto !important;display:flex !important;align-items:center !important;justify-content:flex-end !important;
+    min-width:max-content !important;margin-inline-start:auto !important;gap:5px !important;height:100% !important;
+  }
+  html[data-theme="light"] header#siteHeader .mini-control-pill{
+    display:flex !important;align-items:center !important;justify-content:center !important;flex:0 0 auto !important;
+    height:34px !important;min-height:34px !important;padding:2px 5px !important;gap:4px !important;
+    border-radius:999px !important;box-sizing:border-box !important;
+  }
+  html[data-theme="light"] header#siteHeader .mini-control-divider{height:18px !important;flex:0 0 1px !important;}
+  html[data-theme="light"] header#siteHeader #langToggle{flex:0 0 auto !important;}
+  html[data-theme="light"] header#siteHeader #themeToggle{width:29px !important;height:29px !important;min-width:29px !important;padding:4px !important;display:inline-flex !important;}
+  html[data-theme="light"] header#siteHeader .hamburger{flex:0 0 auto !important;align-self:center !important;}
+}
+@media (max-width:420px){
+  html[data-theme="light"] header#siteHeader .mini-control-pill{height:32px !important;min-height:32px !important;padding-inline:4px !important;gap:3px !important;}
+  html[data-theme="light"] header#siteHeader .mini-control-divider{height:17px !important;}
+  html[data-theme="light"] header#siteHeader #themeToggle{width:27px !important;height:27px !important;min-width:27px !important;padding:3px !important;}
+}
