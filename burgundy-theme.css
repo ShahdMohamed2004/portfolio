@@ -71,3 +71,20 @@ html[data-theme="light"] .ambient-glow::before{background:radial-gradient(ellips
 html[data-theme="light"] .ambient-glow::after{background:radial-gradient(ellipse 22% 52% at 100% 50%,rgba(184,92,114,.08),transparent 74%),radial-gradient(ellipse 18% 38% at 0% 88%,rgba(155,63,85,.05),transparent 76%) !important;opacity:.36 !important;animation-delay:-9s !important;}
 @keyframes burgundy-edge-breathe{0%{transform:scale(1) translate3d(-.35%,0,0);opacity:.72;}100%{transform:scale(1.035) translate3d(.35%,.25%,0);opacity:.92;}}
 @media (prefers-reduced-motion:reduce){html[data-theme="light"] .ambient-glow::before,html[data-theme="light"] .ambient-glow::after{animation:none !important;}}
+
+/* Teaching Experience and contact paragraph: light mode only. */
+html[data-theme="light"] #experienceSpine .timeline-detail,
+html[data-theme="light"] #experienceSpine .timeline-detail[open]{
+  background:linear-gradient(145deg,#fff7f7,#f4e2e6) !important;
+  border-color:rgba(140,48,71,.24) !important;
+  box-shadow:0 16px 34px -29px rgba(111,32,53,.30),inset 0 1px 0 rgba(255,255,255,.94) !important;
+}
+html[data-theme="light"] #experienceSpine .timeline-detail:hover,
+html[data-theme="light"] #experienceSpine .timeline-detail:focus-within,
+html[data-theme="light"] #experienceSpine .timeline-detail[open]{
+  background-image:linear-gradient(145deg,rgba(255,255,255,.94),rgba(235,192,202,.78)) !important;
+  border-color:rgba(140,48,71,.48) !important;
+}
+html[data-theme="light"] #experienceSpine .timeline-detail > summary h3{color:#4a202d !important;}
+html[data-theme="light"] #experienceSpine .timeline-detail > :not(summary){color:#765d66 !important;}
+html[data-theme="light"] #contactIntro{color:#000 !important;}
