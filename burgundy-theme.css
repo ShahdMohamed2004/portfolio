@@ -668,3 +668,13 @@ html[data-theme="light"] #main-content #contact #contactIntro {
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
 }
+
+/* Final Light Mode color alignment for materials lead and contact card. */
+html[data-theme="light"] #main-content #materials .section-head .section-lead {
+  color: #7a263a !important;
+  -webkit-text-fill-color: #7a263a !important;
+  text-shadow: none !important;
+}
+html[data-theme="light"] #main-content #contact .contact-box {
+  border-color: rgba(122,38,58,.52) !important;
+}
