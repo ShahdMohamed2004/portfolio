@@ -193,3 +193,63 @@ html[data-theme="light"] #skills #skillsGrid .skill-group li:hover{border-color:
   html[data-theme="light"] header#siteHeader #langToggle{height:34px !important;min-width:64px !important;padding-inline:7px !important;font-size:.72rem !important;}
   html[data-theme="light"] header#siteHeader .hamburger{width:40px !important;height:40px !important;min-width:40px !important;padding:7px !important;}
 }
+
+/* Final requested pass: compact soft-oval header and burgundy inner surfaces. */
+@media (max-width:860px){
+  html[data-theme="light"] header#siteHeader,
+  html[data-theme="light"] header#siteHeader.scrolled{
+    top:10px !important;inset-inline:20px !important;width:auto !important;max-width:calc(100vw - 40px) !important;
+    min-height:48px !important;height:48px !important;border-radius:999px !important;
+    background:rgba(255,255,255,.96) !important;border:1px solid rgba(140,48,71,.20) !important;
+    box-shadow:0 8px 22px -16px rgba(111,32,53,.28),inset 0 1px 0 rgba(255,255,255,.98) !important;
+    backdrop-filter:blur(14px) saturate(108%) !important;-webkit-backdrop-filter:blur(14px) saturate(108%) !important;
+  }
+  html[data-theme="light"] header#siteHeader nav,
+  html[data-theme="light"] header#siteHeader.scrolled nav{
+    height:48px !important;min-height:48px !important;padding-inline:10px !important;gap:7px !important;
+  }
+  html[data-theme="light"] header#siteHeader .wordmark{font-size:.82rem !important;max-width:42vw !important;}
+  html[data-theme="light"] header#siteHeader .nav-utility{gap:5px !important;}
+  html[data-theme="light"] header#siteHeader #langToggle{height:30px !important;min-width:58px !important;padding-inline:7px !important;font-size:.68rem !important;}
+  html[data-theme="light"] header#siteHeader .hamburger{width:34px !important;height:34px !important;min-width:34px !important;padding:5px !important;}
+  html[data-theme="light"] header#siteHeader .hamburger svg{width:21px !important;height:21px !important;}
+}
+@media (max-width:420px){
+  html[data-theme="light"] header#siteHeader,
+  html[data-theme="light"] header#siteHeader.scrolled{inset-inline:14px !important;max-width:calc(100vw - 28px) !important;min-height:46px !important;height:46px !important;}
+  html[data-theme="light"] header#siteHeader nav,
+  html[data-theme="light"] header#siteHeader.scrolled nav{height:46px !important;min-height:46px !important;padding-inline:8px !important;gap:5px !important;}
+  html[data-theme="light"] header#siteHeader .wordmark{font-size:.78rem !important;max-width:40vw !important;}
+  html[data-theme="light"] header#siteHeader #langToggle{height:29px !important;min-width:54px !important;font-size:.65rem !important;}
+  html[data-theme="light"] header#siteHeader .hamburger{width:32px !important;height:32px !important;min-width:32px !important;padding:4px !important;}
+}
+
+html[data-theme="light"] #about .about-card,
+html[data-theme="light"] #work #workSpine .project-details,
+html[data-theme="light"] #work #workSpine .project-details[open],
+html[data-theme="light"] #experience #experienceSpine .timeline-detail,
+html[data-theme="light"] #experience #experienceSpine .timeline-detail[open]{
+  background:linear-gradient(145deg,#fff4f5,#eed7dd) !important;
+  border-color:rgba(140,48,71,.30) !important;
+  box-shadow:0 18px 36px -30px rgba(111,32,53,.34),inset 0 1px 0 rgba(255,255,255,.95) !important;
+}
+html[data-theme="light"] #work #workSpine .project-details-body,
+html[data-theme="light"] #experience #experienceSpine .timeline-detail > :not(summary){
+  background:rgba(255,247,248,.38) !important;color:#765d66 !important;
+}
+html[data-theme="light"] #about .about-bio{
+  color:#000 !important;text-shadow:none !important;
+}
+html[data-theme="light"] #about .about-role{
+  color:#5b2034 !important;font-weight:600 !important;
+}
+html[data-theme="light"] #about .about-name{
+  color:transparent !important;background:linear-gradient(108deg,#4a202d 0%,#7a263a 30%,#f2cdd5 47%,#8c3047 59%,#4a202d 100%) !important;
+  background-size:240% 100% !important;background-clip:text !important;-webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;animation:burgundy-glass-shimmer 8s ease-in-out infinite !important;
+}
+html[data-theme="light"] #about .about-tags .about-tag{
+  color:#6f2035 !important;background:rgba(255,247,248,.72) !important;border-color:rgba(140,48,71,.28) !important;
+}
+@keyframes burgundy-glass-shimmer{0%,100%{background-position:100% 50%;}50%{background-position:0% 50%;}}
+@media (prefers-reduced-motion:reduce){html[data-theme="light"] #about .about-name{animation:none !important;background-position:50% 50% !important;}}
