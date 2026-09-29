@@ -470,3 +470,158 @@ html[data-theme="light"] body#artifacts-component-root-html #main-content #work 
   color: var(--light-burgundy) !important;
   -webkit-text-fill-color: var(--light-burgundy) !important;
 }
+
+/* Mobile polish pass — final alignment, full oval geometry and visible side atmosphere. */
+@media (max-width: 860px) {
+  html[data-theme="light"] header#siteHeader,
+  html[data-theme="light"] header#siteHeader.scrolled {
+    inset-inline: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding: 0 !important;
+    border-radius: 9999px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  html[data-theme="light"] header#siteHeader nav,
+  html[data-theme="light"] header#siteHeader.scrolled nav {
+    width: 100% !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding: 0 10px 0 14px !important;
+    margin: 0 !important;
+    gap: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+    border-radius: inherit !important;
+  }
+  html[data-theme="light"] header#siteHeader .wordmark {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    line-height: 1 !important;
+    transform: none !important;
+  }
+  html[data-theme="light"] header#siteHeader .wordmark-name {
+    display: block !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+  }
+  html[data-theme="light"] header#siteHeader .nav-utility {
+    flex: 0 0 auto !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+  }
+  html[data-theme="light"] header#siteHeader .mini-control-pill {
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 2px 5px !important;
+    gap: 4px !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+  html[data-theme="light"] header#siteHeader #langToggle {
+    height: 30px !important;
+    min-width: 54px !important;
+    padding: 0 7px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    border-radius: 9999px !important;
+  }
+  html[data-theme="light"] header#siteHeader #themeToggle {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    padding: 4px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+  }
+  html[data-theme="light"] header#siteHeader .mini-control-divider { height: 18px !important; flex: 0 0 1px !important; }
+  html[data-theme="light"] header#siteHeader .hamburger {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    padding: 6px !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: center !important;
+    border-radius: 50% !important;
+    box-sizing: border-box !important;
+  }
+  html[data-theme="light"] header#siteHeader .hamburger svg { width: 22px !important; height: 22px !important; }
+}
+@media (max-width: 360px) {
+  html[data-theme="light"] header#siteHeader,
+  html[data-theme="light"] header#siteHeader.scrolled { height: 50px !important; min-height: 50px !important; }
+  html[data-theme="light"] header#siteHeader nav,
+  html[data-theme="light"] header#siteHeader.scrolled nav { height: 50px !important; min-height: 50px !important; padding-inline: 12px 9px !important; gap: 6px !important; }
+  html[data-theme="light"] header#siteHeader .wordmark-name { font-size: .78rem !important; }
+  html[data-theme="light"] header#siteHeader .mini-control-pill { height: 32px !important; min-height: 32px !important; padding-inline: 4px !important; gap: 3px !important; }
+  html[data-theme="light"] header#siteHeader #langToggle { min-width: 52px !important; height: 28px !important; font-size: .66rem !important; }
+  html[data-theme="light"] header#siteHeader #themeToggle { width: 26px !important; height: 26px !important; min-width: 26px !important; }
+  html[data-theme="light"] header#siteHeader .hamburger { width: 34px !important; height: 34px !important; min-width: 34px !important; }
+}
+
+/* Stronger but restrained burgundy side glow for mobile experimentation. */
+@media (max-width: 767px) {
+  html[data-theme="light"] .ambient-glow {
+    z-index: 1 !important;
+    opacity: 1 !important;
+    isolation: isolate !important;
+  }
+  html[data-theme="light"] .ambient-glow::before,
+  html[data-theme="light"] .ambient-glow::after {
+    inset: -6% !important;
+    filter: blur(25px) !important;
+    opacity: .72 !important;
+    animation-duration: 16s !important;
+  }
+  html[data-theme="light"] .ambient-glow::before {
+    background:
+      radial-gradient(ellipse 16% 58% at -1% 50%, rgba(93,31,46,.30), transparent 74%),
+      radial-gradient(ellipse 12% 38% at 101% 14%, rgba(122,38,58,.16), transparent 76%) !important;
+  }
+  html[data-theme="light"] .ambient-glow::after {
+    background:
+      radial-gradient(ellipse 16% 58% at 101% 50%, rgba(93,31,46,.26), transparent 74%),
+      radial-gradient(ellipse 12% 38% at -1% 86%, rgba(122,38,58,.14), transparent 76%) !important;
+  }
+}
+
+/* The sheen sits above the button surface and below its label/icon. */
+html[data-theme="light"] #home #btnCV.hero-action-primary { isolation: isolate !important; }
+html[data-theme="light"] #home #btnCV.hero-action-primary::before { z-index: 1 !important; }
+html[data-theme="light"] #home #btnCV.hero-action-primary > * { position: relative !important; z-index: 2 !important; }
+
+/* Make the glass sweep perceptible immediately, then let it continue gently. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-theme="light"] #home #btnCV.hero-action-primary::before {
+    opacity: .54 !important;
+    animation-delay: -6.8s !important;
+  }
+}
