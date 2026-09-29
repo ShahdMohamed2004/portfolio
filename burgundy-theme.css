@@ -1013,3 +1013,61 @@ html[data-theme="light"] body#artifacts-component-root-html #main-content #conta
     font-size: .92rem !important;
   }
 }
+
+
+/* Light-mode CV printer: replace every green machine surface, glow and signal with burgundy. */
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader {
+  --device-dark: #210b14 !important;
+  --device-green: #5a1d31 !important;
+  --device-border: rgba(183, 103, 113, .58) !important;
+  --signal: #d9ad91 !important;
+  --scanning: #c27f8c !important;
+  --ready: #b97884 !important;
+  --incomplete: #a65c70 !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .reader-scene::before {
+  background: radial-gradient(ellipse at 50% 65%, rgba(150, 63, 80, .24), rgba(75, 23, 40, .10) 38%, transparent 73%) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .reader-back {
+  border-color: rgba(151, 91, 103, .64) !important;
+  background: linear-gradient(115deg, rgba(255, 248, 239, .13), transparent 25%, transparent 78%, rgba(226, 176, 177, .06)), linear-gradient(180deg, #6b293d, #35121f 60%, #1a0810) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .reader-slot {
+  border-color: rgba(177, 126, 132, .42) !important;
+  box-shadow: inset 0 2px 4px #14070b, 0 0 0 1px rgba(255, 240, 235, .07), 0 0 12px rgba(121, 38, 58, .24) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .device {
+  border-color: rgba(151, 91, 103, .64) !important;
+  background: linear-gradient(112deg, rgba(255, 246, 240, .13), transparent 24%, transparent 72%, rgba(255, 255, 255, .045)), linear-gradient(145deg, #6b263b 0%, #4a1729 46%, #210b14 100%) !important;
+  box-shadow: 0 30px 62px -25px rgba(0, 0, 0, .80), 0 0 32px -16px rgba(150, 63, 80, .48), inset 0 1px 0 rgba(255, 248, 239, .22), inset 0 -3px 0 rgba(19, 5, 10, .44) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .reader-lip {
+  border-color: rgba(151, 91, 103, .54) !important;
+  background: linear-gradient(180deg, rgba(255, 248, 239, .13), transparent 25%), linear-gradient(180deg, #713246, #4a1a2b 72%, #2a0e19) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .reader-lip span {
+  background: repeating-linear-gradient(100deg, rgba(24, 8, 14, .72) 0 1px, rgba(215, 177, 163, .22) 1px 4px) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .device-screen {
+  border-color: rgba(166, 111, 120, .48) !important;
+  background: linear-gradient(165deg, #32101b, #0e0408 70%) !important;
+  box-shadow: 0 1px 0 rgba(255, 242, 237, .14), inset 0 1px 5px #000, 0 0 16px rgba(150, 63, 80, .22) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .device-readout,
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .device-serial,
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .device-monogram {
+  color: #d9b4ab !important;
+  text-shadow: 0 0 9px rgba(221, 170, 158, .20) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader [data-reader-progress] {
+  background: linear-gradient(90deg, #7b3b4a, #c29a83) !important;
+  box-shadow: 0 0 7px rgba(171, 104, 105, .40) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .device-led,
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader [data-reader-docked="true"] .device-led {
+  background: #d9ad91 !important;
+  box-shadow: 0 0 0 2px #1b0d13, 0 0 10px 2px rgba(217, 173, 145, .34) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #materials .materials-reader .materials-reader-status[data-state="READY"] {
+  color: #7a263a !important;
+}

@@ -138,3 +138,21 @@ svg{display:block;width:18px;height:18px;flex-shrink:0;}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;}}
 @media(forced-colors:active){.cvp-paper,.cvp-printer{border:1px solid CanvasText;}.cvp-dialog{border:1px solid CanvasText;}.cvp-download{border:2px solid ButtonText;}.cvp-led{background:Highlight;}}
+
+
+/* Light theme printer finish: the CV machine is burgundy, not green. */
+:host([theme="light"]) .cvp-printer {
+  border-color: #a05d6d;
+  background: linear-gradient(180deg, #713246 0%, #5b2638 6%, #421c2a 31%, #2b101c 78%, #210b14 96%, #512437 100%);
+  box-shadow: 0 8px 13px -8px #35101d99, inset 0 1px 1px #fff0e87a, inset 1px 0 0 #ffffff19, inset -1px 0 0 #18060c88;
+}
+:host([theme="light"]) .cvp-printer::before { background: linear-gradient(90deg, transparent, #f4d9d047, transparent); }
+:host([theme="light"]) .cvp-brand { color: #f0ddd8; }
+:host([theme="light"]) .cvp-monogram { border-color: #c28a94; }
+:host([theme="light"]) .cvp-printer-model { color: #d3aeb4; }
+:host([theme="light"]) .cvp-machine-status { color: #e0c1bd; }
+:host([theme="light"]) .cvp-led { background: #d9ad91; box-shadow: 0 0 0 3px #d9ad9115, 0 0 9px #d9ad9175; }
+:host([theme="light"]) .cvp-slot { background: #14070b; border-color: #210b14; box-shadow: 0 1px 0 #e6c9c22e, inset 0 2px 2px #000; }
+:host([theme="light"]) .cvp-scan { background: #d9ad91; box-shadow: 0 0 7px #d9ad91; }
+@keyframes cvp-pulse-light { 50% { opacity: .4; box-shadow: 0 0 4px #d9ad9150; } }
+:host([theme="light"]) .cvp-stage[data-state="printing"] .cvp-led { animation-name: cvp-pulse-light; }
