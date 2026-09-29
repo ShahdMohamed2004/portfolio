@@ -625,3 +625,27 @@ html[data-theme="light"] #home #btnCV.hero-action-primary > * { position: relati
     animation-delay: -6.8s !important;
   }
 }
+
+/* Contact polish: burgundy card and black copy in Light Mode only. */
+html[data-theme="light"] #contact .section-head h2,
+html[data-theme="light"] #contact #contactIntro {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  text-shadow: none !important;
+}
+html[data-theme="light"] #contact .contact-box {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  background: linear-gradient(135deg, #f7e7ea 0%, #efd2d8 58%, #dfb2bd 100%) !important;
+  border: 1px solid rgba(122,38,58,.52) !important;
+  box-shadow: 0 18px 38px -26px rgba(93,31,46,.48), inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+html[data-theme="light"] #contact .contact-box::before,
+html[data-theme="light"] #contact .contact-box::after {
+  background: linear-gradient(116deg, rgba(255,255,255,.56), rgba(122,38,58,.10) 54%, transparent 78%) !important;
+}
+html[data-theme="light"] #contact .contact-box p,
+html[data-theme="light"] #contact .contact-box #contactIntro {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+}
