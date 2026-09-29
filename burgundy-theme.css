@@ -948,3 +948,36 @@ html[data-theme="light"] body#artifacts-component-root-html #main-content #conta
     -webkit-text-fill-color: #2f6f4e !important;
   }
 }
+
+
+/* Final light-mode burgundy controls: no green leakage into the header or CV action. */
+@media (max-width: 767px) {
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass :is(.lang-toggle, .theme-toggle, .hamburger),
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .nav-utility .lang-toggle,
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .nav-utility .theme-toggle,
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .hamburger {
+    color: #7a263a !important;
+    -webkit-text-fill-color: #7a263a !important;
+  }
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .nav-utility .lang-toggle:hover,
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .nav-utility .theme-toggle:hover {
+    background: rgba(122, 38, 58, .12) !important;
+  }
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .mini-control-divider {
+    background: rgba(122, 38, 58, .28) !important;
+  }
+  html[data-theme="light"] body#artifacts-component-root-html #home .cta-row #btnCV.hero-action-primary,
+  html[data-theme="light"] body#artifacts-component-root-html #home .cta-row #btnCV.hero-action-primary:hover,
+  html[data-theme="light"] body#artifacts-component-root-html #home .cta-row #btnCV.hero-action-primary:focus-visible,
+  html[data-theme="light"] body#artifacts-component-root-html #home .cta-row #btnCV.hero-action-primary:active {
+    background: linear-gradient(135deg, #8c3047, #6f2035) !important;
+    color: #fff8f5 !important;
+    -webkit-text-fill-color: #fff8f5 !important;
+    border-color: rgba(111, 32, 53, .58) !important;
+    box-shadow: 0 12px 28px -18px rgba(111, 32, 53, .58), inset 0 1px 0 rgba(255, 255, 255, .34) !important;
+  }
+  html[data-theme="light"] body#artifacts-component-root-html #home .cta-row #btnCV.hero-action-primary svg {
+    color: currentColor !important;
+    stroke: currentColor !important;
+  }
+}
