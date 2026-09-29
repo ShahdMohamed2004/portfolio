@@ -678,3 +678,8 @@ html[data-theme="light"] #main-content #materials .section-head .section-lead {
 html[data-theme="light"] #main-content #contact .contact-box {
   border-color: rgba(122,38,58,.52) !important;
 }
+
+/* Contact card border must follow the Burgundy surface in Light Mode. */
+html[data-theme="light"] body#artifacts-component-root-html #main-content #contact .contact-box {
+  border: 1px solid rgba(122,38,58,.52) !important;
+}
