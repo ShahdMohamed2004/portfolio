@@ -121,3 +121,34 @@ html[data-theme="light"] #work #workSpine .project-details summary{color:#4a202d
 html[data-theme="light"] #whatIDoGrid .approach-card p,
 html[data-theme="light"] #howITeachGrid .accordion-card .accordion-body,
 html[data-theme="light"] #work #workSpine .project-details-body{color:#765d66 !important;}
+
+/* Soft edge light: barely visible burgundy atmosphere, never over the content. */
+.ambient-glow{background:transparent !important;}
+.ambient-glow::before,
+.ambient-glow::after{
+  inset:-12% !important;
+  filter:blur(58px) !important;
+  animation:burgundy-edge-breathe 18s ease-in-out infinite alternate !important;
+}
+.ambient-glow::before{
+  background:
+    radial-gradient(ellipse 22% 58% at 0% 50%,rgba(184,92,114,.13),transparent 74%),
+    radial-gradient(ellipse 18% 42% at 100% 18%,rgba(155,63,85,.09),transparent 76%) !important;
+  opacity:.78 !important;
+}
+.ambient-glow::after{
+  background:
+    radial-gradient(ellipse 22% 52% at 100% 50%,rgba(184,92,114,.11),transparent 74%),
+    radial-gradient(ellipse 18% 38% at 0% 88%,rgba(155,63,85,.08),transparent 76%) !important;
+  opacity:.72 !important;
+  animation-delay:-9s !important;
+}
+@keyframes burgundy-edge-breathe{
+  0%{transform:scale(1) translate3d(-.35%,0,0);opacity:.72;}
+  100%{transform:scale(1.035) translate3d(.35%,.25%,0);opacity:.92;}
+}
+html[data-theme="light"] .ambient-glow::before{opacity:.42 !important;}
+html[data-theme="light"] .ambient-glow::after{opacity:.36 !important;}
+@media (prefers-reduced-motion:reduce){
+  .ambient-glow::before,.ambient-glow::after{animation:none !important;}
+}
