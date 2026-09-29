@@ -939,3 +939,12 @@ html[data-theme="light"] body#artifacts-component-root-html #main-content #conta
     background: rgba(47, 111, 78, .12) !important;
   }
 }
+
+
+/* Highest-priority light-mode language color, for both Arabic and English labels. */
+@media (max-width: 767px) {
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .nav-utility .lang-toggle {
+    color: #2f6f4e !important;
+    -webkit-text-fill-color: #2f6f4e !important;
+  }
+}
