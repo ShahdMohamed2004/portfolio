@@ -981,3 +981,35 @@ html[data-theme="light"] body#artifacts-component-root-html #main-content #conta
     stroke: currentColor !important;
   }
 }
+
+
+/* Light mobile identity repair: show the real full name once; remove legacy pseudo-name layers. */
+@media (max-width: 767px) {
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .wordmark {
+    font-size: clamp(.96rem, 4.6vw, 1.08rem) !important;
+    flex: 1 1 auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+    padding-inline-end: 4px !important;
+  }
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .wordmark::after {
+    content: none !important;
+    display: none !important;
+  }
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .wordmark-name {
+    display: inline-block !important;
+    max-width: none !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+    padding-inline-end: 3px !important;
+  }
+}
+@media (max-width: 360px) {
+  html[data-theme="light"] body#artifacts-component-root-html #siteHeader.glass .wordmark {
+    font-size: .92rem !important;
+  }
+}
