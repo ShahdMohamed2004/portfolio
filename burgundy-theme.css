@@ -284,3 +284,189 @@ html[data-theme="light"] #about .about-tags .about-tag{
   html[data-theme="light"] header#siteHeader .mini-control-divider{height:17px !important;}
   html[data-theme="light"] header#siteHeader #themeToggle{width:27px !important;height:27px !important;min-width:27px !important;padding:3px !important;}
 }
+
+
+/* Canonical Light Mode polish — final design-system pass.
+ * Every rule is explicitly scoped to [data-theme="light"] so Dark Mode remains untouched. */
+html[data-theme="light"] {
+  --light-burgundy-ink: #421522;
+  --light-burgundy-deep: #5d1f2e;
+  --light-burgundy: #7a263a;
+  --light-burgundy-rose: #a45f6c;
+  --light-body-ink: #171114;
+  --light-body-muted: #62464e;
+  --light-burgundy-line: rgba(122, 38, 58, .28);
+  --light-burgundy-shadow: 0 18px 38px -28px rgba(93, 31, 46, .36);
+}
+
+/* One shared surface token for About, Selected Work and Teaching Experience. */
+html[data-theme="light"] #main-content #about .about-card,
+html[data-theme="light"] #main-content #work #workSpine .project-details,
+html[data-theme="light"] #main-content #experience #experienceSpine .timeline-detail {
+  color: var(--light-body-ink) !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(255,247,248,.90) 52%, rgba(242,223,227,.92)) !important;
+  border: 1px solid var(--light-burgundy-line) !important;
+  box-shadow: var(--light-burgundy-shadow), inset 0 1px 0 rgba(255,255,255,.98) !important;
+}
+html[data-theme="light"] #main-content #work #workSpine .project-details[open],
+html[data-theme="light"] #main-content #experience #experienceSpine .timeline-detail[open],
+html[data-theme="light"] #main-content #work #workSpine .project-details:hover,
+html[data-theme="light"] #main-content #experience #experienceSpine .timeline-detail:hover,
+html[data-theme="light"] #main-content #experience #experienceSpine .timeline-detail:focus-within {
+  background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(250,235,238,.94) 52%, rgba(235,194,202,.82)) !important;
+  border-color: rgba(122,38,58,.52) !important;
+}
+html[data-theme="light"] #main-content #about .about-card::before,
+html[data-theme="light"] #main-content #work #workSpine .project-details::before,
+html[data-theme="light"] #main-content #experience #experienceSpine .timeline-detail::before {
+  background: linear-gradient(116deg, rgba(255,255,255,.78), transparent 38%) !important;
+}
+html[data-theme="light"] #main-content #work #workSpine .project-details-body,
+html[data-theme="light"] #main-content #experience #experienceSpine .timeline-detail > :not(summary) {
+  color: var(--light-body-muted) !important;
+}
+html[data-theme="light"] #main-content #about .about-card :is(h3,.about-role),
+html[data-theme="light"] #main-content #work #workSpine .project-details :is(summary,h3),
+html[data-theme="light"] #main-content #experience #experienceSpine .timeline-detail :is(summary,h3) {
+  color: var(--light-burgundy-deep) !important;
+}
+
+/* About copy and the two requested interest labels stay neutral black. */
+html[data-theme="light"] #about #aboutBio,
+html[data-theme="light"] #about #aboutTagOne,
+html[data-theme="light"] #about #aboutTagTwo {
+  color: var(--light-body-ink) !important;
+  -webkit-text-fill-color: var(--light-body-ink) !important;
+  text-shadow: none !important;
+}
+html[data-theme="light"] #about #aboutTagOne,
+html[data-theme="light"] #about #aboutTagTwo {
+  background: rgba(255,255,255,.62) !important;
+  border-color: rgba(122,38,58,.25) !important;
+}
+
+/* Identity token: the name and subtitle use deep burgundy in Light Mode. */
+html[data-theme="light"] #about #aboutName,
+html[data-theme="light"] #about #aboutRole,
+html[data-theme="light"] #siteHeader.glass .wordmark-name {
+  color: var(--light-burgundy-deep) !important;
+  -webkit-text-fill-color: var(--light-burgundy-deep) !important;
+}
+html[data-theme="light"] #about #aboutName,
+html[data-theme="light"] #siteHeader.glass .wordmark-name {
+  background: linear-gradient(112deg, var(--light-burgundy-deep) 0%, var(--light-burgundy) 42%, #dba9b2 50%, var(--light-burgundy) 58%, var(--light-burgundy-deep) 100%) !important;
+  background-size: 230% 100% !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: light-burgundy-reflection 11s ease-in-out infinite !important;
+}
+@keyframes light-burgundy-reflection { 0%,68%,100% { background-position: 100% 50%; } 84% { background-position: 0% 50%; } }
+
+/* Section indicators: one reusable oval geometry, with burgundy numbers. */
+html[data-theme="light"] .section-head .section-tag,
+html[data-theme="light"] .where-am-i {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: fit-content !important;
+  min-height: 30px !important;
+  padding: 6px 13px !important;
+  gap: .45em !important;
+  border: 1px solid var(--light-burgundy-line) !important;
+  border-radius: 999px !important;
+  background: rgba(255,248,247,.78) !important;
+  color: var(--light-burgundy-deep) !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  box-shadow: 0 8px 18px -16px rgba(93,31,46,.42), inset 0 1px 0 rgba(255,255,255,.92) !important;
+}
+html[data-theme="light"] .section-head .section-tag,
+html[data-theme="light"] .where-am-i { letter-spacing: .08em !important; }
+html[data-theme="light"] .where-am-i #whereAmINumber,
+html[data-theme="light"] #work .filter-number,
+html[data-theme="light"] #howITeachGrid .accordion-card summary .num {
+  color: var(--light-burgundy) !important;
+  -webkit-text-fill-color: var(--light-burgundy) !important;
+}
+html[data-theme="light"] .where-am-i strong,
+html[data-theme="light"] .where-am-i #whereAmILabel { color: var(--light-burgundy-deep) !important; }
+@media (max-width: 767px) {
+  html[data-theme="light"] .section-head .section-tag { min-height:28px !important; padding:6px 12px !important; font-size:.68rem !important; max-width:100% !important; }
+  html[data-theme="light"] .where-am-i { min-height:28px !important; padding:6px 11px !important; }
+}
+
+/* Print my CV: keep burgundy and add a restrained glass reflection. */
+html[data-theme="light"] #home #btnCV.hero-action-primary {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  color: #fffaf8 !important;
+  background: linear-gradient(135deg, var(--light-burgundy), var(--light-burgundy-deep)) !important;
+  border-color: rgba(93,31,46,.54) !important;
+  box-shadow: 0 12px 26px -18px rgba(93,31,46,.62), inset 0 1px 0 rgba(255,255,255,.34) !important;
+}
+html[data-theme="light"] #home #btnCV.hero-action-primary::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 34% !important;
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,.48) 50%, transparent) !important;
+  transform: translateX(-155%) skewX(-24deg) !important;
+  opacity: .42 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+  animation: light-cv-reflection 12s ease-in-out infinite !important;
+}
+@keyframes light-cv-reflection { 0%,70%,100% { transform:translateX(-155%) skewX(-24deg); } 84% { transform:translateX(430%) skewX(-24deg); } }
+
+/* Mobile-only ambient edge light; contained and non-interactive. */
+@media (max-width: 767px) {
+  html[data-theme="light"] .ambient-glow { position:fixed !important; inset:0 !important; display:block !important; overflow:hidden !important; z-index:0 !important; pointer-events:none !important; background:transparent !important; }
+  html[data-theme="light"] .ambient-glow::before,
+  html[data-theme="light"] .ambient-glow::after { content:"" !important; position:absolute !important; inset:-10% !important; pointer-events:none !important; filter:blur(34px) !important; opacity:.28 !important; animation:light-edge-breathe 18s ease-in-out infinite alternate !important; }
+  html[data-theme="light"] .ambient-glow::before { background:radial-gradient(ellipse 18% 62% at -1% 50%,rgba(164,95,108,.14),transparent 76%),radial-gradient(ellipse 15% 48% at 101% 17%,rgba(193,139,150,.08),transparent 78%) !important; }
+  html[data-theme="light"] .ambient-glow::after { background:radial-gradient(ellipse 18% 62% at 101% 50%,rgba(164,95,108,.12),transparent 76%),radial-gradient(ellipse 15% 48% at -1% 83%,rgba(193,139,150,.07),transparent 78%) !important; animation-delay:-9s !important; }
+  html[data-theme="light"] .ambient-glow > * { opacity:0 !important; }
+}
+@keyframes light-edge-breathe { from { transform:scale(1); } to { transform:scale(1.025); } }
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="light"] #about #aboutName,
+  html[data-theme="light"] #siteHeader.glass .wordmark-name,
+  html[data-theme="light"] #home #btnCV.hero-action-primary::before,
+  html[data-theme="light"] .ambient-glow::before,
+  html[data-theme="light"] .ambient-glow::after { animation:none !important; }
+}
+
+/* Cascade repair: match the existing timeline DOM specificity without touching Dark Mode. */
+html[data-theme="light"] #main-content #experience #experienceSpine > .entry > .timeline-detail,
+html[data-theme="light"] #main-content #work #workSpine > .entry > .project-details {
+  background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(255,247,248,.90) 52%, rgba(242,223,227,.92)) !important;
+  border-color: var(--light-burgundy-line) !important;
+  box-shadow: var(--light-burgundy-shadow), inset 0 1px 0 rgba(255,255,255,.98) !important;
+}
+html[data-theme="light"] #main-content #experience #experienceSpine > .entry > .timeline-detail[open],
+html[data-theme="light"] #main-content #experience #experienceSpine > .entry > .timeline-detail:hover,
+html[data-theme="light"] #main-content #experience #experienceSpine > .entry > .timeline-detail:focus-within {
+  background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(250,235,238,.94) 52%, rgba(235,194,202,.82)) !important;
+  border-color: rgba(122,38,58,.52) !important;
+}
+html[data-theme="light"] #main-content #work .work-filter .filter-number,
+html[data-theme="light"] #main-content #howITeachGrid .accordion-card summary .num {
+  color: var(--light-burgundy) !important;
+  -webkit-text-fill-color: var(--light-burgundy) !important;
+}
+html[data-theme="light"] #main-content #work .work-filter[aria-pressed="true"] .filter-number {
+  color: var(--light-burgundy) !important;
+  -webkit-text-fill-color: var(--light-burgundy) !important;
+}
+
+/* Final number token: color and text-fill are both explicit to defeat inherited accent rules. */
+html[data-theme="light"] #main-content #work .work-filters .work-filter > span.filter-number {
+  color: var(--light-burgundy) !important;
+  -webkit-text-fill-color: var(--light-burgundy) !important;
+}
+html[data-theme="light"] body#artifacts-component-root-html #main-content #work #workFilters .work-filter > span.filter-number {
+  color: var(--light-burgundy) !important;
+  -webkit-text-fill-color: var(--light-burgundy) !important;
+}
