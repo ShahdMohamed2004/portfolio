@@ -683,3 +683,23 @@ html[data-theme="light"] #main-content #contact .contact-box {
 html[data-theme="light"] body#artifacts-component-root-html #main-content #contact .contact-box {
   border: 1px solid rgba(122,38,58,.52) !important;
 }
+
+/* Header-only responsive fix: preserve the wordmark identity while making the full name fit. */
+@media (min-width: 361px) and (max-width: 430px) {
+  html[data-theme="light"] header#siteHeader .wordmark-name,
+  html:not([data-theme="light"]) header#siteHeader .wordmark-name {
+    font-size: .84rem !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    transform: none !important;
+  }
+}
+@media (max-width: 360px) {
+  html[data-theme="light"] header#siteHeader .wordmark-name,
+  html:not([data-theme="light"]) header#siteHeader .wordmark-name {
+    font-size: .78rem !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    transform: none !important;
+  }
+}
