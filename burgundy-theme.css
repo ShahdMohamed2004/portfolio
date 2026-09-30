@@ -1224,3 +1224,19 @@ html[data-theme="light"] #materials .materials-reader .materials-reader-status[d
   #materials .materials-reader .materials-reader-status,
   #materials .materials-reader .materials-reader-status::before { animation: none !important; }
 }
+
+/* Footer ownership mark: use the supplied premium SM artwork, not the legacy letter badge. */
+.sm-ownership-mark {
+  overflow: hidden;
+  padding: 0;
+  background: #082018;
+  border-color: rgba(216,183,90,.48);
+}
+.sm-ownership-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.sm-ownership-mark span { display: none; }
