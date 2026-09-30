@@ -1,0 +1,3 @@
+# Keep the RFC 9116 disclosure file in the generated GitHub Pages site.
+include:
+  - .well-known
