@@ -12,6 +12,12 @@
     let activeUrl = '';
     let closeTimer = 0;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const safeDriveUrl = value => {
+      try {
+        const url = new URL(String(value), window.location.origin);
+        return url.protocol === 'https:' && url.hostname === 'drive.google.com' ? url.href : '';
+      } catch (_) { return ''; }
+    };
 
     const copy = () => document.documentElement.lang === 'ar'
       ? { kicker: 'أرشيف المواد التعليمية', status: 'جاري فتح المستند…', open: 'فتح المادة', close: 'إغلاق', cancel: 'العودة إلى المواد', dialog: 'معاينة المادة التعليمية' }
@@ -64,7 +70,7 @@
     };
 
     function open(card) {
-      const href = card.getAttribute('href');
+      const href = safeDriveUrl(card.getAttribute('href'));
       if (!href || href === '#') return;
       activeCard = card;
       activeUrl = href;

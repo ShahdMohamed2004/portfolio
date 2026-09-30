@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#152825" />
 <meta name="color-scheme" content="dark light" />
 <!-- GitHub Pages cannot set response headers here; this meta policy still reduces object, base, form, and mixed-content attack surface. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src https://drive.google.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'self'; form-action 'none'; upgrade-insecure-requests" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src https://drive.google.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src 'none'; form-action 'none'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -3554,7 +3554,6 @@ const SITE_AR = {
       links: [
         { label: "عرض الورقة البحثية", href: SITE.projects[0].links[0].href },
         { label: "عرض العرض التقديمي", href: SITE.projects[0].links[1].href },
-        { label: "جرّب الاستبيان المباشر", href: SITE.projects[0].links[2].href }
       ]
     },
     {
@@ -3568,8 +3567,7 @@ const SITE_AR = {
       role: "تصميم التقييم والتنفيذ الرقمي والاختبار والتطوير المدعوم بالذكاء الاصطناعي",
       tools: "HTML وCSS وJavaScript وأدوات التقييم الرقمي",
       links: [
-        { label: "عرض تصميم التقييم", href: SITE.projects[1].links[0].href },
-        { label: "جرّب الاختبار المباشر", href: SITE.projects[1].links[1].href }
+        { label: "عرض تصميم التقييم", href: SITE.projects[1].links[0].href }
       ]
     },
     {
