@@ -2,13 +2,10 @@
 
 A bilingual, responsive static portfolio for Shahd Mohamed Siddiq. The site is intentionally dependency-light: the main experience lives in `index.html`, with optimized image and sharing assets in `assets/`.
 
-## Local preview
+## Public deployment
 
-```bash
-python3 -m http.server 4173
-```
-
-Then open `http://localhost:4173/`.
+The live, HTTPS deployment is available at:
+https://shahdmohamed2004.github.io/portfolio/
 
 ## Contents
 
