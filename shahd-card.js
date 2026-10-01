@@ -42,7 +42,7 @@
     .swivel{position:absolute;left:4px;top:12px;width:8px;height:8px;border:1px solid #697467;border-radius:3px;background:linear-gradient(90deg,#626b5c,#f0efe0 40%,#b8baa9 65%,#697261)}
     .clasp{position:absolute;left:3px;top:17px;width:10px;height:19px;border:1px solid #727a6d;border-radius:3px;background:linear-gradient(90deg,#7a8472,#f7f4e5 35%,#c6c7b4 66%,#7a8472);box-shadow:inset 0 1px #ffffffd9}
     .clasp::after{content:'';position:absolute;left:2px;top:4px;width:4px;height:10px;border-right:1px solid #747e6d;border-bottom:1px solid #747e6d;border-radius:1px;opacity:.8}
-    @media(max-width:767px){:host{height:400px;--card-width:150px;--card-height:229px;--clip-height:26px}.card{border-radius:7px}.card-top{height:29px;padding:0 10px;font-size:5px}.portrait{height:123px;margin-inline:9px}.identity{padding:9px 10px 0}.name{font-size:14.5px;letter-spacing:-.4px}.role{font-size:6.8px;margin-top:4px}.footer{left:10px;right:10px;bottom:9px;padding-top:7px}.discipline{font-size:5px;letter-spacing:1px}.hint{font-size:8px;bottom:7px}.clasp{height:17px}.portrait-label{font-size:5px}}
+    .hint{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:8px;white-space:nowrap;color:#d7c58d;font:500 10px/1.2 'Space Grotesk',Arial,sans-serif;letter-spacing:.04em;opacity:.78;transition:opacity .35s ease,transform .35s ease;pointer-events:none;text-shadow:0 1px 8px #07140f}.hint::before,.hint::after{content:'‹';font-size:17px;line-height:1;opacity:.72}.hint::after{content:'›'}.hint.is-hidden{opacity:0;transform:translateX(-50%) translateY(5px)}.hint-ar{display:none}:host(.rtl) .hint-en{display:none}:host(.rtl) .hint-ar{display:inline}@media(max-width:767px){:host{height:400px;--card-width:150px;--card-height:229px;--clip-height:26px}.card{border-radius:7px}.card-top{height:29px;padding:0 10px;font-size:5px}.portrait{height:123px;margin-inline:9px}.identity{padding:9px 10px 0}.name{font-size:14.5px;letter-spacing:-.4px}.role{font-size:6.8px;margin-top:4px}.hint{font-size:8px;bottom:7px}.clasp{height:17px}.portrait-label{font-size:5px}}
     @media(prefers-reduced-motion:reduce){.hint{transition:none}}
     @media(forced-colors:active){.ambient,.glass{display:none}.control,.card{border:1px solid ButtonText}.assembly:focus-visible:not(.pointer-focus) .card{outline-color:Highlight}}
   `;
@@ -58,6 +58,7 @@
       this.angle = 0; this.angularVelocity = 0; this.wind = 0;
       this.visible = true; this.drag = null; this.quiet = 0; this.nodes = [];
       this.lastPointer = null;
+      this.hint = null;
       // All motion tuning lives here so it can be adjusted without hunting through the solver.
       this.physics = {
         gravity: 980, ropeDamping: .987, stretchDamping: .84,
@@ -108,12 +109,14 @@
               <i class="corner" aria-hidden="true"></i>
             </div>
           </div>
+          <div class="hint" role="status" aria-live="polite"><span class="hint-en">Drag the card to explore</span><span class="hint-ar">اسحب البطاقة يمينًا أو يسارًا</span></div>
         </div>`;
       this.scene=this.shadowRoot.querySelector('.scene');
       this.canvas = this.shadowRoot.querySelector('canvas');
       this.ctx = this.canvas.getContext('2d');
       this.card = this.shadowRoot.querySelector('.card');
       this.assembly = this.shadowRoot.querySelector('.assembly');
+      this.hint = this.shadowRoot.querySelector('.hint');
       const image = this.shadowRoot.querySelector('img');
       image.src = this.getAttribute('photo') || DEFAULT_PHOTO;
       image.onerror = () => { image.onerror = null; image.src = DEFAULT_PHOTO; };
@@ -184,6 +187,7 @@
     }
     move(e) {
       if (!this.drag || this.drag.id !== e.pointerId) return;
+      this.hideHint();
       const p = this.local(e);
       if(e.pointerType==='touch' && !this.drag.axis){
         const dx=p.x-this.drag.startX, dy=p.y-this.drag.startY;
@@ -210,6 +214,7 @@
     keyboard(e) {
       this.assembly.classList.remove('pointer-focus');
       if (!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','Enter',' '].includes(e.key)) return;
+      this.hideHint();
       e.preventDefault();
       if (e.key === 'Home') { this.release(); this.pause(); this.reset(); this.draw(); return; }
       else if (!this.reduced.matches) {
@@ -218,6 +223,9 @@
         else end.py += (e.key === 'ArrowUp'?1.3:-1.3)*force;
       }
       this.wake();
+    }
+    hideHint() {
+      if (this.hint) this.hint.classList.add('is-hidden');
     }
     breeze(e) {
       if (this.drag || this.reduced.matches || !this.fine.matches || e.pointerType === 'touch') return;
