@@ -11,9 +11,9 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "assets/sm-logo-premium.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "assets/sm-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ]
