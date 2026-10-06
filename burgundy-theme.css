@@ -1240,3 +1240,64 @@ html[data-theme="light"] #materials .materials-reader .materials-reader-status[d
   border-radius: inherit;
 }
 .sm-ownership-mark span { display: none; }
+
+/* Safe portfolio polish: preserve the editorial system while giving the two
+   core projects a restrained highlight-card treatment. */
+#work #workSpine > .project-details:nth-of-type(-n + 2) {
+  position: relative;
+  border-color: rgba(217, 181, 106, .42) !important;
+  box-shadow:
+    0 18px 38px -30px rgba(217, 181, 106, .44),
+    inset 0 1px 0 rgba(255, 244, 202, .10) !important;
+}
+
+#work #workSpine > .project-details:nth-of-type(-n + 2)::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 14px;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f3d27f, rgba(217, 181, 106, .12));
+  opacity: .9;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  #work #workSpine > .project-details:nth-of-type(-n + 2):hover,
+  #work #workSpine > .project-details:nth-of-type(-n + 2):focus-within {
+    transform: translateY(-2px);
+    border-color: rgba(243, 210, 127, .68) !important;
+    box-shadow:
+      0 24px 46px -32px rgba(217, 181, 106, .58),
+      inset 0 1px 0 rgba(255, 244, 202, .16) !important;
+  }
+}
+
+/* Light mode: the contact card is intentionally dark, so keep Email readable
+   as white text with a restrained black outline/shadow in both languages. */
+html[data-theme="light"] #contact #contactEmailBtn,
+html[data-theme="light"] #contact #contactEmailBtn:hover,
+html[data-theme="light"] #contact #contactEmailBtn:focus-visible {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  text-shadow:
+    0 1px 0 #000,
+    1px 0 0 #000,
+    -1px 0 0 #000,
+    0 0 3px rgba(0, 0, 0, .88) !important;
+}
+
+/* Keep the accent on the correct side when the page is switched to Arabic. */
+html[dir="rtl"] #work #workSpine > .project-details:nth-of-type(-n + 2)::before {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #work #workSpine > .project-details:nth-of-type(-n + 2),
+  #work #workSpine > .project-details:nth-of-type(-n + 2):hover,
+  #work #workSpine > .project-details:nth-of-type(-n + 2):focus-within {
+    transform: none !important;
+  }
+}
