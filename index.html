@@ -3264,10 +3264,10 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <a href="https://shahdmohamed2004.github.io/portfolio/app-download.html" target="_blank" rel="noopener noreferrer">Get Android app</a>
     </div>
   </div>
-  <aside class="visitor-counter-card" aria-label="عداد زوار الموقع">
-    <span class="visitor-counter-eyebrow"><span class="visitor-counter-dot" aria-hidden="true"></span><span id="visitorCounterLabel">زوار الموقع</span></span>
+  <aside class="visitor-counter-card" aria-label="Visitor counter">
+    <span class="visitor-counter-eyebrow"><span class="visitor-counter-dot" aria-hidden="true"></span><span id="visitorCounterLabel">Visitors</span></span>
     <strong class="visitor-counter-number" id="visitorCounterNumber" aria-live="polite">—</strong>
-    <span class="visitor-counter-caption" id="visitorCounterCaption">عدد فريد ومجهول</span>
+    <span class="visitor-counter-caption" id="visitorCounterCaption">All page visits</span>
   </aside>
 </footer>
 
@@ -4850,10 +4850,42 @@ const SITE_AR = {
 <script>
   (() => {
     const number = document.getElementById('visitorCounterNumber');
+    const label = document.getElementById('visitorCounterLabel');
     const caption = document.getElementById('visitorCounterCaption');
+    const card = document.querySelector('.visitor-counter-card');
     if (!number) return;
-    const endpoint = 'https://counterapi.com/api/shahdmohamed2004.github.io/view/portfolio?unique=true';
-    fetch(endpoint, { cache: 'no-store', credentials: 'omit' })
+
+    const apiBase = 'https://counterapi.com/api/shahdmohamed2004.github.io';
+    const allVisitsEndpoint = `${apiBase}/view/portfolio`;
+    const sourceEndpoint = source => `${apiBase}/referrer/${encodeURIComponent(source)}`;
+
+    const applyCounterLanguage = () => {
+      const arabic = document.documentElement.lang === 'ar';
+      if (label) label.textContent = arabic ? 'زوار الموقع' : 'Visitors';
+      if (caption) caption.textContent = arabic ? 'كل زيارات الصفحة' : 'All page visits';
+      if (card) card.setAttribute('aria-label', arabic ? 'عداد زوار الموقع' : 'Visitor counter');
+    };
+    applyCounterLanguage();
+    new MutationObserver(applyCounterLanguage).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+    const classifySource = () => {
+      const params = new URLSearchParams(window.location.search);
+      const campaign = (params.get('utm_source') || '').trim().toLowerCase();
+      const referrer = (document.referrer || '').toLowerCase();
+      const value = campaign || referrer;
+      if (!value) return 'direct';
+      if (value.includes('linkedin')) return 'linkedin';
+      if (value.includes('google')) return 'google';
+      if (value.includes('bing')) return 'bing';
+      if (value.includes('instagram')) return 'instagram';
+      if (value.includes('facebook')) return 'facebook';
+      if (value.includes('whatsapp')) return 'whatsapp';
+      if (value.includes('youtube')) return 'youtube';
+      return campaign || 'other';
+    };
+
+    // No unique=true here: every completed page load is counted as a visit.
+    fetch(allVisitsEndpoint, { cache: 'no-store', credentials: 'omit', keepalive: true })
       .then(response => response.ok ? response.json() : Promise.reject(new Error('counter unavailable')))
       .then(data => {
         if (!Number.isFinite(Number(data.value))) throw new Error('invalid counter value');
@@ -4861,8 +4893,11 @@ const SITE_AR = {
       })
       .catch(() => {
         number.textContent = '—';
-        if (caption) caption.textContent = 'الإحصاء غير متاح مؤقتًا';
+        if (caption) caption.textContent = document.documentElement.lang === 'ar' ? 'الإحصاء غير متاح مؤقتًا' : 'Stats temporarily unavailable';
       });
+
+    // One small public counter per source makes LinkedIn, Google, and other referrers comparable.
+    fetch(sourceEndpoint(classifySource()), { cache: 'no-store', credentials: 'omit', keepalive: true }).catch(() => {});
   })();
 </script>
 <script src="scripts.bundle.js?v=3.0.1" defer></script>
