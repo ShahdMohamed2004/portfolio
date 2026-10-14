@@ -1240,3 +1240,26 @@ html[data-theme="light"] #materials .materials-reader .materials-reader-status[d
   border-radius: inherit;
 }
 .sm-ownership-mark span { display: none; }
+
+
+/* A quiet, modern visitor capsule at the very end of the page. */
+.visitor-counter-card {
+  align-self: flex-end;
+  width: min(100%, 224px);
+  margin-top: 18px;
+  padding: 13px 15px 14px;
+  border: 1px solid rgba(231, 184, 78, .28);
+  border-radius: 18px;
+  background: radial-gradient(circle at 100% 0%, rgba(231,184,78,.13), transparent 48%), linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.018)), rgba(10,29,22,.56);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 18px 36px -28px rgba(0,0,0,.86);
+  text-align: start;
+  direction: rtl;
+}
+.visitor-counter-eyebrow { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: .66rem; letter-spacing: .02em; line-height: 1.2; }
+.visitor-counter-dot { width: 6px; height: 6px; flex: 0 0 6px; border-radius: 50%; background: #80d5a0; box-shadow: 0 0 0 4px rgba(128,213,160,.09), 0 0 12px rgba(128,213,160,.42); }
+.visitor-counter-number { display: block; margin-top: 6px; color: var(--yellow); font-family: 'Space Grotesk', 'IBM Plex Sans Arabic', sans-serif; font-size: clamp(1.45rem, 3vw, 1.8rem); font-weight: 600; letter-spacing: -.04em; line-height: 1; direction: ltr; text-align: start; }
+.visitor-counter-caption { display: block; margin-top: 7px; color: var(--chalk-dim); font-size: .61rem; line-height: 1.35; opacity: .78; }
+html[data-theme="light"] .visitor-counter-card { border-color: rgba(122,38,58,.22); background: radial-gradient(circle at 100% 0%, rgba(122,38,58,.10), transparent 48%), linear-gradient(145deg, rgba(255,255,255,.88), rgba(249,236,237,.58)); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 18px 36px -28px rgba(93,31,46,.30); }
+html[data-theme="light"] .visitor-counter-number { color: #7a263a; }
+html[data-theme="light"] .visitor-counter-caption { color: #7a5b63; opacity: 1; }
+@media (max-width: 640px) { .visitor-counter-card { align-self: stretch; width: auto; margin-top: 16px; } .visitor-counter-number { font-size: 1.55rem; } }
