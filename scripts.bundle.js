@@ -732,7 +732,7 @@
       enlarge:'Tap the page for a closer look', zoom:'Read the page or switch to 100% for more detail.',
       error:'The preview could not load. You can still download the original PDF below.',
       alt:'Shahd Mohamed Siddiq — original CV, page 1 of 1',
-      fileTitle:'Shahd Mohamed · CV', info:'PDF · 1 page · 46 KB', page:'Page 1 of 1', fit:'Fit width', full:'100%',
+      fileTitle:'Shahd Mohamed · CV', info:'PDF · 1 page · 5 KB', page:'Page 1 of 1', fit:'Fit width', full:'100%',
       trigger:'Download CV', short:'Preview CV'
     },
     ar: {
