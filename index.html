@@ -2956,6 +2956,16 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
 
 
 
+<style>
+  #value .value-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+  #value .value-card{min-height:190px;padding:22px 20px;border:1px solid var(--line-strong);border-top:2px solid var(--yellow);background:rgba(255,255,255,.025);display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+  html[data-theme="light"] #value .value-card{background:rgba(255,255,255,.52)}
+  #value .value-number{font:600 .72rem/1 var(--font-mono,monospace);letter-spacing:.12em;color:var(--yellow)}
+  #value .value-card h3{margin:0;font-size:1.05rem;line-height:1.35}
+  #value .value-card p{margin:0;color:var(--chalk-dim);line-height:1.65}
+  html[data-theme="light"] #value .value-card p{color:var(--text-main)}
+  @media (max-width:720px){#value .value-grid{grid-template-columns:1fr;gap:9px;margin-top:18px}#value .value-card{min-height:0;padding:17px 16px}}
+</style>
 </head>
 <body id="artifacts-component-root-html">
 <noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
@@ -3226,6 +3236,32 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
       <span class="availability-item" id="availabilityEdtech" role="listitem">EdTech &amp; Digital Learning Projects</span>
     </div>
   </section>
+
+  <!-- VALUE TO A TEAM -->
+  <section id="value">
+    <div class="section-head reveal">
+      <span class="section-tag" id="valueTag">what I bring</span>
+      <h2 id="valueHeading">What I can bring to your team</h2>
+    </div>
+    <div class="value-grid" role="list" aria-label="What Shahd can bring to a team">
+      <article class="value-card reveal-item" role="listitem">
+        <span class="value-number">01</span>
+        <h3 id="valueOneTitle">Clear learning experiences</h3>
+        <p id="valueOneText">Well-structured lessons and visual materials that make language easier to understand and use.</p>
+      </article>
+      <article class="value-card reveal-item" role="listitem">
+        <span class="value-number">02</span>
+        <h3 id="valueTwoTitle">Practical assessment</h3>
+        <p id="valueTwoText">Thoughtful tasks, feedback, and assessment tools that make learner progress visible.</p>
+      </article>
+      <article class="value-card reveal-item" role="listitem">
+        <span class="value-number">03</span>
+        <h3 id="valueThreeTitle">Creative EdTech support</h3>
+        <p id="valueThreeText">A visual mindset and digital tools that support engaging, learner-centred education.</p>
+      </article>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact">
     <div class="section-head reveal">
@@ -3257,11 +3293,11 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     <div class="sm-ownership-mark"><img src="assets/sm-logo-premium.png" alt="SM logo for Shahd Mohamed" width="108" height="108" loading="lazy" decoding="async"></div>
     <div class="sm-ownership-copy">
       <strong>Shahd Mohamed</strong>
-      <span>Original work · SM studio</span>
+      <span id="footerStudio">Original work · SM studio</span>
     </div>
     <div class="sm-ownership-links">
-      <a href="https://shahdmohamed2004.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Open website</a>
-      <a href="https://shahdmohamed2004.github.io/portfolio/app-download.html" target="_blank" rel="noopener noreferrer">Get Android app</a>
+      <a id="footerOpenWebsite" href="https://shahdmohamed2004.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Open website</a>
+      <a id="footerAndroidApp" href="https://shahdmohamed2004.github.io/portfolio/app-download.html" target="_blank" rel="noopener noreferrer">Get Android app</a>
     </div>
   </div>
   <aside class="visitor-counter-card" aria-label="Visitor counter">
@@ -3428,6 +3464,13 @@ const SITE = {
     { title: "Projects", href: "https://drive.google.com/drive/folders/1d2hgaLe5ASKrY-Op27gsmu6wMyygF70A" }
   ],
   experience: [
+    {
+      flag: "part-time",
+      title: "English Teacher",
+      place: "CURIOOkids Egypt",
+      dates: "Oct 2026 – Present",
+      points: ["Deliver interactive English communication sessions for children", "Use age-appropriate activities to build speaking, vocabulary, and practical language use", "Create a positive, engaging, learner-centred classroom environment"]
+    },
     {
       flag: "practicum",
       title: "English Teaching Practicum",
@@ -3641,12 +3684,19 @@ const SITE_AR = {
 
   experience: [
     {
+      flag: "دوام جزئي",
+      title: "معلمة لغة إنجليزية",
+      place: "CURIOOkids Egypt",
+      dates: "أكتوبر 2026 – حتى الآن",
+      points: ["تقديم جلسات تفاعلية في التواصل باللغة الإنجليزية للأطفال", "استخدام أنشطة مناسبة للعمر لتنمية التحدث والمفردات والاستخدام العملي للغة", "تهيئة بيئة صفية إيجابية وتفاعلية تتمحور حول المتعلم"]
+    },
+    {
       flag: "تدريب عملي",
       title: "التدريب العملي في تدريس اللغة الإنجليزية",
       place: "جامعة أكتوبر للعلوم الحديثة والآداب (MSA)",
       dates: "سبتمبر 2025 – مايو 2026",
       points: ["تخطيط الدروس", "التدريس الصفي", "تصميم التقييم وتطبيقه", "تغذية راجعة للمتعلمين"],
-      evidence: { label: "عرض الأدلة", href: SITE.experience[0].evidence.href }
+      evidence: { label: "عرض الأدلة", href: SITE.experience[1].evidence.href }
     },
     {
       flag: "تدريب",
@@ -3654,7 +3704,7 @@ const SITE_AR = {
       place: "مدارس دار التربية",
       dates: "سبتمبر 2024 – مايو 2025",
       points: ["دعم داخل الفصل", "تنفيذ الدروس", "تغذية راجعة للمتعلمين"],
-      evidence: { label: "عرض مجلد الأعمال", href: SITE.experience[1].evidence.href }
+      evidence: { label: "عرض مجلد الأعمال", href: SITE.experience[2].evidence.href }
     }
   ],
 
@@ -3673,7 +3723,7 @@ const SITE_AR = {
   skills: {
     teaching: [
       { name: "تخطيط الدروس" },
-      { name: "التدريس القواعدي" },
+      { name: "تدريس القواعد" },
       { name: "التقييم" },
       { name: "التغذية الراجعة" }
     ],
@@ -4040,7 +4090,7 @@ const SITE_AR = {
     document.getElementById('creativeLead').classList.add('creative-lead');
 
     // Availability strip
-    const availability = lang === 'ar' ? {tag:'أستكشف حاليًا', heading:'مجالات أستطيع أن أساهم فيها', teaching:'فرص تدريس اللغة الإنجليزية', design:'تصميم دروس ESP والتقييم', edtech:'مشروعات تكنولوجيا التعليم والتعلّم الرقمي'} : {tag:'currently exploring', heading:'Where I can contribute', teaching:'English Language Teaching opportunities', design:'ESP Lesson & Assessment Design', edtech:'EdTech & Digital Learning Projects'};
+    const availability = lang === 'ar' ? {tag:'أستكشف حاليًا', heading:'ما أستطيع تقديمه لفريقك', teaching:'فرص تدريس اللغة الإنجليزية', design:'تصميم دروس ESP والتقييم', edtech:'مشروعات تكنولوجيا التعليم والتعلّم الرقمي'} : {tag:'currently exploring', heading:'Where I can contribute', teaching:'English Language Teaching opportunities', design:'ESP Lesson & Assessment Design', edtech:'EdTech & Digital Learning Projects'};
     document.getElementById('availabilityTag').textContent = availability.tag;
     document.getElementById('availabilityHeading').textContent = availability.heading;
     document.getElementById('availabilityTeaching').textContent = availability.teaching;
@@ -4092,7 +4142,8 @@ const SITE_AR = {
     development: { tag: ["always learning", "تعلّم مستمر"], heading: ["Professional development", "التطوير المهني"] },
     skills: { tag: ["toolkit", "الأدوات"], heading: ["Skills & languages", "المهارات واللغات"] },
     creative: { tag: ["beyond the classroom", "خارج الفصل"], heading: ["Also into", "اهتمامات أخرى"] },
-    contact: { tag: ["get in touch", "تواصل معي"], heading: ["Let's connect", "لنتواصل"] }
+    contact: { tag: ["get in touch", "تواصل معي"], heading: ["Let's connect", "لنتواصل"] },
+    value: { tag: ["what I bring", "ما أقدمه"], heading: ["What I can bring to your team", "ما أستطيع تقديمه لفريقك"] }
   };
   const BUTTON_TEXT = {
     btnWork: ["View featured project", "عرض المشروع المميز"],
@@ -4102,7 +4153,10 @@ const SITE_AR = {
     btnCV: ["Download CV", "تحميل السيرة الذاتية"],
     btnLinkedin: ["LinkedIn", "LinkedIn"],
     contactEmailBtn: ["Email", "البريد الإلكتروني"],
-    contactCvBtn: ["Download CV", "تحميل السيرة الذاتية"]
+    contactCvBtn: ["Download CV", "تحميل السيرة الذاتية"],
+    footerOpenWebsite: ["Open website", "فتح الموقع"],
+    footerAndroidApp: ["Get Android app", "تحميل تطبيق أندرويد"],
+    footerStudio: ["Original work · SM studio", "عمل أصلي · استوديو SM"]
   };
   const ABOUT_TEXT = {
     aboutKicker: ["A little about me", "نبذة صغيرة عني"],
@@ -4110,9 +4164,21 @@ const SITE_AR = {
     aboutTagTwo: ["Learning design", "تصميم التعلّم"],
     aboutTagThree: ["EdTech", "التقنية التعليمية"]
   };
+  const VALUE_TEXT = {
+    valueTag: ["what I bring", "ما أقدمه"],
+    valueHeading: ["What I can bring to your team", "ما أستطيع تقديمه لفريقك"],
+    valueOneTitle: ["Clear learning experiences", "خبرات تعلم واضحة"],
+    valueOneText: ["Well-structured lessons and visual materials that make language easier to understand and use.", "دروس ومواد بصرية منظّمة تجعل اللغة أسهل في الفهم والاستخدام."],
+    valueTwoTitle: ["Practical assessment", "تقييم عملي"],
+    valueTwoText: ["Thoughtful tasks, feedback, and assessment tools that make learner progress visible.", "مهام وتغذية راجعة وأدوات تقييم تُظهر تقدّم المتعلمين بوضوح."],
+    valueThreeTitle: ["Creative EdTech support", "دعم إبداعي لتكنولوجيا التعليم"],
+    valueThreeText: ["A visual mindset and digital tools that support engaging, learner-centred education.", "تفكير بصري وأدوات رقمية تدعم تعليمًا تفاعليًا يتمحور حول المتعلم."]
+  };
 
   function applyStaticText(lang){
     const i = lang === 'ar' ? 1 : 0;
+    const valueList = document.querySelector('#value .value-grid');
+    if (valueList) valueList.setAttribute('aria-label', i ? 'ما يمكن أن تقدمه شهد للفريق' : 'What Shahd can bring to a team');
     document.querySelectorAll('[data-nav]').forEach(a => {
       const pair = NAV_LABELS[a.getAttribute('data-nav')];
       if(!pair) return;
@@ -4151,6 +4217,10 @@ const SITE_AR = {
     Object.keys(ABOUT_TEXT).forEach(id => {
       const el = document.getElementById(id);
       if(el) el.textContent = ABOUT_TEXT[id][i];
+    });
+    Object.keys(VALUE_TEXT).forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.textContent = VALUE_TEXT[id][i];
     });
     document.getElementById('linkedinLinkDesktop').querySelector('.utility-label').textContent = 'LinkedIn';
     document.getElementById('linkedinLinkMobile').textContent = 'LinkedIn';
