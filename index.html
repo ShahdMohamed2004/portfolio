@@ -3769,6 +3769,22 @@ const SITE_AR = {
   contactEmailBtn.title = 'Open Gmail compose';
   document.getElementById('contactLinkedinBtn').href = safeExternalUrl(SITE.links.linkedin);
   document.getElementById('contactCvBtn').href = safeExternalUrl(SITE.links.cv);
+
+  // Outbound click tracking: count an actual LinkedIn link click, not just a page visit.
+  // CounterAPI is public and does not expose any private credential in this static site.
+  const clickCounterEndpoint = source => `https://counterapi.com/api/shahdmohamed2004.github.io/referrer/${encodeURIComponent(source + '_button_click')}`;
+  function trackOutboundClick(source){
+    const url = clickCounterEndpoint(source);
+    fetch(url, { method: 'GET', cache: 'no-store', credentials: 'omit', keepalive: true }).catch(() => {
+      // Best-effort fallback for in-app browsers that cancel fetch during navigation.
+      const beacon = new Image();
+      beacon.referrerPolicy = 'no-referrer';
+      beacon.src = url;
+    });
+  }
+  document.querySelectorAll('[id$=\"Linkedin\"], [id$=\"linkedin\"]').forEach(link => {
+    link.addEventListener('click', () => trackOutboundClick('linkedin'));
+  });
   // Everything below depends on which language is active.
   const SKILL_LABELS = {
     en: { teaching: "Instructional Design", soft: "Classroom Practice", hard: "Educational Technology", languages: "Languages" },
