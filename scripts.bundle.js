@@ -732,7 +732,7 @@
       enlarge:'Tap the page for a closer look', zoom:'Read the page or switch to 100% for more detail.',
       error:'The preview could not load. You can still download the original PDF below.',
       alt:'Shahd Mohamed Siddiq — original CV, page 1 of 1',
-      fileTitle:'Shahd Mohamed · CV', info:'PDF · 1 page · 5 KB', page:'Page 1 of 1', fit:'Fit width', full:'100%',
+      fileTitle:'Shahd Mohamed · CV', info:'PDF · 1 page', page:'Page 1 of 1', fit:'Fit width', full:'100%',
       trigger:'Download CV', short:'Preview CV'
     },
     ar: {
@@ -743,7 +743,7 @@
       enlarge:'اضغط على الورقة لقراءة التفاصيل', zoom:'اقرأ الصفحة، أو اختر 100% لتكبير التفاصيل.',
       error:'تعذّر تحميل المعاينة. يمكنك تحميل ملف PDF الأصلي من الزر بالأسفل.',
       alt:'السيرة الذاتية الأصلية لشهد محمد صديق — صفحة ١ من ١',
-      fileTitle:'شهد محمد · السيرة الذاتية', info:'PDF · صفحة واحدة · 46 KB', page:'صفحة ١ من ١', fit:'ملاءمة العرض', full:'100%',
+      fileTitle:'شهد محمد · السيرة الذاتية', info:'PDF · صفحة واحدة', page:'صفحة ١ من ١', fit:'ملاءمة العرض', full:'100%',
       trigger:'تحميل السيرة الذاتية', short:'معاينة السيرة الذاتية'
     }
   };
