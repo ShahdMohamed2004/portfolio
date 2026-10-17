@@ -229,7 +229,7 @@ async function checkLinks(page) {
     await checkLinks(noJs);
     check(await noJs.locator('#materialsGrid a').first().isVisible(),'Files available without JavaScript');
     check(!(await noJs.locator('[data-materials-reader]').isVisible()),'No nonworking reader without JS');
-    for(const blocked of ['materials-reader.js','materials-reader.css','assets/materials-id-card.jpg']) {
+    for(const blocked of ['materials-reader.js','materials-reader.css','assets/materials-preview.webp']) {
       const fallback = await browser.newPage();
       await fallback.route(`**/${blocked}*`,route=>route.abort());await fallback.goto(url,{waitUntil:'networkidle'});
       await checkLinks(fallback);
