@@ -44,6 +44,7 @@
     .clasp::after{content:'';position:absolute;left:2px;top:4px;width:4px;height:10px;border-right:1px solid #747e6d;border-bottom:1px solid #747e6d;border-radius:1px;opacity:.8}
     .hint{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:8px;white-space:nowrap;color:#d7c58d;font:500 10px/1.2 'Space Grotesk',Arial,sans-serif;letter-spacing:.04em;opacity:.78;transition:opacity .35s ease,transform .35s ease;pointer-events:none;text-shadow:0 1px 8px #07140f}.hint::before,.hint::after{content:'‹';font-size:17px;line-height:1;opacity:.72}.hint::after{content:'›'}.hint.is-hidden{opacity:0;transform:translateX(-50%) translateY(5px)}.hint-ar{display:none}:host(.rtl) .hint-en{display:none}:host(.rtl) .hint-ar{display:inline}@media(max-width:767px){:host{height:400px;--card-width:150px;--card-height:229px;--clip-height:26px}.card{border-radius:7px}.card-top{height:29px;padding:0 10px;font-size:5px}.portrait{height:123px;margin-inline:9px}.identity{padding:9px 10px 0}.name{font-size:14.5px;letter-spacing:-.4px}.role{font-size:6.8px;margin-top:4px}.hint{font-size:8px;bottom:7px}.clasp{height:17px}.portrait-label{font-size:5px}}
     @media(prefers-reduced-motion:reduce){.hint{transition:none}}
+    @media(hover:none),(pointer:coarse){.hint{display:none}.card{cursor:default;touch-action:pan-y pinch-zoom}}
     @media(forced-colors:active){.ambient,.glass{display:none}.control,.card{border:1px solid ButtonText}.assembly:focus-visible:not(.pointer-focus) .card{outline-color:Highlight}}
   `;
   class ShahdLanyard extends HTMLElement {
@@ -54,6 +55,7 @@
       this.abort = new AbortController();
       this.reduced = matchMedia('(prefers-reduced-motion: reduce)');
       this.fine = matchMedia('(hover: hover) and (pointer: fine)');
+      this.coarse = matchMedia('(hover: none), (pointer: coarse)');
       this.raf = 0; this.lastFrame = 0; this.accumulator = 0;
       this.angle = 0; this.angularVelocity = 0; this.wind = 0;
       this.visible = true; this.drag = null; this.quiet = 0; this.nodes = [];
@@ -174,7 +176,7 @@
       return {x:(e.clientX - rect.left)*this.w/rect.width, y:(e.clientY-rect.top)*this.h/rect.height};
     }
     grab(e) {
-      if (!e.isPrimary || (e.pointerType === 'mouse' && e.button !== 0) || this.drag || !this.nodes.length) return;
+      if (!e.isPrimary || e.pointerType === 'touch' || this.coarse.matches || (e.pointerType === 'mouse' && e.button !== 0) || this.drag || !this.nodes.length) return;
       const p = this.local(e), end = this.nodes[16];
       const dx=p.x-end.x, dy=p.y-end.y, c=Math.cos(this.angle), s=Math.sin(this.angle);
       this.drag = {id:e.pointerId, x:p.x, y:p.y, startX:p.x, startY:p.y, axis:e.pointerType==='touch'?null:'both', vx:0, vy:0, offsetX:dx*c+dy*s, offsetY:-dx*s+dy*c, time:e.timeStamp};
@@ -374,14 +376,14 @@
     }
     wake() {
       if(!this._alive || this.raf || !this.visible || document.hidden || !this.nodes.length) return;
-      if(this.reduced.matches&&!this.drag){this.reset();this.draw();return;}
+      if((this.reduced.matches||this.coarse.matches)&&!this.drag){this.reset();this.draw();return;}
       this.lastFrame=0;this.accumulator=0;this.quiet=0;
       this.raf=requestAnimationFrame(t=>this.frame(t));
     }
     pause() { cancelAnimationFrame(this.raf);this.raf=0;this.lastFrame=0; }
     frame(time) {
       this.raf=0;
-      if(this.reduced.matches&&!this.drag){this.reset();this.draw();this.lastFrame=0;return;}
+      if((this.reduced.matches||this.coarse.matches)&&!this.drag){this.reset();this.draw();this.lastFrame=0;return;}
       const dt=this.lastFrame?Math.min((time-this.lastFrame)/1000,.04):1/60;
       this.lastFrame=time;this.accumulator+=dt;
       while(this.accumulator>=1/120){this.step(1/120);this.accumulator-=1/120;}
