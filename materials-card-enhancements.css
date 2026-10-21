@@ -1,0 +1,48 @@
+/* Small, additive polish for Teaching Materials cards only.
+   Existing card links, reader drag physics, and folder navigation stay untouched. */
+#materials .material-card::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    112deg,
+    transparent 27%,
+    rgba(255, 255, 255, .12) 46%,
+    rgba(215, 180, 91, .16) 52%,
+    transparent 72%
+  );
+  transform: translateX(-118%) skewX(-16deg);
+}
+
+@keyframes materialsCardInteractionShine {
+  0% { opacity: 0; transform: translateX(-118%) skewX(-16deg); }
+  35% { opacity: .58; }
+  100% { opacity: 0; transform: translateX(118%) skewX(-16deg); }
+}
+
+#materials .material-card:is(:hover, :focus-visible, :active)::before {
+  animation: materialsCardInteractionShine 720ms cubic-bezier(.2, .7, .25, 1) both;
+}
+
+html:not([data-theme="light"]) #materials .material-card:focus-visible,
+html:not([data-theme="light"]) #materials .materials-reader .id-card:focus-visible {
+  outline: 2px solid rgba(215, 180, 91, .88) !important;
+  outline-offset: 4px !important;
+}
+
+html[data-theme="light"] #materials .material-card:focus-visible,
+html[data-theme="light"] #materials .materials-reader .id-card:focus-visible {
+  outline: 2px solid #7a263a !important;
+  outline-offset: 4px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #materials .material-card::before {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
