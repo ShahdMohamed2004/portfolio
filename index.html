@@ -98,6 +98,7 @@
 
   <link rel="stylesheet" href="styles.bundle.css?v=3.0.0">
   <link rel="stylesheet" href="visual-refresh.css?v=1.0.7">
+  <link rel="stylesheet" href="portfolio-media.css?v=1.0.0">
 <style>
   :root{
     --ink:#152825;
@@ -3366,6 +3367,7 @@ const SITE = {
     { num: "04", title: "Evidence-based", desc: "Using assessment and feedback to monitor learning." }
   ],
 
+  // Project data lives here. Add real images under assets/ and approved links only when provided.
   projects: [
     {
       flag: "core project",
@@ -3377,6 +3379,8 @@ const SITE = {
       stat: "Selected finding: 87% of students reported more active participation when timelines were used.",
       role: "Visual instructional design, grammar instruction, and evidence",
       tools: "Visual materials, lesson design, and research evidence",
+      images: [],
+      websiteUrl: "",
       links: [
         { label: "View research paper", href: "https://drive.google.com/file/d/1pIi1WeTp2ButXIUmkPe9c7qRDW16YNRD/view?usp=drivesdk" },
         { label: "View presentation", href: "https://drive.google.com/file/d/1YrXIr2UZhCIzEGpfyUP6otY-UcJDNcRf/view?usp=drivesdk" },
@@ -3392,6 +3396,8 @@ const SITE = {
       stat: "",
       role: "Assessment design, digital implementation, testing, and AI-supported development",
       tools: "HTML, CSS, JavaScript, and digital assessment tools",
+      images: [],
+      websiteUrl: "",
       links: [
         { label: "View assessment design", href: "https://drive.google.com/file/d/1BALXpg_gdcqjDVyqnIhxotggqtk6LEwM/view?usp=drivesdk" },
       ]
@@ -3452,7 +3458,14 @@ const SITE = {
       links: [
         { label: "Open teaching demonstration", href: "https://drive.google.com/file/d/1bjMdGG5RVQGelgc6v7RMqHMZYyT02hPS/preview" }
       ]
-    }
+    },
+    { flag: "teaching practice", category: "teaching", categories: ["teaching"], title: "Visual Vocabulary Lesson — Inside the Book", badges: ["Teaching Practice", "Whiteboard lesson"], description: "A vocabulary lesson using visual examples and whiteboard illustrations to introduce book-related terms and concepts.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "teaching practice", category: "teaching", categories: ["teaching"], title: "Visual Grammar Lesson — My Backpack", badges: ["Teaching Practice", "Whiteboard lesson"], description: "A visual explanation of possessive adjectives and possessive pronouns using vocabulary, examples, and drawings.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "cross-curricular lesson", category: "teaching", categories: ["teaching"], title: "Cross-Curricular Lesson — The Solar System", badges: ["Teaching Practice", "Science + English"], description: "A science-related classroom lesson that uses planets and visual explanations to support English vocabulary and descriptive language.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "basic grammar lesson", category: "teaching", categories: ["teaching"], title: "Basic Grammar Lesson — There Is / There Are", badges: ["Teaching Practice", "Whiteboard lesson"], description: "A visual explanation of singular and plural structures using simple drawings and example sentences.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "digital learning", category: "edtech", categories: ["edtech"], title: "Interactive Educational Website for Children", badges: ["Digital Learning", "Interactive website"], description: "An interactive educational website designed to help children learn through play.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "classroom activities", category: "classroom", categories: ["classroom"], title: "Classroom Activities", badges: ["Classroom Activities"], description: "Practical and interactive learning activities carried out with learners in the classroom.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "teaching videos", category: "videos", categories: ["videos"], title: "Teaching Demonstrations", badges: ["Teaching Videos"], description: "Selected demonstrations showing how a learning activity is presented and practiced.", images: [], websiteUrl: "", video: "", links: [] }
   ],
 
   // Teaching materials — each card links straight to its own Drive folder.
@@ -3466,11 +3479,12 @@ const SITE = {
   ],
   experience: [
     {
-      flag: "part-time",
-      title: "English Teacher",
+      flag: "present",
+      title: "English Instructor",
       place: "CURIOOkids Egypt",
-      dates: "Oct 2026 – Present",
-      points: ["Deliver interactive English communication sessions for children", "Use age-appropriate activities to build speaking, vocabulary, and practical language use", "Create a positive, engaging, learner-centred classroom environment"]
+      dates: "",
+      description: "As an English Instructor, I plan and deliver English lessons for young learners using visual explanations, practical examples, and interactive activities. I prepare learner-centered lessons and classroom materials that support vocabulary, grammar, communication skills, and active participation.",
+      points: []
     },
     {
       flag: "practicum",
@@ -3671,7 +3685,14 @@ const SITE_AR = {
       links: [
         { label: "فتح العرض التدريسي", href: "https://drive.google.com/file/d/1bjMdGG5RVQGelgc6v7RMqHMZYyT02hPS/preview" }
       ]
-    }
+    },
+    { flag: "ممارسة تدريسية", category: "teaching", categories: ["teaching"], title: "درس مفردات بصري — داخل الكتاب", badges: ["ممارسة تدريسية", "درس على السبورة"], description: "درس مفردات يستخدم أمثلة بصرية ورسومات على السبورة لتقديم المصطلحات والمفاهيم المرتبطة بالكتاب.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "ممارسة تدريسية", category: "teaching", categories: ["teaching"], title: "درس قواعد بصري — حقيبتي", badges: ["ممارسة تدريسية", "درس على السبورة"], description: "شرح بصري لصفات الملكية وضمائر الملكية باستخدام المفردات والأمثلة والرسومات.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "درس تكاملي", category: "teaching", categories: ["teaching"], title: "درس تكاملي — النظام الشمسي", badges: ["ممارسة تدريسية", "علوم + لغة إنجليزية"], description: "درس صفي متعلق بالعلوم يستخدم الكواكب والشرح البصري لدعم مفردات اللغة الإنجليزية واللغة الوصفية.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "درس قواعد أساسية", category: "teaching", categories: ["teaching"], title: "درس قواعد أساسية — There Is / There Are", badges: ["ممارسة تدريسية", "درس على السبورة"], description: "شرح بصري للتراكيب المفردة والجمع باستخدام رسومات بسيطة وجمل نموذجية.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "تعلّم رقمي", category: "edtech", categories: ["edtech"], title: "موقع تعليمي تفاعلي للأطفال", badges: ["تعلّم رقمي", "موقع تفاعلي"], description: "موقع تعليمي تفاعلي مصمم لمساعدة الأطفال على التعلّم من خلال اللعب.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "أنشطة صفية", category: "classroom", categories: ["classroom"], title: "أنشطة صفية", badges: ["أنشطة صفية"], description: "أنشطة تعليمية عملية وتفاعلية تم تنفيذها مع المتعلمين داخل الفصل.", images: [], websiteUrl: "", video: "", links: [] },
+    { flag: "فيديوهات تدريسية", category: "videos", categories: ["videos"], title: "عروض تدريسية", badges: ["فيديوهات تدريسية"], description: "عروض مختارة توضّح كيفية تقديم نشاط تعليمي والتدرّب عليه.", images: [], websiteUrl: "", video: "", links: [] }
   ],
 
   materials: [
@@ -3685,11 +3706,12 @@ const SITE_AR = {
 
   experience: [
     {
-      flag: "دوام جزئي",
-      title: "معلمة لغة إنجليزية",
+      flag: "حتى الآن",
+      title: "مدرّسة لغة إنجليزية",
       place: "CURIOOkids Egypt",
-      dates: "أكتوبر 2026 – حتى الآن",
-      points: ["تقديم جلسات تفاعلية في التواصل باللغة الإنجليزية للأطفال", "استخدام أنشطة مناسبة للعمر لتنمية التحدث والمفردات والاستخدام العملي للغة", "تهيئة بيئة صفية إيجابية وتفاعلية تتمحور حول المتعلم"]
+      dates: "",
+      description: "بصفتي مدرّسة لغة إنجليزية، أخطّط للدروس الإنجليزية وأقدّمها للمتعلمين الصغار باستخدام الشروحات البصرية والأمثلة العملية والأنشطة التفاعلية. وأُعدّ دروسًا ومواد صفية تتمحور حول المتعلم وتدعم المفردات والقواعد ومهارات التواصل والمشاركة الفعّالة.",
+      points: []
     },
     {
       flag: "تدريب عملي",
@@ -3879,11 +3901,11 @@ const SITE_AR = {
 
     // Selected work — filterable on desktop, swipeable chips on mobile.
     const projectCategories = lang === 'ar'
-      ? { all: 'كل الأعمال', research: 'بحث', edtech: 'EdTech', design: 'تصميم', teaching: 'تدريس' }
-      : { all: 'All work', research: 'Research', edtech: 'EdTech', design: 'Design', teaching: 'Teaching' };
+      ? { all: 'كل الأعمال', research: 'بحث', edtech: 'EdTech', design: 'تصميم', teaching: 'تدريس', classroom: 'أنشطة صفية', videos: 'فيديوهات' }
+      : { all: 'All work', research: 'Research', edtech: 'EdTech', design: 'Design', teaching: 'Teaching', classroom: 'Classroom Activities', videos: 'Teaching Videos' };
     const getProjectCategories = p => {
       const raw = Array.isArray(p.categories) ? p.categories : [p.category || 'design'];
-      const valid = raw.filter(category => ['research','edtech','design','teaching'].includes(category));
+      const valid = raw.filter(category => ['research','edtech','design','teaching','classroom','videos'].includes(category));
       return [...new Set(valid.length ? valid : ['design'])];
     };
     document.getElementById('workFilters').innerHTML = Object.entries(projectCategories).map(([key, label], index) => `<button class="work-filter" type="button" data-filter="${key}" aria-pressed="${key === 'all'}" aria-label="${escapeHtml(label)}"><span class="filter-number">${String(index + 1).padStart(2, '0')}</span><span class="filter-label">${escapeHtml(label)}</span></button>`).join('');
@@ -3919,12 +3941,13 @@ const SITE_AR = {
                 </div>
               </div>
             </div>` : `
+            ${Array.isArray(p.images) && p.images.filter(Boolean).length ? `<div class="project-media-gallery" role="list" aria-label="${lang === 'ar' ? 'صور المشروع' : 'Project images'}">${p.images.filter(Boolean).map((src, imageIndex) => `<figure role="listitem"><img src="${safeAssetUrl(src)}" alt="${escapeHtml(p.title)} — ${lang === 'ar' ? 'صورة' : 'image'} ${imageIndex + 1}" loading="lazy" decoding="async"></figure>`).join('')}</div>` : ''}
             ${p.video && safeEmbedUrl(p.video) ? `<div class="teaching-video" aria-label="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching demonstration video'}"><iframe src="${safeEmbedUrl(p.video)}" title="${lang === 'ar' ? 'فيديو العرض التدريسي' : 'Teaching Demonstration video'}" loading="lazy" referrerpolicy="no-referrer" allow="autoplay; fullscreen" allowfullscreen></iframe></div>` : ''}
             ${p.stat ? `<div class="stat-line">${escapeHtml(p.stat)}</div>` : ''}
             <p>${escapeHtml(p.description)}</p>
             ${p.role ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الدور' : 'Role'}</span>${escapeHtml(p.role)}</div>` : ''}
             ${p.tools ? `<div class="meta-row"><span class="meta-label">${lang === 'ar' ? 'الأدوات' : 'Tools'}</span>${escapeHtml(p.tools)}</div>` : ''}
-            <div class="proj-links">${p.links.map(projectLink).join('')}</div>
+            <div class="proj-links">${p.links.map(projectLink).join('')}${p.websiteUrl && safeExternalUrl(p.websiteUrl, '') ? projectLink({ label: lang === 'ar' ? 'فتح الموقع' : 'Explore website', href: p.websiteUrl }) : ''}</div>
             <div class="ownership-note">${lang === 'ar' ? 'عمل أصلي بواسطة شهد محمد.' : 'Original work by Shahd Mohamed.'}</div>`}
           </div>
         </details>
@@ -4020,8 +4043,9 @@ const SITE_AR = {
     // Experience
     document.getElementById('experienceSpine').innerHTML = data.experience.map(e => `
       <div class="entry"><details class="timeline-detail"><summary class="expandable-summary"><span class="entry-flag">${escapeHtml(e.flag)}</span><h3>${escapeHtml(e.title)}</h3></summary>
-        <div class="place"><bdi class="place-name mixed-content" dir="auto">${escapeHtml(e.place)}</bdi><span class="place-separator" aria-hidden="true"> · </span><bdi class="dates mixed-content" dir="${lang === 'ar' ? 'auto' : 'ltr'}">${escapeHtml(e.dates)}</bdi></div>
-        <ul class="point-list">${e.points.map(pt => `<li>${escapeHtml(pt)}</li>`).join('')}</ul>
+        <div class="place"><bdi class="place-name mixed-content" dir="auto">${escapeHtml(e.place)}</bdi>${e.dates ? `<span class="place-separator" aria-hidden="true"> · </span><bdi class="dates mixed-content" dir="${lang === 'ar' ? 'auto' : 'ltr'}">${escapeHtml(e.dates)}</bdi>` : ''}</div>
+        ${e.description ? `<p class="experience-description">${escapeHtml(e.description)}</p>` : ''}
+        ${e.points && e.points.length ? `<ul class="point-list">${e.points.map(pt => `<li>${escapeHtml(pt)}</li>`).join('')}</ul>` : ''}
         ${e.evidence ? `<div class="proj-links">${projectLink(e.evidence)}</div>` : ''}
       </details></div>
     `).join('');
