@@ -99,6 +99,7 @@
   <link rel="stylesheet" href="styles.bundle.css?v=3.0.0">
   <link rel="stylesheet" href="visual-refresh.css?v=1.0.7">
   <link rel="stylesheet" href="portfolio-media.css?v=1.0.0">
+  <link rel="stylesheet" href="practical-work.css?v=1.0.0">
 <style>
   :root{
     --ink:#152825;
@@ -3177,6 +3178,14 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
         <a class="material-card reveal-item in-view" href="https://drive.google.com/drive/folders/1g0XnzDUJwKrmgcFmbgFSgwUHkl_kAXGK" target="_blank" rel="noopener noreferrer"><span class="mname">Practical Work Videos</span></a>
         <a class="material-card reveal-item in-view" href="https://drive.google.com/drive/folders/1d2hgaLe5ASKrY-Op27gsmu6wMyygF70A" target="_blank" rel="noopener noreferrer"><span class="mname">Projects</span></a>
       </div>
+      <div class="practical-work-block">
+        <div class="practical-work-heading">
+          <span class="section-tag">practical work</span>
+          <h3 id="practicalWorkHeading">Practical work by setting</h3>
+          <p id="practicalWorkLead">Each placement has its own evidence space, so activities stay connected to the context where they were designed and delivered.</p>
+        </div>
+        <div id="practicalWorkGroups" class="practical-work-groups" role="list" aria-label="Practical work by setting"></div>
+      </div>
       <a class="btn btn-text" id="materialsPortfolioLink" href="https://drive.google.com/drive/folders/1_SgYq2bi8oCfyzkCNLl3ZWqLtBG197CM" target="_blank" rel="noopener noreferrer">View full portfolio</a>
     </div>
   </section>
@@ -3459,6 +3468,7 @@ const SITE = {
         { label: "Open teaching demonstration", href: "https://drive.google.com/file/d/1bjMdGG5RVQGelgc6v7RMqHMZYyT02hPS/preview" }
       ]
     },
+    { flag: "early years numeracy", category: "teaching", categories: ["teaching"], title: "Fun with Numbers 1 to 10", badges: ["Early Years", "Numbers 1–10"], description: "A playful early-years activity that introduces numbers 1 to 10 through visual counting, repetition, movement, and learner participation.", images: [], websiteUrl: "", video: "", links: [] },
     { flag: "teaching practice", category: "teaching", categories: ["teaching"], title: "Visual Vocabulary Lesson — Inside the Book", badges: ["Teaching Practice", "Whiteboard lesson"], description: "A vocabulary lesson using visual examples and whiteboard illustrations to introduce book-related terms and concepts.", images: [], websiteUrl: "", video: "", links: [] },
     { flag: "teaching practice", category: "teaching", categories: ["teaching"], title: "Visual Grammar Lesson — My Backpack", badges: ["Teaching Practice", "Whiteboard lesson"], description: "A visual explanation of possessive adjectives and possessive pronouns using vocabulary, examples, and drawings.", images: [], websiteUrl: "", video: "", links: [] },
     { flag: "cross-curricular lesson", category: "teaching", categories: ["teaching"], title: "Cross-Curricular Lesson — The Solar System", badges: ["Teaching Practice", "Science + English"], description: "A science-related classroom lesson that uses planets and visual explanations to support English vocabulary and descriptive language.", images: [], websiteUrl: "", video: "", links: [] },
@@ -3476,6 +3486,11 @@ const SITE = {
     { title: "Research papers", href: "https://drive.google.com/drive/folders/1zHdqDdbPUsbgA7wvTLmoMu3spNnbPXPA" },
     { title: "Practical Work Videos", href: "https://drive.google.com/drive/folders/1g0XnzDUJwKrmgcFmbgFSgwUHkl_kAXGK" },
     { title: "Projects", href: "https://drive.google.com/drive/folders/1d2hgaLe5ASKrY-Op27gsmu6wMyygF70A" }
+  ],
+  practicalWork: [
+    { title: "CURIOOkids Egypt", setting: "English Instructor", description: "Activities and lesson materials created for young learners at CURIOOkids Egypt.", href: "" },
+    { title: "MSA University", setting: "English Teaching Practicum", description: "Lesson plans, classroom practice, assessment, and learner feedback from the university practicum.", href: "https://drive.google.com/file/d/1bjMdGG5RVQGelgc6v7RMqHMZYyT02hPS/view?usp=drivesdk" },
+    { title: "Dar El Tarbiah Schools", setting: "Teaching Internship", description: "Classroom support, lesson delivery, activities, and learner feedback from the teaching internship.", href: "https://drive.google.com/drive/folders/13a3g42U4qm-nW-uW2i9szL_il34Lo9EO" }
   ],
   experience: [
     {
@@ -3686,6 +3701,7 @@ const SITE_AR = {
         { label: "فتح العرض التدريسي", href: "https://drive.google.com/file/d/1bjMdGG5RVQGelgc6v7RMqHMZYyT02hPS/preview" }
       ]
     },
+    { flag: "تعلم الأرقام للأطفال", category: "teaching", categories: ["teaching"], title: "Fun with Numbers 1 to 10", badges: ["مرحلة الطفولة المبكرة", "الأرقام من 1 إلى 10"], description: "نشاط ممتع للأطفال في المرحلة المبكرة يقدّم الأرقام من 1 إلى 10 من خلال العد البصري والتكرار والحركة ومشاركة المتعلمين.", images: [], websiteUrl: "", video: "", links: [] },
     { flag: "ممارسة تدريسية", category: "teaching", categories: ["teaching"], title: "درس مفردات بصري — داخل الكتاب", badges: ["ممارسة تدريسية", "درس على السبورة"], description: "درس مفردات يستخدم أمثلة بصرية ورسومات على السبورة لتقديم المصطلحات والمفاهيم المرتبطة بالكتاب.", images: [], websiteUrl: "", video: "", links: [] },
     { flag: "ممارسة تدريسية", category: "teaching", categories: ["teaching"], title: "درس قواعد بصري — حقيبتي", badges: ["ممارسة تدريسية", "درس على السبورة"], description: "شرح بصري لصفات الملكية وضمائر الملكية باستخدام المفردات والأمثلة والرسومات.", images: [], websiteUrl: "", video: "", links: [] },
     { flag: "درس تكاملي", category: "teaching", categories: ["teaching"], title: "درس تكاملي — النظام الشمسي", badges: ["ممارسة تدريسية", "علوم + لغة إنجليزية"], description: "درس صفي متعلق بالعلوم يستخدم الكواكب والشرح البصري لدعم مفردات اللغة الإنجليزية واللغة الوصفية.", images: [], websiteUrl: "", video: "", links: [] },
@@ -3704,6 +3720,11 @@ const SITE_AR = {
     { title: "المشاريع", href: "https://drive.google.com/drive/folders/1d2hgaLe5ASKrY-Op27gsmu6wMyygF70A" }
   ],
 
+  practicalWork: [
+    { title: "CURIOOkids Egypt", setting: "مدرّسة لغة إنجليزية", description: "أنشطة ومواد تعليمية أعددتها للمتعلمين الصغار في CURIOOkids Egypt.", href: "" },
+    { title: "جامعة MSA", setting: "التدريب العملي في تدريس اللغة الإنجليزية", description: "خطط دروس وممارسة صفية وتقييم وتغذية راجعة من فترة التدريب العملي بالجامعة.", href: "https://drive.google.com/file/d/1bjMdGG5RVQGelgc6v7RMqHMZYyT02hPS/view?usp=drivesdk" },
+    { title: "مدارس دار التربية", setting: "تدريب في التدريس", description: "دعم داخل الفصل وتنفيذ دروس وأنشطة وتغذية راجعة من فترة التدريب.", href: "https://drive.google.com/drive/folders/13a3g42U4qm-nW-uW2i9szL_il34Lo9EO" }
+  ],
   experience: [
     {
       flag: "حتى الآن",
@@ -4040,6 +4061,21 @@ const SITE_AR = {
       </a>
     `).join('');
 
+    const practicalWorkHeading = document.getElementById('practicalWorkHeading');
+    const practicalWorkLead = document.getElementById('practicalWorkLead');
+    const practicalWorkGroups = document.getElementById('practicalWorkGroups');
+    if(practicalWorkHeading && practicalWorkLead && practicalWorkGroups){
+      practicalWorkHeading.textContent = lang === 'ar' ? 'العمل العملي حسب مكان التطبيق' : 'Practical work by setting';
+      practicalWorkLead.textContent = lang === 'ar' ? 'لكل مكان تدريب مساحة أدلة خاصة به، حتى تظل الأنشطة مرتبطة بالسياق الذي صُممت ونُفذت فيه.' : 'Each placement has its own evidence space, so activities stay connected to the context where they were designed and delivered.';
+      practicalWorkGroups.setAttribute('aria-label', practicalWorkHeading.textContent);
+      practicalWorkGroups.innerHTML = (data.practicalWork || []).map(group => `
+        <article class="practical-work-card" role="listitem">
+          <span class="practical-work-setting">${escapeHtml(group.setting)}</span>
+          <h4>${escapeHtml(group.title)}</h4>
+          <p>${escapeHtml(group.description)}</p>
+          ${group.href && safeExternalUrl(group.href, '') ? `<a class="proj-link" href="${safeExternalUrl(group.href)}" target="_blank" rel="noopener noreferrer">${lang === 'ar' ? 'فتح مساحة الأدلة' : 'Open evidence space'}${externalIcon}</a>` : `<span class="practical-work-pending">${lang === 'ar' ? 'مساحة الأدلة ستُضاف عند اعتماد الخامة' : 'Evidence space will be added when the material is approved'}</span>`}
+        </article>`).join('');
+    }
     // Experience
     document.getElementById('experienceSpine').innerHTML = data.experience.map(e => `
       <div class="entry"><details class="timeline-detail"><summary class="expandable-summary"><span class="entry-flag">${escapeHtml(e.flag)}</span><h3>${escapeHtml(e.title)}</h3></summary>
