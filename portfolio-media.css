@@ -1,0 +1,8 @@
+/* Optional project media: empty arrays render no placeholder or broken image. */
+.project-media-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;margin:0 0 18px;}
+.project-media-gallery figure{margin:0;min-width:0;border:1px solid rgba(231,184,78,.2);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.035);}
+.project-media-gallery img{display:block;width:100%;height:auto;max-height:460px;object-fit:contain;object-position:center;background:rgba(0,0,0,.08);}
+html[data-theme="light"] .project-media-gallery figure{border-color:rgba(197,155,76,.28);background:rgba(255,255,255,.55);}
+html[data-theme="light"] .project-media-gallery img{background:rgba(255,255,255,.42);}
+.experience-description{margin:0 0 14px;line-height:1.8;}
+@media (max-width:640px){.project-media-gallery{grid-template-columns:1fr;}.project-media-gallery img{max-height:none;}}
