@@ -1,4 +1,4 @@
-/* Hero-edge pull cord: damped spring physics, touch/keyboard access, and theme-aware lamp feedback. */
+/* Hero-edge pull cord: spring physics, touch/keyboard access, pointer sway, and optional device-motion response. */
 (() => {
   'use strict';
 
@@ -7,6 +7,7 @@
   if (!cord || !hero) return;
 
   const root = document.documentElement;
+  const bulb = cord.querySelector('.theme-cord__bulb');
   const badgeHost = hero.querySelector('.shahd-badge-mount');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -24,6 +25,10 @@
   let animationFrame = 0;
   let ignoreNextClick = false;
   let placementFrame = 0;
+  let motionState = 'idle';
+  let lastMotion = null;
+  let lastMotionAt = 0;
+  let shakeTimer = 0;
 
   function updateLabel() {
     const isLight = root.dataset.theme === 'light';
@@ -43,17 +48,21 @@
     const cardRect = realCard?.getBoundingClientRect() || badgeHost?.getBoundingClientRect();
     if (!heroRect.width || !heroRect.height) return;
 
-    // Keep the bulb on the hero's physical right edge, with a clear lane beside the ID card.
-    const safeRight = Math.max(24, window.innerWidth - 16);
+    const style = getComputedStyle(cord);
+    const bulbStyle = getComputedStyle(bulb);
+    const bulbTop = parseFloat(bulbStyle.top) || 0;
+    const bulbHeight = bulb.getBoundingClientRect().height || 36;
+    const cordHeight = parseFloat(style.height) || 200;
+    const safeInset = parseFloat(style.getPropertyValue('--cord-safe-right')) || 0;
+    const safeRight = Math.max(24, window.innerWidth - Math.max(16, safeInset + 12));
     const preferredX = heroRect.right - 12;
     const afterCardX = cardRect ? cardRect.right + 30 : preferredX;
     const centerX = clamp(Math.max(preferredX, afterCardX), 24, safeRight);
-    const localX = centerX - heroRect.left;
-    cord.style.setProperty('--cord-x', `${localX.toFixed(1)}px`);
+    cord.style.setProperty('--cord-x', `${(centerX - heroRect.left).toFixed(1)}px`);
 
-    // Align the bulb beside the card's middle, never over or attached to the card.
+    // The lamp hangs beside the card's middle, in its own lane along the hero edge.
     const cardMiddleY = cardRect ? cardRect.top + cardRect.height / 2 : heroRect.top + heroRect.height * 0.55;
-    const top = clamp(cardMiddleY - heroRect.top - 73, 112, Math.max(112, heroRect.height - 166));
+    const top = clamp(cardMiddleY - heroRect.top - bulbTop - bulbHeight / 2, 112, Math.max(112, heroRect.height - cordHeight));
     cord.style.setProperty('--cord-top', `${top.toFixed(1)}px`);
   }
 
@@ -92,9 +101,7 @@
 
   function switchTheme() {
     const nextIsLight = root.dataset.theme !== 'light';
-    if (typeof window.togglePortfolioTheme === 'function') {
-      window.togglePortfolioTheme();
-    }
+    if (typeof window.togglePortfolioTheme === 'function') window.togglePortfolioTheme();
     if (!nextIsLight) playDarkChime();
     updateLabel();
   }
@@ -110,11 +117,12 @@
       angle = 0;
       angularVelocity = 0;
     } else {
-      // Semi-implicit Euler integration keeps the cord elastic with a soft pendulum follow-through.
-      velocityY += (-58 * currentY - 13.5 * velocityY) * dt;
-      currentY += velocityY * dt;
-      angularVelocity += (-36 * angle - 8.2 * angularVelocity + currentY * 0.075) * dt;
+      // Semi-implicit Euler integration gives the longer cord a soft, weighted rebound.
+      velocityY += (-43 * currentY - 10.5 * velocityY) * dt;
+      currentY = clamp(currentY + velocityY * dt, 0, 62);
+      angularVelocity += (-29 * angle - 7.5 * angularVelocity + currentY * 0.07) * dt;
       angle += angularVelocity * dt;
+      if (currentY === 0 && velocityY < 0) velocityY = 0;
       if (Math.abs(currentY) < 0.14 && Math.abs(velocityY) < 0.9) {
         currentY = 0;
         velocityY = 0;
@@ -134,8 +142,8 @@
   function releaseSpring(initialAngle = 0) {
     if (animationFrame) window.cancelAnimationFrame(animationFrame);
     angle = initialAngle;
-    angularVelocity = initialAngle * 2.1;
-    velocityY = currentY ? -Math.max(0.9, Math.abs(velocityY) * 0.24) : 0;
+    angularVelocity = initialAngle * 1.8;
+    velocityY = currentY ? -Math.max(0.8, Math.abs(velocityY) * 0.22) : 0;
     lastFrame = 0;
     if (reduceMotion.matches) {
       currentY = 0;
@@ -148,13 +156,63 @@
     animationFrame = window.requestAnimationFrame(animateSpring);
   }
 
+  function flashOnShake() {
+    cord.classList.add('is-shaken');
+    window.clearTimeout(shakeTimer);
+    shakeTimer = window.setTimeout(() => cord.classList.remove('is-shaken'), 420);
+  }
+
+  function onDeviceMotion(event) {
+    if (pointer || reduceMotion.matches) return;
+    const directAcceleration = event.acceleration;
+    const acceleration = directAcceleration && Number.isFinite(directAcceleration.x) && Number.isFinite(directAcceleration.y)
+      ? directAcceleration : event.accelerationIncludingGravity;
+    if (!acceleration || !Number.isFinite(acceleration.x) || !Number.isFinite(acceleration.y)) return;
+    const now = performance.now();
+    if (now - lastMotionAt < 28) return;
+    lastMotionAt = now;
+    const sample = { x: acceleration.x, y: acceleration.y };
+    if (lastMotion) {
+      const dx = sample.x - lastMotion.x;
+      const dy = sample.y - lastMotion.y;
+      if (Math.hypot(dx, dy) > 1.35) {
+        angularVelocity = clamp(angularVelocity + dx * 0.65, -20, 20);
+        velocityY = clamp(velocityY + Math.min(8, Math.abs(dy) * 0.38), -18, 18);
+        flashOnShake();
+        if (!animationFrame) {
+          lastFrame = 0;
+          animationFrame = window.requestAnimationFrame(animateSpring);
+        }
+      }
+    }
+    lastMotion = sample;
+  }
+
+  async function enableDeviceMotion() {
+    const MotionEvent = window.DeviceMotionEvent;
+    if (!MotionEvent || motionState !== 'idle' || reduceMotion.matches) return;
+    motionState = 'pending';
+    try {
+      if (typeof MotionEvent.requestPermission === 'function') {
+        const result = await MotionEvent.requestPermission();
+        if (result !== 'granted') { motionState = 'denied'; return; }
+      }
+      window.addEventListener('devicemotion', onDeviceMotion, { passive: true });
+      motionState = 'granted';
+    } catch (_) {
+      motionState = 'denied';
+    }
+  }
+
   cord.addEventListener('pointerdown', event => {
     if ((event.button !== undefined && event.button !== 0) || event.isPrimary === false) return;
+    enableDeviceMotion();
     pointer = { id: event.pointerId, startX: event.clientX, startY: event.clientY, lastY: event.clientY, lastTime: performance.now(), speedY: 0 };
     if (animationFrame) window.cancelAnimationFrame(animationFrame);
     animationFrame = 0;
     velocityY = 0;
     cord.classList.add('is-pulling');
+    cord.classList.remove('is-hovered');
     try { cord.setPointerCapture(event.pointerId); } catch (_) { /* Embedded browsers may not support pointer capture. */ }
   });
 
@@ -166,7 +224,7 @@
     pointer.lastY = event.clientY;
     pointer.lastTime = now;
     currentY = clamp(event.clientY - pointer.startY, 0, 62);
-    angle = clamp((pointer.startX - event.clientX) * 0.14, -13, 13);
+    angle = clamp((pointer.startX - event.clientX) * 0.13, -14, 14);
     setCordPose(currentY, angle);
     if (currentY > 2) event.preventDefault();
   });
@@ -182,7 +240,7 @@
       ignoreNextClick = true;
       window.setTimeout(() => { ignoreNextClick = false; }, 500);
       switchTheme();
-      releaseSpring(clamp(pullAngle + (Math.random() - 0.5) * 3, -14, 14));
+      releaseSpring(clamp(pullAngle + (Math.random() - 0.5) * 3, -15, 15));
     } else {
       releaseSpring(pullAngle * 0.5);
     }
@@ -200,8 +258,32 @@
     }
     // Keyboard and assistive-technology activation remain available without dragging.
     switchTheme();
-    currentY = 27;
+    currentY = 28;
     releaseSpring(4.5);
+  });
+
+  hero.addEventListener('pointermove', event => {
+    if (event.pointerType !== 'mouse' || pointer || reduceMotion.matches) return;
+    const bulbRect = bulb.getBoundingClientRect();
+    const centerX = bulbRect.left + bulbRect.width / 2;
+    const centerY = bulbRect.top + bulbRect.height / 2;
+    const dx = event.clientX - centerX;
+    const dy = event.clientY - centerY;
+    if (Math.hypot(dx, dy) < 175) {
+      cord.classList.add('is-hovered');
+      angle = clamp(angle * 0.55 - dx * 0.025 + (event.movementX || 0) * 0.08, -8, 8);
+      angularVelocity = clamp(angularVelocity + (event.movementX || 0) * 0.025, -10, 10);
+      setCordPose(currentY, angle);
+    } else if (cord.classList.contains('is-hovered')) {
+      cord.classList.remove('is-hovered');
+      releaseSpring(angle * 0.55);
+    }
+  });
+  hero.addEventListener('pointerleave', () => {
+    if (cord.classList.contains('is-hovered')) {
+      cord.classList.remove('is-hovered');
+      releaseSpring(angle * 0.5);
+    }
   });
 
   new MutationObserver(updateLabel).observe(root, { attributes: true, attributeFilter: ['data-theme', 'lang'] });

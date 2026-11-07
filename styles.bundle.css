@@ -13625,14 +13625,14 @@ html[data-theme="light"] #contact #contactEmailBtn:focus-visible {
 /* Hero-edge theme pull cord: slim gold hardware, a clear bulb, and a reserved lane beside the ID card. */
 #home.hero.shahd-badge-hero { position:relative !important; overflow:visible !important; }
 #home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero {
-  --cord-y:0px; --cord-angle:0deg; --cord-x:calc(100% - 14px); --cord-top:42%;
+  --cord-y:0px; --cord-angle:0deg; --cord-x:calc(100% - 14px); --cord-top:42%; --cord-length:clamp(100px,10vw,132px); --cord-safe-right:env(safe-area-inset-right,0px);
   position:absolute !important; top:var(--cord-top) !important; left:var(--cord-x) !important; right:auto !important;
-  z-index:30; display:block; width:48px; height:158px; margin:0; padding:0; overflow:visible;
+  z-index:30; display:block; width:48px; height:calc(var(--cord-length) + 52px); margin:0; padding:0; overflow:visible;
   border:0; border-radius:0; background:transparent; color:#e7bd62; cursor:grab; touch-action:none;
-  -webkit-tap-highlight-color:transparent; transform:translateX(-50%); filter:none;
+  -webkit-tap-highlight-color:transparent; transform:translateX(-50%); transform-origin:50% 0; animation:theme-cord-idle-sway 4.8s ease-in-out infinite; filter:none;
 }
 #home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero:active,
-#home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero.is-pulling { cursor:grabbing; }
+#home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero.is-pulling { cursor:grabbing; animation-play-state:paused; }
 #home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero:focus-visible {
   outline:2px solid currentColor; outline-offset:2px; border-radius:18px;
 }
@@ -13642,13 +13642,13 @@ html[data-theme="light"] #contact #contactEmailBtn:focus-visible {
   transform:translateX(-50%);
 }
 .theme-cord__line {
-  position:absolute; top:6px; left:50%; width:1.5px; height:calc(54px + var(--cord-y)); border-radius:0 0 2px 2px;
+  position:absolute; top:6px; left:50%; width:1.5px; height:calc(var(--cord-length) + var(--cord-y)); border-radius:0 0 2px 2px;
   background:linear-gradient(to bottom,currentColor 0%,rgba(231,189,98,.62) 82%,rgba(231,189,98,.28) 100%);
   box-shadow:0 0 5px rgba(231,189,98,.18); transform:translateX(-50%) rotate(var(--cord-angle)); transform-origin:50% 0;
   transition:height 55ms linear;
 }
 .theme-cord__bulb {
-  position:absolute; top:calc(56px + var(--cord-y)); left:50%; display:grid; width:27px; height:36px; place-items:center;
+  position:absolute; top:calc(var(--cord-length) - 2px + var(--cord-y)); left:50%; display:grid; width:27px; height:36px; place-items:center;
   color:currentColor; transform:translateX(-50%) rotate(var(--cord-angle)); transform-origin:50% 0;
   transition:top 55ms linear,filter 240ms ease,color 240ms ease;
 }
@@ -13664,15 +13664,20 @@ html[data-theme="light"] #contact #contactEmailBtn:focus-visible {
 }
 .theme-cord:hover .theme-cord__bulb,
 .theme-cord:focus-visible .theme-cord__bulb { filter:drop-shadow(0 0 9px rgba(231,189,98,.46)); }
-.theme-cord.is-pulling .theme-cord__bulb { filter:drop-shadow(0 0 13px rgba(255,221,137,.68)); }
+.theme-cord.is-pulling .theme-cord__bulb,.theme-cord.is-shaken .theme-cord__bulb { filter:drop-shadow(0 0 13px rgba(255,221,137,.68)); }
 html:not([data-theme="light"]) .theme-cord__bulb::before { opacity:.94; transform:scale(1.18); }
 html[data-theme="light"] #home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero { color:#9a722c; }
 html[data-theme="light"] .theme-cord__bulb::before {
   background:radial-gradient(circle,rgba(255,235,176,.24),rgba(179,140,62,.08) 48%,transparent 78%); opacity:.48;
 }
 html[data-theme="light"] .theme-cord__bulb svg { fill:rgba(255,238,195,.18); }
+@keyframes theme-cord-idle-sway {
+  0%,100% { transform:translateX(-50%) rotate(-1.35deg); }
+  50% { transform:translateX(-50%) rotate(1.35deg); }
+}
+#home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero.is-hovered { animation-play-state:paused; }
 @media (max-width:767px) {
-  #home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero { width:46px; height:150px; }
+  #home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero { --cord-length:92px; width:46px; height:calc(var(--cord-length) + 52px); }
   .theme-cord__bulb { width:25px; height:34px; }
   .theme-cord__bulb svg { width:23px; height:30px; }
 }
