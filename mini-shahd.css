@@ -32,9 +32,18 @@
 #miniShahd.state-celebrate .mini-arm.left{transform:rotate(-72deg)}#miniShahd.state-celebrate .mini-arm.right{transform:rotate(72deg)}#miniShahd.state-celebrate .mini-sparkles{opacity:1;animation:mini-sparkle 1.2s ease both}
 #miniShahd.state-surprise .mini-face{transform:translateZ(22px) translateY(-4px)}#miniShahd.state-surprise .mini-eye{transform:scale(1.35)}
 #miniShahd.state-sit .mini-character{bottom:10%;transform:translateX(-50%) rotateY(-8deg) scale(.94)}#miniShahd.state-sit .mini-leg{top:139px;transform:rotate(72deg)}
-@keyframes mini-wave{from{transform:rotate(-12deg)}to{transform:rotate(18deg)}}@keyframes mini-sparkle{0%{transform:scale(.5) rotate(-8deg);opacity:0}35%{transform:scale(1.1) rotate(4deg);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mini-wave{from{transform:rotate(-12deg)}to{transform:rotate(18deg)}}@keyframes mini-sparkle{0%{transform:scale(.5) rotate(-8deg);opacity:0}35%{transform:scale(1.1) rotate(4deg);opacity:1}100%{transform:scale(1);opacity:1}}@keyframes mini-shadow{0%,100%{transform:translateX(-50%) scaleX(1);opacity:.72}50%{transform:translateX(-50%) scaleX(.86);opacity:.46}}
 @keyframes mini-breathe{0%,100%{transform:translateX(-50%) rotateY(-8deg) translateY(0)}50%{transform:translateX(-50%) rotateY(-8deg) translateY(-3px)}}
-@media (hover:hover) and (pointer:fine){.mini-character{animation:mini-breathe 3.6s ease-in-out infinite}.mini-character:hover{animation-play-state:paused}}
+/* The companion keeps a visible, calm idle motion on touch devices too. */
+.mini-character{animation:mini-breathe 3.6s ease-in-out infinite}.mini-character:hover{animation-play-state:paused}.mini-shadow{animation:mini-shadow 3.6s ease-in-out infinite}
 @media(max-width:767px){#miniShahd{width:190px;height:245px;margin:8px auto 0;transform:none!important}.hero.shahd-badge-hero>#miniShahd{grid-area:badge;align-self:end;justify-self:center;margin:0;transform:none!important}.mini-character{transform:translateX(-50%) scale(.88) rotateY(-8deg)}.mini-hint{font-size:.58rem}.mini-bubble{top:0;min-width:138px;font-size:.66rem}}
-@media(prefers-reduced-motion:reduce){.mini-character,.mini-hand,.mini-sparkles{animation:none!important}.mini-character{transition:none}.mini-bubble{transition:none}}
+@media(prefers-reduced-motion:reduce){.mini-character,.mini-hand,.mini-sparkles,.mini-shadow{animation:none!important}.mini-character{transition:none}.mini-bubble{transition:none}}
 html[data-theme='light'] #miniShahd{--mini-shadow:rgba(40,35,24,.22);--mini-green:#386454}.theme-cord:focus-visible~#miniShahd{outline-offset:6px}
+
+/* Keep the identity card and the companion in separate visual lanes. */
+.hero.shahd-badge-hero>.hero-visuals{grid-area:badge;display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,.44fr);align-items:end;gap:clamp(4px,1.4vw,18px);min-width:0}
+.hero.shahd-badge-hero>.hero-visuals>shahd-lanyard{display:block;width:100%;height:500px;margin:0;min-width:0}
+.hero.shahd-badge-hero>.hero-visuals>#miniShahd{width:100%;height:360px;margin:0;transform:none;align-self:end}
+.hero.shahd-badge-hero>.hero-visuals .mini-character{transform:translateX(-50%) scale(1.08) rotateY(-8deg)}
+@media(max-width:899px) and (min-width:768px){.hero.shahd-badge-hero>.hero-visuals>shahd-lanyard{height:460px}.hero.shahd-badge-hero>.hero-visuals>#miniShahd{height:300px}.hero.shahd-badge-hero>.hero-visuals .mini-character{transform:translateX(-50%) scale(.92) rotateY(-8deg)}}
+@media(max-width:767px){.hero.shahd-badge-hero>.hero-visuals{grid-area:badge;display:flex;flex-direction:column;align-items:center;gap:4px}.hero.shahd-badge-hero>.hero-visuals>shahd-lanyard{width:min(100%,420px);height:400px}.hero.shahd-badge-hero>.hero-visuals>#miniShahd{width:176px;height:205px;margin:0;transform:none!important}.hero.shahd-badge-hero>.hero-visuals .mini-character{transform:translateX(-50%) scale(.68) rotateY(-8deg)}.hero.shahd-badge-hero>.hero-visuals .mini-hint{display:none}.hero.shahd-badge-hero>.hero-visuals .mini-bubble{top:0}}
