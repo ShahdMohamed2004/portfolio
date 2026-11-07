@@ -98,6 +98,7 @@
 
   <link rel="stylesheet" href="styles.bundle.css?v=3.3.0">
   <link rel="stylesheet" href="visual-refresh.css?v=1.0.7">
+  <link rel="stylesheet" href="mini-shahd.css?v=1.0.0">
 <style>
   :root{
     --ink:#152825;
@@ -3057,6 +3058,21 @@ html[dir="rtl"] .contact-links{justify-content:flex-start;}
     </div>
 
     <shahd-lanyard class="shahd-badge-mount" photo="assets/about.webp" aria-label="Interactive professional identity badge"></shahd-lanyard>
+    <div id="miniShahd" aria-label="Mini Shahd interactive companion">
+      <div class="mini-stage">
+        <div class="mini-bubble" role="status" aria-live="polite"></div>
+        <div class="mini-sparkles" aria-hidden="true"><i>✦</i><i>✧</i><i>·</i></div>
+        <div class="mini-board" aria-hidden="true"></div><div class="mini-shadow" aria-hidden="true"></div>
+        <div class="mini-character state-idle" role="button" tabindex="0" aria-label="Mini Shahd — click for a reaction">
+          <div class="mini-hijab" aria-hidden="true"></div><div class="mini-face" aria-hidden="true"><i class="mini-eye left"></i><i class="mini-eye right"></i></div><div class="mini-neck" aria-hidden="true"></div>
+          <div class="mini-body" aria-hidden="true"><span class="mini-collar"></span></div>
+          <div class="mini-arm left" aria-hidden="true"><span class="mini-hand"></span></div><div class="mini-arm right" aria-hidden="true"><span class="mini-hand"></span></div>
+          <div class="mini-leg left" aria-hidden="true"><span class="mini-shoe"></span></div><div class="mini-leg right" aria-hidden="true"><span class="mini-shoe"></span></div>
+          <div class="mini-book" aria-hidden="true"></div><div class="mini-pencil" aria-hidden="true"></div>
+        </div>
+        <span class="mini-hint" aria-hidden="true">Click Mini Shahd to say hello</span>
+      </div>
+    </div>
     <div class="tense-diagram" id="tenseDiagram">
       <svg viewBox="0 0 640 136" aria-hidden="true">
         <path class="timeline-base" d="M10,68 H630" pathLength="1" aria-hidden="true" />
@@ -4898,13 +4914,6 @@ const SITE_AR = {
 
 <script src="scripts.bundle.js?v=3.0.1" defer></script>
 <script src="theme-cord.js?v=2.1.0" defer></script>
-
-
-
-
-
-
-
-
+<script src="mini-shahd.js?v=1.0.0" defer></script>
 </body>
 </html>
