@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#152825" />
 <meta name="color-scheme" content="dark light" />
 <!-- GitHub Pages cannot set response headers here; this meta policy still reduces object, base, form, and mixed-content attack surface. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src https://drive.google.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.counter.dev; connect-src https://t.counter.dev; form-action 'none'; upgrade-insecure-requests" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src https://drive.google.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.counter.dev https://unpkg.com; connect-src https://t.counter.dev; form-action 'none'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -98,6 +98,7 @@
 
   <link rel="stylesheet" href="styles.bundle.css?v=3.3.0">
   <link rel="stylesheet" href="visual-refresh.css?v=1.0.7">
+  <link rel="stylesheet" href="teacher-character.css?v=1.0.0">
 <style>
   :root{
     --ink:#152825;
@@ -4906,5 +4907,13 @@ const SITE_AR = {
 
 
 
+
+  <aside class="teacher-companion" aria-label="Interactive 3D learning guide">
+    <div class="teacher-companion-bubble" aria-live="polite"></div>
+    <model-viewer src="assets/teacher-character-rigged.glb" alt="3D teacher character" camera-controls="false" interaction-prompt="none" loading="lazy" reveal="auto" shadow-intensity="0.35" exposure="1.05" camera-orbit="0deg auto auto"></model-viewer>
+    <div class="teacher-companion-label">Learning guide</div>
+  </aside>
+  <script type="module" src="https://unpkg.com/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+  <script src="teacher-character.js?v=1.0.0" defer></script>
 </body>
 </html>

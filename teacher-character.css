@@ -1,0 +1,16 @@
+/* Teacher companion: isolated, responsive, scroll-driven 3D space filler. */
+.teacher-companion{position:fixed;z-index:18;inset-inline-end:clamp(18px,4vw,76px);inset-block-start:clamp(150px,25vh,230px);width:clamp(190px,19vw,270px);height:clamp(300px,48vh,470px);pointer-events:none;opacity:.98;transform:translate3d(0,0,0);transition:opacity .35s ease,filter .35s ease;filter:drop-shadow(0 24px 24px rgba(0,0,0,.22));}
+.teacher-companion::before{content:"";position:absolute;inset:auto 9% 2%;height:20px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.36),transparent 72%);filter:blur(5px);z-index:-1;}
+.teacher-companion model-viewer{display:block;width:100%;height:100%;background:transparent;--poster-color:transparent;--progress-bar-color:var(--yellow,#e7b84e);--progress-mask:transparent;}
+.teacher-companion-bubble{position:absolute;inset-block-start:-10px;inset-inline-end:6%;max-width:190px;padding:9px 12px;border:1px solid rgba(231,184,78,.3);border-radius:14px 14px 3px 14px;background:rgba(21,40,37,.84);color:var(--chalk,#efeAD8);font:600 .72rem/1.35 var(--font-body,system-ui);opacity:0;transform:translateY(7px);transition:opacity .3s ease,transform .3s ease;white-space:nowrap;}
+.teacher-companion-bubble.is-visible{opacity:1;transform:translateY(0);}
+.teacher-companion-label{position:absolute;inset-inline-start:0;inset-block-end:4%;padding:5px 8px;border:1px solid rgba(231,184,78,.25);border-radius:999px;background:rgba(21,40,37,.7);color:var(--yellow,#e7b84e);font:600 .62rem/1 var(--font-body,system-ui);letter-spacing:.08em;text-transform:uppercase;}
+html[data-theme="light"] .teacher-companion-bubble,html[data-theme="light"] .teacher-companion-label{background:rgba(247,242,236,.9);color:#5b1425;}
+@media (max-width:1100px){.teacher-companion{inset-inline-end:0;width:142px;height:248px;opacity:.68;inset-block-start:clamp(190px,28vh,250px);}}
+@media (max-width:767px){.teacher-companion{position:relative;inset:auto;display:block;width:min(220px,58vw);height:300px;margin:6px auto 18px;opacity:1;filter:drop-shadow(0 15px 18px rgba(0,0,0,.2));pointer-events:auto;}
+  .teacher-companion-bubble{inset-block-start:2px;inset-inline-end:-10px;}
+  .teacher-companion-label{inset-inline-start:4px;inset-block-end:0;}
+  #home .hero-copy{display:contents;}
+  #home .teacher-companion-slot{display:block;}
+}
+@media (prefers-reduced-motion:reduce){.teacher-companion{transition:none;}.teacher-companion-bubble{transition:none;}.teacher-companion model-viewer{animation:none!important;}}
