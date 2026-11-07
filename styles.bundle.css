@@ -13613,3 +13613,11 @@ html[data-theme="light"] #experience #experienceSpine > .entry > .timeline-detai
   -webkit-backdrop-filter: blur(10px) saturate(112%) !important;
   backdrop-filter: blur(10px) saturate(112%) !important;
 }
+
+/* Light theme: keep the Email label legible on its dark contact action card. */
+html[data-theme="light"] #contact #contactEmailBtn,
+html[data-theme="light"] #contact #contactEmailBtn:hover,
+html[data-theme="light"] #contact #contactEmailBtn:focus-visible {
+  color: #f6f0da !important;
+  -webkit-text-fill-color: #f6f0da !important;
+}
