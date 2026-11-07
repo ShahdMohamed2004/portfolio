@@ -13622,114 +13622,61 @@ html[data-theme="light"] #contact #contactEmailBtn:focus-visible {
   -webkit-text-fill-color: #f6f0da !important;
 }
 
-/* A discreet pull-cord hangs from the header edge as the tactile theme control. */
-.theme-cord {
-  --cord-y: 0px;
-  --cord-angle: 0deg;
-  position: fixed;
-  z-index: 190;
-  top: 70px;
-  inset-inline-end: max(14px, env(safe-area-inset-right));
-  width: 48px;
-  height: 124px;
-  margin: 0;
-  padding: 0;
-  overflow: visible;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: #e7b84e;
-  cursor: grab;
-  touch-action: none;
-  -webkit-tap-highlight-color: transparent;
-  filter: drop-shadow(0 3px 7px rgba(5, 12, 10, .22));
+/* Hero-edge theme pull cord: slim gold hardware, a clear bulb, and a reserved lane beside the ID card. */
+#home.hero.shahd-badge-hero { position:relative !important; overflow:visible !important; }
+#home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero {
+  --cord-y:0px; --cord-angle:0deg; --cord-x:calc(100% - 14px); --cord-top:42%;
+  position:absolute !important; top:var(--cord-top) !important; left:var(--cord-x) !important; right:auto !important;
+  z-index:30; display:block; width:48px; height:158px; margin:0; padding:0; overflow:visible;
+  border:0; border-radius:0; background:transparent; color:#e7bd62; cursor:grab; touch-action:none;
+  -webkit-tap-highlight-color:transparent; transform:translateX(-50%); filter:none;
 }
-.theme-cord:active,
-.theme-cord.is-pulling { cursor: grabbing; }
-.theme-cord:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
-  border-radius: 14px;
+#home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero:active,
+#home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero.is-pulling { cursor:grabbing; }
+#home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero:focus-visible {
+  outline:2px solid currentColor; outline-offset:2px; border-radius:18px;
 }
 .theme-cord__mount {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 14px;
-  height: 7px;
-  border: 1px solid currentColor;
-  border-top: 0;
-  border-radius: 0 0 8px 8px;
-  background: color-mix(in srgb, currentColor 18%, transparent);
-  transform: translateX(-50%);
+  position:absolute; top:0; left:50%; width:9px; height:8px; border:1px solid currentColor; border-top:0;
+  border-radius:0 0 8px 8px; background:rgba(231,189,98,.12); box-shadow:0 2px 8px rgba(231,189,98,.18);
+  transform:translateX(-50%);
 }
 .theme-cord__line {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  width: 1.5px;
-  height: calc(43px + var(--cord-y));
-  border-radius: 0 0 2px 2px;
-  background: linear-gradient(to bottom, currentColor 0%, color-mix(in srgb, currentColor 58%, transparent) 100%);
-  transform: translateX(-50%) rotate(var(--cord-angle));
-  transform-origin: 50% 0;
-  transition: height 70ms linear;
+  position:absolute; top:6px; left:50%; width:1.5px; height:calc(54px + var(--cord-y)); border-radius:0 0 2px 2px;
+  background:linear-gradient(to bottom,currentColor 0%,rgba(231,189,98,.62) 82%,rgba(231,189,98,.28) 100%);
+  box-shadow:0 0 5px rgba(231,189,98,.18); transform:translateX(-50%) rotate(var(--cord-angle)); transform-origin:50% 0;
+  transition:height 55ms linear;
 }
-.theme-cord__pendant {
-  position: absolute;
-  top: calc(46px + var(--cord-y));
-  left: 50%;
-  display: grid;
-  width: 24px;
-  height: 29px;
-  place-items: center;
-  color: currentColor;
-  transform: translateX(-50%) rotate(var(--cord-angle));
-  transform-origin: 50% 0;
-  transition: top 70ms linear, filter 220ms ease;
+.theme-cord__bulb {
+  position:absolute; top:calc(56px + var(--cord-y)); left:50%; display:grid; width:27px; height:36px; place-items:center;
+  color:currentColor; transform:translateX(-50%) rotate(var(--cord-angle)); transform-origin:50% 0;
+  transition:top 55ms linear,filter 240ms ease,color 240ms ease;
 }
-.theme-cord__pendant svg {
-  display: block;
-  width: 21px;
-  height: 25px;
-  overflow: visible;
-  fill: color-mix(in srgb, currentColor 22%, #14231f);
-  stroke: currentColor;
-  stroke-width: 1.55;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.theme-cord__bulb::before {
+  content:""; position:absolute; inset:5px 3px 10px; border-radius:50%;
+  background:radial-gradient(circle,rgba(255,218,128,.30),rgba(231,189,98,.12) 44%,transparent 76%);
+  filter:blur(6px); opacity:.72; transition:opacity 240ms ease,transform 240ms ease; pointer-events:none;
 }
-.theme-cord:hover .theme-cord__pendant,
-.theme-cord:focus-visible .theme-cord__pendant {
-  filter: drop-shadow(0 0 8px color-mix(in srgb, currentColor 68%, transparent));
+.theme-cord__bulb svg {
+  position:relative; z-index:1; display:block; width:24px; height:31px; overflow:visible;
+  fill:rgba(231,189,98,.08); stroke:currentColor; stroke-width:1.55; stroke-linecap:round; stroke-linejoin:round;
+  filter:drop-shadow(0 1px 3px rgba(4,14,10,.24));
 }
-.theme-cord.is-pulling .theme-cord__pendant {
-  filter: drop-shadow(0 0 12px color-mix(in srgb, currentColor 82%, transparent));
+.theme-cord:hover .theme-cord__bulb,
+.theme-cord:focus-visible .theme-cord__bulb { filter:drop-shadow(0 0 9px rgba(231,189,98,.46)); }
+.theme-cord.is-pulling .theme-cord__bulb { filter:drop-shadow(0 0 13px rgba(255,221,137,.68)); }
+html:not([data-theme="light"]) .theme-cord__bulb::before { opacity:.94; transform:scale(1.18); }
+html[data-theme="light"] #home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero { color:#9a722c; }
+html[data-theme="light"] .theme-cord__bulb::before {
+  background:radial-gradient(circle,rgba(255,235,176,.24),rgba(179,140,62,.08) 48%,transparent 78%); opacity:.48;
 }
-html[data-theme="light"] .theme-cord {
-  color: #9b6b1e;
-  filter: drop-shadow(0 3px 7px rgba(43, 55, 48, .16));
+html[data-theme="light"] .theme-cord__bulb svg { fill:rgba(255,238,195,.18); }
+@media (max-width:767px) {
+  #home.hero.shahd-badge-hero > .theme-cord.theme-cord--hero { width:46px; height:150px; }
+  .theme-cord__bulb { width:25px; height:34px; }
+  .theme-cord__bulb svg { width:23px; height:30px; }
 }
-html[data-theme="light"] .theme-cord__pendant svg {
-  fill: #f5dfad;
-}
-@media (max-width: 860px) {
-  .theme-cord {
-    top: 76px;
-    inset-inline-end: max(6px, env(safe-area-inset-right));
-    width: 42px;
-    height: 116px;
-  }
-  .theme-cord__line { height: calc(39px + var(--cord-y)); }
-  .theme-cord__pendant { top: calc(42px + var(--cord-y)); }
-}
-@media (max-width: 380px) {
-  .theme-cord { inset-inline-end: 3px; transform: scale(.9); transform-origin: top right; }
-  html[dir="rtl"] .theme-cord { transform-origin: top left; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .theme-cord__line,
-  .theme-cord__pendant { transition: none !important; }
-  .theme-cord,
-  .theme-cord * { animation: none !important; }
+@media (prefers-reduced-motion:reduce) {
+  .theme-cord__line,.theme-cord__bulb,.theme-cord__bulb::before { transition:none !important; }
+  .theme-cord,.theme-cord * { animation:none !important; }
 }
